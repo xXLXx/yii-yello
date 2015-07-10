@@ -1,0 +1,716 @@
+[
+  {
+    "title": "Dateline Standard Time",
+    "code": "DST",
+    "zone": -12,
+    "isDst": false,
+    "text": "(UTC-12:00) International Date Line West"
+  },
+  {
+    "title": "UTC-11",
+    "code": "U",
+    "zone": -11,
+    "isDst": false,
+    "text": "(UTC-11:00) Coordinated Universal Time-11"
+  },
+  {
+    "title": "Hawaiian Standard Time",
+    "code": "HST",
+    "zone": -10,
+    "isDst": false,
+    "text": "(UTC-10:00) Hawaii"
+  },
+  {
+    "title": "Alaskan Standard Time",
+    "code": "AKDT",
+    "zone": -8,
+    "isDst": true,
+    "text": "(UTC-09:00) Alaska"
+  },
+  {
+    "title": "Pacific Standard Time (Mexico)",
+    "code": "PDT",
+    "zone": -7,
+    "isDst": true,
+    "text": "(UTC-08:00) Baja California"
+  },
+  {
+    "title": "Pacific Standard Time",
+    "code": "PDT",
+    "zone": -7,
+    "isDst": true,
+    "text": "(UTC-08:00) Pacific Time (US & Canada)"
+  },
+  {
+    "title": "US Mountain Standard Time",
+    "code": "UMST",
+    "zone": -7,
+    "isDst": false,
+    "text": "(UTC-07:00) Arizona"
+  },
+  {
+    "title": "Mountain Standard Time (Mexico)",
+    "code": "MDT",
+    "zone": -6,
+    "isDst": true,
+    "text": "(UTC-07:00) Chihuahua, La Paz, Mazatlan"
+  },
+  {
+    "title": "Mountain Standard Time",
+    "code": "MDT",
+    "zone": -6,
+    "isDst": true,
+    "text": "(UTC-07:00) Mountain Time (US & Canada)"
+  },
+  {
+    "title": "Central America Standard Time",
+    "code": "CAST",
+    "zone": -6,
+    "isDst": false,
+    "text": "(UTC-06:00) Central America"
+  },
+  {
+    "title": "Central Standard Time",
+    "code": "CDT",
+    "zone": -5,
+    "isDst": true,
+    "text": "(UTC-06:00) Central Time (US & Canada)"
+  },
+  {
+    "title": "Central Standard Time (Mexico)",
+    "code": "CDT",
+    "zone": -5,
+    "isDst": true,
+    "text": "(UTC-06:00) Guadalajara, Mexico City, Monterrey"
+  },
+  {
+    "title": "Canada Central Standard Time",
+    "code": "CCST",
+    "zone": -6,
+    "isDst": false,
+    "text": "(UTC-06:00) Saskatchewan"
+  },
+  {
+    "title": "SA Pacific Standard Time",
+    "code": "SPST",
+    "zone": -5,
+    "isDst": false,
+    "text": "(UTC-05:00) Bogota, Lima, Quito"
+  },
+  {
+    "title": "Eastern Standard Time",
+    "code": "EDT",
+    "zone": -4,
+    "isDst": true,
+    "text": "(UTC-05:00) Eastern Time (US & Canada)"
+  },
+  {
+    "title": "US Eastern Standard Time",
+    "code": "UEDT",
+    "zone": -4,
+    "isDst": true,
+    "text": "(UTC-05:00) Indiana (East)"
+  },
+  {
+    "title": "Venezuela Standard Time",
+    "code": "VST",
+    "zone": -4.5,
+    "isDst": false,
+    "text": "(UTC-04:30) Caracas"
+  },
+  {
+    "title": "Paraguay Standard Time",
+    "code": "PST",
+    "zone": -4,
+    "isDst": false,
+    "text": "(UTC-04:00) Asuncion"
+  },
+  {
+    "title": "Atlantic Standard Time",
+    "code": "ADT",
+    "zone": -3,
+    "isDst": true,
+    "text": "(UTC-04:00) Atlantic Time (Canada)"
+  },
+  {
+    "title": "Central Brazilian Standard Time",
+    "code": "CBST",
+    "zone": -4,
+    "isDst": false,
+    "text": "(UTC-04:00) Cuiaba"
+  },
+  {
+    "title": "SA Western Standard Time",
+    "code": "SWST",
+    "zone": -4,
+    "isDst": false,
+    "text": "(UTC-04:00) Georgetown, La Paz, Manaus, San Juan"
+  },
+  {
+    "title": "Pacific SA Standard Time",
+    "code": "PSST",
+    "zone": -4,
+    "isDst": false,
+    "text": "(UTC-04:00) Santiago"
+  },
+  {
+    "title": "Newfoundland Standard Time",
+    "code": "NDT",
+    "zone": -2.5,
+    "isDst": true,
+    "text": "(UTC-03:30) Newfoundland"
+  },
+  {
+    "title": "E. South America Standard Time",
+    "code": "ESAST",
+    "zone": -3,
+    "isDst": false,
+    "text": "(UTC-03:00) Brasilia"
+  },
+  {
+    "title": "Argentina Standard Time",
+    "code": "AST",
+    "zone": -3,
+    "isDst": false,
+    "text": "(UTC-03:00) Buenos Aires"
+  },
+  {
+    "title": "SA Eastern Standard Time",
+    "code": "SEST",
+    "zone": -3,
+    "isDst": false,
+    "text": "(UTC-03:00) Cayenne, Fortaleza"
+  },
+  {
+    "title": "Greenland Standard Time",
+    "code": "GDT",
+    "zone": -2,
+    "isDst": true,
+    "text": "(UTC-03:00) Greenland"
+  },
+  {
+    "title": "Montevideo Standard Time",
+    "code": "MST",
+    "zone": -3,
+    "isDst": false,
+    "text": "(UTC-03:00) Montevideo"
+  },
+  {
+    "title": "Bahia Standard Time",
+    "code": "BST",
+    "zone": -3,
+    "isDst": false,
+    "text": "(UTC-03:00) Salvador"
+  },
+  {
+    "title": "UTC-02",
+    "code": "U",
+    "zone": -2,
+    "isDst": false,
+    "text": "(UTC-02:00) Coordinated Universal Time-02"
+  },
+  {
+    "title": "Mid-Atlantic Standard Time",
+    "code": "MDT",
+    "zone": -1,
+    "isDst": true,
+    "text": "(UTC-02:00) Mid-Atlantic - Old"
+  },
+  {
+    "title": "Azores Standard Time",
+    "code": "ADT",
+    "zone": 0,
+    "isDst": true,
+    "text": "(UTC-01:00) Azores"
+  },
+  {
+    "title": "Cape Verde Standard Time",
+    "code": "CVST",
+    "zone": -1,
+    "isDst": false,
+    "text": "(UTC-01:00) Cape Verde Is."
+  },
+  {
+    "title": "Morocco Standard Time",
+    "code": "MDT",
+    "zone": 1,
+    "isDst": true,
+    "text": "(UTC) Casablanca"
+  },
+  {
+    "title": "UTC",
+    "code": "CUT",
+    "zone": 0,
+    "isDst": false,
+    "text": "(UTC) Coordinated Universal Time"
+  },
+  {
+    "title": "GMT Standard Time",
+    "code": "GDT",
+    "zone": 1,
+    "isDst": true,
+    "text": "(UTC) Dublin, Edinburgh, Lisbon, London"
+  },
+  {
+    "title": "Greenwich Standard Time",
+    "code": "GST",
+    "zone": 0,
+    "isDst": false,
+    "text": "(UTC) Monrovia, Reykjavik"
+  },
+  {
+    "title": "W. Europe Standard Time",
+    "code": "WEDT",
+    "zone": 2,
+    "isDst": true,
+    "text": "(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"
+  },
+  {
+    "title": "Central Europe Standard Time",
+    "code": "CEDT",
+    "zone": 2,
+    "isDst": true,
+    "text": "(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague"
+  },
+  {
+    "title": "Romance Standard Time",
+    "code": "RDT",
+    "zone": 2,
+    "isDst": true,
+    "text": "(UTC+01:00) Brussels, Copenhagen, Madrid, Paris"
+  },
+  {
+    "title": "Central European Standard Time",
+    "code": "CEDT",
+    "zone": 2,
+    "isDst": true,
+    "text": "(UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb"
+  },
+  {
+    "title": "W. Central Africa Standard Time",
+    "code": "WCAST",
+    "zone": 1,
+    "isDst": false,
+    "text": "(UTC+01:00) West Central Africa"
+  },
+  {
+    "title": "Namibia Standard Time",
+    "code": "NST",
+    "zone": 1,
+    "isDst": false,
+    "text": "(UTC+01:00) Windhoek"
+  },
+  {
+    "title": "GTB Standard Time",
+    "code": "GDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Athens, Bucharest"
+  },
+  {
+    "title": "Middle East Standard Time",
+    "code": "MEDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Beirut"
+  },
+  {
+    "title": "Egypt Standard Time",
+    "code": "EST",
+    "zone": 2,
+    "isDst": false,
+    "text": "(UTC+02:00) Cairo"
+  },
+  {
+    "title": "Syria Standard Time",
+    "code": "SDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Damascus"
+  },
+  {
+    "title": "E. Europe Standard Time",
+    "code": "EEDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) E. Europe"
+  },
+  {
+    "title": "South Africa Standard Time",
+    "code": "SAST",
+    "zone": 2,
+    "isDst": false,
+    "text": "(UTC+02:00) Harare, Pretoria"
+  },
+  {
+    "title": "FLE Standard Time",
+    "code": "FDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius"
+  },
+  {
+    "title": "Turkey Standard Time",
+    "code": "TDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Istanbul"
+  },
+  {
+    "title": "Israel Standard Time",
+    "code": "JDT",
+    "zone": 3,
+    "isDst": true,
+    "text": "(UTC+02:00) Jerusalem"
+  },
+  {
+    "title": "Libya Standard Time",
+    "code": "LST",
+    "zone": 2,
+    "isDst": false,
+    "text": "(UTC+02:00) Tripoli"
+  },
+  {
+    "title": "Jordan Standard Time",
+    "code": "JST",
+    "zone": 3,
+    "isDst": false,
+    "text": "(UTC+03:00) Amman"
+  },
+  {
+    "title": "Arabic Standard Time",
+    "code": "AST",
+    "zone": 3,
+    "isDst": false,
+    "text": "(UTC+03:00) Baghdad"
+  },
+  {
+    "title": "Kaliningrad Standard Time",
+    "code": "KST",
+    "zone": 3,
+    "isDst": false,
+    "text": "(UTC+03:00) Kaliningrad, Minsk"
+  },
+  {
+    "title": "Arab Standard Time",
+    "code": "AST",
+    "zone": 3,
+    "isDst": false,
+    "text": "(UTC+03:00) Kuwait, Riyadh"
+  },
+  {
+    "title": "E. Africa Standard Time",
+    "code": "EAST",
+    "zone": 3,
+    "isDst": false,
+    "text": "(UTC+03:00) Nairobi"
+  },
+  {
+    "title": "Iran Standard Time",
+    "code": "IDT",
+    "zone": 4.5,
+    "isDst": true,
+    "text": "(UTC+03:30) Tehran"
+  },
+  {
+    "title": "Arabian Standard Time",
+    "code": "AST",
+    "zone": 4,
+    "isDst": false,
+    "text": "(UTC+04:00) Abu Dhabi, Muscat"
+  },
+  {
+    "title": "Azerbaijan Standard Time",
+    "code": "ADT",
+    "zone": 5,
+    "isDst": true,
+    "text": "(UTC+04:00) Baku"
+  },
+  {
+    "title": "Russian Standard Time",
+    "code": "RST",
+    "zone": 4,
+    "isDst": false,
+    "text": "(UTC+04:00) Moscow, St. Petersburg, Volgograd"
+  },
+  {
+    "title": "Mauritius Standard Time",
+    "code": "MST",
+    "zone": 4,
+    "isDst": false,
+    "text": "(UTC+04:00) Port Louis"
+  },
+  {
+    "title": "Georgian Standard Time",
+    "code": "GST",
+    "zone": 4,
+    "isDst": false,
+    "text": "(UTC+04:00) Tbilisi"
+  },
+  {
+    "title": "Caucasus Standard Time",
+    "code": "CST",
+    "zone": 4,
+    "isDst": false,
+    "text": "(UTC+04:00) Yerevan"
+  },
+  {
+    "title": "Afghanistan Standard Time",
+    "code": "AST",
+    "zone": 4.5,
+    "isDst": false,
+    "text": "(UTC+04:30) Kabul"
+  },
+  {
+    "title": "West Asia Standard Time",
+    "code": "WAST",
+    "zone": 5,
+    "isDst": false,
+    "text": "(UTC+05:00) Ashgabat, Tashkent"
+  },
+  {
+    "title": "Pakistan Standard Time",
+    "code": "PST",
+    "zone": 5,
+    "isDst": false,
+    "text": "(UTC+05:00) Islamabad, Karachi"
+  },
+  {
+    "title": "India Standard Time",
+    "code": "IST",
+    "zone": 5.5,
+    "isDst": false,
+    "text": "(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi"
+  },
+  {
+    "title": "Sri Lanka Standard Time",
+    "code": "SLST",
+    "zone": 5.5,
+    "isDst": false,
+    "text": "(UTC+05:30) Sri Jayawardenepura"
+  },
+  {
+    "title": "Nepal Standard Time",
+    "code": "NST",
+    "zone": 5.75,
+    "isDst": false,
+    "text": "(UTC+05:45) Kathmandu"
+  },
+  {
+    "title": "Central Asia Standard Time",
+    "code": "CAST",
+    "zone": 6,
+    "isDst": false,
+    "text": "(UTC+06:00) Astana"
+  },
+  {
+    "title": "Bangladesh Standard Time",
+    "code": "BST",
+    "zone": 6,
+    "isDst": false,
+    "text": "(UTC+06:00) Dhaka"
+  },
+  {
+    "title": "Ekaterinburg Standard Time",
+    "code": "EST",
+    "zone": 6,
+    "isDst": false,
+    "text": "(UTC+06:00) Ekaterinburg"
+  },
+  {
+    "title": "Myanmar Standard Time",
+    "code": "MST",
+    "zone": 6.5,
+    "isDst": false,
+    "text": "(UTC+06:30) Yangon (Rangoon)"
+  },
+  {
+    "title": "SE Asia Standard Time",
+    "code": "SAST",
+    "zone": 7,
+    "isDst": false,
+    "text": "(UTC+07:00) Bangkok, Hanoi, Jakarta"
+  },
+  {
+    "title": "N. Central Asia Standard Time",
+    "code": "NCAST",
+    "zone": 7,
+    "isDst": false,
+    "text": "(UTC+07:00) Novosibirsk"
+  },
+  {
+    "title": "China Standard Time",
+    "code": "CST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi"
+  },
+  {
+    "title": "North Asia Standard Time",
+    "code": "NAST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Krasnoyarsk"
+  },
+  {
+    "title": "Singapore Standard Time",
+    "code": "MPST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Kuala Lumpur, Singapore"
+  },
+  {
+    "title": "W. Australia Standard Time",
+    "code": "WAST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Perth"
+  },
+  {
+    "title": "Taipei Standard Time",
+    "code": "TST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Taipei"
+  },
+  {
+    "title": "Ulaanbaatar Standard Time",
+    "code": "UST",
+    "zone": 8,
+    "isDst": false,
+    "text": "(UTC+08:00) Ulaanbaatar"
+  },
+  {
+    "title": "North Asia East Standard Time",
+    "code": "NAEST",
+    "zone": 9,
+    "isDst": false,
+    "text": "(UTC+09:00) Irkutsk"
+  },
+  {
+    "title": "Tokyo Standard Time",
+    "code": "TST",
+    "zone": 9,
+    "isDst": false,
+    "text": "(UTC+09:00) Osaka, Sapporo, Tokyo"
+  },
+  {
+    "title": "Korea Standard Time",
+    "code": "KST",
+    "zone": 9,
+    "isDst": false,
+    "text": "(UTC+09:00) Seoul"
+  },
+  {
+    "title": "Cen. Australia Standard Time",
+    "code": "CAST",
+    "zone": 9.5,
+    "isDst": false,
+    "text": "(UTC+09:30) Adelaide"
+  },
+  {
+    "title": "AUS Central Standard Time",
+    "code": "ACST",
+    "zone": 9.5,
+    "isDst": false,
+    "text": "(UTC+09:30) Darwin"
+  },
+  {
+    "title": "E. Australia Standard Time",
+    "code": "EAST",
+    "zone": 10,
+    "isDst": false,
+    "text": "(UTC+10:00) Brisbane"
+  },
+  {
+    "title": "AUS Eastern Standard Time",
+    "code": "AEST",
+    "zone": 10,
+    "isDst": false,
+    "text": "(UTC+10:00) Canberra, Melbourne, Sydney"
+  },
+  {
+    "title": "West Pacific Standard Time",
+    "code": "WPST",
+    "zone": 10,
+    "isDst": false,
+    "text": "(UTC+10:00) Guam, Port Moresby"
+  },
+  {
+    "title": "Tasmania Standard Time",
+    "code": "TST",
+    "zone": 10,
+    "isDst": false,
+    "text": "(UTC+10:00) Hobart"
+  },
+  {
+    "title": "Yakutsk Standard Time",
+    "code": "YST",
+    "zone": 10,
+    "isDst": false,
+    "text": "(UTC+10:00) Yakutsk"
+  },
+  {
+    "title": "Central Pacific Standard Time",
+    "code": "CPST",
+    "zone": 11,
+    "isDst": false,
+    "text": "(UTC+11:00) Solomon Is., New Caledonia"
+  },
+  {
+    "title": "Vladivostok Standard Time",
+    "code": "VST",
+    "zone": 11,
+    "isDst": false,
+    "text": "(UTC+11:00) Vladivostok"
+  },
+  {
+    "title": "New Zealand Standard Time",
+    "code": "NZST",
+    "zone": 12,
+    "isDst": false,
+    "text": "(UTC+12:00) Auckland, Wellington"
+  },
+  {
+    "title": "UTC+12",
+    "code": "U",
+    "zone": 12,
+    "isDst": false,
+    "text": "(UTC+12:00) Coordinated Universal Time+12"
+  },
+  {
+    "title": "Fiji Standard Time",
+    "code": "FST",
+    "zone": 12,
+    "isDst": false,
+    "text": "(UTC+12:00) Fiji"
+  },
+  {
+    "title": "Magadan Standard Time",
+    "code": "MST",
+    "zone": 12,
+    "isDst": false,
+    "text": "(UTC+12:00) Magadan"
+  },
+  {
+    "title": "Kamchatka Standard Time",
+    "code": "KDT",
+    "zone": 13,
+    "isDst": true,
+    "text": "(UTC+12:00) Petropavlovsk-Kamchatsky - Old"
+  },
+  {
+    "title": "Tonga Standard Time",
+    "code": "TST",
+    "zone": 13,
+    "isDst": false,
+    "text": "(UTC+13:00) Nuku'alofa"
+  },
+  {
+    "title": "Samoa Standard Time",
+    "code": "SST",
+    "zone": 13,
+    "isDst": false,
+    "text": "(UTC+13:00) Samoa"
+  }
+]

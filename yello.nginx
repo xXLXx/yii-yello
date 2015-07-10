@@ -1,0 +1,30 @@
+server{
+        listen 127.0.0.1:80;
+        server_name yello.dev *.yello.dev;
+        index index.php;
+        root /var/www/yello.dev/frontend/web;
+        charset utf-8;
+        location / {
+                if (!-e $request_filename) {
+                        rewrite ^(.*)$  /index.php last;
+                        break;
+                }
+        }
+        location ~* ^.+\.(css|js)$ {
+                expires 30d;
+                access_log off;
+                add_header      Cache-Control "public,must-revalidate";
+        }
+        location ~* ^.+\.(jp?g|gif|png|ico|cur|swf|gz)$ {
+                expires 30d;
+                access_log off;
+                add_header      Cache-Control "public,must-revalidate";
+		try_files $uri @missImages;
+        }
+        location ~ .php$ {
+                include fastcgi_params;
+                fastcgi_pass 127.0.0.1:9000;
+                fastcgi_param DOCUMENT_ROOT /var/www/yello.dev/frontend/web;
+                fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+        }
+}

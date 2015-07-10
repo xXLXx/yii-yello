@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# set these paths to match your environment
+CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+YII_PATH=$CURRENT_DIR/vendor/yiisoft/yii2
+APIDOC_PATH=$CURRENT_DIR/vendor/bin
+OUTPUT=$CURRENT_DIR/frontend/web/doc
+
+echo $CURRENT_DIR
+
+cd $APIDOC_PATH
+./apidoc api $CURRENT_DIR,$YII_PATH $OUTPUT
+#./apidoc guide $YII_PATH/docs/guide    $OUTPUT/guide-en --apiDocs=../api --guidePrefix= --interactive=0
+#./apidoc guide $YII_PATH/docs/guide-ru $OUTPUT/guide-ru --apiDocs=../api --guidePrefix= --interactive=0
+# repeat the last line for more languages
