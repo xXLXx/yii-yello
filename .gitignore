@@ -5,6 +5,6 @@ protected/runtime/*
 protected/data/*.db
 themes/classic/views/
 **/Thumbs.db
-nbproject/**
-/nbproject/private/
 frontend/web/web.config
+nbproject
+private
