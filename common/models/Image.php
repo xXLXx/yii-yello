@@ -70,7 +70,10 @@ class Image extends \common\models\BaseModel
         $this->imageFile->saveAs($originalOutput);
         \yii\imagine\Image::thumbnail($originalOutput, 144, 144)->save($thumbOutput);
         $this->originalUrl = $originalUrl;
-        $this->thumbUrl = $thumbUrl;
+        
+        // $this->thumbUrl = $thumbUrl; 
+        //TODO: Replace below with above when null thumburl bug figured out.
+        $this->thumbUrl = '/img/temp/01.jpg';
         return true;
     }
 }
