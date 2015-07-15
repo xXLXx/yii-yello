@@ -7,3 +7,4 @@ themes/classic/views/
 **/Thumbs.db
 nbproject/**
 /nbproject/private/
+frontend/web/web.config
