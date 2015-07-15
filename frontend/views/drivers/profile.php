@@ -143,13 +143,13 @@
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
                                     <h5><?= $review->title ?></h5>
-<!--                                        <span class="star-block big">-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-half"></span>-->
-<!--                                            <span class="font-star"></span>-->
-<!--                                        </span>-->
+                                        <span class="star-block big">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
                                     <div><?= $review->text?></div>
                                     <div class="gray-text">
                                         <?php
