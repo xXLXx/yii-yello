@@ -21,22 +21,22 @@
                     <div class="user-photo-info-inner">
                         <h2><?= $driver->username ?></h2>
                         <div class="text-small-11 gray-text">Yello ID: #<?= $driver->id ?></div>
-<!--                                    <div>-->
-<!--                                        <span class="star-block">-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-two"></span>-->
-<!--                                            <span class="font-star-half"></span>-->
-<!--                                            <span class="font-star"></span>-->
-<!--                                        </span>-->
-<!--                                    </div>-->
+                                    <div>
+                                        <span class="star-block">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
+                                    </div>
                     </div>
                 </div>
             </div>
-<!--                        <h4>Achivements</h4>-->
-<!--                        <div class="achivements-list big-size">-->
-<!--                            <div class="item check"></div>-->
-<!--                        </div>-->
+                        <h4>Achivements</h4>
+                        <div class="achivements-list big-size">
+                            <div class="item check"></div>
+                        </div>
             <h4>Public details</h4>
             <table class="strip-table">
                 <col width="30%" />
