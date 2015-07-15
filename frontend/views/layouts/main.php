@@ -89,8 +89,8 @@ AppAsset::register($this);
         var datedisp = months[d.getMonth()] + ' ' + d.getDate() + ' ' + d.getFullYear();
         var timedisp = hours + ' ' + minutes + ' ' + ampm;
         console.log(timedisp);
-        $("#datedisplay").html(datedisp);
-        $("#timedisplay").html(timedisp);
+        $("#todaysdate").html(datedisp);
+        $("#todaystime").html(timedisp);
     }
 
     jQuery(document).ready(function(){
