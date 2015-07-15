@@ -6,6 +6,5 @@ protected/data/*.db
 themes/classic/views/
 **/Thumbs.db
 nbproject/**
-nbproject/private/private.xml
-
+nbproject/private/**
 nbproject/private/private.xml
