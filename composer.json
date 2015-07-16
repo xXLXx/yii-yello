@@ -21,7 +21,8 @@
         "bower-asset/jquery": "1.11.0",
         "yiisoft/yii2-imagine": "~2.0.0",
         "yiisoft/yii2-apidoc": "~2.0.0",
-        "yiisoft/yii2-jui": "~2.0.0"
+        "yiisoft/yii2-jui": "~2.0.0",
+        "bower-asset/BootstrapDialog":"*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
