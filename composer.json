@@ -22,7 +22,8 @@
         "yiisoft/yii2-imagine": "~2.0.0",
         "yiisoft/yii2-apidoc": "~2.0.0",
         "yiisoft/yii2-jui": "~2.0.0",
-        "bower-asset/BootstrapDialog":"*"
+        "bower-asset/BootstrapDialog":"*",
+        "kartik-v/yii2-widgets": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

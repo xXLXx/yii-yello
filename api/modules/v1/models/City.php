@@ -21,7 +21,7 @@ class City extends \api\common\models\City implements Linkable
             Link::REL_SELF => Url::to(
                 [
                     'city/view',
-                    'id' => $this->id,
+                    'id' => $this->id
                 ],
                 true
             ),
