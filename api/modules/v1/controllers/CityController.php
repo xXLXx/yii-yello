@@ -17,12 +17,12 @@ class CityController extends \api\common\controllers\CityController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => Auth::className(),
-        ];
-        return $behaviors;
-    }
+//    public function behaviors()
+//    {
+//        $behaviors = parent::behaviors();
+//        $behaviors['authenticator'] = [
+//            'class' => Auth::className(),
+//        ];
+//        return $behaviors;
+//    }
 }
