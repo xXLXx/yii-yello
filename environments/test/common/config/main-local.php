@@ -3,15 +3,17 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=yelloau.cquajeb46vrk.ap-southeast-2.rds.amazonaws.com;dbname=drivestageubuntu',
-            'username' => 'drivestageusr',
-            'password' => 'K3vinh@5ting$',
+            'dsn' => 'mysql:host=yelloau.cquajeb46vrk.ap-southeast-2.rds.amazonaws.comt;dbname=drivestagejira',
+            'username' => 'jirabox',
+            'password' => '@rthurB33tson',
             'charset' => 'utf8',
         ],
-   'mailer' => [
+        'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
-        // for the mailer to send real emails.
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
         'transport' => [
              'class' => 'Swift_SmtpTransport',
              'host' => 'email-smtp.us-east-1.amazonaws.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
@@ -19,8 +21,8 @@ return [
              'password' => 'AkDyihIj/BOGV7uRM7k8I7zk+usYSv7ub4tGT5PEcfA/',
              'port' => '587', // Port 25 is a very common port too
              'encryption' => 'tls', // It is often used, check your provider or mail server specs
-             ] ,
-            
-            ],
+             ]            
+            ,
+        ],
     ],
 ];
