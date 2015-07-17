@@ -60,20 +60,37 @@ class Image extends \common\models\BaseModel
         if ( ! file_exists($imageDir) ) {
             FileHelper::createDirectory($imageDir);
         }
+        
+        
+        $ext='';
+        $mimetype = \yii\helpers\FileHelper::getMimeType($this->imageFile);
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imageMimeType: '.$mimetype . PHP_EOL, true), FILE_APPEND);
+        switch ($mimetype){
+            case 'image/jpeg':
+            case 'image/jpg':
+                $ext='jpg';
+                break;
+            case 'image/png':
+                $ext='png';
+            case 'image/gif':
+                $ext='gif';
+            default:
+                break;
+        }
 
-        $originalUrl = '/upload/images/' . $this->id . '.'
-            . $this->imageFile->getExtension();
+        if($ext==''){
+            return false;
+        }
+
+        $originalUrl = '/upload/images/' . $this->id . '.'.$ext;
+            
         $originalOutput =  $webPath . $originalUrl;
-        $thumbUrl = '/upload/images/' . $this->id . '-thumb.'
-            . $this->imageFile->getExtension();
+        $thumbUrl = '/upload/images/' . $this->id . '-thumb.'.$ext;        
         $thumbOutput = $webPath . $thumbUrl;
         $this->imageFile->saveAs($originalOutput);
         \yii\imagine\Image::thumbnail($originalOutput, 144, 144)->save($thumbOutput);
         $this->originalUrl = $originalUrl;
-        
-        // $this->thumbUrl = $thumbUrl; 
-        //TODO: Replace below with above when null thumburl bug figured out.
-        $this->thumbUrl = '/img/temp/01.jpg';
+        $this->thumbUrl = $thumbUrl;
         return true;
     }
 }
