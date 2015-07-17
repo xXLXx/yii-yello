@@ -18,14 +18,14 @@ class SuburbController extends \api\common\controllers\SuburbController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => Auth::className(),
-        ];
-        return $behaviors;
-    }
+//    public function behaviors()
+//    {
+//        $behaviors = parent::behaviors();
+//        $behaviors['authenticator'] = [
+//            'class' => Auth::className(),
+//        ];
+        //return $behaviors;
+//    }
 
     public function actionCity($id)
     {
