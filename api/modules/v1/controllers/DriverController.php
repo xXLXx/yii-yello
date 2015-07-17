@@ -36,13 +36,16 @@ class DriverController extends \api\common\controllers\DriverController
         $model = new DriverForm();
         $post = \Yii::$app->request->post();
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('postPersonal' . PHP_EOL, true), FILE_APPEND);
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('Files' . PHP_EOL, true), FILE_APPEND);
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($_FILES, true), FILE_APPEND);
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('Info' . PHP_EOL, true), FILE_APPEND);
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($post, true), FILE_APPEND);
         if ($model->load($post)) {
             if ($model->validate()) {
                 $model->save();
             }
         }
+
         return $model;
 //        return $model->getErrors() ? $model->getErrors() : $model;
     }
