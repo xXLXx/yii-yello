@@ -21,7 +21,7 @@ class WorkDetailsForm extends Model
     public $bsb;
     public $accountNumber;
     public $suburbs;
-
+ 
     /**
      * @inheritdoc
      */

@@ -8,7 +8,8 @@
     </div>
 </div>
 <div class="user-photo-container f-left">
-  <!--  <img src="<?//= $driver->image ? $driver->image->thumblUrl : '/img/temp/01.jpg' ?>"  -->
-    <img src="<?= $driver->image ? '/img/temp/01.jpg' : '/img/temp/01.jpg' ?>" 
+  
+<!--    <img src="<?//= $driver->image ? $driver->image->thumblUrl : '/img/temp/01.jpg' ?>"  -->
+    <img src="<?= $driver->imageId  ? '/upload/images/'.$driver->imageId.'-thumb.jpg'   : '/img/temp/01.jpg' ?>"
         alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
 </div>
