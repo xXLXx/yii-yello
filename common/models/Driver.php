@@ -22,76 +22,83 @@ namespace common\models;
  * @property DriverHasStore[] $driverHasStore Driver and stores link
  * @property Store[] $stores linked Stores
  */
-class Driver extends User {
-
+class Driver extends User
+{
     /**
      * @inheritdoc
      */
-    public static function find() {
+    public static function find() 
+    {
         $role = Role::findOne(['name' => Role::ROLE_DRIVER]);
         return parent::find()
-                        ->joinWith('userDriver')
-                        ->andWhere(['roleId' => $role->id]);
+            ->joinWith('userDriver')
+            ->andWhere(['roleId' => $role->id]);
     }
 
     /**
      * @inheritdoc
      */
-    public function fields() {
+    public function fields()
+    {
         $fields = parent::fields();
         $fields['extended'] = function(Driver $model) {
             return $model->userDriver;
         };
         return $fields;
     }
-
+    
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShiftHasDrivers() {
+    public function getShiftHasDrivers()
+    {
         return $this->hasMany(ShiftHasDriver::className(), [
-                    'driverId' => 'id'
+            'driverId' => 'id'
         ]);
     }
-
+    
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShiftHasAccepted() {
+    public function getShiftHasAccepted()
+    {
         return $this->getShiftHasDrivers()->andWhere([
-                    'acceptedByStoreOwner' => 1
+            'acceptedByStoreOwner' => 1
         ]);
     }
-
+    
     /**
      * Get shifts accepted
      * 
      * @return \yii\db\ActiveQuery
      */
-    public function getShiftsAccepted() {
+    public function getShiftsAccepted()
+    {
         return $this->hasMany(Shift::className(), ['id' => 'shiftId'])
-                        ->via('shiftHasAccepted');
+            ->via('shiftHasAccepted');
     }
-
+    
     /**
      * Get DriverHasSuburbs
      * 
      * @return \yii\db\ActiveQuery
      */
-    public function getDriverHasSuburbs() {
+    public function getDriverHasSuburbs()
+    {
         return $this->hasMany(
-                        DriverHasSuburb::className(), ['driverId' => 'id']
+            DriverHasSuburb::className(), ['driverId' => 'id']
         );
     }
-
+    
     /**
      * Get suburbs
      * 
      * @return \yii\db\ActiveQuery
      */
-    public function getSuburbs() {
+    public function getSuburbs()
+    {
         return $this->hasMany(Suburb::className(), ['id' => 'suburbId'])
-                        ->via('driverHasSuburbs');
+            ->via('driverHasSuburbs');
     }
 
     /**
@@ -99,7 +106,8 @@ class Driver extends User {
      * 
      * @return \yii\db\ActiveQuery
      */
-    public function getVehicle() {
+    public function getVehicle() 
+    {
         return $this->hasOne(Vehicle::className(), ['driverId' => 'id']);
     }
 
@@ -108,79 +116,84 @@ class Driver extends User {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getVehicleTypes() {
+    public function getVehicleTypes()
+    {
         return $this->hasMany(VehicleType::className(), ['id' => 'vehicleTypeId'])
-                        ->via('vehicle');
+            ->via('vehicle');
     }
-
+    
     /**
      * Get completed deliveries count
      * 
      * @return number
      */
-    public function getCompletedDeliveriesCount() {
+    public function getCompletedDeliveriesCount()
+    {
         $shiftState = ShiftState::findOne([
-                    'name' => ShiftState::STATE_COMPLETED
+            'name' => ShiftState::STATE_COMPLETED
         ]);
         $shiftsCompleted = $this->getShiftsAccepted()
-                ->andWhere(['shiftStateId' => $shiftState->id])
-                ->all();
+            ->andWhere(['shiftStateId' => $shiftState->id])
+            ->all();
         $counts = \yii\helpers\ArrayHelper::getColumn(
-                        $shiftsCompleted, 'deliveryCount'
+            $shiftsCompleted, 'deliveryCount'
         );
         return array_sum($counts);
     }
-
+    
     /**
      * Get approved deliveries count
      * 
      * @return number
      */
-    public function getApprovedDeliveriesCount() {
+    public function getApprovedDeliveriesCount()
+    {
         $shiftState = ShiftState::findOne([
-                    'name' => ShiftState::STATE_APPROVAL
+            'name' => ShiftState::STATE_APPROVAL
         ]);
         $shiftsApproval = $this->getShiftsAccepted()
-                ->andWhere(['shiftStateId' => $shiftState->id])
-                ->all();
+            ->andWhere(['shiftStateId' => $shiftState->id])
+            ->all();
         $counts = \yii\helpers\ArrayHelper::getColumn(
-                        $shiftsApproval, 'deliveryCount'
+            $shiftsApproval, 'deliveryCount'
         );
         return array_sum($counts);
     }
-
+    
     /**
      * Get total to pay
      * 
      * @return number
      */
-    public function getTotalToPay() {
+    public function getTotalToPay()
+    {
         $shiftState = ShiftState::findOne([
-                    'name' => ShiftState::STATE_PENDING_PAYMENT
+            'name' => ShiftState::STATE_PENDING_PAYMENT
         ]);
         $shiftsPendingPayment = $this->getShiftsAccepted()
-                ->andWhere(['shiftStateId' => $shiftState->id])
-                ->all();
+            ->andWhere(['shiftStateId' => $shiftState->id])
+            ->all();
         $payments = \yii\helpers\ArrayHelper::getColumn(
-                        $shiftsPendingPayment, 'payment'
+            $shiftsPendingPayment, 'payment'
         );
         return array_sum($payments);
     }
-
+    
     /**
      * Get paid
      * 
      * @return number
      */
-    public function getPaid() {
+    public function getPaid()
+    {
         $shiftState = ShiftState::findOne([
-                    'name' => ShiftState::STATE_COMPLETED
+            'name' => ShiftState::STATE_COMPLETED
         ]);
         $shiftsCompleted = $this->getShiftsAccepted()
-                ->andWhere(['shiftStateId' => $shiftState->id])
-                ->all();
+            ->andWhere(['shiftStateId' => $shiftState->id])
+            ->all();
         $payments = \yii\helpers\ArrayHelper::getColumn(
-                        $shiftsCompleted, 'payment'
+            $shiftsCompleted, 'payment'
         );
         return array_sum($payments);
     }
@@ -190,9 +203,10 @@ class Driver extends User {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getStoreOwnerFavouriteDrivers() {
+    public function getStoreOwnerFavouriteDrivers()
+    {
         return $this->hasMany(
-                        StoreOwnerFavouriteDrivers::className(), ['driverId' => 'id']
+            StoreOwnerFavouriteDrivers::className(), ['driverId' => 'id']
         );
     }
 
@@ -201,9 +215,10 @@ class Driver extends User {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getStoreOwnersFromFavourites() {
+    public function getStoreOwnersFromFavourites()
+    {
         return $this->hasMany(StoreOwner::className(), ['id' => 'storeOwnerId'])
-                        ->via('storeOwnerFavouriteDrivers');
+            ->via('storeOwnerFavouriteDrivers');
     }
 
     /**
@@ -213,12 +228,13 @@ class Driver extends User {
      *
      * @return null|static
      */
-    public function favouriteForStoreOwner($storeOwnerId) {
+    public function favouriteForStoreOwner($storeOwnerId)
+    {
         $favouriteForStoreOwner = StoreOwnerFavouriteDrivers::findOne(
-                        [
-                            'driverId' => $this->id,
-                            'storeOwnerId' => $storeOwnerId
-                        ]
+            [
+                'driverId' => $this->id,
+                'storeOwnerId' => $storeOwnerId
+            ]
         );
         return $favouriteForStoreOwner;
     }
@@ -228,7 +244,8 @@ class Driver extends User {
      *
      * @return Driver|null|static
      */
-    public function favouriteForCurrentStoreOwner() {
+    public function favouriteForCurrentStoreOwner()
+    {
         $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
         return $this->favouriteForStoreOwner($storeOwner->id);
     }
@@ -238,9 +255,10 @@ class Driver extends User {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getDriverHasStore() {
+    public function getDriverHasStore()
+    {
         return $this->hasMany(
-                        DriverHasStore::className(), ['driverId' => 'id']
+            DriverHasStore::className(), ['driverId' => 'id']
         );
     }
 
@@ -249,9 +267,9 @@ class Driver extends User {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getStores() {
+    public function getStores()
+    {
         return $this->hasMany(Store::className(), ['id' => 'storeId'])
-                        ->via('driverHasStore');
+            ->via('driverHasStore');
     }
-
 }
