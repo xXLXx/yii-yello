@@ -38,3 +38,5 @@
 .popup.store-invite.height-active .button-container{
     margin: 175px 0 0;
 }
+
+.hidden{display:none !important;}
