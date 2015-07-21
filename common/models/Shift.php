@@ -132,6 +132,7 @@ class Shift extends BaseModel
             'updatedAtAsDatetime',
             'storeId',
             'shiftStateId',
+            'shiftState',
             'actualStart' => 'actualStartAsTimestamp',
             'actualStartAsDatetime',
             'actualEnd' => 'actualEndAsTimestamp',
@@ -173,6 +174,17 @@ class Shift extends BaseModel
                     return null;
                 },
             ],
+                        [
+                            ['shiftState'],
+                            'value' => function(Shift $model, $attribute){
+                            if($attribute=='shiftState'){
+                               $shiftState = ShiftState::findOne(['id' => $model->shiftStateId,]);
+                                    if($shiftState instanceof ShiftState){
+                                        return $shiftState->title;
+                                    }
+                                }
+                            }
+                        ],
             [
                 [
                     'start', 'end', 'actualStart', 'actualEnd',
@@ -476,9 +488,15 @@ class Shift extends BaseModel
         if (empty($shiftState)) {
             return [];
         }
+            $date = new \DateTime();
+        //$startDate = date("Y-m-d hh:mm:ss", strtotime(start));
+        
+        
+        
         $searchModel = new ShiftSearch();
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
+        //compare($searchModel->start.'>='.$date);
         $searchModel->driverId = $driverId;
         $searchModel->appliedByDriver = false;
         $searchModel->declinedByStoreOwner = false;
