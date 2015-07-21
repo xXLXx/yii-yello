@@ -38,6 +38,7 @@ use common\helpers\ArrayHelper;
  * @property string $approvedApplicationId
  * @property integer $storeId
  * @property integer $shiftStateId
+ * @property string $shiftStateName
  * @property string $actualStart
  * @property string $actualEnd
  * @property integer $deliveryCount
@@ -108,6 +109,7 @@ class Shift extends BaseModel
             'isAppliedByMe',
             'isAcceptedByStoreOwner',
             'isDeclinedByStoreOwner',
+            'startsAfterNow',
             'shiftRequestReview'
         ];
     }
@@ -132,7 +134,6 @@ class Shift extends BaseModel
             'updatedAtAsDatetime',
             'storeId',
             'shiftStateId',
-            'shiftState',
             'actualStart' => 'actualStartAsTimestamp',
             'actualStartAsDatetime',
             'actualEnd' => 'actualEndAsTimestamp',
@@ -174,17 +175,6 @@ class Shift extends BaseModel
                     return null;
                 },
             ],
-                        [
-                            ['shiftState'],
-                            'value' => function(Shift $model, $attribute){
-                            if($attribute=='shiftState'){
-                               $shiftState = ShiftState::findOne(['id' => $model->shiftStateId,]);
-                                    if($shiftState instanceof ShiftState){
-                                        return $shiftState->title;
-                                    }
-                                }
-                            }
-                        ],
             [
                 [
                     'start', 'end', 'actualStart', 'actualEnd',
@@ -489,14 +479,13 @@ class Shift extends BaseModel
             return [];
         }
             $date = new \DateTime();
-        //$startDate = date("Y-m-d hh:mm:ss", strtotime(start));
-        
+        $startDate = $date->format('Y-m-d H:i:s');
         
         
         $searchModel = new ShiftSearch();
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
-        //compare($searchModel->start.'>='.$date);
+        $searchModel->startsAfterNow = true;
         $searchModel->driverId = $driverId;
         $searchModel->appliedByDriver = false;
         $searchModel->declinedByStoreOwner = false;

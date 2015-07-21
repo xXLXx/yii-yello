@@ -19,6 +19,12 @@ class ShiftSearch extends Shift
      * @var bool
      */
     public $acceptedByStoreOwner;
+    /**
+     * Search shifts after this moment
+     *
+     * @var bool
+     */
+    public $startsAfterNow;
 
     /**
      * Search shifts applied by $driverId driver to
@@ -187,6 +193,15 @@ class ShiftSearch extends Shift
             }
         }
 
+        if (isset($this->startsAfterNow)) {
+           $date = new \DateTime();
+             $startDate = $date->format('Y-m-d H:i:s');
+            $query->andWhere([
+                '>','start',$startDate
+            ]);
+       }
+
+        
         if ($this->shiftStateId) {
             $query->andWhere([
                 'shiftStateId' => $this->shiftStateId,
