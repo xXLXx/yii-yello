@@ -1,16 +1,16 @@
 <?php
 /* @var $this yii\web\View */
 use yii\helpers\Html;
-$this->title = 'Select Role / Yello';
+$this->title = 'Driver Info / Yello';
 ?>
 <div class="login-container-inner">
     <div class="login-popup width-340">
         <div class="select-form">
             <form action="">
-                <h1 class="center"><?= \Yii::t('app', 'Select Role'); ?></h1>
-                <?= Html::a(\Yii::t('app', 'Yello Admin'), ['/site/signup'], ['class' => 'btn blue']); ?>
-                <?= Html::a(\Yii::t('app', 'Store Owner'), ['/site/signup'], ['class' => 'btn blue']); ?>
-                <?= Html::a(\Yii::t('app', 'Franchisers & MA'), ['/site/signup'], ['class' => 'btn blue']); ?>
+                <h2 class="center"><?= \Yii::t('app', 'Driver Website Coming Soon'); ?></h2>
+                <p>Thank you for visiting us. Your exclusive driver's website is on its way. Meanwhile you may like to download the app or subscribe using these buttons.</p>
+                <?= Html::a(\Yii::t('app', 'Yello Website'), ['https://www.driveyello.com/registration/'], ['class' => 'btn blue']); ?>
+                <?= Html::a(\Yii::t('app', 'Download the App'), ['#'], ['class' => 'btn blue']); ?>
             </form>
         </div>
     </div>
