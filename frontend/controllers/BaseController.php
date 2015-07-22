@@ -32,7 +32,7 @@ class BaseController extends Controller
                             }
 
                         }
-                        }
+                    }
                 }            
                     return true;
            } else {
