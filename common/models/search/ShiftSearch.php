@@ -140,14 +140,20 @@ class ShiftSearch extends Shift
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['start'=>SORT_ASC]]            
         ]);
-
+        $dataProvider->sort->attributes['start'] = [
+              // The tables are the ones our relation are configured to
+              // in my case they are prefixed with "tbl_"
+              'asc' => ['start' => SORT_ASC],
+              'desc' => ['start' => SORT_DESC],
+          ];
         $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
-            return $dataProvider;
+            // return $dataProvider;
         }
 
         if (isset($this->declinedByStoreOwner) && !is_null($this->declinedByStoreOwner)) {
