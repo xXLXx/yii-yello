@@ -435,4 +435,58 @@ class User extends BaseModel implements IdentityInterface
     {
         return static::findOne(['User.id' => \Yii::$app->user->identity->getId()]);
     }
-}
+
+    /**
+     * Make sure user info is all there
+     *
+     * @return User|null
+     */
+    public function getSignUpState(){
+        $ca=[];   //controller actions
+        switch ($this->roleId){
+            case 1:// yello super admin
+            case 8: // yello admin
+                // go to settings page
+                
+                return false;
+
+                break;
+            
+            case 2: // Franchiser
+            case 10: // franchiserManager
+            case 11: // franchiserExtendedManager
+                    // make sure franchise info is complete
+                return false;
+
+                break;
+            
+            case 3: // driver
+                // log user out and send them to generic info page
+                Yii::$app->user->logout();
+                return[
+                    ['driver','index'],
+                    ['site','index']
+                ];
+                
+                return false;
+                
+                break;
+            case 4: // manager
+            case 6: // storeOwner
+            case 7: // employee
+                return false;
+                break;
+            case 9: // menu aggregator
+            case 12: // MAmanager
+                return false;
+                break;
+                
+            default:
+                return false;
+        }
+        
+    }
+    
+    
+    
+    }

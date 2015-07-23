@@ -81,7 +81,7 @@ class SiteController extends BaseController
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return \Yii::$app->getResponse()->redirect(['settings/index']);
+                return \Yii::$app->getResponse()->redirect(['settings/index']);
         } 
         return $this->render('login', [
             'model' => $model,
