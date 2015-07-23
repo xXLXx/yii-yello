@@ -128,6 +128,12 @@ class ShiftForm extends Model
      */
     public function validateDriver()
     {
+        if (!count($this->visibleGroup)) {
+            $this->addError(
+                'isMyDrivers', \Yii::t('app', 'No option selected for Driver.')
+            );
+        }
+
         if (!$this->isMyDrivers) {
             return true;
         }
@@ -172,10 +178,13 @@ class ShiftForm extends Model
         $this->isFavourites = false;
         $this->isMyDrivers = false;
         $this->isYelloDrivers = false;
-        foreach($this->visibleGroup as $visibleGroup){
-            //$visibleGroup = $this->visibleGroup;
-            $this->$visibleGroup = true;
+
+        if(isset($this->visibleGroup) && is_array($this->visibleGroup)){
+            foreach($this->visibleGroup as $visibleGroup){
+                $this->$visibleGroup = true;
+            }
         }
+
         return parent::beforeValidate();
     }
     
