@@ -14,6 +14,7 @@ class ShiftForm extends Model
 {
     public $id;
     public $date;
+    public $end_date;
     public $start;
     public $end;
     public $storeId;
@@ -58,18 +59,66 @@ class ShiftForm extends Model
      */
     public function validateDateRange()
     {
-        $startDateTime = \DateTime::createFromFormat('H:i', $this->start);
-        $endDateTime = \DateTime::createFromFormat('H:i', $this->end);
-        $interval = $endDateTime->diff($startDateTime);
-        $hours = $interval->format('%h%');
+        $startMinutes = $this->time_to_minutes($this->start);
+        $endMinutes = $this->time_to_minutes($this->end);
+        $diff = $endMinutes - $startMinutes;
+
+        if($diff < 0){ //check for next day
+            $diff = 1440 + $diff;
+            $this->end_date = date('Y-m-d', strtotime($this->date) + 24*3600);
+        } else {
+            $this->end_date = date('Y-m-d', strtotime($this->date));
+        }
+
+        $hours = $diff / 60;
+
         $minHours = 3;
+        $maxHours = 8;
+
         if ($hours < $minHours) {
             $this->addError(
                 'end', \Yii::t('app', 'Min. duration ' . $minHours . ' hours')
             );
         }
+        if ($hours > $maxHours) {
+            $this->addError(
+                'end', \Yii::t('app', 'Max. duration ' . $maxHours . ' hours')
+            );
+        }
         return false;
     }
+
+    private function time_to_minutes($time){
+
+        $time = explode(':',$time);
+        $minutes = $time[0]*60 + $time[1];
+        return $minutes;
+
+    }
+
+    /*public function validateDateRange()
+    {
+
+        $startDateTime = \DateTime::createFromFormat('H:i', $this->start);
+        $endDateTime = \DateTime::createFromFormat('H:i', $this->end);
+        $interval = $endDateTime->diff($startDateTime);
+        $hours = $interval->format('%h%');
+
+        $minHours = 3;
+        $maxHours = 8;
+
+        if ($hours < $minHours) {
+            $this->addError(
+                'end', \Yii::t('app', 'Min. duration ' . $minHours . ' hours')
+            );
+        }
+        if ($hours > $maxHours) {
+            $this->addError(
+                'end', \Yii::t('app', 'Max. duration ' . $maxHours . ' hours')
+            );
+        }
+        return false;
+    }*/
     
      /**
      * Validate driver
@@ -145,7 +194,7 @@ class ShiftForm extends Model
         $date = \DateTime::createFromFormat('d-m-Y', $this->date);
         $dateFormated = $date->format('Y-m-d');
         $shift->start = $dateFormated . ' ' . $this->start;
-        $shift->end = $dateFormated . ' ' . $this->end;
+        $shift->end = $this->end_date . ' ' . $this->end;
         $shift->save();
         if ($this->driverId) {
             $shift->setStateAllocated($this->driverId);
