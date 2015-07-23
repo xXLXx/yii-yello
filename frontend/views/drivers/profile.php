@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-                        <h4>Achivements</h4>
+                        <h4>Achievements</h4>
                         <div class="achivements-list big-size">
                             <div class="item check"></div>
                         </div>

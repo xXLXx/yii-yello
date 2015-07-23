@@ -63,7 +63,7 @@ class DriverListWidget extends BaseGridView
                 'headerOptions' => ['style'=>'font-weight: 600']
             ],
             [
-                'label' => \Yii::t('app', 'Achivements'),
+                'label' => \Yii::t('app', 'Achievements'),
                 'format' => 'html',
                 'value' => function ($driver) {
                     return $this->render('blocks/achivementsColumn', [

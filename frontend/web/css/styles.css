@@ -574,6 +574,7 @@ a.blue-text {text-decoration:none;}
     .profile-settings .table-block {width:auto;}
     .signature {font-size:9px; color:#3bafda; margin:4px 0 -16px; line-height:11px;}
 .profile-user-photo {padding:22px 0 0 242px;}
+.profile-user-photo.store-profile-user-photo {padding: 66px 0 0 50px;}
     .profile-user-photo .user-photo-container {width:144px; height:144px;}
     .profile-user-photo .user-photo-container.no-photo {border:1px solid #96a0ad; box-sizing:border-box;}
     .profile-user-photo .user-photo-container.no-photo:after {line-height:144px; font-size:144px; margin:17px 0 0;}
