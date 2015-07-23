@@ -18,7 +18,7 @@ $this->registerJs('ImageUploadPreview.init();');
     ]);
 ?>
 <?= Html::activeHiddenInput($model, 'id'); ?>
-    <table class="profile-settings">
+    <table class="profile-settings f-left">
         <tbody>
         <tr>
             <td>
@@ -166,7 +166,7 @@ $this->registerJs('ImageUploadPreview.init();');
         </tr>
         </tbody>
     </table>
-<div class="profile-user-photo" style="">
+<div class="profile-user-photo f-left store-profile-user-photo">
     <div class="user-photo-container">
         <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/temp/07.png' ?>"/>
     </div>
@@ -180,9 +180,10 @@ $this->registerJs('ImageUploadPreview.init();');
         ?>
     </div>
 </div>
+<div class="clearfix"></div>
 <div class="border-top-block">
     <?= Html::a(\Yii::t('app', 'Cancel'), ['your-stores/index'], ['class' => 'btn white'])?>
-    <?php $submitName = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add Store');?>
+    <?php $submitName = $model->id ? \Yii::t('app', 'Save') : \Yii::t('app', 'Add Store');?>
     <?= Html::submitButton($submitName, ['class' => 'btn blue']); ?>
 </div>
 <?php ActiveForm::end(); ?>
