@@ -97,6 +97,7 @@ class ShiftForm extends Model
     }
 
     /*public function validateDateRange()
+    /*public function validateDateRange()
     {
 
         $startDateTime = \DateTime::createFromFormat('H:i', $this->start);
@@ -171,8 +172,10 @@ class ShiftForm extends Model
         $this->isFavourites = false;
         $this->isMyDrivers = false;
         $this->isYelloDrivers = false;
-        $visibleGroup = $this->visibleGroup;
-        $this->$visibleGroup = true;
+        foreach($this->visibleGroup as $visibleGroup){
+            //$visibleGroup = $this->visibleGroup;
+            $this->$visibleGroup = true;
+        }
         return parent::beforeValidate();
     }
     
