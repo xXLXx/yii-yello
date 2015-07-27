@@ -18,7 +18,7 @@ $shiftRequestReviews = $shift->shiftRequestReview;
 <?php endif; ?>
 <div class="border-top-block">
 
-    <div class="bold-text">No. Of completed deliviries: <span class="red-text"><?= $shift->deliveryCount ?></span></div>
+    <div class="bold-text">No. Of completed deliveries: <span class="red-text"><?= $shift->deliveryCount ?></span></div>
     <div class="bold-text">Total payment: $<?= $shift->payment ?></div>
 
     <?php if(!$shiftRequestReviews): ?>
