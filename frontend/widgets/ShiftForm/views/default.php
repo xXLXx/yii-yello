@@ -99,24 +99,24 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
         </div>
         <div class="inline-input-block">
             <label class="bold-text"><?= \Yii::t('app', 'Driver') ?></label>
-            <div class="j_radio_container js-driver-visible-group-container">
+            <div class="j_checkbox_container js-driver-visible-group-container">
                 <div class="checkbox-input">
                     <input class="js-driver-group-radio" 
-                        id="driver-1" name="<?= $model->formName() . '[visibleGroup]' ?>" value="isYelloDrivers"
-                        type="radio" <?php if ($model->isYelloDrivers): ?>checked="checked"<?php endif; ?> >
-                    <label class="j_radio <?php if ($model->isYelloDrivers): ?>active<?php endif; ?>" for="driver-1"><?= \Yii::t('app', 'Yello'); ?></label>
+                        id="driver-1" name="<?= $model->formName() . '[visibleGroup][]' ?>" value="isYelloDrivers"
+                        type="checkbox" <?php if ($model->isYelloDrivers): ?>checked="checked"<?php endif; ?> >
+                    <label class="j_checkbox <?php if ($model->isYelloDrivers): ?>active<?php endif; ?>" for="driver-1"><?= \Yii::t('app', 'Yello'); ?></label>
                 </div>
                 <div class="checkbox-input">
                     <input class="js-driver-group-radio" 
-                        id="driver-2" name="<?= $model->formName() . '[visibleGroup]' ?>" value="isFavourites"
-                        type="radio" <?php if ($model->isFavourites): ?>checked="checked"<?php endif; ?> >
-                    <label class="j_radio <?php if ($model->isFavourites): ?>active<?php endif; ?>" for="driver-2"><?= \Yii::t('app', 'Favourites'); ?></label>
+                        id="driver-2" name="<?= $model->formName() . '[visibleGroup][]' ?>" value="isFavourites"
+                        type="checkbox" <?php if ($model->isFavourites): ?>checked="checked"<?php endif; ?> >
+                    <label class="j_checkbox <?php if ($model->isFavourites): ?>active<?php endif; ?>" for="driver-2"><?= \Yii::t('app', 'Favourites'); ?></label>
                 </div>
                 <div class="checkbox-input">
                     <input class="js-driver-group-radio" 
-                        id="driver-3" name="<?= $model->formName() . '[visibleGroup]' ?>" value="isMyDrivers"
-                        type="radio" <?php if ($model->isMyDrivers): ?>checked="checked"<?php endif; ?> >
-                    <label class="j_radio <?php if ($model->isMyDrivers): ?>active<?php endif; ?>" for="driver-3"><?= \Yii::t('app', 'My Driver(s)'); ?></label>
+                        id="driver-3" name="<?= $model->formName() . '[visibleGroup][]' ?>" value="isMyDrivers"
+                        type="checkbox" <?php if ($model->isMyDrivers): ?>checked="checked"<?php endif; ?> >
+                    <label class="j_checkbox <?php if ($model->isMyDrivers): ?>active<?php endif; ?>" for="driver-3"><?= \Yii::t('app', 'My Driver(s)'); ?></label>
                 </div>
             </div>
         </div>
