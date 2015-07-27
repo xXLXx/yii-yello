@@ -105,7 +105,8 @@ class Shift extends \api\common\models\Shift implements Linkable
         return $this
             ->getShiftHasDrivers()
             ->where([
-                'driverId' => $driver->getId()
+                'driverId' => $driver->getId(),
+                'isArchived' => 0
             ]);
     }
 }
