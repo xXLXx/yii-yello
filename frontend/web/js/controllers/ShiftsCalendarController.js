@@ -2,7 +2,16 @@
  * Controller shifts calendar page
  * 
  * @author markov
+ * @updates pottie
  */
+
+var calendarObject;
+var calendarInterval;
+var begindate=0;
+
+function popCal(){
+    calendarObject.again();
+}
 var ShiftsCalendarController = {
     
     data: {},
@@ -19,19 +28,34 @@ var ShiftsCalendarController = {
             var monthTitle = calendar._data.beginDate.format('MMMM YYYY');
             $('.js-month-title').html(monthTitle);
         };
+        
         var calendar = new Calendar('.calendar-wrapper');
         refreshMonthTitle(calendar);
         $('.font-chevron-left').parent('.item').on('click', function() {
             calendar.prev();
+            calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
         $('.font-chevron-right').parent('.item').on('click', function() {
             calendar.next();
+            calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
+        $('#choosetoday').on('click', function() {
+            calendar.today();
+            calendarObject = calendar;
+            refreshMonthTitle(calendar);
+        });
+
+        
+        
+        //setInterval(function(){ calendar.again(); }, 3000);
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
+            if(begindate==null){
+                begindate=beginDate;
+            }
             $.ajax({
                 type: "POST",
                 url: self.data.sourceUrl,
@@ -69,8 +93,13 @@ var ShiftsCalendarController = {
             calendar.sourceCallbacksCall();
         });
         this.copyWeeklySheetInit();
+        calendarObject = calendar;
+        calendarInterval = setInterval(popCal,2000)
+
     },
-    
+
+   
+
     /**
      * Render state counts
      */

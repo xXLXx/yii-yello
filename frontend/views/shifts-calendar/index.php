@@ -35,7 +35,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
             </div>
             <div class="period-list clearfix">
                 <div class="item"><span class="font-chevron-left"></span></div>
-                <div class="item"><?= \Yii::t('app', 'Today'); ?></div>
+                <div class="item" id="choosetoday"><?= \Yii::t('app', 'Today'); ?></div>
                 <div class="item"><span class="font-chevron-right"></span></div>
             </div>
         </div>

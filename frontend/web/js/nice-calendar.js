@@ -186,6 +186,7 @@ Calendar.prototype.setDateInterval = function(interval) {
 }
 
 Calendar.prototype.next = function() {
+    begindate=begindate+7;
     this._data.beginDate.add(7, 'd');
     this.sourceCallbacksCall();
     this.refresh();
@@ -193,11 +194,27 @@ Calendar.prototype.next = function() {
 };
 
 Calendar.prototype.prev = function() {
+    begindate=begindate-7;
     this._data.beginDate.subtract(7, 'd');
     this.sourceCallbacksCall();
     this.refresh();
     this.render();
 };
+
+Calendar.prototype.again = function(){
+    this.sourceCallbacksCall();
+    this.refresh();
+    this.render();
+}
+
+
+Calendar.prototype.today = function(){
+    this._data.beginDate.subtract(begindate, 'd');
+    begindate=0;
+    this.sourceCallbacksCall();
+    this.refresh();
+    this.render();
+}
 
 Calendar.prototype.onEventClick = function(callback) {
     this._clickCallbacks.push = callback;
