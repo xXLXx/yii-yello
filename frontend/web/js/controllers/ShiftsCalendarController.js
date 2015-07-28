@@ -8,7 +8,14 @@
 var calendarObject;
 var calendarInterval;
 var begindate=0;
+var currentselected=0;
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 function popCal(){
     calendarObject.again();
 }
@@ -22,6 +29,10 @@ var ShiftsCalendarController = {
      * Init
      */
     init: function(data) {
+        var shid = getParameterByName('shiftId');
+        if(shid!==null){
+            currentselected = shid;
+        }
         var self = this;
         this.data = data;
         function refreshMonthTitle(calendar) {
@@ -62,11 +73,13 @@ var ShiftsCalendarController = {
                 data: {
                     start: beginDate.format('YYYY-MM-DD'),
                     end: endDate.format('YYYY-MM-DD'),
-                    storeId: self.data.storeId
+                    storeId: self.data.storeId,
+                    shiftid: currentselected
                 },
                 success: function(result) {
                     self.renderStateCounts(result.events);
                     provide(result.events);
+                    $("#tableitem-"+result.shiftid).addClass('active');
                 },
                 dataType: 'json'
             });
@@ -74,15 +87,16 @@ var ShiftsCalendarController = {
         calendar.onEventClick(function(event) {
             $.pjax({ 
                 url: event.data.url, 
-                container: '#shift-form-widget-pjax' 
+                container: '#shift-form-widget-pjax'
             });
+                currentselected=event.id;
             $('.sidebar-container').removeClass('without-col-left');
         });
         
         $('#shift-add-bth').on('click', function() {
             $.pjax({ 
                 url: $(this).attr('href'), 
-                container: '#shift-form-widget-pjax' 
+                container: '#shift-form-widget-pjax'
             });
             $('.sidebar-container').removeClass('without-col-left');
             return false;
@@ -91,10 +105,11 @@ var ShiftsCalendarController = {
         $('#shift-form-widget-pjax').on('pjax:complete', function() {
             colorBoxInit();
             calendar.sourceCallbacksCall();
+            
         });
         this.copyWeeklySheetInit();
         calendarObject = calendar;
-        calendarInterval = setInterval(popCal,2000)
+        calendarInterval = setInterval(popCal,2000);
 
     },
 

@@ -151,9 +151,24 @@ Calendar.prototype.render = function() {
                 '<% for (var i = 0; i < eventGroups.maxLength; i++) { %>' +
                     '<tr>' +
                         '<% for (var j = 0; j < eventGroups.groups.length; j++) { %>' +
-                            '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) { %>' +
+                            '<% if (eventGroups.groups[j] && eventGroups.groups[j][i] && eventGroups.groups[j][i].id==currentselected )  {%>'+
+                                
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
-                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>">' +
+                                    '<div class="calendar-table-item active <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
+                                        '<a class="calendar-table-cell">' +
+                                            '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
+                                            '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
+                                            '<% if (eventGroups.groups[j][i].applicantsCount) { %>' +
+                                                '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
+                                            '<% } %>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</td>' +
+                            '<% } else { %>' +
+                               '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) {%>'+
+                                
+                                '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
+                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
                                         '<a class="calendar-table-cell">' +
                                             '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
@@ -165,6 +180,7 @@ Calendar.prototype.render = function() {
                                 '</td>' +
                             '<% } else { %>' +
                                 '<td></td>' +
+                            '<% } %>' +
                             '<% } %>' +
                         '<% } %>' +
                     '</tr>' +
@@ -224,6 +240,7 @@ Calendar.prototype.eventClickInit = function() {
     var self = this;
     $('.js-event', this.getContainer()).on('click', function() {
         var eventId = $(this).data('event-id');
+        currentselected=eventId;
         var event = self.getEventById(eventId);
         for (var i in self._clickCallbacks) {
             self._clickCallbacks[i].call(self, event);
