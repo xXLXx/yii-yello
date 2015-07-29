@@ -22,12 +22,16 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
         return $behaviors;
     }
 
+    
+
+    
+    
     /**
      * Change password
      *
      * @return PasswordChangeForm|\common\models\User|null
      */
-    public function actionChangePassword()
+    public function actionChangepassword()
     {
         $form = new PasswordChangeForm();
         if ($form->load(\Yii::$app->request->post()) && $form->validate()) {
@@ -51,12 +55,13 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
      * @param integer $on
      * @return Driver Currently authorized Driver model
      */
-    public function actionSwitchAvailableToWork($on = 0)
+    public function actionAvailable()
     {
+        $on = \Yii::$app->request->post('on');
         $driver = Driver::getCurrent();
         $userDriver = $driver->userDriver;
         $userDriver->updateAttributes([
-            'isAvailableToWork' => (bool) $on,
+            'isAvailableToWork' => (int) $on,
         ]);
         return Driver::getCurrent();
     }
@@ -67,12 +72,13 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
      * @param integer $on
      * @return Driver Currently authorized Driver model
      */
-    public function actionSwitchNotifications($on = 0)
+    public function actionNotifications()
     {
+        $on = \Yii::$app->request->post('on');
         $driver = Driver::getCurrent();
         $userDriver = $driver->userDriver;
         $userDriver->updateAttributes([
-            'isAllowedToReceiveNotifications' => (bool) $on,
+            'isAllowedToReceiveNotifications' => (int) $on,
         ]);
         return Driver::getCurrent();
     }
