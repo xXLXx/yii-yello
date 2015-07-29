@@ -44,7 +44,7 @@ class ShiftForm extends Model
                 ['date', 'start', 'end'], 'required'
             ],
             [
-                ['end'], 'validateDateRange'
+                ['date', 'end'], 'validateDateRange'
             ],
             [
                 ['isMyDrivers'], 'validateDriver'
@@ -59,6 +59,16 @@ class ShiftForm extends Model
      */
     public function validateDateRange()
     {
+
+        $startDateTime = \DateTime::createFromFormat('d-m-Y H:i', $this->date." ".$this->start);
+        $startDateTimestamp = $startDateTime->getTimestamp();
+
+        if($startDateTimestamp < time()){
+            $this->addError(
+                'date', \Yii::t('app', 'Shifts can only be created in the future')
+            );
+        }
+
         $startMinutes = $this->time_to_minutes($this->start);
         $endMinutes = $this->time_to_minutes($this->end);
         $diff = $endMinutes - $startMinutes;

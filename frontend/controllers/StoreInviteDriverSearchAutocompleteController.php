@@ -20,6 +20,11 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
     {
         $searchText = \Yii::$app->request->post('searchText');
         $user = \Yii::$app->user->identity;
+        //print_r($user->storeOwner);
+        //var_dump($user->storeOwner->storeCurrent->id);
+        if(!isset($user->storeOwner->storeCurrent->id)){
+            return "Please create store first.";
+        }
         $storeId = $user->storeOwner->storeCurrent->id;
         $ids = DriverHasStore::find()
             ->select('driverId')

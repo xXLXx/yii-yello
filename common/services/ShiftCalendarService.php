@@ -27,10 +27,13 @@ class ShiftCalendarService extends BaseService
             ->andWhere(['>=', 'start', $data['start']])
             ->andWhere(['<=', 'end', $data['end']])
             ->andWhere(['storeId' => $data['storeId']])
+            ->orderBy(['start' => 'asc'])
             ->all();
         $pendingState = ShiftState::findOne([
             'name' => ShiftState::STATE_PENDING
         ]);
+        //$shiftId = \Yii::$app->request->get('shiftId');
+
         foreach ($shifts as $shift) {
             $startDateTime = 
                 \DateTime::createFromFormat('Y-m-d H:i:s', $shift->start);
@@ -40,6 +43,10 @@ class ShiftCalendarService extends BaseService
             if ($shift->shiftStateId == $pendingState->id) {
                 $applicantsCount = count($shift->applicants);
             }
+
+            $active = "";
+            //$active = ($shift->id == $shiftId) ? " active" : "";
+
             $result[] = [
                 'date'  => $startDateTime->format('Y-m-d'),
                 'begin' => $startDateTime->format('H:i'),
@@ -52,7 +59,7 @@ class ShiftCalendarService extends BaseService
                         'shiftId' => $shift->id
                     ]),
                     'shiftStateId' => $shift->shiftStateId,
-                    'color' => $shift->shiftState->color
+                    'color' => $shift->shiftState->color . $active
                 ],
                 'applicantsCount' => $applicantsCount
             ];

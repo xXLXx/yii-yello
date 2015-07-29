@@ -10,6 +10,7 @@ function Calendar(container) {
     this._events = [];
     this._data.beginDate = moment().day("Monday");
     this._data.currentDate = moment();
+    this._data.selectedId = "";
     this.refresh();
     this.render();
 };
@@ -26,7 +27,16 @@ Calendar.prototype.getEventById = function(id) {
 Calendar.prototype.refresh = function() {
     this._data.days = this.getDays();
     this._data.eventGroups = this.eventGroups();
+    this._data.shiftId = get_shift_id_url();
 };
+
+function get_shift_id_url() {
+    var data = window.location.href.match(/shiftId=([^&]+)/);
+    if (data) {
+        return data[1];
+    }
+    return 0;
+}
 
 Calendar.prototype.getDays = function() {
     var days = [
@@ -153,7 +163,7 @@ Calendar.prototype.render = function() {
                         '<% for (var j = 0; j < eventGroups.groups.length; j++) { %>' +
                             '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) { %>' +
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
-                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>">' +
+                                    '<div class="calendar-table-item <% if (eventGroups.groups[j][i].id == shiftId) { %> active<% } %> <%=  eventGroups.groups[j][i].data.color %>">' +
                                         '<a class="calendar-table-cell">' +
                                             '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
@@ -206,6 +216,10 @@ Calendar.prototype.onEventClick = function(callback) {
 Calendar.prototype.eventClickInit = function() {
     var self = this;
     $('.js-event', this.getContainer()).on('click', function() {
+
+        $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
+        $(this).find('.calendar-table-item').addClass('active');
+
         var eventId = $(this).data('event-id');
         var event = self.getEventById(eventId);
         for (var i in self._clickCallbacks) {
