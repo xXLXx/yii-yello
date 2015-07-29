@@ -13,12 +13,20 @@ use yii\helpers\Json;
  */
 class DriverController extends BaseController
 {
+    public function actionIndex(){
+        $this->layout='simple';
+        return $this->render('index');
+    }
+
+
+
+
     /**
      * Form for invitation driver to the store
      */
     public function actionInviteForm()
     {
-        return $this->renderPartial('inviteForm');
+        return $this->render('inviteForm');
     }
 
     public function actionInviteSearch()

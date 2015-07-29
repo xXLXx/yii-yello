@@ -44,8 +44,14 @@ class ShiftCalendarService extends BaseService
                 $applicantsCount = count($shift->applicants);
             }
 
+
             $active = "";
             //$active = ($shift->id == $shiftId) ? " active" : "";
+
+
+            $now=  new \DateTime;
+            if($startDateTime<$now && $shift->shiftStateId == $pendingState->id ){
+            }else{
 
             $result[] = [
                 'date'  => $startDateTime->format('Y-m-d'),
@@ -63,6 +69,7 @@ class ShiftCalendarService extends BaseService
                 ],
                 'applicantsCount' => $applicantsCount
             ];
+            }
         }
         return $result;
     }

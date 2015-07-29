@@ -17,7 +17,10 @@
                     onSelect: function ( date, picker ) {
 
                         dateWidget.changeDateLabel(date);
+                        
+//                        setInterval('dateWidget.getShiftsForDate('+date+')',2000);
                         dateWidget.getShiftsForDate(date);
+                    
                     }
                 });
                 dateWidget.$block.find('#bt-prev-date').click({delta: -1}, dateWidget.dateRewind);
@@ -37,7 +40,7 @@
                 dateWidget.getShiftsForDate(date);
             },
             getShiftsForDate: function ( date ) {
-
+                alert('ba');
                 searchWidget.$input.val('');
 
                 $.ajax('/shift-list/list', {
@@ -104,7 +107,6 @@
                 searchWidget.$shiftsList = $('#shifts-list');
             },
             driverNameFilter: function () {
-
                 var filterString = searchWidget.$input.val().toLowerCase();
 
                 searchWidget.$shiftsList.find('.shift-item').each(function () {

@@ -82,7 +82,8 @@ class ShiftsCalendarController extends BaseController
             'storeId'   => $post['storeId']
         ]);
         return Json::encode([
-            'events' => $events
+            'events' => $events,
+            'shiftid' => $post['shiftid']
         ]);
     }
 }
