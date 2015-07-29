@@ -23,7 +23,7 @@ class SiteController extends BaseController
     /**
      * @inheritdoc
      */
-    public $layout = 'Simple';
+    public $layout = 'bootstrapsimple';
 
     /**
      * @inheritdoc

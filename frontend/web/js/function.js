@@ -111,9 +111,21 @@ $(document).ready(function() {
         $(".j_scrollpane").jScrollPane();
     }
 
-    $(document).ready(
         $('#request-password-reset-form').on('beforeSubmit', function(event, jqXHR, settings) {
             var form = $(this);
+
+                    $(".disableme").each(function () {
+                        var msg = "Loading...";
+                        if (typeof $(this).data("disabledmsg") != 'undefined') {
+                            msg = $(this).data("disabledmsg");
+                        }
+                        if (this.tagName=="SUBMIT") {
+                                $(this).disableSubmit({ text: msg });
+                        } else {
+                            $(this).disableButton({ text: msg });
+                        }
+                    });                    
+            
             $.ajax({
                 url: form.attr('action'),
                 type: 'post',
@@ -122,16 +134,31 @@ $(document).ready(function() {
                     if (data.status === 'ok') {
                         $('.j_reset_item').toggle();
                     } else if (data.status === 'error') {
+                            $(".disableme").each(function () {
+                                if (this.tagName=="SUBMIT") {
+                                        $(this).enableSubmit({msg:'foo'});
+                                } else {
+                                    $(this).enableButton({msg:'foo'});
+                                }
+                            });
                         var error = data.message.email[0];
                         form.find('.error-message').text(error);
                     } else {
                         form.find('.error-message').text('Unknown error. Contact admin please.');
+                            $(" .disableme").each(function () {
+                                if (this.tagName=="SUBMIT") {
+                                        $(this).enableSubmit();
+                                } else {
+                                    $(this).enableButton();
+                                }
+                            });
                     }
                 }
+
             });
             return false;
         })
-    );
+
 });
 
 function Placeholder(container){

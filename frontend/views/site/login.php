@@ -49,8 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <?=
             Html::submitButton(\Yii::t('app', 'Sign In'), [
-                'class' => 'btn blue uppercase',
-                'name' => 'login-button'
+                'class' => 'btn blue uppercase disableme',
+                'name' => 'login-button',
+                'data-disabledmsg' => 'Validating...'
             ]);
             ?>
             <div class="center">

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::error($model, 'email', ['class' => 'help-block help-block-error error-message']) ?>
                     <div class="button-container clearfix">
                         <a href="<?= Url::home() ?>" class="btn f-left">Cancel</a>
-                        <?= Html::submitButton('Reset', ['class' => 'btn blue f-right', 'id' => 'resetPassword']) ?>
+                        <?= Html::submitButton('Reset', ['class' => 'btn blue f-right disableme', 'id' => 'resetPassword', 'data-disabledmsg'=>'Processing...', 'data-enabledval'=>'Reset']) ?>
                     </div>
                 </div>
 

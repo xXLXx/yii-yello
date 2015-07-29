@@ -418,6 +418,11 @@ a.blue-text {text-decoration:none;}
 * html .jspCorner {margin: 0 -3px 0 0;}
 
 
+/* Bootstrap simple page layout */
+    .masthead {position:absolute; z-index:1; top:21px; left:42px; height:60px; width:60px; line-height:58px; font-size:11px;}
+
+
+
 /* Login page */
 .login-block {position:absolute; top:0; bottom:0; left:0; right:0; background:#182837;}
     .login-block .logo {position:absolute; z-index:1; top:21px; left:42px; height:60px; width:60px; line-height:58px; font-size:11px;}

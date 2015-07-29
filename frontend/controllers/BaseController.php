@@ -7,7 +7,7 @@ use yii\web\Controller;
 /**
  * Base controller
  *
- * @author markov
+ * @author pottie
  */
 class BaseController extends Controller 
 {
@@ -34,7 +34,6 @@ class BaseController extends Controller
                             if($go){
                                 return \Yii::$app->getResponse()->redirect([$goto]);
                             }
-
                         }
                     }
                 }            

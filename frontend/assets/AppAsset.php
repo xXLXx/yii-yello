@@ -21,7 +21,8 @@ class AppAsset extends AssetBundle
         'css/font-style.css',
         'css/styles.css',
         'css/colorbox.css',
-        'css/main.css'
+        'css/main.css',
+        'css/vanilla.css'
     ];
     public $js = [
         'js/cusel-2.5.js',
@@ -35,7 +36,8 @@ class AppAsset extends AssetBundle
         'js/jquery.jscrollpane.min.js',
         'js/helpers/WaitHelper.js',
         'js/jquery.colorbox-min.js',
-        'js/ImageUploadPreview.js'
+        'js/ImageUploadPreview.js',
+        'js/vanilla.js'
     ];
     public $depends = [
         'yii\web\YiiAsset'
