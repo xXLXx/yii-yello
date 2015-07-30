@@ -23,6 +23,9 @@ class CompanyDetailsController extends BaseController
                 $companyForm->save();
             }
         } else {
+            // TODO: change code to get info rom new tables:
+            // 
+            
             $user = \Yii::$app->user->identity;
             $companyForm->setData($user->storeOwner);
         }

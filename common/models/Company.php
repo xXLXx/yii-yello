@@ -8,28 +8,22 @@ use Yii;
  * This is the model class for table "Company".
  *
  * @property integer $id
+ * @property integer $companyType
+ * @property integer $userfk
+ * @property integer $registeredForGST
  * @property string $accountName
  * @property string $companyName
- * @property string $address1
- * @property string $address2
- * @property string $postcode
- * @property integer $suburb
- * @property integer $stateId
- * @property string $contactPerson
- * @property string $phone
- * @property string $website
  * @property string $ABN
+ * @property string $website
  * @property integer $imageId
  * @property string $email
- * @property integer $country
+ * @property integer $createdAt
+ * @property integer $updatedAt
+ * @property integer $isArchived
  * @property integer $timeFormatId
- * @property integer $timeZoneId
- * @property integer $currencyId
- * 
- * @property Store[] $stores stores
- * @property Image $image logo image
+ * @property integer $isPrimary
  */
-class Company extends \common\models\BaseModel
+class Company extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -44,30 +38,12 @@ class Company extends \common\models\BaseModel
      */
     public function rules()
     {
-        $rules = [
-            [['stateId', 'timeZoneId', 'timeFormatId', 'currencyId', 'imageId'], 'integer'],
-            [['contactPerson'], 'string'],
-            [['companyName', 'suburb', 'postcode', 'address1', 'address2', 
-                'accountName', 'phone', 'website', 'ABN', 'email'],
-                'string', 'max' => 255]
+        return [
+            [['companyType', 'userfk', 'registeredForGST', 'imageId', 'createdAt', 'updatedAt', 'isArchived', 'timeFormatId', 'isPrimary'], 'integer'],
+            [['createdAt', 'updatedAt'], 'required'],
+            [['accountName', 'companyName', 'ABN', 'website'], 'string', 'max' => 255],
+            [['email'], 'string', 'max' => 400]
         ];
-        return array_merge(parent::rules(), $rules);
-    }
-    
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStores()
-    {
-        return $this->hasMany(Store::className(), ['companyId' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getImage()
-    {
-        return $this->hasOne(Image::className(), ['id' => 'imageId']);
     }
 
     /**
@@ -75,20 +51,21 @@ class Company extends \common\models\BaseModel
      */
     public function attributeLabels()
     {
-        $labels = [
+        return [
             'id' => Yii::t('app', 'ID'),
+            'companyType' => Yii::t('app', 'Company Type'),
+            'userfk' => Yii::t('app', 'Userfk'),
+            'registeredForGST' => Yii::t('app', 'Registered For Gst'),
+            'accountName' => Yii::t('app', 'Account Name'),
             'companyName' => Yii::t('app', 'Company Name'),
-            'address1' => Yii::t('app', 'Address1'),
-            'address2' => Yii::t('app', 'Address2'),
-            'suburb' => Yii::t('app', 'Suburb'),
-            'stateId' => Yii::t('app', 'State ID'),
-            'contactPerson' => Yii::t('app', 'Contact Person'),
-            'phone' => Yii::t('app', 'Phone'),
-            'website' => Yii::t('app', 'Website'),
             'ABN' => Yii::t('app', 'Abn'),
+            'website' => Yii::t('app', 'Website'),
             'imageId' => Yii::t('app', 'Image ID'),
             'email' => Yii::t('app', 'Email'),
+            'createdAt' => Yii::t('app', 'Created At'),
+            'updatedAt' => Yii::t('app', 'Updated At'),
+            'isArchived' => Yii::t('app', 'Is Archived'),
+            'timeFormatId' => Yii::t('app', 'Time Format ID'),
         ];
-        return array_merge(parent::attributeLabels(), $labels);
     }
 }

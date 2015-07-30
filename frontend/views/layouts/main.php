@@ -75,7 +75,6 @@ AppAsset::register($this);
         </div>
     <?php $this->endBody() ?>
 </body>
-
 <script language="javascript" type="text/javascript">
 
     function popdatetime() {
