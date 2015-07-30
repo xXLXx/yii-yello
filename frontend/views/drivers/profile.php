@@ -121,8 +121,8 @@
                             <h2 class="h1"><?= $completedShiftCount ?></h2>
                         </div>
                         <div class="table-cell-item">
-                            <h4>Drivers</h4>
-                            <h2 class="h1"><?= $driversCount ?></h2>
+                            <h4>Deliveries</h4>
+                            <h2 class="h1"><?php echo $deliveriesCount ?></h2>
                         </div>
                     </div>
                 </div>

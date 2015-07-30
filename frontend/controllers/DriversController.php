@@ -85,13 +85,21 @@ class DriversController extends BaseController
             return false;
         }
         $completedShiftState = ShiftState::findOne(['name' => ShiftState::STATE_COMPLETED]);
-        $completedShift= Shift::findAll(['shiftStateId' => $completedShiftState->id]);
-        $driversCount = Driver::find()->count();
+        $completedShift = Shift::findAll(['shiftStateId' => $completedShiftState->id]);
+        $shiftData = Shift::find()
+            ->where(['shiftStateId' => $completedShiftState->id])
+            ->andWhere(['driverId' => $id])
+            ->select(['Shift.id, sum(deliveryCount) as deliveriesCount', 'count(Shift.id) as completedShift'])
+            ->leftJoin('shifthasdriver as shiftHasDriver', 'Shift.id=shiftHasDriver.shiftId')
+            ->asArray()
+            ->one();
+
+        //$deliveriesCount = 10;
         $reviews = ShiftRequestReview::find()->all();
         return $this->render('profile', [
             'driver' => $driver,
-            'completedShiftCount' => count($completedShift),
-            'driversCount' => $driversCount,
+            'completedShiftCount' => $shiftData['completedShift'],
+            'deliveriesCount' => $shiftData['deliveriesCount'] ?: 0,
             'reviews' => $reviews
         ]);
 
