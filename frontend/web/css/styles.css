@@ -46,18 +46,26 @@ p {padding:0; margin:0 0 16px;}
     .color-list li.bold {font-weight:600; padding:0; color:#000;}
         .color-list li:after {content:""; position:absolute; top:3px; left:0; width:11px; height:11px; border-radius:11px; background:#e4e7ea; border:1px solid #cfd2d5;}
         .color-list li.red:after {background:#ff7c7c; border-color:#ea4f4f;}
-        .color-list li.green:after {background:#bdd071; border-color:#9bab5f;}
+        .color-list li.orange:after {background:#ffb97c; border-color:#f19747;}
         .color-list li.yellow:after {background:#f8cf1c; border-color:#f5a929;}
+        .color-list li.lime:after {background:#acff7c; border-color:#84f147;}
+        .color-list li.green:after {background:#7cffc2; border-color:#47f1a3;}
+        .color-list li.aqua:after {background:#7cfffd; border-color:#4feae8;}
         .color-list li.blue:after {background:#3bafda; border-color:#2b8fb4;}
-        .color-list li.violet:after {background:#ebd9fb; border-color:#a139fe;}
+        .color-list li.violet:after {background:#c47cff; border-color:#a547f1;}
+        .color-list li.pink:after {background:#ff7cd3; border-color:#ea4fb6;}
         .color-list li.bold:after {display:none;}
     .color-list.inline-list li {display:inline-block; vertical-align:top; margin-right:15px; padding-left:16px;}
     .color-list.inline-list li.bold {padding:0;}
         .color-list.inline-list li:after {top:6px; width:7px; height:7px; border-radius:7px; background:#f3f3f3; border-color:#b0b0b0;}
         .color-list.inline-list li.red:after {background:#ffdada; border-color:#ff1717;}
-        .color-list.inline-list li.green:after {background:#b8e986; border-color:#65ad11;}
+        .color-list.inline-list li.green:after {background:#daffed; border-color:#17ff92;}
+        .color-list.inline-list li.lime:after {background:#e9ffda; border-color:#6cff17;}
+        .color-list.inline-list li.pink:after {background:#ffdaf3; border-color:#ff17b1;}
+        .color-list.inline-list li.aqua:after {background:#dafffe; border-color:#17fffb;}
         .color-list.inline-list li.yellow:after {background:#fff7d3; border-color:#f6ae36;}
-        .color-list li.violet:after {background:#ebd9fb; border-color:#a139fe;}
+        .color-list.inline-list li.orange:after {background:#ffeada; border-color:#ff8217;}
+        .color-list li.violet:after {background:#eddaff; border-color:#9717ff;}
         .color-list.inline-list li.blue:after {background:#d2e7ff; border-color:#4271a8;}
 
 .center {text-align:center;}
@@ -823,32 +831,81 @@ a.blue-text {text-decoration:none;}
         .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;}
             .calendar-table-cell {display:table-cell; vertical-align:middle; border:none; border-left:3px solid #a9a9a9; position:relative; min-width:60px; text-decoration:none; color:#000;}
                 .calendar-table-cell .bold-text {word-break:break-all; display:block;}
+                
+                
         .calendar-table-item.red {background:#ffdada;}
             .red .calendar-table-cell {border-color:#ff7d6a; color:#ff0000;}
-        .calendar-table-item.yellow {background:#fff7d3;}
+            
+        .calendar-table-item.orange {background:#fff7d3;}
+            .orange .calendar-table-cell {border-color:#f5a623; color:#f5a623;}
+        
+            
+            .calendar-table-item.yellow {background:#fff7d3;}
             .yellow .calendar-table-cell {border-color:#f5a623; color:#f5a623;}
-        .calendar-table-item.green {background:#b8e986;}
+        
+            
+            .calendar-table-item.lime {background:#b8e986;}
+            .lime .calendar-table-cell {border-color:#59a600; color:#59a600;}
+        
+            
+            .calendar-table-item.green {background:#dff9e5;}
             .green .calendar-table-cell {border-color:#59a600; color:#59a600;}
-        .calendar-table-item.blue {background:#d2e7ff;}
+        
+            
+            .calendar-table-item.aqua {background:#17fffb;}
+            .aqua .calendar-table-cell {border-color:#17fffb; color:#000;}
+        
+            
+            .calendar-table-item.blue {background:#d2e7ff;}
             .blue .calendar-table-cell {border-color:#30639f; color:#30639f;}
-        .calendar-table-item.violet {background:#edd8ff;}
+        
+            .calendar-table-item.violet {background:#edd8ff;}
             .violet .calendar-table-cell {border-color:#b378e5; color:#b277eb;}
+        
+            .calendar-table-item.pink {background:#ff17b1;}
+            .pink .calendar-table-cell {border-color:#ff17b1; color:fff;}
+            
+            
             .cell-count {position:absolute; top:6px; left:-9px; color:#fff; font-size:10px; line-height:18px; padding:0 6px; border-radius:8px; background:#ff3d3d;}
-        .calendar-table-item.white {background:#fff;}
+
+            .calendar-table-item.white {background:#fff;}
             .white .calendar-table-cell {border-left:none;}
+            
+            
         .calendar-table-item.active {background:#a9a9a9;}
             .active .calendar-table-cell {color:#fff; border-color:#a9a9a9;}
-        .calendar-table-item.active.yellow {background:#f5a623;}
-            .active.yellow .calendar-table-cell {border-color:#f5a623;}
+        
         .calendar-table-item.active.red {background:#ff7d6a;}
             .active.red .calendar-table-cell {border-color:#ff7d6a;}
+
+        .calendar-table-item.active.orange {background:#ff8217;}
+            .active.orange .calendar-table-cell {border-color:#ff8217;}
+
+            .calendar-table-item.active.yellow {background:#f5a623;}
+            .active.yellow .calendar-table-cell {border-color:#f5a623;}
+            
+        .calendar-table-item.active.lime {background:#6cff17;}
+            .active.lime .calendar-table-cell {color:#000;border-color:#6cff17;}
+
         .calendar-table-item.active.green {background:#59a600;}
             .active.green .calendar-table-cell {border-color:#59a600;}
-        .calendar-table-item.active.violet {background:#b277e5;}
-            .active.violet .calendar-table-cell {border-color:#b277e5;}
-        .calendar-table-item.active.blue {background:#30639f;}
+            
+        .calendar-table-item.active.aqua {background:#ff7d6a;}
+            .active.aqua .calendar-table-cell {border-color:#ff7d6a;}
+
+            .calendar-table-item.active.blue {background:#30639f;}
             .active.blue .calendar-table-cell {border-color:#30639f;}
-.inline-input-block {margin:9px 0 0;}
+
+
+            .calendar-table-item.active.violet {background:#b277e5;}
+            .active.violet .calendar-table-cell {border-color:#b277e5;}
+        
+            .calendar-table-item.active.pink {background:#b277e5;}
+            .active.pink .calendar-table-cell {border-color:#b277e5;}
+        
+
+            
+            .inline-input-block {margin:9px 0 0;}
     .inline-input-block .bold-text {margin:0 0 7px; display:block;}
     .inline-input-block .checkbox-input,
     .inline-input-block .radio-input {margin:0 10px 10px 0; display:inline-block; vertical-align:top;}
@@ -1106,6 +1163,18 @@ a.blue-text {text-decoration:none;}
 }
 .state.blue {
   color: #30639f;
+}
+.state.aqua {
+  color: #0bae8d;
+}
+.state.orange {
+  color: #a8860f;
+}
+.state.lime {
+  color: #2fef09;
+}
+.state.pink {
+  color: #ef09e2;
 }
 .float-right {
   text-align: right;
