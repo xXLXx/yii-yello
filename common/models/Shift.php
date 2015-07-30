@@ -456,6 +456,7 @@ class Shift extends BaseModel
         $shiftState = ShiftState::findOne(['name' => ShiftState::STATE_PENDING]);
         $searchModel = new ShiftSearch();
         $searchModel->driverId = $driverId;
+        $searchModel->startsAfterNow = true;
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
         $searchModel->appliedByDriver = true;
@@ -485,7 +486,7 @@ class Shift extends BaseModel
         $searchModel = new ShiftSearch();
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
-        $searchModel->startsAfterNow = true;
+       $searchModel->startsAfterNow = true;
         $searchModel->driverId = $driverId;
         $searchModel->appliedByDriver = false;
         $searchModel->declinedByStoreOwner = false;

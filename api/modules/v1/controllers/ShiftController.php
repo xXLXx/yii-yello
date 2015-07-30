@@ -183,8 +183,9 @@ class ShiftController extends \api\common\controllers\ShiftController
      * @param integer $id Shift Id
      * @return Shift
      */
-    public function actionAcceptRequestReview($id)
+    public function actionAcceptRequestReview()
     {
+        $id = \Yii::$app->request->post('id', 0);
         $shift = $this->findModel($id);
         $shift->setStatePendingPayment();
         return $shift;

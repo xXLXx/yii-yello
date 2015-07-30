@@ -26,7 +26,7 @@ class DriverController extends BaseController
      */
     public function actionInviteForm()
     {
-        return $this->renderPartial('inviteForm');
+        return $this->render('inviteForm');
     }
 
     public function actionInviteSearch()

@@ -28,7 +28,7 @@ ShiftListAsset::register($this);
                 <div class="period-list clearfix">
                     <div class="item" id="bt-prev-date"><span class="font-chevron-left"></span></div>
                     <div class="item" id="date-label">Today</div>
-                    <div class="item" id="bt-next-date"><span class="font-chevron-right"></span></div>
+                    <div class="item" id="bt-next-date"><span class="font-chevron-right js_roster_next"></span></div>
                 </div>
 
             </div>

@@ -7,8 +7,13 @@ use yii\helpers\Url;
 <div class="driver-info border-bottom clearfix">
     <?= $this->render('//blocks//driverInfoPanelBlock', ['driver' => $driver]); ?>
     <div class="user-panel-button">
-        <span class="font-star-two"></span>
+        <span class="font-star-two
+        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+            hidden
+        <?php endif; ?>
+            "></span>
     </div>
+
     <div class="user-photo-info">
         <div class="user-photo-info-inner">
             <?= $this->render('//blocks//userPhotoInfoBlock', ['driver' => $driver]); ?>

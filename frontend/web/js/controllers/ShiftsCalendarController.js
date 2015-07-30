@@ -2,7 +2,23 @@
  * Controller shifts calendar page
  * 
  * @author markov
+ * @updates pottie
  */
+
+var calendarObject;
+var calendarInterval;
+var begindate=0;
+var currentselected=0;
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+function popCal(){
+    calendarObject.again();
+}
 var ShiftsCalendarController = {
     
     data: {},
@@ -13,36 +29,57 @@ var ShiftsCalendarController = {
      * Init
      */
     init: function(data) {
+        var shid = getParameterByName('shiftId');
+        if(shid!==null){
+            currentselected = shid;
+        }
         var self = this;
         this.data = data;
         function refreshMonthTitle(calendar) {
             var monthTitle = calendar._data.beginDate.format('MMMM YYYY');
             $('.js-month-title').html(monthTitle);
         };
+        
         var calendar = new Calendar('.calendar-wrapper');
         refreshMonthTitle(calendar);
         $('.font-chevron-left').parent('.item').on('click', function() {
             calendar.prev();
+            calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
         $('.font-chevron-right').parent('.item').on('click', function() {
             calendar.next();
+            calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
+        $('#choosetoday').on('click', function() {
+            calendar.today();
+            calendarObject = calendar;
+            refreshMonthTitle(calendar);
+        });
+
+        
+        
+        //setInterval(function(){ calendar.again(); }, 3000);
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
+            if(begindate==null){
+                begindate=beginDate;
+            }
             $.ajax({
                 type: "POST",
                 url: self.data.sourceUrl,
                 data: {
                     start: beginDate.format('YYYY-MM-DD'),
                     end: endDate.format('YYYY-MM-DD'),
-                    storeId: self.data.storeId
+                    storeId: self.data.storeId,
+                    shiftid: currentselected
                 },
                 success: function(result) {
                     self.renderStateCounts(result.events);
                     provide(result.events);
+                    $("#tableitem-"+result.shiftid).addClass('active');
                 },
                 dataType: 'json'
             });
@@ -50,15 +87,16 @@ var ShiftsCalendarController = {
         calendar.onEventClick(function(event) {
             $.pjax({ 
                 url: event.data.url, 
-                container: '#shift-form-widget-pjax' 
+                container: '#shift-form-widget-pjax'
             });
+                currentselected=event.id;
             $('.sidebar-container').removeClass('without-col-left');
         });
         
         $('#shift-add-bth').on('click', function() {
             $.pjax({ 
                 url: $(this).attr('href'), 
-                container: '#shift-form-widget-pjax' 
+                container: '#shift-form-widget-pjax'
             });
             $('.sidebar-container').removeClass('without-col-left');
             return false;
@@ -67,10 +105,16 @@ var ShiftsCalendarController = {
         $('#shift-form-widget-pjax').on('pjax:complete', function() {
             colorBoxInit();
             calendar.sourceCallbacksCall();
+            
         });
         this.copyWeeklySheetInit();
+        calendarObject = calendar;
+        calendarInterval = setInterval(popCal,2000);
+
     },
-    
+
+   
+
     /**
      * Render state counts
      */
@@ -105,7 +149,12 @@ var ShiftsCalendarController = {
                     start: self.current.beginDate.format('YYYY-MM-DD'),
                     end: self.current.endDate.format('YYYY-MM-DD')
                 },
-                url: self.data.copyWeeklySheetUrl
+                url: self.data.copyWeeklySheetUrl,
+                success: function(result) {
+                    //if(result == "success"){
+                        $('.js_roster_next').click();
+                    //}
+                }
             });
             
         });
