@@ -17,20 +17,25 @@ use common\models\StoreOwner;
  */
 class CompanyForm extends Model
 {
+    public $id;
     public $accountName;
     public $companyName;
-    public $email;
-    public $address1;
-    public $address2;
-    public $suburb;
-    public $countryId;
-    public $stateId;
-    public $postcode;
-    public $phone;
-    public $timeZoneId;
-    public $timeFormatId;
-    public $currencyId;
-    public $id;
+    public $abn;
+    
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    public $website;
+    
+    
+    public $block_or_unit;
+    public $street_number;
+    public $route;
+    public $locality;
+    public $administrative_area_level_1;
+    public $postal_code;
+    public $country;
+    public $formatted_address;
 
     /**
      * @inheritdoc
@@ -38,11 +43,26 @@ class CompanyForm extends Model
     public function rules() 
     {
         return [
-            [['id', 'currencyId', 'timeZoneId', 'timeFormatId', 'stateId', 'countryId'], 'integer'],
-            [['email'], 'email'],
-            [['accountName', 'companyName', 'address1', 'address2', 'suburb', 'postcode', 'phone'], 'string'],
+            [['id'], 'integer'],
+            [['contact_email'], 'email'],
+            [['accountName', 'companyName', 'abn', 'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1','postal_code','country'], 'string'],
         ];
     }
+
+    
+    public function attributeLabels()
+    {
+        $labels = [
+            'street_number' => '',
+            'route' => '',
+            'administrative_area_level_1'=> \Yii::t('app', 'State'),
+            'postal_code'=> \Yii::t('app', 'Postcode'),
+            'locality'=> \Yii::t('app', 'Suburb')
+            
+        ];
+        return array_merge(parent::attributeLabels(), $labels);
+    }    
+    
     
     /**
      * Set data from StoreOwner
