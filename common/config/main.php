@@ -69,7 +69,7 @@ return [
             ),
         ),
         'authManager' => [
-            'class'          => 'yii\rbac\PhpManager',
+            'class'          => 'yii\rbac\DbManager',
             'defaultRoles' => [
                 Role::ROLE_EMPLOYEE,
                 Role::ROLE_DRIVER,
@@ -80,9 +80,6 @@ return [
                 Role::ROLE_USER,
                 Role::ROLE_YELLO_ADMIN
             ],
-            'itemFile'       => '@common/rbac/items.php',
-            'assignmentFile' => '@common/rbac/assignments.php',
-            'ruleFile'       => '@common/rbac/rules.php'
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -103,7 +100,11 @@ return [
         ],
         'activity' => [
             'class' => 'common\components\Activity'
-        ]
+        ],
+        'user' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+        ],
     ],
     'controllerMap' => [
         'fixture' => [
