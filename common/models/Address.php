@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "address".
@@ -23,11 +24,10 @@ use Yii;
  * @property integer $updatedUTC
  * @property integer $geolocated
  * @property integer $isarchived
- * @property integer $timezonefk
  *
- * @property Companyaddress[] $companyaddresses
+ * @property CompanyAddress[] $companyAddresses
  */
-class Address extends \yii\db\ActiveRecord
+class Address extends BaseModel
 {
     /**
      * @inheritdoc
@@ -43,7 +43,7 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['countryfk', 'createdUTC', 'updatedUTC', 'geolocated', 'isarchived', 'timezonefk'], 'integer'],
+            [['countryfk', 'createdUTC', 'updatedUTC', 'geolocated', 'isarchived'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['block_or_unit', 'locality', 'administrative_area_level_1'], 'string', 'max' => 250],
             [['street_number'], 'string', 'max' => 45],
@@ -76,15 +76,31 @@ class Address extends \yii\db\ActiveRecord
             'updatedUTC' => Yii::t('app', 'Updated Utc'),
             'geolocated' => Yii::t('app', 'Geolocated'),
             'isarchived' => Yii::t('app', 'Isarchived'),
-            'timezonefk' => Yii::t('app', 'Timezonefk'),
         ];
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['createdUTC', 'updatedUTC'],
+                    self::EVENT_BEFORE_UPDATE => ['updatedUTC'],
+                ],
+            ]
+        ];
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompanyaddresses()
+    public function getCompanyAddresses()
     {
-        return $this->hasMany(Companyaddress::className(), ['addressfk' => 'idaddress']);
+        return $this->hasMany(CompanyAddress::className(), ['addressfk' => 'idaddress']);
     }
 }

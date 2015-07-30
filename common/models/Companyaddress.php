@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "companyaddress".
@@ -19,11 +20,11 @@ use Yii;
  * @property integer $updatedUTC
  * @property integer $isarchived
  *
- * @property Company $companyfk0
- * @property Address $addressfk0
- * @property Addresstype $addresstype0
+ * @property Company $company
+ * @property Address $address
+ * @property Addresstype $addressType
  */
-class Companyaddress extends \yii\db\ActiveRecord
+class CompanyAddress extends BaseModel
 {
     /**
      * @inheritdoc
@@ -68,9 +69,26 @@ class Companyaddress extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['createdUTC', 'updatedUTC'],
+                    self::EVENT_BEFORE_UPDATE => ['updatedUTC'],
+                ],
+            ]
+        ];
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompanyfk0()
+    public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'companyfk']);
     }
@@ -78,7 +96,7 @@ class Companyaddress extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAddressfk0()
+    public function getAddress()
     {
         return $this->hasOne(Address::className(), ['idaddress' => 'addressfk']);
     }
@@ -86,7 +104,7 @@ class Companyaddress extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAddresstype0()
+    public function getAddressType()
     {
         return $this->hasOne(Addresstype::className(), ['idaddresstypes' => 'addresstype']);
     }

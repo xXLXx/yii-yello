@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use common\models\Address;
+use common\models\Companyaddress;
 use yii\base\Model;
 use common\models\TimeZone;
 use common\models\Currency;
@@ -10,6 +12,7 @@ use common\models\TimeFormat;
 use common\models\State;
 use common\models\Company;
 use common\models\StoreOwner;
+
 /**
  * Company form
  *
@@ -86,9 +89,68 @@ class CompanyForm extends Model
      */
     public function save() 
     {
-        $company = Company::findOne($this->id);
-        $company->setAttributes($this->getAttributes());
-        $company->save();
+        $transaction = \Yii::$app->db->beginTransaction();
+
+        try {
+            $company = Company::findOne($this->id);
+            $company->ABN = $this->abn;
+            $company->accountName = $this->accountName;
+            $company->companyName = $this->companyName;
+            $company->website = $this->website;
+
+            if (!$company->save()) {
+                $error = $company->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $companyAddress = CompanyAddress::findOneOrCreate(array(
+                'companyfk' => $this->id,
+            ));
+
+            // This will create new address if addressfk is null yet.
+            $address = Address::findOneOrCreate(array(
+                'idaddress' => $companyAddress->addressfk,
+            ));
+            $address->block_or_unit = $this->block_or_unit;
+            $address->street_number = $this->street_number;
+            $address->route = $this->route;
+            $address->locality = $this->locality;
+            $address->administrative_area_level_1 = $this->administrative_area_level_1;
+            $address->postal_code = $this->postal_code;
+            $address->country = $this->country;
+            $address->formatted_address = $this->formatted_address;
+
+            if (!$address->save()) {
+                $error = $address->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $companyAddress->addressfk = $address->idaddress;
+            $companyAddress->contact_name = $this->contact_name;
+            $companyAddress->contact_phone = $this->contact_phone;
+            $companyAddress->contact_email = $this->contact_email;
+
+            if (!$companyAddress->save()) {
+                $error = $companyAddress->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+
+
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
+
+        return false;
     }
     
     /**

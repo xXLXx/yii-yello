@@ -23,7 +23,7 @@ use Yii;
  * @property integer $timeFormatId
  * @property integer $isPrimary
  */
-class Company extends \yii\db\ActiveRecord
+class Company extends BaseModel
 {
     /**
      * @inheritdoc
