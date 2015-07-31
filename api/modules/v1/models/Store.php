@@ -6,6 +6,7 @@
 namespace api\modules\v1\models;
 
 use common\helpers\ArrayHelper;
+use common\models\Address;
 use yii\helpers\Url;
 use yii\web\Link;
 use yii\web\Linkable;
@@ -45,18 +46,30 @@ class Store extends \api\common\models\Store implements Linkable
         return [
             'id',
             'title',
-            'address1',
-            'address2',
+            'address1' => function ($model) {
+                return $model->address ? $model->address->address1 : '';
+            },
+            'address2' => function ($model) {
+                return $model->address ? $model->address->address2 : '';
+            },
             'imageId',
             'storeImage' => function(Store $model) {
                 return $model->image;
             },
-            'contactPerson',
-            'phone',
-            'createdAt' => 'createdAtAsTimestamp',
-            'createdAtAsDatetime',
-            'updatedAt' => 'updatedAtAsTimestamp',
-            'updatedAtAsDatetime',
+            'contactPerson' => function ($model) {
+                return $model->storeAddress ? $model->storeAddress->contact_name : '';
+            },
+            'phone' => function ($model) {
+                return $model->storeAddress ? $model->storeAddress->contact_phone : '';
+            },
+            'createdAt',
+            'createdAtAsDatetime' => function ($model) {
+                return date('c', $model->createdAt);
+            },
+            'updatedAt',
+            'updatedAtAsDatetime' => function ($model) {
+                return date('c', $model->updatedAt);
+            },
         ];
     }
 

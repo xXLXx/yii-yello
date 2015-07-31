@@ -2,37 +2,33 @@
 
 namespace common\models;
 
-use common\behaviors\DatetimeFormatBehavior;
-use Faker\Provider\cs_CZ\DateTime;
 use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
- * This is the model class for table "Store".
+ * This is the model class for table "store".
  *
  * @property integer $id
- * @property string $title
- * @property integer $businessTypeId
  * @property integer $companyId
+ * @property integer $businessTypeId
+ * @property integer $storeOwnerId
  * @property integer $paymentScheduleId
- * @property string $address1
- * @property string $address2
- * @property string $suburb
- * @property integer $stateId
- * @property string $contactPerson
- * @property string $phone
- * @property string $abn
+ * @property integer $imageId
+ * @property string $title
  * @property string $website
- * @property string $email
  * @property string $businessHours
  * @property string $storeProfile
- * @property integer $imageId
- * @property string $createdAtAsDatetime
- * @property string $updatedAtAsDatetime
- * @property Image $image image
+ * @property integer $createdAt
+ * @property integer $updatedAt
+ * @property integer $isArchived
  *
- * @property Company $company company
+ * @property Driverhasstore[] $driverhasstores
  * @property Shift[] $shifts
+ * @property Businesstype $businessType
+ * @property Company $company
+ * @property Image $image
+ * @property Storeowner $storeOwner
+ * @property Userhasstore[] $userhasstores
  */
 class Store extends BaseModel
 {
@@ -41,7 +37,7 @@ class Store extends BaseModel
      */
     public static function tableName()
     {
-        return 'Store';
+        return 'store';
     }
 
     /**
@@ -49,30 +45,41 @@ class Store extends BaseModel
      */
     public function rules()
     {
-        $rules = [
-            [['businessTypeId', 'companyId', 'paymentScheduleId', 'stateId', 'imageId'], 'integer'],
-            [['title', 'address1', 'address2', 'suburb', 'contactPerson', 'phone', 'abn', 'website', 'email',
-            'businessHours', 'storeProfile'], 'string', 'max' => 255]
+        return [
+            [['companyId', 'businessTypeId', 'storeOwnerId', 'paymentScheduleId', 'imageId', 'createdAt', 'updatedAt', 'isArchived'], 'integer'],
+            [['createdAt', 'updatedAt'], 'required'],
+            [['title', 'website', 'businessHours', 'storeProfile'], 'string', 'max' => 255]
         ];
-        return array_merge(parent::rules(), $rules);
     }
 
-    public function behaviors()
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
     {
-        $behaviors = parent::behaviors();
-        $behaviors[] = [
-            'class' => DatetimeFormatBehavior::className(),
-            DatetimeFormatBehavior::ATTRIBUTES_TIMESTAMP => ['createdAt', 'updatedAt'],
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'companyId' => Yii::t('app', 'Company ID'),
+            'businessTypeId' => Yii::t('app', 'Business Type ID'),
+            'storeOwnerId' => Yii::t('app', 'Store Owner ID'),
+            'paymentScheduleId' => Yii::t('app', 'Payment Schedule ID'),
+            'imageId' => Yii::t('app', 'Image ID'),
+            'title' => Yii::t('app', 'Title'),
+            'website' => Yii::t('app', 'Website'),
+            'businessHours' => Yii::t('app', 'Business Hours'),
+            'storeProfile' => Yii::t('app', 'Store Profile'),
+            'createdAt' => Yii::t('app', 'Created At'),
+            'updatedAt' => Yii::t('app', 'Updated At'),
+            'isArchived' => Yii::t('app', 'Is Archived'),
         ];
-        return $behaviors;
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompany()
+    public function getDriverhasstores()
     {
-        return $this->hasOne(Company::className(), ['id' => 'companyId']);
+        return $this->hasMany(Driverhasstore::className(), ['storeId' => 'id']);
     }
 
     /**
@@ -84,22 +91,23 @@ class Store extends BaseModel
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\ActiveQuery
      */
-    public function attributeLabels()
+    public function getBusinessType()
     {
-        $labels = [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'businessTypeId' => Yii::t('app', 'Business Type ID'),
-            'companyId' => Yii::t('app', 'Company ID'),
-            'paymentScheduleId' => Yii::t('app', 'Payment Schedule ID'),
-        ];
-        return array_merge(parent::attributeLabels(), $labels);
+        return $this->hasOne(Businesstype::className(), ['id' => 'businessTypeId']);
     }
 
     /**
-     * Get Image
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'companyId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
      */
     public function getImage()
     {
@@ -107,9 +115,42 @@ class Store extends BaseModel
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreOwner()
+    {
+        return $this->hasOne(Storeowner::className(), ['id' => 'storeOwnerId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserhasstores()
+    {
+        return $this->hasMany(Userhasstore::className(), ['storeId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
+            ->viaTable('storeaddress', ['storefk' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreAddress()
+    {
+        return $this->hasOne(StoreAddress::className(), ['storefk' => 'id']);
+    }
+
+    /**
      * @param \DateTime $date
      *
-     * @return ActiveDataProvider
+     * @return \yii\data\ActiveDataProvider
      */
     public function getAssignedShiftsByDate( \DateTime $date = null )
     {

@@ -19,7 +19,7 @@ use Yii;
  * @property integer $updatedUTC
  * @property integer $isarchived
  */
-class Storeaddress extends \yii\db\ActiveRecord
+class StoreAddress extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

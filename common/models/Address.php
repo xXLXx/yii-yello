@@ -103,4 +103,26 @@ class Address extends BaseModel
     {
         return $this->hasMany(CompanyAddress::className(), ['addressfk' => 'idaddress']);
     }
+
+    /**
+     * Handy getter of address1.
+     *
+     * @todo needs confirmation from mark
+     * @return string
+     */
+    public function getAddress1()
+    {
+        return $this->block_or_unit . ' ' . $this->street_number . ' ' . $this->route;
+    }
+
+    /**
+     * Handy getter of address2.
+     *
+     * @todo needs confirmation from mark
+     * @return string
+     */
+    public function getAddress2()
+    {
+        return $this->locality . ' ' . $this->country . ' ' . $this->postal_code;
+    }
 }
