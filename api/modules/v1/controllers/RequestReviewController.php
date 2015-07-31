@@ -43,13 +43,15 @@ class RequestReviewController extends \api\common\controllers\RequestReviewContr
 
         $deliveryCount = (int)$request->post('deliveryCount', 0);
         $shiftId = (int)$request->post('shiftId', 0);
-
+        $comment = $request->post('comment','no comment');
         if ( $deliveryCount && $shiftId ) {
 
             $requestReview = new ShiftRequestReview();
             $requestReview->shiftId = $shiftId;
             $requestReview->deliveryCount = $deliveryCount;
             $requestReview->userId = Yii::$app->user->identity->id;
+            $requestReview->title = 'Driver Response';
+            $requestReview->text = $comment;
             $requestReview->save();
 
             return;
