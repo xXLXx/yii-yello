@@ -86,10 +86,10 @@ class CompanyForm extends Model
         }
         $this->setAttributes($company->getAttributes());
 
-        $companyAddress = CompanyAddress::findOne(array('companyfk' => $company->id));
+        $companyAddress = CompanyAddress::findOneOrCreate(array('companyfk' => $company->id));
         $this->setAttributes($companyAddress->getAttributes());
 
-        $address = Address::findOne($companyAddress->addressfk);
+        $address = Address::findOneOrCreate($companyAddress->addressfk);
         $this->setAttributes($address->getAttributes());
     }
     
