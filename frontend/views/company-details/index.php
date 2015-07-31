@@ -39,7 +39,7 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
         <div class="row">
         <?php echo $form->field($model, 'accountName',$options); ?>
         <?php echo $form->field($model, 'companyName',$options); ?>
-        <?php echo $form->field($model, 'abn',$options); ?>
+        <?php echo $form->field($model, 'ABN',$options); ?>
         </div>
             
         <div class="row">

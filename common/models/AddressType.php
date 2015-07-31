@@ -12,9 +12,13 @@ use Yii;
  *
  * @property Companyaddress[] $companyaddresses
  */
-class Addresstype extends \yii\db\ActiveRecord
+class AddressType extends \yii\db\ActiveRecord
 {
-    /**
+    const TYPE_DEFAULT = 'default';
+    const TYPE_POSTAL = 'postal';
+    const TYPE_LOCATION = 'location';
+
+        /**
      * @inheritdoc
      */
     public static function tableName()
@@ -42,6 +46,16 @@ class Addresstype extends \yii\db\ActiveRecord
             'idaddresstypes' => Yii::t('app', 'Idaddresstypes'),
             'addresstype' => Yii::t('app', 'Addresstype'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return \common\models\query\AddressTypeQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \common\models\query\AddressTypeQuery(get_called_class());
     }
 
     /**

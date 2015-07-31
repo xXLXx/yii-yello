@@ -22,7 +22,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Company $company
  * @property Address $address
- * @property Addresstype $addressType
+ * @property AddressType $addressType
  */
 class CompanyAddress extends BaseModel
 {
@@ -106,6 +106,6 @@ class CompanyAddress extends BaseModel
      */
     public function getAddressType()
     {
-        return $this->hasOne(Addresstype::className(), ['idaddresstypes' => 'addresstype']);
+        return $this->hasOne(AddressType::className(), ['idaddresstypes' => 'addresstype']);
     }
 }

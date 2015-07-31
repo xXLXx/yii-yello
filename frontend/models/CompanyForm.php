@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\models\Address;
+use common\models\AddressType;
 use common\models\Companyaddress;
 use yii\base\Model;
 use common\models\TimeZone;
@@ -23,7 +24,7 @@ class CompanyForm extends Model
     public $id;
     public $accountName;
     public $companyName;
-    public $abn;
+    public $ABN; // to match company.ABN field
     
     public $contact_name;
     public $contact_phone;
@@ -48,7 +49,9 @@ class CompanyForm extends Model
         return [
             [['id'], 'integer'],
             [['contact_email'], 'email'],
-            [['accountName', 'companyName', 'abn', 'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1','postal_code','country'], 'string'],
+            [['accountName', 'companyName', 'ABN', 'block_or_unit', 'street_number', 'route', 'locality',
+                'administrative_area_level_1','postal_code','country', 'formatted_address', 'contact_name',
+                'contact_phone', 'contact_email', 'website'], 'string'],
         ];
     }
 
@@ -82,6 +85,12 @@ class CompanyForm extends Model
             $storeOwner->save();
         }
         $this->setAttributes($company->getAttributes());
+
+        $companyAddress = CompanyAddress::findOne(array('companyfk' => $company->id));
+        $this->setAttributes($companyAddress->getAttributes());
+
+        $address = Address::findOne($companyAddress->addressfk);
+        $this->setAttributes($address->getAttributes());
     }
     
     /**
@@ -93,7 +102,7 @@ class CompanyForm extends Model
 
         try {
             $company = Company::findOne($this->id);
-            $company->ABN = $this->abn;
+            $company->ABN = $this->ABN;
             $company->accountName = $this->accountName;
             $company->companyName = $this->companyName;
             $company->website = $this->website;
@@ -109,7 +118,7 @@ class CompanyForm extends Model
                 'companyfk' => $this->id,
             ));
 
-            // This will create new address if addressfk is null yet.
+            // This will create new (default) address if addressfk is null yet.
             $address = Address::findOneOrCreate(array(
                 'idaddress' => $companyAddress->addressfk,
             ));
@@ -133,6 +142,7 @@ class CompanyForm extends Model
             $companyAddress->contact_name = $this->contact_name;
             $companyAddress->contact_phone = $this->contact_phone;
             $companyAddress->contact_email = $this->contact_email;
+            $companyAddress->addresstype = AddressType::find()->byType(AddressType::TYPE_DEFAULT)->one()->idaddresstypes;
 
             if (!$companyAddress->save()) {
                 $error = $companyAddress->getFirstError();
