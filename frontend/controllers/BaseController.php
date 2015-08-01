@@ -14,8 +14,13 @@ class BaseController extends Controller
  public function beforeAction($action) {
 
         if (parent::beforeAction($action)) {
-            
-                
+            	// this calls getSignUpState  to verify all necessary user info is there
+				// getSignupState returns array of action, controller, ispreferred
+                // or false
+				// if getsignupstate returns array, the routine below checks to see if the 
+				// current controller/action is in the array and if not, will redirect to ispreferred array row
+				// exceptions are all 'error' actions
+				
                 if (!\Yii::$app->user->isGuest) {
                     $user = \Yii::$app->user->identity;
                     $loginurl = $user->getSignUpState();

@@ -31,7 +31,7 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
      *
      * @return PasswordChangeForm|\common\models\User|null
      */
-    public function actionChangepassword()
+    public function actionChangePassword()
     {
         $form = new PasswordChangeForm();
         if ($form->load(\Yii::$app->request->post()) && $form->validate()) {
