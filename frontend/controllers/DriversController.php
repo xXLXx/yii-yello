@@ -85,6 +85,7 @@ class DriversController extends BaseController
             return false;
         }
         $completedShiftState = ShiftState::findOne(['name' => ShiftState::STATE_COMPLETED]);
+		//TODO: Lalit - please comment changes
         $completedShift = Shift::findAll(['shiftStateId' => $completedShiftState->id]);
         $shiftData = Shift::find()
             ->where(['shiftStateId' => $completedShiftState->id])

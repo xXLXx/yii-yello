@@ -20,6 +20,8 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
     {
         $searchText = \Yii::$app->request->post('searchText');
         $user = \Yii::$app->user->identity;
+		
+		//TODO: Jovani, Lalit store owner central validation in basecontroller at frontend and user model.
         //print_r($user->storeOwner);
         //var_dump($user->storeOwner->storeCurrent->id);
         if(!isset($user->storeOwner->storeCurrent->id)){

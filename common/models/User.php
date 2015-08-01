@@ -444,25 +444,37 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * This is referenced by basecontroller at frontend
+     * 
+     * todo: consider running it only on login and setting a validated flag 
      * Make sure user info is all there
-     *
-     * @return User|null
+     * This is the post-signon switchboard that verifies all signup info is there
+     * and that subscription is valid this function will find the user's role
+     * and run appropriate subroutines to verify validation of the users details
+     * and organisation details, and subscription details
+     * @return $ca|false
+     * populate ca with list of [controller, action, selected] that user is allowed
+     * to see while signup is incomplete. set selected to true for the preferred
+     * controller/action
      */
     public function getSignUpState(){
         $ca=[];   //controller actions
+                 // if ca[] is populated and returned, it should have at least
+        
         switch ($this->roleId){
             case 1:// yello super admin
             case 8: // yello admin
                 // go to settings page
-                
+                // TODO: send to admin dashboard
                 return false;
-
                 break;
             
             case 2: // Franchiser
             case 10: // franchiserManager
             case 11: // franchiserExtendedManager
                     // make sure franchise info is complete
+                
+                //TODO: Vett Franchiser has valid subscription and redirect to signup stage if not.
                 return false;
 
                 break;
@@ -470,21 +482,34 @@ class User extends BaseModel implements IdentityInterface
             case 3: // driver
                 // log user out and send them to generic info page
                 Yii::$app->user->logout();
-                return[
-                    ['driver','index'],
-                    ['site','index']
+                $ca=[
+                    ['driver','index',true],
+                    ['site','index',false]
                 ];
-                
+                return $ca;
                 return false;
                 
                 break;
             case 4: // manager
             case 6: // storeOwner
+                // TODO: Vett storeowner has valid subscription and redirect to signup stage if not
+
+                return false;
+//                if(!$this->getUserHasStores()){
+//                   array_push($ca,['store-add','index'],true);
+//                }
+//                if(!$this->getCompany()){
+//                   array_push($ca,['store-add','index'],true);
+//                }
             case 7: // employee
+                // TODO: Make sure employee's store is valid with valid supbscription
+                //          Make sure employee details are valid
                 return false;
                 break;
             case 9: // menu aggregator
             case 12: // MAmanager
+                // TODO: Nothing at this stage
+                
                 return false;
                 break;
                 
