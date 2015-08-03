@@ -22,6 +22,10 @@ class DriversController extends BaseController
     public function actionIndex()
     {
         $searchParams = \Yii::$app->request->getQueryParams();
+        if(!$searchParams){
+            array_push($searchParams, ['category'=>'all']);
+            
+        }
         $searchModel = new DriverSearch();
         $dataProvider = $searchModel->search($searchParams);
         $driversCount = $dataProvider->count;
@@ -58,7 +62,8 @@ class DriversController extends BaseController
     /**
      * Remove driver from favourites
      *
-     * @return string
+     * @return string  
+     * 
      */
     public function actionRemoveFavourite()
     {
