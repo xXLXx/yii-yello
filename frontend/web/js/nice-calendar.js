@@ -10,6 +10,7 @@ function Calendar(container) {
     this._events = [];
     this._data.beginDate = moment().day("Monday");
     this._data.currentDate = moment();
+    this._data.selectedId = "";
     this.refresh();
     this.render();
 };
@@ -26,7 +27,16 @@ Calendar.prototype.getEventById = function(id) {
 Calendar.prototype.refresh = function() {
     this._data.days = this.getDays();
     this._data.eventGroups = this.eventGroups();
+    this._data.shiftId = get_shift_id_url();
 };
+
+function get_shift_id_url() {
+    var data = window.location.href.match(/shiftId=([^&]+)/);
+    if (data) {
+        return data[1];
+    }
+    return 0;
+}
 
 Calendar.prototype.getDays = function() {
     var days = [
