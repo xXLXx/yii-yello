@@ -106,6 +106,9 @@ class DriverSearch extends Driver
             );
         }
 
+        
+        
+        
         if (!empty($params['category']) && $params['category'] == 'favourites') {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('storeOwnerFavouriteDrivers');
@@ -116,6 +119,23 @@ class DriverSearch extends Driver
             );
         }
 
+        if (!empty($params['category']) && $params['category'] == 'all') {
+            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
+            $query->join('LEFT OUTER JOIN', 'driverHasStore',
+                'driverHasStore.driverId =user.id');     
+            $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
+                'StoreOwnerFavouriteDrivers.driverId =user.Id');     
+            
+            $query->andFilterWhere(
+                [
+                    'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
+                    'DriverHasStore.isAcceptedByDriver' => 1
+                ]
+            );            
+            $query->orWhere([
+                  'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id
+            ]);
+        }
         if (!empty($params['category']) && $params['category'] == 'my') {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('driverHasStore');
