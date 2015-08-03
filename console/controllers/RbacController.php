@@ -254,7 +254,6 @@ class RbacController extends Controller
         $auth->addChild($franchiser, $changeOrgUsersDetails);
         $auth->addChild($franchiser, $viewOrgUsersDetails);
         $auth->addChild($franchiser, $createFranchisorOrganisation);
-        $auth->addChild($franchiser, $changeOrgUsersDetails);
         $auth->addChild($franchiser, $updatePaymentDetails);
         $auth->addChild($franchiser, $enableDisablePaymentMethod);
         $auth->addChild($franchiser, $deleteFranchise);
