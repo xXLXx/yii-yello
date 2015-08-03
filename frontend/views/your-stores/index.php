@@ -28,8 +28,8 @@ $this->title = \Yii::t('app', 'Your Stores');
                         <?= Html::a($store->title,['store-edit/index', 'storeId' => $store->id]) ?>
                     </h3>
                     <div class="company-adress gray-text">
-                        <?= $store->address1 ?><br>
-                        <?= $store->address2 ?>
+                        <?= $store->address ? $store->address->address1 : ''; ?><br>
+                        <?= $store->address ? $store->address->address2 : ''; ?>
                     </div>
 <!--                    <div>-->
 <!--                        <span class="star-block">-->
