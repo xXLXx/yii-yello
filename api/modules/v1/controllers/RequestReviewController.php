@@ -5,6 +5,7 @@ namespace api\modules\v1\controllers;
 use Yii;
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\ShiftRequestReview;
+use api\modules\v1\models\Shift;
 use yii\web\BadRequestHttpException;
 
 
@@ -54,7 +55,7 @@ class RequestReviewController extends \api\common\controllers\RequestReviewContr
             $requestReview->text = $comment;
             $requestReview->save();
 
-            return;
+            return Shift::findOne($shiftId);
         }
 
         throw new BadRequestHttpException();
