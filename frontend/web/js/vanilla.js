@@ -338,11 +338,23 @@ var Vanilla = new function() {
 
 
     $.fn.disableButton = function (options) {
-        var settings = $.extend({
+    var settings = $.extend({
             // These are the defaults.
-            text: ""
+            replaceclass: null,
+            text: "Saving..."
         }, options);
+        if (settings.replaceclass != null) {
+            var fromto = settings.replaceclass.split(",");
+            if (fromto.length > 1) {
+                this.removeClass(fromto[0]);
+            }
+            this.addClass(fromto[1]);
+        }
+        if(!this.hasAttr('data-enabledval')){
+            this.attr('data-enabledval',this.text());
+        }
         var tw = this.innerWidth();
+        this.prop("disabled", true);
         this.addClass("disabled");
         if (this.text().length > settings.text.length) {
             this.innerWidth(tw);
@@ -388,14 +400,14 @@ $('body').on('beforeSubmit', 'form', function() {
     if (form.find('.has-error').length) {
                     $(this+".disableme").each(function () {
                         if (this.tagName=="SUBMIT") {
-                                $(this).enableSubmit({ text: msg });
+                                $(this).enableSubmit();
                         } else {
-                            $(this).enableButton({ text: msg });
+                            $(this).enableButton();
                         }
                     });
     }else{
                 $(".disableme").each(function () {
-                        var msg = "Loading...";
+                        var msg = "Saving...";
                         if (typeof $(this).data("disabledmsg") != 'undefined') {
                             msg = $(this).data("disabledmsg");
                         }

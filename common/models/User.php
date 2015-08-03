@@ -429,8 +429,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getCompany()
     {
-        return $this->hasOne(Company::className(), ['id' => 'companyId'])
-            ->via('storeOwner');
+        return $this->hasOne(Company::className(), ['userfk' => 'id', 'isprimary'=>1]);
     }
 
     /**

@@ -16,7 +16,7 @@ $this->title = \Yii::t('app', 'Company Details');
 $options = ['options'=>['class'=>'col col-sm-11 col-md-5 col-lg-5']];
 $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
 ?>
-<st
+
 <div class="sidebar-container">
     <?= SettingsLeftNavigation::widget(); ?>
     <div class="col-right">
@@ -74,9 +74,11 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
     </div>
 </div>
 
+
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script>    
-    
+        var formname = 'companyform';
+        formname = formname+'-';
         var placeSearch, autocomplete;
         var componentForm = {
           street_number: 'short_name',
@@ -106,8 +108,8 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
           var place = autocomplete.getPlace();
 
           for (var component in componentForm) {
-            document.getElementById('companyform-'+component).value = '';
-            document.getElementById('companyform-'+component).disabled = false;
+            document.getElementById(formname+component).value = '';
+            document.getElementById(formname+component).disabled = false;
           }
 
           // Get each component of the address from the place details
@@ -116,7 +118,7 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
             var addressType = place.address_components[i].types[0];
             if (componentForm[addressType]) {
               var val = place.address_components[i][componentForm[addressType]];
-              document.getElementById('companyform-'+addressType).value = val;
+              document.getElementById(formname+addressType).value = val;
             }
           }
         }
