@@ -38,7 +38,7 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
             ->andWhere(['not in', 'User.id', $ids])
             ->all();
         if (!$drivers) {
-            return false;
+            return "<div class='error_message'>Sorry there are no matches for your search. If you have an email address for the driver you can send an invite via email by selecting the “Send invite” option above.</div>";
         }
         return $this->renderPartial('autocomplete', [
             'drivers' => $drivers

@@ -35,8 +35,21 @@
     min-height: 320px;
 }
 
-.popup.store-invite.height-active .button-container{
+/*.popup.store-invite.height-active .button-container{
     margin: 175px 0 0;
+}*/
+
+.popup.store-invite.with-error {
+    min-height: 280px;
+}
+.with-error .search-select-popup{
+    width: auto;
+    border: none;
+    box-shadow: none;
+}
+
+.popup.store-invite.with-error .button-container{
+    display: none;
 }
 
 .hidden{display:none !important;}

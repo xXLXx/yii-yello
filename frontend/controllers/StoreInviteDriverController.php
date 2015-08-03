@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use api\common\models\Driver;
 use frontend\models\StoreInviteDriverForm;
 
 /**
@@ -21,7 +22,11 @@ class StoreInviteDriverController extends BaseController
         if ($storeInviteDriverForm->load($params)) {
             if ($storeInviteDriverForm->validate()) {
                 $storeInviteDriverForm->save();
-                return 'success';
+                $driver_id = $params['StoreInviteDriverForm']['driverId'];
+                $driver_data = Driver::findOne($driver_id);
+                return $this->render('success', [
+                    'driver_data' => $driver_data
+                ]);
             }
         } else {
             $driverHasStoreId = \Yii::$app->request->post('id');
