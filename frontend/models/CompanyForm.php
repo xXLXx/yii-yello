@@ -40,6 +40,8 @@ class CompanyForm extends Model
     public $postal_code;
     public $country;
     public $formatted_address;
+    public $latitude;
+    public $longitude;
 
     /**
      * @inheritdoc
@@ -51,7 +53,7 @@ class CompanyForm extends Model
             [['contact_email'], 'email'],
             [['accountName', 'companyName', 'ABN', 'block_or_unit', 'street_number', 'route', 'locality',
                 'administrative_area_level_1','postal_code','country', 'formatted_address', 'contact_name',
-                'contact_phone', 'contact_email', 'website'], 'string'],
+                'contact_phone', 'contact_email', 'website', 'latitude', 'longitude'], 'string'],
         ];
     }
 
@@ -130,6 +132,8 @@ class CompanyForm extends Model
             $address->postal_code = $this->postal_code;
             $address->country = $this->country;
             $address->formatted_address = $this->formatted_address;
+            $address->latitude = $this->latitude;
+            $address->longitude = $this->longitude;
 
             if (!$address->save()) {
                 $error = $address->getFirstError();
