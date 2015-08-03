@@ -50,7 +50,7 @@ class SignupStorePaymentDetails extends Model
     {
         $labels = [
             'address_line1' => 'Address (Line 1)',
-            'address_line1' => 'Address (Line 2)',
+            'address_line2' => 'Address (Line 2)',
             'address_city'=>\Yii::t('app', 'Suburb'),
             'address_state'=> \Yii::t('app', 'State'),
             'address_zip'=> \Yii::t('app', 'Postcode'),

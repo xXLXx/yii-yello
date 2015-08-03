@@ -105,12 +105,12 @@ $wholerow = ['options' => ['class' => '']];
 
                                 <input class="form-control" id="autocomplete" placeholder="Enter your billing address here" autocomplete="off" onfocus="geolocatestripe()" type="text">
                                 
-                                    <?php echo $form->field($model, 'address_line1',['inputOptions'=>['data-stripe'=>'address_line1']]); ?>
-                                    <?php echo $form->field($model, 'address_line2',['inputOptions'=>['data-stripe'=>'address_line2']]); ?>
-                                    <?php echo $form->field($model, 'address_city',['inputOptions'=>['data-stripe'=>'address_city'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'address_state',['inputOptions'=>['data-stripe'=>'address_state'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4','style'=>'padding-left:0;padding-right:0px;']]); ?>
-                                    <?php echo $form->field($model, 'address_zip',['inputOptions'=>['data-stripe'=>'address_zip'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'address_country',['inputOptions'=>['data-stripe'=>'address_country'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9','style'=>'padding-left:0;padding-right:0px;']]); ?>                            
+                                    <?php echo $form->field($model, 'address_line1',['inputOptions'=>['data-stripe'=>'address_line1','class'=>'form-control stripeform']]); ?>
+                                    <?php echo $form->field($model, 'address_line2',['inputOptions'=>['data-stripe'=>'address_line2','class'=>'form-control stripeform']  ]); ?>
+                                    <?php echo $form->field($model, 'address_city',['inputOptions'=>['data-stripe'=>'address_city','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']]); ?>
+                                    <?php echo $form->field($model, 'address_state',['inputOptions'=>['data-stripe'=>'address_state','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
+                                    <?php echo $form->field($model, 'address_zip',['inputOptions'=>['data-stripe'=>'address_zip','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3 ','style'=>'padding-left:0;padding-right:5px;']]); ?>
+                                    <?php echo $form->field($model, 'address_country',['inputOptions'=>['data-stripe'=>'address_country','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>                            
 
                             </div>
                         </div>

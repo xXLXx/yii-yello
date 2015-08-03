@@ -123,6 +123,7 @@
           if(unit.length>0){
               addressline1 = unit+'/'+addressline1;
           }
+          //SignupStorePaymentDetails[address_line1]
           popstripe('address_line1',addressline1);
           
         }
