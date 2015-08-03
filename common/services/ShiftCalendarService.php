@@ -27,6 +27,7 @@ class ShiftCalendarService extends BaseService
             ->andWhere(['>=', 'start', $data['start']])
             ->andWhere(['<=', 'end', $data['end']])
             ->andWhere(['storeId' => $data['storeId']])
+            ->orderBy(['start' => 'asc'])
             ->all();
         $pendingState = ShiftState::findOne([
             'name' => ShiftState::STATE_PENDING
