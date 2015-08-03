@@ -14,9 +14,9 @@ var DriversFilter = {
      * Events initialization
      */
     initEvents: function () {
-        $('.j_driver-filter-form input').on('change', function () {
+        /*$('.j_driver-filter-form input').on('change', function () {
             $('.j_driver-filter-form').submit();
-        });
+        });*/
         $('.j_driver-filter-item-remove').on('click', function (e) {
             e.preventDefault();
             var value = $(this).data('val');
