@@ -39,7 +39,6 @@ class BaseController extends Controller
                             if($go){
                                 return \Yii::$app->getResponse()->redirect([$goto]);
                             }
-
                         }
                     }
                 }            

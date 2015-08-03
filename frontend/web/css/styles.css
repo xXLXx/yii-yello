@@ -430,6 +430,7 @@ a.blue-text {text-decoration:none;}
     .masthead {position:absolute; z-index:1; top:21px; left:42px; height:60px; width:60px; line-height:58px; font-size:11px;}
 
 
+
 /* Login page */
 .login-block {position:absolute; top:0; bottom:0; left:0; right:0; background:#182837;}
     .login-block .logo {position:absolute; z-index:1; top:21px; left:42px; height:60px; width:60px; line-height:58px; font-size:11px;}
@@ -1162,6 +1163,18 @@ a.blue-text {text-decoration:none;}
 }
 .state.blue {
   color: #30639f;
+}
+.state.aqua {
+  color: #0bae8d;
+}
+.state.orange {
+  color: #a8860f;
+}
+.state.lime {
+  color: #2fef09;
+}
+.state.pink {
+  color: #ef09e2;
 }
 .float-right {
   text-align: right;

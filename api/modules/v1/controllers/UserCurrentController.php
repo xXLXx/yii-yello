@@ -22,6 +22,10 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
         return $behaviors;
     }
 
+    
+
+    
+    
     /**
      * Change password
      *
