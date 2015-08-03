@@ -24,7 +24,7 @@ class DriversController extends BaseController
         $searchParams = \Yii::$app->request->getQueryParams();
         $searchModel = new DriverSearch();
         $dataProvider = $searchModel->search($searchParams);
-        $driversCount = Driver::find()->count();
+        $driversCount = $dataProvider->count;
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
