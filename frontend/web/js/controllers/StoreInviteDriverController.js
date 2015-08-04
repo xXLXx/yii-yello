@@ -20,6 +20,7 @@ var StoreInviteDriverController = {
                     if (data.search('success') != -1) {
                         var html = $('.success_message', data).html();
                         $('#store-invite-driver-form .popup-body-inner').html(html);
+                        $('.popup.store-invite').removeClass('with-error').removeClass('height-active');
                         $(".j_colorbox").colorbox.resize();
                         return; 
                     }

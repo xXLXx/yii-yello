@@ -18,7 +18,7 @@ var StoreInviteDriverSearchWidget = {
             waitHelper.wait(500, function() {
                 self.loadDrivers(searchText, function(result) {
 
-                    $('#store-invite-driver-form .js-driver-info-table').text(''); //blank the already selected driver
+                    $('#store-invite-driver-form .js-driver-info-table, #store-invite-driver-form .driver-info').text(''); //blank the already selected driver
                     $('.js-driver-input').val(''); //blank the already selected driver hidden value
 
                     var $searchSelect = $(

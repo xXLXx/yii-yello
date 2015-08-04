@@ -64,6 +64,9 @@ class StoreInviteDriverController extends BaseController
         $storeTitle = $user->storeOwner->storeCurrent->title;
         $storeId = $user->storeOwner->storeCurrent->id;
 
+        //@todo Fetch the store address here
+        $address = "";
+
         $signupinvitations = array("SignupInvitationsForm" =>
             array(
                 'emailaddress' => $invite_email,
@@ -82,29 +85,27 @@ class StoreInviteDriverController extends BaseController
 
         $signupInvitations = new SignupInvitationsForm();
 
-        if($signupInvitations->load($signupinvitations)){
+        if(!$signupInvitations->load($signupinvitations)){
+            return false;
+        }
 
-            if($signupInvitations->validate()){
+        if(!$signupInvitations->validate()){
 
-                $signupInvitations->save($signupinvitations);
-                return true;
+            $errors = $signupInvitations->getErrors();
+            return $errors;
 
-            } else {
-
-                $errors = $signupInvitations->getErrors();
-                return $errors;
-
-            };
         };
 
+        $signupInvitations->save($signupinvitations);
 
-        $body = "You have been invited to be be a driver on Yello for $storeTitle and address. Click the link below to sign up to join Yello and connect to $storeTitle.<br/>"
+        $body = "You have been invited to be be a driver on Yello for $storeTitle $address. Click the link below to sign up to join Yello and connect to $storeTitle.<br/>"
+            //@todo Pass the correct app link.
             . Html::a(
                 'Sign up',
                 Yii::$app->urlManager->createAbsoluteUrl(
                     [
                         'site/signup',
-                        'invitationcode'  => $invitation_code
+                        'invitationcode' => $invitation_code
                     ]
                 ),
                 ['target' => '_blank']
@@ -116,5 +117,7 @@ class StoreInviteDriverController extends BaseController
             ->setSubject('Yello Driver Invitation')
             ->setHtmlBody($body)
             ->send();
+
+        return true;
     }
 }

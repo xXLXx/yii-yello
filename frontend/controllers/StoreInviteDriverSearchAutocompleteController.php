@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Driver;
+use yii\rbac\Role;
 use yii\web\NotFoundHttpException;
 use api\common\models\DriverHasStore;
 
@@ -32,13 +33,14 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
             ->column();
         $drivers = Driver::find()
             ->with(['image'])
-            ->andWhere(['like', 'email', $searchText])
-            //->where(['or', ['like', 'username', $searchText], ['like', 'email', $searchText]]) //@todo Make the or statement work
+            //->andWhere(['like', 'email', $searchText])
+            ->andWhere(['or', ['like', 'username', $searchText], ['like', 'email', $searchText]])
             ->andWhere(['not in', 'User.id', $ids])
             ->all();
 
         if (!$drivers) {
             $valid_email = filter_var($searchText, FILTER_VALIDATE_EMAIL);
+            //@todo Pass the correct messages here.
             if($valid_email === false){
                 return "<div class='error_message'>Sorry there are no matches for your search. If you have an email address for the driver please enter above.</div>";
             } else {
