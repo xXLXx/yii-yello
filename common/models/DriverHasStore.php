@@ -135,4 +135,19 @@ class DriverHasStore extends \common\models\BaseModel
             ]
         );
     }
+
+    public static function inviteAccepted($user_id, $store_id, $accept_status = 0){
+
+        if(!DriverHasStore::find()->where( ['driverId' => $user_id, 'storeId' => $store_id] )->one()){
+            $driver_has_store = new DriverHasStore();
+            $driver_has_store->driverId = $user_id;
+            $driver_has_store->storeId = $store_id;
+            $driver_has_store->createdAt = time();
+            $driver_has_store->updatedAt = time();
+            $driver_has_store->isInvitedByStoreOwner = 1;
+            $driver_has_store->isAcceptedByDriver = $accept_status;
+            $driver_has_store->save();
+        }
+
+    }
 }

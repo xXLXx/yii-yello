@@ -28,10 +28,16 @@ class StoreInviteDriverController extends BaseController
 
             if(!$driver_id && filter_var($params['invite_driver_input'], FILTER_VALIDATE_EMAIL) !== false){
                 $invite_email =  $params['StoreInviteDriverForm']['email'] = $params['invite_driver_input'];
-                $this->invite_driver($invite_email);
-                return $this->render('success', [
-                    'username' => $invite_email
-                ]);
+                $invite_status = $this->invite_driver($invite_email);
+                if($invite_status === true){
+                    return $this->render('success', [
+                        'username' => $invite_email
+                    ]);
+                } else {
+                    return $this->render('error', [
+                        'errors' => $invite_status
+                    ]);
+                }
             }
 
             if ($storeInviteDriverForm->validate()) {
@@ -56,7 +62,7 @@ class StoreInviteDriverController extends BaseController
         $invitation_code = Yii::$app->security->generateRandomString();
         $user = \Yii::$app->user->identity;
         $storeTitle = $user->storeOwner->storeCurrent->title;
-        /*$storeId = $user->storeOwner->storeCurrent->id;
+        $storeId = $user->storeOwner->storeCurrent->id;
 
         $signupinvitations = array("SignupInvitationsForm" =>
             array(
@@ -64,8 +70,8 @@ class StoreInviteDriverController extends BaseController
                 'invitationcode' => $invitation_code,
                 'userfk' => $user->id,
                 'storeownerfk' => $storeId,
-                //'datecreated' => NULL,
-                //'dateupdated' => NULL,
+                'createdAt' => time(),
+                'updatedAt' => time(),
                 //'expires' => NULL,
                 //'sent' => NULL,
                 //'isArchived' => NULL,
@@ -75,14 +81,24 @@ class StoreInviteDriverController extends BaseController
         );
 
         $signupInvitations = new SignupInvitationsForm();
+
         if($signupInvitations->load($signupinvitations)){
+
             if($signupInvitations->validate()){
+
                 $signupInvitations->save($signupinvitations);
+                return true;
+
+            } else {
+
+                $errors = $signupInvitations->getErrors();
+                return $errors;
+
             };
-        };*/
+        };
 
 
-        $body = "You have been invited to be be a driver on Yello for $storeTitle and address. Click the link below to sign up to join Yello and connect to $storeTitle."
+        $body = "You have been invited to be be a driver on Yello for $storeTitle and address. Click the link below to sign up to join Yello and connect to $storeTitle.<br/>"
             . Html::a(
                 'Sign up',
                 Yii::$app->urlManager->createAbsoluteUrl(
@@ -93,6 +109,7 @@ class StoreInviteDriverController extends BaseController
                 ),
                 ['target' => '_blank']
             );
+
         $email = Yii::$app->mailer->compose()
             ->setTo($invite_email)
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
