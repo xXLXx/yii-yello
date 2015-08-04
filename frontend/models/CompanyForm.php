@@ -103,7 +103,7 @@ class CompanyForm extends Model
         $transaction = \Yii::$app->db->beginTransaction();
 
         try {
-            $company = Company::findOne($this->id);
+            $company = Company::findOneOrCreate($this->id);
             $company->ABN = $this->ABN;
             $company->accountName = $this->accountName;
             $company->companyName = $this->companyName;
@@ -115,6 +115,8 @@ class CompanyForm extends Model
 
                 throw new \yii\db\Exception(current($error));
             }
+
+            $this->id = $company->id;
 
             $companyAddress = CompanyAddress::findOneOrCreate(array(
                 'companyfk' => $this->id,
@@ -143,6 +145,7 @@ class CompanyForm extends Model
             }
 
             $companyAddress->addressfk = $address->idaddress;
+            $companyAddress->companyfk = $this->id;
             $companyAddress->contact_name = $this->contact_name;
             $companyAddress->contact_phone = $this->contact_phone;
             $companyAddress->contact_email = $this->contact_email;
