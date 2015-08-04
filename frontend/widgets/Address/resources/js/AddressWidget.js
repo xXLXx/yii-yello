@@ -1,3 +1,4 @@
+
 var jsAddressWidget = {
 
     componentForm: AddressWidget.fieldsMapping,
@@ -24,9 +25,9 @@ var jsAddressWidget = {
     fillInAddress: function () {
         // Get the place details from the autocomplete object.
         var place = this.autocomplete.getPlace();
-
         var formname = AddressWidget.formName;
         formname = formname+'-';
+        console.log(place);
 
         for (var component in this.componentForm) {
             document.getElementById(formname+component).value = '';

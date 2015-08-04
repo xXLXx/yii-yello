@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Driver;
 use yii\web\NotFoundHttpException;
 use api\common\models\DriverHasStore;
+use common\models\search\DriverSearch;
 
 /**
  * Driver search controller
@@ -16,17 +17,18 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
     /**
      * Autocomplete
      */
-    public function actionAutocomplete()
+    public function actionAutocompleteOld()
     {
-        $searchText = \Yii::$app->request->post('searchText');
+        $searchText = \Yii::$app->request->get('searchText');
         $user = \Yii::$app->user->identity;
-		
 		//TODO: Jovani, Lalit store owner central validation in basecontroller at frontend and user model.
         //print_r($user->storeOwner);
         //var_dump($user->storeOwner->storeCurrent->id);
         if(!isset($user->storeOwner->storeCurrent->id)){
             return "Please create store first.";
         }
+        
+        
         $storeId = $user->storeOwner->storeCurrent->id;
         $ids = DriverHasStore::find()
             ->select('driverId')
@@ -44,6 +46,24 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
             'drivers' => $drivers
         ]);
     }
+    
+    
+    
+    public function actionAutocomplete()
+    {
+        $user = \Yii::$app->user->identity;
+        $params = \Yii::$app->request->post();
+        $params['category']='uninvited';
+        $driverSearch = new DriverSearch();
+        $drivers = $driverSearch->buildQuery($params)->all();
+        if (!$drivers) {
+            return false;
+        }
+        return $this->renderPartial('autocomplete', [
+            'drivers' => $drivers
+        ]);
+    }
+        
     
     /**
      * Get selected driver results

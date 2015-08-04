@@ -161,9 +161,24 @@ Calendar.prototype.render = function() {
                 '<% for (var i = 0; i < eventGroups.maxLength; i++) { %>' +
                     '<tr>' +
                         '<% for (var j = 0; j < eventGroups.groups.length; j++) { %>' +
-                            '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) { %>' +
+                            '<% if (eventGroups.groups[j] && eventGroups.groups[j][i] && eventGroups.groups[j][i].id==currentselected )  {%>'+
+                                
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
-                                    '<div class="calendar-table-item <% if (eventGroups.groups[j][i].id == shiftId) { %> active<% } %> <%=  eventGroups.groups[j][i].data.color %>">' +
+                                    '<div class="calendar-table-item active <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
+                                        '<a class="calendar-table-cell">' +
+                                            '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
+                                            '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
+                                            '<% if (eventGroups.groups[j][i].applicantsCount) { %>' +
+                                                '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
+                                            '<% } %>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</td>' +
+                            '<% } else { %>' +
+                               '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) {%>'+
+                                
+                                '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
+                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
                                         '<a class="calendar-table-cell">' +
                                             '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
@@ -175,6 +190,7 @@ Calendar.prototype.render = function() {
                                 '</td>' +
                             '<% } else { %>' +
                                 '<td></td>' +
+                            '<% } %>' +
                             '<% } %>' +
                         '<% } %>' +
                     '</tr>' +
@@ -196,6 +212,7 @@ Calendar.prototype.setDateInterval = function(interval) {
 }
 
 Calendar.prototype.next = function() {
+    begindate=begindate+7;
     this._data.beginDate.add(7, 'd');
     this.sourceCallbacksCall();
     this.refresh();
@@ -203,11 +220,27 @@ Calendar.prototype.next = function() {
 };
 
 Calendar.prototype.prev = function() {
+    begindate=begindate-7;
     this._data.beginDate.subtract(7, 'd');
     this.sourceCallbacksCall();
     this.refresh();
     this.render();
 };
+
+Calendar.prototype.again = function(){
+    this.sourceCallbacksCall();
+    this.refresh();
+    this.render();
+}
+
+
+Calendar.prototype.today = function(){
+    this._data.beginDate.subtract(begindate, 'd');
+    begindate=0;
+    this.sourceCallbacksCall();
+    this.refresh();
+    this.render();
+}
 
 Calendar.prototype.onEventClick = function(callback) {
     this._clickCallbacks.push = callback;
@@ -219,8 +252,8 @@ Calendar.prototype.eventClickInit = function() {
 
         $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
         $(this).find('.calendar-table-item').addClass('active');
-
         var eventId = $(this).data('event-id');
+        currentselected=eventId;
         var event = self.getEventById(eventId);
         for (var i in self._clickCallbacks) {
             self._clickCallbacks[i].call(self, event);

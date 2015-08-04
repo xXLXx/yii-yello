@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <td class="gray-text">Address</td>
-                    <td><?= $driver->userDriver->address1 ?></td>
+                    <td><?// TODO:jovani  $driver->userDriver->address1 ?></td>
                 </tr>
                 <tr class="tr-gray">
                     <td class="gray-text">Phone</td>
@@ -104,11 +104,11 @@
                 </tr>
             </table>
             <h4>Locations</h4>
-            <div class="location-list">
-                <?php foreach ($driver->suburbs as $suburb): ?>
-                    <div class="location-item"><?= $suburb->title ?></div>
-                <?php endforeach; ?>
-            </div>
+<!--  TODO:jovani          <div class="location-list">
+                <?//php foreach ($driver->suburbs as $suburb): ?>
+                    <div class="location-item"><?//= $suburb->title ?></div>
+                <?//php endforeach; ?>
+            </div>-->
             <h4>Profile</h4>
             <div><?= $driver->userDriver->personalProfile ?></div>
             </div>
