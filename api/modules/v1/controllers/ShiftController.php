@@ -183,11 +183,25 @@ class ShiftController extends \api\common\controllers\ShiftController
      * @param integer $id Shift Id
      * @return Shift
      */
-    public function actionAcceptRequestReview()
+    public function actionAcceptRequestReview($id)
     {
-        $id = \Yii::$app->request->post('id', 0);
+        // should be post
+        // $id = \Yii::$app->request->post('id', 0);
         $shift = $this->findModel($id);
-        $shift->setStatePendingPayment();
+        // change to latest dispute
+        $reviewed = $shift->getLastShiftRequestReview($id);
+        $deliverycount = $reviewed->deliveryCount;
+        // TODO: include subscription table and find  subscription by store account. subscription table not yet created
+        $minpayment = 60; $perdelivery=5; $dollarvalue=1;
+        $payment=$deliverycount*$perdelivery*$dollarvalue;
+        if($minpayment > $payment){
+            $payment=$minpayment;
+        }
+        $shift->setStateCompleted($deliverycount, $payment);
         return $shift;
     }
+    
+
+    
+    
 }
