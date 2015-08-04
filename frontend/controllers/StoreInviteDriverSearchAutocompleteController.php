@@ -22,8 +22,6 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
         $searchText = \Yii::$app->request->get('searchText');
         $user = \Yii::$app->user->identity;
 		//TODO: Jovani, Lalit store owner central validation in basecontroller at frontend and user model.
-        //print_r($user->storeOwner);
-        //var_dump($user->storeOwner->storeCurrent->id);
         if(!isset($user->storeOwner->storeCurrent->id)){
             return "Please create store first.";
         }
@@ -36,11 +34,19 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
             ->column();
         $drivers = Driver::find()
             ->with(['image'])
-            ->andWhere(['like', 'username', $searchText])
+            ->andWhere(['like', 'email', $searchText])
+            //->where(['or', ['like', 'username', $searchText], ['like', 'email', $searchText]]) //@todo Make the or statement work
             ->andWhere(['not in', 'User.id', $ids])
             ->all();
+
         if (!$drivers) {
-            return "<div class='error_message'>Sorry there are no matches for your search. If you have an email address for the driver you can send an invite via email by selecting the “Send invite” option above.</div>";
+            $valid_email = filter_var($searchText, FILTER_VALIDATE_EMAIL);
+            if($valid_email === false){
+                return "<div class='error_message'>Sorry there are no matches for your search. If you have an email address for the driver please enter above.</div>";
+            } else {
+                return "<div class='error_message'>Sorry there are no matches for your search. If you want to invite \"$searchText\" via email then press send button.</div>";
+            }
+
         }
         return $this->renderPartial('autocomplete', [
             'drivers' => $drivers

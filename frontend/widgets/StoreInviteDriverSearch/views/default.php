@@ -5,7 +5,7 @@
     StoreInviteDriverSearchAsset::register($this);
 ?>
 
-<input type="text" class="js-driver-search-widget-search text-input small width-100" 
+<input type="text" name="invite_driver_input" class="js-driver-search-widget-search text-input small width-100"
     placeholder="<?= \Yii::t('app', 'Enter Yello ID or Email') ?>" />
 <div class="js-driver-search-widget-results" style="position:relative;">
     <?= Html::hiddenInput($formName . '[driverId]', $model->driverId, ['class' => 'js-driver-input']); ?>

@@ -42,14 +42,18 @@
 .popup.store-invite.with-error {
     min-height: 280px;
 }
+.popup.store-invite.with-error .button-container{
+    margin: 80px 0 0;
+}
+
 .with-error .search-select-popup{
     width: auto;
     border: none;
     box-shadow: none;
 }
 
-.popup.store-invite.with-error .button-container{
+/*.popup.store-invite.with-error .button-container{
     display: none;
-}
+}*/
 
 .hidden{display:none !important;}

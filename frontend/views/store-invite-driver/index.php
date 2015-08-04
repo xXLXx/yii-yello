@@ -28,14 +28,14 @@ use frontend\widgets\StoreInviteDriverSearch\StoreInviteDriverSearchWidget;
         <div class="popup-body">
             <div class="popup-body-inner request-review">
                 <?= Html::errorSummary($storeInviteDriverForm) ?>
-                <div class="clearfix j_radio_container">
+                <!--<div class="clearfix j_radio_container">
                     <div class="radio-input inline-block">
                         <input id="rating-1" name="rating" value="" type="radio" checked="checked">
-                        <label class="j_radio active" for="rating-1"><?= \Yii::t('app', 'Search on Yello') ?></label></div>
+                        <label class="j_radio active" for="rating-1"><?/*= \Yii::t('app', 'Search on Yello') */?></label></div>
                     <div class="radio-input inline-block">
                         <input id="rating-2" name="rating" value="" type="radio">
-                        <label class="j_radio" for="rating-2"><?= \Yii::t('app', 'Send invite') ?></label></div>
-                </div>
+                        <label class="j_radio" for="rating-2"><?/*= \Yii::t('app', 'Send invite') */?></label></div>
+                </div>-->
                 <?= 
                     StoreInviteDriverSearchWidget::widget([
                         'model' => $storeInviteDriverForm
