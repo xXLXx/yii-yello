@@ -30,8 +30,7 @@ class CompanyForm extends Model
     public $contact_phone;
     public $contact_email;
     public $website;
-    
-    
+
     public $block_or_unit;
     public $street_number;
     public $route;
