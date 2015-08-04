@@ -9,6 +9,8 @@ namespace api\modules\v1\controllers;
 use api\modules\v1\models\LoginForm;
 use api\modules\v1\models\PasswordResetRequestForm;
 use api\modules\v1\models\SignupForm;
+use common\models\DriverHasStore;
+use common\models\SignupInvitations;
 use Yii;
 use yii\web\Response;
 
@@ -54,10 +56,36 @@ class UserController extends \api\common\controllers\UserController
      */
     public function actionRegister()
     {
+
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        $params = Yii::$app->request->post();
+        if ($model->load($params)) {
             $user = $model->signup();
             if ($user) {
+
+                if(isset($params['invitationcode'])){
+
+                    $main_invitation = SignupInvitations::find()->where( ['invitationcode' => $params['invitationcode'] ] )->one();
+
+                    if($main_invitation){
+
+                        DriverHasStore::inviteAccepted($user->id, $main_invitation->storeownerfk, 1);
+
+                        $all_invitations = SignupInvitations::find()
+                            ->where( ['emailaddress' => $main_invitation->emailaddress ])
+                            ->andWhere( ['NOT IN', 'invitationcode', $params['invitationcode']] )
+                            ->all();
+
+                        foreach($all_invitations as $invitation){
+
+                            DriverHasStore::inviteAccepted($user->id, $invitation->storeownerfk);
+
+                        }
+
+                    }
+
+                }
+
                 return [
                     'accessToken' => $user->accessToken,
                 ];

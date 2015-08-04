@@ -828,7 +828,7 @@ a.blue-text {text-decoration:none;}
     .calendar-table tbody tr td {border-left:1px solid #d8d8d8; padding:2px 3px 0 0; text-align:center; height:62px; vertical-align:middle;}
     .calendar-table tbody tr td:first-child {border-left:none;}
     .calendar-table .toggle-popup {text-align:left;}
-        .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;}
+        .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;cursor:pointer;}
             .calendar-table-cell {display:table-cell; vertical-align:middle; border:none; border-left:3px solid #a9a9a9; position:relative; min-width:60px; text-decoration:none; color:#000;}
                 .calendar-table-cell .bold-text {word-break:break-all; display:block;}
                 
@@ -983,7 +983,7 @@ a.blue-text {text-decoration:none;}
     .create-account-block-container {width:700px; margin:28px auto 0; border:1px solid #bcc0c1; border-radius:6px;}
         .create-header {background:#f6f6f6; border:none; border-bottom:1px solid #bcc0c1; padding:10px 0; border-radius:6px 6px 0 0;}
             .step-list {text-align:center; font-size:14px;}
-                .step-item {display:inline-block; vertical-align:top; padding:0 0 0 37px; color:#bcc0c1; margin:7px 39px; position:relative; line-height:24px;}
+                .step-item {display:inline-block; vertical-align:top; padding:0 0 0 37px; color:#bcc0c1; margin:7px 29px; position:relative; line-height:24px;}
                     .step-item span {position:absolute; top:0; left:0; width:22px; height:22px; border-radius:22px; border:1px solid #bcc0c1; text-align:center; font-size:13px; line-height:20px;}
                 .step-item.active {color:#000;}
                     .step-item.active span {background:#e2e7e9;}

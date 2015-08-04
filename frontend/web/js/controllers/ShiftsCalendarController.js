@@ -149,7 +149,12 @@ var ShiftsCalendarController = {
                     start: self.current.beginDate.format('YYYY-MM-DD'),
                     end: self.current.endDate.format('YYYY-MM-DD')
                 },
-                url: self.data.copyWeeklySheetUrl
+                url: self.data.copyWeeklySheetUrl,
+                success: function(result) {
+                    //if(result == "success"){
+                        $('.js_roster_next').click();
+                    //}
+                }
             });
             
         });

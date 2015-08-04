@@ -1,6 +1,6 @@
 <div class="search-select-item js-search-select-item" data-driver-id="<?= $driver->id ?>">
     <div class="user-photo-container f-left">
-        <img src="<?= $driver->image ? $driver->image->thumblUrl : '/img/temp/01.jpg' ?>" 
+        <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/temp/01.jpg' ?>"
             alt="<?= $driver->username ?>" />
     </div>
     <div class="user-photo-info">

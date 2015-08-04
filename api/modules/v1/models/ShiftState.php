@@ -4,27 +4,57 @@
  */
 
 namespace api\modules\v1\models;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 
-
-class ShiftState extends \api\common\models\ShiftState
+class ShiftState extends \api\common\models\ShiftState implements Linkable
 {
-    public function extraFields()
-    {
-        return ['shifts'];
-    }
+    
+    
 
     /**
      * @inheritdoc
      */
-    public function fields()
+    public function getLinks()
     {
         return [
-            'id',
-            'name',
-            'title',
-            'color',
+            Link::REL_SELF => Url::to(
+                [
+                    'shiftstate/view',
+                    'id' => $this->id,
+                ],
+                true
+            ),
         ];
-    }
+    }    
+//    
+//    public function extraFields()
+//    {
+//        return ['shifts'];
+//    }
+//
+//    /**
+//     * @inheritdoc
+//     */
+//    public function fields()
+//    {
+//        return [
+//            'id',
+//            'name',
+//            'title',
+//            'color',
+//        ];
+//    }
+//
+//    public function getAll(){
+//        return ShiftState::findAll();
+//    }
+
+
+
+
+
 
     /**
      * @inheritdoc

@@ -67,8 +67,8 @@ class DriverController extends \api\common\controllers\DriverController
                 $model->save();
             }
         }
-//        return $model;
-        return $model->getErrors() ? $model->getErrors() : $model;
+        return $model;
+//        return $model->getErrors() ? $model->getErrors() : $model;
     }
 
     public function actionWorkDetails()

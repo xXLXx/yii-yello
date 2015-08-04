@@ -11,9 +11,6 @@ use Yii;
  * @property string $driverLicenseNumber
  * @property string $driverLicensePhoto
  * @property integer $cityId
- * @property integer $stateId
- * @property string $suburb
- * @property string $postcode
  * @property string $personalProfile
  * @property string $emergencyContactName
  * @property string $emergencyContactPhone
@@ -37,7 +34,7 @@ use Yii;
  *
  * @property City $city
  * @property User $user
- * @property State $state
+
  */
 class UserDriver extends AbstractModel
 {
@@ -55,7 +52,7 @@ class UserDriver extends AbstractModel
     public function rules()
     {
         $rules = [
-            [['cityId', 'isAllowedToWorkInAustralia', 'isAccredited', 'userId', 'stateId'], 'integer'],
+            [['cityId', 'isAllowedToWorkInAustralia', 'isAccredited', 'userId'], 'integer'],
             [['registeredForGst', 'isAllowedToReceiveNotifications', 'isAvailableToWork'], 'boolean'],
 //            [   [
 //                    'userId'
@@ -69,7 +66,7 @@ class UserDriver extends AbstractModel
                 [
                     'driverLicenseNumber', 'driverLicensePhoto', 'personalProfile', 
                     'emergencyContactName', 'emergencyContactPhone', 'availability', 
-                    'paymentMethod', 'status', 'address1', 'address2','suburb','postcode', 'companyName',
+                    'paymentMethod', 'status', 'address1', 'address2', 'companyName',
                     'abn', 'bankName', 'bsb', 'accountNumber'
                 ],
                 'string',
@@ -101,9 +98,7 @@ class UserDriver extends AbstractModel
             'paymentMethod' => Yii::t('app', 'Payment Method'),
             'rating' => Yii::t('app', 'Rating'),
             'status' => Yii::t('app', 'Status'),
-            'stateid' => Yii::t('app', 'State ID'),
-            'suburb' => Yii::t('app', 'Suburb'),
-            'postcode' => Yii::t('app', 'Postcode'),
+
         ];
         return array_merge(parent::attributeLabels(), $labels);
     }
@@ -117,19 +112,7 @@ class UserDriver extends AbstractModel
     {
         return $this->hasOne(City::className(), ['id' => 'cityId']);
     }
-    
 
-
-    /**
-     * Get city
-     * 
-     * @return \yii\db\ActiveQuery
-     */
-    public function getState()
-    {
-        return $this->hasOne(State::className(), ['id' => 'stateId']);
-    }
-        
     
     /**
      * Get user

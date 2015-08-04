@@ -5,7 +5,6 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\helpers\VarDumper;
 use yii\web\IdentityInterface;
-use frontend\models\CompanyForm;
 use common\models\query\UserQuery;
 
 /**

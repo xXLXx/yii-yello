@@ -249,6 +249,9 @@ Calendar.prototype.onEventClick = function(callback) {
 Calendar.prototype.eventClickInit = function() {
     var self = this;
     $('.js-event', this.getContainer()).on('click', function() {
+
+        $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
+        $(this).find('.calendar-table-item').addClass('active');
         var eventId = $(this).data('event-id');
         currentselected=eventId;
         var event = self.getEventById(eventId);
