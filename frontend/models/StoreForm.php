@@ -35,6 +35,17 @@ class StoreForm extends Model
     public $image;
     public $imageFile;
 
+    public $block_or_unit;
+    public $street_number;
+    public $route;
+    public $locality;
+    public $administrative_area_level_1;
+    public $postal_code;
+    public $country;
+    public $formatted_address;
+    public $latitude;
+    public $longitude;
+
     /**
      * @inheritdoc
      */
@@ -51,6 +62,18 @@ class StoreForm extends Model
                 'safe'
             ],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'title' => 'Store Name',
+            'administrative_area_level_1' => 'State',
+            'locality' => 'Suburb',
         ];
     }
 

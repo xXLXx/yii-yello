@@ -10,10 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $driverLicenseNumber
  * @property string $driverLicensePhoto
- * @property integer $cityId
- * @property integer $stateId
- * @property string $suburb
- * @property string $postcode
  * @property string $personalProfile
  * @property string $emergencyContactName
  * @property string $emergencyContactPhone
@@ -24,8 +20,6 @@ use Yii;
  * @property double $rating
  * @property string $status
  * @property integer $userId
- * @property string $address1
- * @property string $address2
  * @property string $companyName
  * @property boolean $registeredForGst
  * @property string $abn
@@ -35,9 +29,6 @@ use Yii;
  * @property boolean $isAllowedToReceiveNotifications
  * @property boolean $isAvailableToWork
  *
- * @property City $city
- * @property User $user
- * @property State $state
  */
 class UserDriver extends AbstractModel
 {
@@ -88,7 +79,6 @@ class UserDriver extends AbstractModel
             'id' => Yii::t('app', 'ID'),
             'driverLicenseNumber' => Yii::t('app', 'Driver License Number'),
             'driverLicensePhoto' => Yii::t('app', 'Driver License Photo'),
-            'cityId' => Yii::t('app', 'City ID'),
             'userId' => Yii::t('app', 'User ID'),
             'personalProfile' => Yii::t('app', 'Personal Profile'),
             'emergencyContactName' => Yii::t('app', 'Emergency Contact Name'),
@@ -101,9 +91,6 @@ class UserDriver extends AbstractModel
             'paymentMethod' => Yii::t('app', 'Payment Method'),
             'rating' => Yii::t('app', 'Rating'),
             'status' => Yii::t('app', 'Status'),
-            'stateid' => Yii::t('app', 'State ID'),
-            'suburb' => Yii::t('app', 'Suburb'),
-            'postcode' => Yii::t('app', 'Postcode'),
         ];
         return array_merge(parent::attributeLabels(), $labels);
     }

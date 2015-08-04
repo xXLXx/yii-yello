@@ -828,7 +828,7 @@ a.blue-text {text-decoration:none;}
     .calendar-table tbody tr td {border-left:1px solid #d8d8d8; padding:2px 3px 0 0; text-align:center; height:62px; vertical-align:middle;}
     .calendar-table tbody tr td:first-child {border-left:none;}
     .calendar-table .toggle-popup {text-align:left;}
-        .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;}
+        .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;cursor:pointer;}
             .calendar-table-cell {display:table-cell; vertical-align:middle; border:none; border-left:3px solid #a9a9a9; position:relative; min-width:60px; text-decoration:none; color:#000;}
                 .calendar-table-cell .bold-text {word-break:break-all; display:block;}
                 

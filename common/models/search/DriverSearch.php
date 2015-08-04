@@ -63,6 +63,8 @@ class DriverSearch extends Driver
             $query->andWhere([
                 'OR',
                 ['like', 'username', $params['searchText']],
+                ['like', 'firstName', $params['searchText']],
+                ['like', 'lastName', $params['searchText']],
                 ['like', 'email', $params['searchText']],
                 ['User.id' => $params['searchText']],
             ]);
@@ -106,7 +108,9 @@ class DriverSearch extends Driver
             );
         }
 
-        
+        if(!empty($params['storeid'])){
+            
+        }
         
         
         if (!empty($params['category']) && $params['category'] == 'favourites') {
@@ -146,9 +150,47 @@ class DriverSearch extends Driver
                 ]
             );
         }
+        if (!empty($params['category']) && $params['category'] == 'uninvited') {
+            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
+            $query->join('LEFT OUTER JOIN', 'driverHasStore',
+                'driverHasStore.driverId =user.id');     
+            $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
+                'StoreOwnerFavouriteDrivers.driverId =user.Id');     
+//            
+//            $query->andFilterWhere(
+//                [
+//                    [],
+//                //    ['!=','DriverHasStore.isAcceptedByDriver', 1]
+//                ]
+//            );            
+//            $query->andWhere([
+//               '!=',   'StoreOwnerFavouriteDrivers.storeOwnerId' , $storeOwner->id,
+//            ]);
+//            $query->andWhere([
+//                '!=','DriverHasStore.storeId', $storeOwner->id,
+//            ]);
+        }        
+        
         return $query;
     }
     
+    public function getCount($params){
+        $query = $this->buildQuery($params);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query
+        ]);
+        
+        if (!$this->validate()) {
+            return 0;
+        }
+
+        return $dataProvider->count;
+        
+    }
+
+
+
+
     /**
      * Creates data provider instance with search query applied
      *

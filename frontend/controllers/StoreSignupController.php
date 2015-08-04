@@ -15,6 +15,7 @@ class StoreSignupController extends BaseController
      */
     public function actionIndex()
     {
+        
         $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
@@ -31,6 +32,8 @@ class StoreSignupController extends BaseController
     }
     
     public function actionStepTwo(){
+        // cannot use address widget
+        
         $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
@@ -43,5 +46,20 @@ class StoreSignupController extends BaseController
             'model'     => $storeSignupForm
         ]);
     }
+
+    public function actionStepThree(){
+        $this->layout='signup';
+        $user = \Yii::$app->user->identity;
+        $post = \Yii::$app->request->post();
+        $storeSignupFirstStoreForm = new \frontend\models\SignupStoreFirstStore();
+        if ($storeSignupFirstStoreForm->load($post)) {
+        } else {
+            // TODO: change code to get info rom new tables:
+        }
+        return $this->render('stepthree', [
+            'model'     => $storeSignupFirstStoreForm
+        ]);
+    }    
+    
     
 }

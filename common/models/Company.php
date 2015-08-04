@@ -40,7 +40,6 @@ class Company extends BaseModel
     {
         return [
             [['companyType', 'userfk', 'registeredForGST', 'imageId', 'createdAt', 'updatedAt', 'isArchived', 'timeFormatId', 'isPrimary'], 'integer'],
-            [['createdAt', 'updatedAt'], 'required'],
             [['accountName', 'companyName', 'ABN', 'website'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 400]
         ];

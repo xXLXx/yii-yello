@@ -11,8 +11,8 @@ class m150507_015830_ModelsAddBaseField extends Migration
             'Company', 'Role', 'Driver', 'Franchiser', 'Shift', 'Store'
         ];
         foreach ($tables as $table) {
-            $this->addColumn($table, 'createdAt', Schema::TYPE_INTEGER . ' NOT NULL');
-            $this->addColumn($table, 'updatedAt', Schema::TYPE_INTEGER . ' NOT NULL');
+            $this->addColumn($table, 'createdAt', Schema::TYPE_INTEGER . ' NOT NULL default 0');
+            $this->addColumn($table, 'updatedAt', Schema::TYPE_INTEGER . ' NOT NULL default 0');
             $this->addColumn($table, 'isArchived', Schema::TYPE_BOOLEAN . ' DEFAULT 0');
         }
         $this->addColumn('User', 'isArchived', Schema::TYPE_BOOLEAN . ' DEFAULT 0');

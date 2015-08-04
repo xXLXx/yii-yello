@@ -18,6 +18,7 @@ class DriverSearchAutocompleteController extends BaseController
      */
     public function actionAutocomplete()
     {
+       
         $params = \Yii::$app->request->post();
         if (isset($params['driverGroup'])) {
             static $assoc = [

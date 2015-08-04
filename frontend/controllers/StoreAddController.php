@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\StoreForm;
 use yii\web\Controller;
 
 /**
@@ -17,6 +18,8 @@ class StoreAddController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new StoreForm();
+
+        return $this->render('index', compact('model'));
     }
 }

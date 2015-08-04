@@ -19,10 +19,10 @@ class m150506_063725_Driver extends Migration
             'personalProfile' => Schema::TYPE_STRING,
             'emergencyContactName' => Schema::TYPE_STRING,
             'emergencyContactPhone' => Schema::TYPE_STRING,
-            'availability' => Schema::TYPE_STRING . ' NOT NULL DEFAULT "roamer"',
+            'availability' => Schema::TYPE_STRING . ' NOT NULL DEFAULT \'roamer\'',
             'isAllowedToWorkInAustralia' => Schema::TYPE_BOOLEAN,
             'isAccredited' => Schema::TYPE_BOOLEAN,
-            'paymentMethod' => Schema::TYPE_STRING . ' NOT NULL DEFAULT "direct"',
+            'paymentMethod' => Schema::TYPE_STRING . ' NOT NULL DEFAULT \'direct\'',
             'rating' => Schema::TYPE_FLOAT,
             'status' => Schema::TYPE_STRING
         ], $tableOptions);

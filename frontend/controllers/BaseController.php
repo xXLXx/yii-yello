@@ -11,7 +11,15 @@ use yii\web\Controller;
  */
 class BaseController extends Controller 
 {
- public function beforeAction($action) {
+
+    
+    public function beforeAction($action) {
+     
+
+    if(defined('YII_DEBUG') && YII_DEBUG){
+        \Yii::$app->assetManager->forceCopy = true;
+    }
+     
 
         if (parent::beforeAction($action)) {
             	// this calls getSignUpState  to verify all necessary user info is there

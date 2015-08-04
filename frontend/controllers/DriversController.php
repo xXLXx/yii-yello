@@ -22,10 +22,11 @@ class DriversController extends BaseController
     public function actionIndex()
     {
         $searchParams = \Yii::$app->request->getQueryParams();
-        if(!$searchParams){
-            array_push($searchParams, ['category'=>'all']);
-            
-        }
+
+            if (!in_array('category', $searchParams)) {
+                array_push($searchParams, ['category'=>'all']);
+            }        
+        
         $searchModel = new DriverSearch();
         $dataProvider = $searchModel->search($searchParams);
         $driversCount = $dataProvider->count;
