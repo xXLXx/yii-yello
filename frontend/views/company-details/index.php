@@ -37,6 +37,7 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
 
         <fieldset>
             <div class="form-group col-md-12">
+                                <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
                 <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'companyform', 'fieldsMapping' => [
                     'street_number' => 'short_name',
                     'route' => 'long_name',
