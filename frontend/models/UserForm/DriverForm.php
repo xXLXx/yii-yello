@@ -19,6 +19,12 @@ class DriverForm extends UserForm
     public $emergencyContactName;
     public $emergencyContactPhone;
     public $userId;
+    public $company;
+    public $abn;
+    
+    
+    
+    
 
     /**
      * @inheritdoc
@@ -48,6 +54,7 @@ class DriverForm extends UserForm
      */
     public function save()
     {
+        $fullname = (string)  $this->firstName.' '.(string)$this->lastName;
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('savePersonal' . PHP_EOL, true), FILE_APPEND);
         $user = \Yii::$app->user->identity;
         $userDriver = UserDriver::findOne(['userId' => $user->id]);
@@ -78,29 +85,29 @@ class DriverForm extends UserForm
         $user->save();
         
 
-        $company = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
-        if(!$company){
-            $company = new Company();
-            $compnay->userfk = $user->id;
-            $company->isPrimary=1;
-            $company->accountName=$this->firstName.' '.$this->lastName;
-            $company->email=$user->email;
+        $companyobj = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
+        if(!$companyobj){
+            $companyobj = new Company();
+            $companyobj->userfk = $user->id;
+            $companyobj->isPrimary=1;
+            $companyobj->accountName=$this->firstName.' '.$this->lastName;
+            $companyobj->email=$user->email;
         }
         
 
         // add /update company
-        $company->registeredForGST=0;
-        $company->companyName=$this->company;
-        $company->ABN=$this->abn;
-        $company->save();
+        $companyobj->registeredForGST=0;
+        $companyobj->companyName=$this->company;
+        $companyobj->ABN=$this->abn;
+        $companyobj->save();
         
-        $companyaddress = CompanyAddress::findOne(['companyfk'=>$company->id , 'addresstitle'=>'Default']);
+        $companyaddress = CompanyAddress::findOne(['companyfk'=>$companyobj->id , 'addresstitle'=>'Default']);
         if(!$companyaddress){
             $companyaddress = new CompanyAddress();
-            $companyaddress->companyfk=$company->id;
+            $companyaddress->companyfk=$companyobj->id;
             $companyaddress->addresstype=1;
             $companyaddress->addresstitle='Default';
-            $companyaddress->contact_name=$user->$this->firstName.' '.$this->lastName;
+            $companyaddress->contact_name=$fullname;
             $companyaddress->contact_email=$user->email;
         }
         $companyaddress->save();
@@ -124,6 +131,7 @@ class DriverForm extends UserForm
         $userDriver->save();
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver->getErrors(), true), FILE_APPEND);
         $vehicle->driverId = $user->id;
+        $vehicle->setAttributes($this->getAttributes());
         $vehicle->save();
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
         $this->image = $user->image;

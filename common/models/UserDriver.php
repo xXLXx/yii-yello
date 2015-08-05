@@ -20,9 +20,6 @@ use Yii;
  * @property double $rating
  * @property string $status
  * @property integer $userId
- * @property string $companyName
- * @property boolean $registeredForGst
- * @property string $abn
  * @property string $bankName
  * @property string $bsb
  * @property integer $accountNumber
@@ -46,8 +43,8 @@ class UserDriver extends AbstractModel
     public function rules()
     {
         $rules = [
-            [['cityId', 'isAllowedToWorkInAustralia', 'isAccredited', 'userId', 'stateId'], 'integer'],
-            [['registeredForGst', 'isAllowedToReceiveNotifications', 'isAvailableToWork'], 'boolean'],
+            [['isAllowedToWorkInAustralia', 'isAccredited', 'userId'], 'integer'],
+            [['isAllowedToReceiveNotifications', 'isAvailableToWork'], 'boolean'],
 //            [   [
 //                    'userId'
 //                ],
@@ -60,8 +57,7 @@ class UserDriver extends AbstractModel
                 [
                     'driverLicenseNumber', 'driverLicensePhoto', 'personalProfile', 
                     'emergencyContactName', 'emergencyContactPhone', 'availability', 
-                    'paymentMethod', 'status', 'address1', 'address2','suburb','postcode', 'companyName',
-                    'abn', 'bankName', 'bsb', 'accountNumber'
+                    'paymentMethod', 'status', 'bankName', 'bsb', 'accountNumber'
                 ],
                 'string',
                 'max' => 255
