@@ -48,6 +48,7 @@ class ShiftRequestReview extends BaseModel
             'createdAtAsDatetime',
             'updatedAt' => 'updatedAtAsTimestamp',
             'updatedAtAsDatetime',
+            'userId'
         ];
     }
 

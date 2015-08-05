@@ -620,6 +620,19 @@ class Shift extends BaseModel
     /**
      * @return ShiftRequestReview|null
      */
+    public function getLastShiftRequestReview($id)
+    {
+        return $this->getShiftRequestReview()
+            ->where(['shiftId' => $id])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }    
+    
+
+    /**
+     * @return ShiftRequestReview|null
+     */
     public function getLastUserShiftRequestReview()
     {
         $userId = Yii::$app->user->identity->id;
