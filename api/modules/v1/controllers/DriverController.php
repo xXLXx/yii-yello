@@ -43,7 +43,12 @@ class DriverController extends \api\common\controllers\DriverController
         if ($model->load($post)) {
             if ($model->validate()) {
                 $model->save();
+                return $model;
+            }else{
+                return ['response'=>'did not validate',$model];
             }
+        }else{
+                return 'post required';
         }
 
         return $model;
@@ -62,8 +67,8 @@ class DriverController extends \api\common\controllers\DriverController
                 $model->save();
             }
         }
-//        return $model;
-        return $model->getErrors() ? $model->getErrors() : $model;
+        return $model;
+//        return $model->getErrors() ? $model->getErrors() : $model;
     }
 
     public function actionWorkDetails()

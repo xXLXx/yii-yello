@@ -4,6 +4,10 @@ namespace frontend\models\UserForm;
 use common\models\Image;
 use common\models\UserDriver;
 use common\models\Vehicle;
+use common\models\Company;
+use common\models\CompanyAddress;
+use common\models\Companytype;
+use common\models\Address;
 use yii\web\UploadedFile;
 
 /**
@@ -11,13 +15,10 @@ use yii\web\UploadedFile;
  */
 class DriverForm extends UserForm
 {
-    public $cityId;
     public $personalProfile;
     public $emergencyContactName;
     public $emergencyContactPhone;
     public $userId;
-    public $address1;
-    public $address2;
 
     /**
      * @inheritdoc
@@ -25,7 +26,7 @@ class DriverForm extends UserForm
     public function rules()
     {
         return [
-            [['userId', 'cityId'], 'integer'],
+            [['userId'], 'integer'],
             [['firstName', 'lastName'], 'filter', 'filter' => 'trim'],
             ['firstName', 'required',
                 'message' => \Yii::t('app', 'Please enter your First Name.')
@@ -33,19 +34,10 @@ class DriverForm extends UserForm
             ['lastName', 'required',
                 'message' => \Yii::t('app', 'Please enter your Last Name.')
             ],
-            ['cityId', 'required',
-                'message' => \Yii::t('app', 'Please enter your city.')
-            ],
-            ['address1', 'required',
-                'message' => \Yii::t('app', 'Please enter your Address(Line1).')
-            ],
-            ['address2', 'required',
-                'message' => \Yii::t('app', 'Please enter your Address(Line2).')
-            ],
             ['personalProfile', 'required',
                 'message' => \Yii::t('app', 'Please enter your Personal Profile.')
             ],
-            [['address1', 'address2', 'emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
+            [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
         ];
@@ -66,6 +58,11 @@ class DriverForm extends UserForm
         if (!$vehicle) {
             $vehicle = new Vehicle();
         }
+        $company = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
+        if(!$company){
+            $company = new Company();
+        }
+        
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imagePersonal' . PHP_EOL, true), FILE_APPEND);
         if (isset($_FILES['imageFile'])) {
             $image = new Image();
@@ -78,9 +75,23 @@ class DriverForm extends UserForm
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
             }
         }
+
+        
         $user->firstName = $this->firstName;
         $user->lastName = $this->lastName;
         $user->save();
+        
+        // add company
+        $compnay->userfk = $user->id;
+        $company->isPrimary=1;
+        $company->registeredForGST=0;
+        $company->accountName=$this->firstName.' '.$this->lastName;
+        $company->companyName=$this->company;
+        $company->ABN->$this->abn;
+        
+               
+        
+        
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($user->toArray(), true), FILE_APPEND);
         $userDriver->setAttributes($this->getAttributes());
         $userDriver->userId = $user->id;

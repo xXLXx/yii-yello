@@ -42,8 +42,9 @@ class ShiftStateBehavior extends BaseBehavior
         $this->setStateByName(ShiftState::STATE_ACTIVE);
         $shift = $this->owner;
         if (empty($shift->actualStart)) {
-            $timeZone = new \DateTimeZone('UTC');
-            $dt = new \DateTime('now', $timeZone);
+//            $timeZone = new \DateTimeZone('UTC');
+//            $dt = new \DateTime('now', $timeZone);
+            $dt = new \DateTime('now');
             $shift->actualStart = $dt->format('Y-m-d H:i:s');
         }
         $shift->update();
@@ -58,7 +59,10 @@ class ShiftStateBehavior extends BaseBehavior
     public function setStateCompleted($deliveryCount, $payment)
     {
         $this->setStateByName(ShiftState::STATE_COMPLETED);
-        $this->owner->update();
+        $shift = $this->owner;
+        $shift->deliveryCount = $deliveryCount;
+        $shift->payment = $payment;
+        $shift->update();
     }
     
     /**
