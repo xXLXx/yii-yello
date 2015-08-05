@@ -58,10 +58,6 @@ class DriverForm extends UserForm
         if (!$vehicle) {
             $vehicle = new Vehicle();
         }
-        $company = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
-        if(!$company){
-            $company = new Company();
-        }
         
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imagePersonal' . PHP_EOL, true), FILE_APPEND);
         if (isset($_FILES['imageFile'])) {
@@ -81,19 +77,49 @@ class DriverForm extends UserForm
         $user->lastName = $this->lastName;
         $user->save();
         
-        // add company
-        $compnay->userfk = $user->id;
-        $company->isPrimary=1;
+
+        $company = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
+        if(!$company){
+            $company = new Company();
+            $compnay->userfk = $user->id;
+            $company->isPrimary=1;
+            $company->accountName=$this->firstName.' '.$this->lastName;
+            $company->email=$user->email;
+        }
+        
+
+        // add /update company
         $company->registeredForGST=0;
-        $company->accountName=$this->firstName.' '.$this->lastName;
         $company->companyName=$this->company;
-        $company->ABN->$this->abn;
+        $company->ABN=$this->abn;
+        $company->save();
         
-               
+        $companyaddress = CompanyAddress::findOne(['companyfk'=>$company->id , 'addresstitle'=>'Default']);
+        if(!$companyaddress){
+            $companyaddress = new CompanyAddress();
+            $companyaddress->companyfk=$company->id;
+            $companyaddress->addresstype=1;
+            $companyaddress->addresstitle='Default';
+            $companyaddress->contact_name=$user->$this->firstName.' '.$this->lastName;
+            $companyaddress->contact_email=$user->email;
+        }
+        $companyaddress->save();
         
+        $address= Address::findOne(['idaddress'=>$companyaddress->idcompanyaddress]);
+        if(!$address){
+            $address = new Address();
+        }
+        $address->save();
+        $companyaddress->addressfk=$address->idaddress;
+        $companyaddress->save();
+        $address->setAttributes($this->getattributes());
+        $address->save();
+        // todo: jovani - add logic to figure out timezone and currency
         
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($user->toArray(), true), FILE_APPEND);
         $userDriver->setAttributes($this->getAttributes());
+        
+        
         $userDriver->userId = $user->id;
         $userDriver->save();
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver->getErrors(), true), FILE_APPEND);
