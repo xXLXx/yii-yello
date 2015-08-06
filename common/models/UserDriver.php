@@ -27,7 +27,7 @@ use Yii;
  * @property boolean $isAvailableToWork
  *
  */
-class UserDriver extends AbstractModel
+class UserDriver extends BaseModel
 {
     /**
      * @inheritdoc

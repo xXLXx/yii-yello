@@ -76,6 +76,7 @@ class User extends BaseModel implements IdentityInterface
         return [
             'image',
             'userDriver',
+            'address',
         ];
     }
 
@@ -427,11 +428,34 @@ class User extends BaseModel implements IdentityInterface
     /**
      * Get company
      * 
-     * @return \yii\db\ActiveRecord 
+     * @return \yii\db\ActiveQuery
      */
     public function getCompany()
     {
-        return $this->hasOne(Company::className(), ['userfk' => 'id', 'isprimary'=>1]);
+        return $this->hasOne(Company::className(), ['userfk' => 'id'])
+            ->where(['isprimary' => 1]);
+    }
+
+    /**
+     * Get Company Address
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompanyAddress()
+    {
+        return $this->hasOne(CompanyAddress::className(), ['companyfk' => 'id'])
+            ->via('company');
+    }
+
+    /**
+     * Get Address
+     *
+     * @return \yii\db\ActiveRecord
+     */
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
+            ->via('companyAddress');
     }
 
     /**

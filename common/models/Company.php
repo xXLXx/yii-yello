@@ -67,4 +67,15 @@ class Company extends BaseModel
             'timeFormatId' => Yii::t('app', 'Time Format ID'),
         ];
     }
+
+    /**
+     * Get Address
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddresses()
+    {
+        return $this->hasMany(Address::className(), ['idaddress' => 'addressfk'])->
+            viaTable('companyaddress', ['companyfk' => 'id']);
+    }
 }
