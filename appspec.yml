@@ -1,5 +1,5 @@
-# 1) Copy only my-file.txt to the destination folder c:\temp.
-#
+version: 0.0
+os: windows
 files:
   - source: \
     destination: c:\inetpub\wwwroot\yii\autodeploy
