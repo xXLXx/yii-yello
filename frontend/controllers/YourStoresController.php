@@ -17,7 +17,7 @@ class YourStoresController extends Controller
 {
     public function behaviors()
     {
-        return [
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['index'],
@@ -40,7 +40,7 @@ class YourStoresController extends Controller
 
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

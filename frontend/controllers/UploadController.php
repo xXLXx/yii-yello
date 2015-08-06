@@ -19,7 +19,7 @@ class UploadController extends BaseController
      */
     public function behaviors()
     {
-        return [
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['index', 'image'],
@@ -41,7 +41,7 @@ class UploadController extends BaseController
                     'image'  => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

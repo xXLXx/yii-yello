@@ -22,7 +22,7 @@ class SettingsMenuAggregatorController extends BaseController
      */
     public function behaviors()
     {
-        return [
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(),  [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['users'],
@@ -40,7 +40,7 @@ class SettingsMenuAggregatorController extends BaseController
 
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

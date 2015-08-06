@@ -25,6 +25,7 @@ use common\models\query\UserQuery;
  * @property integer $imageId imageId
  * @property Boolean $hasExtendedRights has extended rights
  * @property Boolean $isBlocked is user blocked
+ * @property integer $signup_step_completed
  * @property User $parentUser parent user
  * 
  * @property StoreOwner $storeOwner store Owner

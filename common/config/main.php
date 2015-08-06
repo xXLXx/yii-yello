@@ -105,6 +105,10 @@ return [
             'class' => 'yii\web\User',
             'identityClass' => 'common\models\User',
         ],
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'forceCopy' => YII_DEBUG,
+        ],
     ],
     'controllerMap' => [
         'fixture' => [

@@ -24,7 +24,7 @@ class SettingsFranchiserController extends BaseController
      */
     public function behaviors()
     {
-        return [
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['users', 'invitations'],
@@ -42,7 +42,7 @@ class SettingsFranchiserController extends BaseController
 
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

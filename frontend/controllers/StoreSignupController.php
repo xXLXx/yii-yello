@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\models\Role;
+use yii\filters\AccessControl;
+
 
 /**
  * Company details controller
@@ -10,6 +13,24 @@ namespace frontend\controllers;
  */
 class StoreSignupController extends BaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => [Role::ROLE_STORE_OWNER]
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Company details page
      */
