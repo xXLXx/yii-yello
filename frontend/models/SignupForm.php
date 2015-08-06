@@ -21,7 +21,8 @@ class SignupForm extends Model
     protected $_rolesAvailable = [
         Role::ROLE_FRANCHISER,
         Role::ROLE_MENU_AGGREGATOR,
-        Role::ROLE_STORE_OWNER
+        Role::ROLE_STORE_OWNER,
+        Role::ROLE_DRIVER
     ];
 
     public $firstName;

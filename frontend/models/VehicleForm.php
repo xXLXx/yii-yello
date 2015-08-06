@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 use common\models\Image;
+use common\models\UserDriver;
 use common\models\Vehicle;
 use yii\web\UploadedFile;
 use yii\base\Model;
@@ -88,5 +89,15 @@ class VehicleForm extends Model
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->getErrors(), true), FILE_APPEND);
         $this->licensePhoto = $vehicle->licensePhoto;
         $this->vehiclePhoto = $vehicle->image;
+
+        $userDriver = UserDriver::findOne(['userId' => $user->id]);
+        if (!$userDriver) {
+            $userDriver = new UserDriver();
+        }
+        $userDriver->driverLicenseNumber = $this->licenseNumber;
+        $userDriver->save();
+
+        $user->signup_step_completed = 2;
+        $user->save();
     }
 }

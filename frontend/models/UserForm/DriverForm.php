@@ -125,8 +125,7 @@ class DriverForm extends UserForm
         
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($user->toArray(), true), FILE_APPEND);
         $userDriver->setAttributes($this->getAttributes());
-        
-        
+
         $userDriver->userId = $user->id;
         $userDriver->save();
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver->getErrors(), true), FILE_APPEND);
@@ -136,5 +135,9 @@ class DriverForm extends UserForm
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
         $this->image = $user->image;
         $this->userId = $user->id;
+
+        $user->signup_step_completed = 1;
+        $user->save();
+
     }
 }

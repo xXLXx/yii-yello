@@ -23,7 +23,7 @@ class DriverSignupStep3 extends Model
     
 
 
-    public $bankname;
+    public $bankName;
     public $bsb;
     public $accountNumber;
     public $agreedDriverTandC;
@@ -38,7 +38,15 @@ class DriverSignupStep3 extends Model
     {
         //TODO:jovani all fields are required.
         return [
-            
+            [
+                [
+                    'isAllowedToWorkInAustralia', 'companyName', 'registeredForGST', 'abn', 'bankName', 'bsb', 'accountNumber', 'agreedDriverTandC'
+                ],
+                'required'
+            ],
+            [
+                'agreedDriverTandC', 'compare', 'compareValue' => true, 'message' => 'You must agree to the terms and conditions'
+            ]
             ];
     }
 

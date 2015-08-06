@@ -63,5 +63,8 @@ class WorkDetailsForm extends Model
             }
         }
 
+        $user->signup_step_completed = 3;
+        $user->save();
+
     }
 }

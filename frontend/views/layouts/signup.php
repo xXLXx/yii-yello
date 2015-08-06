@@ -60,7 +60,7 @@ AppAsset::register($this);
 <body>
     <?php $this->beginBody() ?>
         <a class="logo masthead" href="/" title="Yello">Yello</a>
-        <a class="link-icon font-log-in pull-right" style="top:41px;right:42px;height:60px;" href="javascript:alert('fix this link);">Sign Out</a>
+        <a class="link-icon font-log-in pull-right" style="top:41px;right:42px;height:60px;" href="<?= yii\helpers\Url::to('/site/logout') ?>">Sign Out</a>
         <div class="" style="margin:30px;text-align:center;">
                     <?= $content ?>
             

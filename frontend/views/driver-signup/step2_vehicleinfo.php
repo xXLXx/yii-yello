@@ -33,7 +33,8 @@ $this->title = 'Driver Signup / Yello';
                         ]);
                      ?>
                      <?= Html::activeHiddenInput($model, 'id'); ?>           
-                    
+
+
                     
                     
 
@@ -47,7 +48,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'vehicletypeid')  ->radioList(
+                                <?php echo $form->field($model, 'vehicleTypeId')  ->radioList(
                             [1 => 'Car', 2 => 'Bike'],
                             [
                                 'item' => function($index, $label, $name, $checked, $value) { //todo: fix layout to match other radios on site.
@@ -63,11 +64,13 @@ $this->title = 'Driver Signup / Yello';
                             ]
                         )
                     ->label(false);; ?>
+
                                <?php echo $form->field($model, 'make') ?>
+                                <?php echo $form->field($model, 'registration') ?>
                                <?php echo $form->field($model, 'model',['options'=>['class'=>'col col-sm-8 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:0;']]) ?>
                                <?php echo $form->field($model, 'year',['options'=>['class'=>'col col-sm-4 col-md-3 col-lg-3 pull-right','style'=>'padding-left:0;padding-right:0;']]) ?>
                                 
-                                <div class="input-block">
+                                <div class="input-block inline-block">
                                     <div class="company-logo">
                                         <div class="company-logo-container no-photo f-left"></div>
                                         <div class="company-info">
@@ -79,7 +82,7 @@ $this->title = 'Driver Signup / Yello';
                                             </div>
                                         </div>
                                     </div>
-                                </div>                    
+                                </div>
 
 
                                 

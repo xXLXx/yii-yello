@@ -16,7 +16,7 @@ class DriverSignupStep2 extends Model
     public $id; // storeid
     
     // company address
-    public $vehicletypeid;
+    public $vehicleTypeId;
     public $registration;
     
     public $make;
@@ -34,14 +34,23 @@ class DriverSignupStep2 extends Model
     {
         //TODO:jovani all fields are required.
         return [
-            
-            ];
+            [
+                [
+                    'registration', 'make', 'model', 'year','licenseNumber'
+                ],
+                'required'
+            ],
+            ['year', 'integer', 'min' => 2000],
+            [
+                'vehicleTypeId', 'required', 'message' => \Yii::t('app', 'Please select Vehicle Type.')
+            ]
+        ];
     }
 
     public function attributeLabels()
     {
         $labels = [
-            'vehicletypeid'=> \Yii::t('app', 'Vehicle Type'), // vehicle types from database - radio buttons
+            'vehicleTypeId'=> \Yii::t('app', 'Vehicle Type'), // vehicle types from database - radio buttons
          
         ];
         return array_merge(parent::attributeLabels(), $labels);

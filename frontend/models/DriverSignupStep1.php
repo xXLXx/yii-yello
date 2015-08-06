@@ -16,9 +16,9 @@ class DriverSignupStep1 extends Model
     public $id; // storeid
     
     // company address
-    public $emergencycontactname;
-    public $emergencycontactphone;
-    public $personalprofile;
+    public $emergencyContactName;
+    public $emergencyContactPhone;
+    public $personalProfile;
     
     public $block_or_unit;
     public $street_number;
@@ -38,8 +38,17 @@ class DriverSignupStep1 extends Model
         return [
             [
                 [
+                    'emergencyContactName', 'emergencyContactPhone', 'personalProfile','formatted_address'
+                ],
+                'required'
+            ],
+            [
+                'emergencyContactPhone', 'number'
+            ],
+            [
+                [
                     'id', 
-                    'emergencycontactname', 'emergencycontactphone', 'personalprofile',
+                    'emergencyContactName', 'emergencyContactPhone', 'personalProfile',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
                     'formatted_address'
                 ],
@@ -60,9 +69,9 @@ class DriverSignupStep1 extends Model
             'administrative_area_level_1'=> \Yii::t('app', 'State'),
             'postal_code'=> \Yii::t('app', 'Postcode'),
             'locality'=> \Yii::t('app', 'Suburb'),
-            'emergencycontactname'=> \Yii::t('app', 'Name'),
-            'emergencycontactphone'=> \Yii::t('app', 'Phone'),
-            'personalprofile'=> \Yii::t('app','')
+            'emergencyContactName'=> \Yii::t('app', 'Name'),
+            'emergencyContactPhone'=> \Yii::t('app', 'Phone'),
+            'personalProfile'=> \Yii::t('app','')
             
         ];
         return array_merge(parent::attributeLabels(), $labels);

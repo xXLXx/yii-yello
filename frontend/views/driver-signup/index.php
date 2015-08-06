@@ -49,8 +49,9 @@ $this->title = 'Driver Signup / Yello';
                             <div class="col col-md-6">
                                 <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
                                 <div class="form-group">
-                                    <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'storesignupform', 'fieldsMapping' => [
-                                        'subpremise' => 'long_name',
+                                    <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'driversignupstep1', 'fieldsMapping' => [
+                                        //'subpremise' => 'long_name',
+                                        'block_or_unit' => 'short_name',
                                         'street_number' => 'short_name',
                                         'route' => 'long_name',
                                         'locality' => 'long_name',
@@ -65,7 +66,7 @@ $this->title = 'Driver Signup / Yello';
                                     <?php echo $form->field($model, 'locality',['inputOptions'=>['class'=>'form-control','disabled'=>'true'] ,'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;'] ]); ?>
                                     <?php echo $form->field($model, 'administrative_area_level_1',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
                                     <?php echo $form->field($model, 'postal_code',['inputOptions'=>['class'=>'form-control stripeform','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3 ','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'country',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>     
+                                    <?php echo $form->field($model, 'country',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
                                 </div>
                             </div>
                         </div>
@@ -85,8 +86,8 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'emergencycontactname'); ?>
-                                <?php echo $form->field($model, 'emergencycontactphone'); ?>
+                                <?php echo $form->field($model, 'emergencyContactName'); ?>
+                                <?php echo $form->field($model, 'emergencyContactPhone'); ?>
                             </div>
                         </div>
                     </div>
@@ -104,7 +105,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'personalprofile')->textarea(); ?>
+                                <?php echo $form->field($model, 'personalProfile')->textarea(); ?>
 
                                 <div class="input-block">
                                     <div class="company-logo">
@@ -118,7 +119,8 @@ $this->title = 'Driver Signup / Yello';
                                             </div>
                                         </div>
                                     </div>
-                                </div>                    
+                                </div>
+
 
 
                             </div>

@@ -54,12 +54,12 @@ $this->title = 'Driver Signup / Yello';
                         </div>
                     </div>
 
-                    
 
-                    
+
+
                     <hr style="width:90%;margin:30px;">
-                    
-                    
+
+
                     <div class="create-body">
                         <div class="row">
                             <div class="col col-md-6">
@@ -70,7 +70,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                               <?php echo $form->field($model, 'bankname') ?>
+                               <?php echo $form->field($model, 'bankName') ?>
                                <?php echo $form->field($model, 'bsb') ?>
                                <?php echo $form->field($model, 'accountNumber') ?>
                             </div>
