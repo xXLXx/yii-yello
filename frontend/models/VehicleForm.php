@@ -97,7 +97,5 @@ class VehicleForm extends Model
         $userDriver->driverLicenseNumber = $this->licenseNumber;
         $userDriver->save();
 
-        $user->signup_step_completed = 2;
-        $user->save();
     }
 }

@@ -4,12 +4,15 @@ namespace frontend\controllers;
 
 use api\common\models\WorkDetailsForm;
 use common\models\Driver;
+use common\models\Image;
+use common\models\Vehicle;
 use frontend\models\UserForm\DriverForm;
 use frontend\models\VehicleForm;
 use yii\helpers\Json;
 use common\models\Company;
 use common\models\CompanyAddress;
 use common\models\Address;
+use yii\web\UploadedFile;
 
 /**
  * Driver list controller
@@ -38,29 +41,20 @@ class DriverSignupController extends BaseController
         $model = new DriverForm();
         if ($model->load($post)) {
             if ($model->validate()) {
+
                 $model->save();
 
-                $companyobj = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
-
-                $companyaddress = CompanyAddress::findOne(['companyfk'=>$companyobj->id , 'addresstitle'=>'Default']);
-
-                $address= Address::findOne(['idaddress'=>$companyaddress->idcompanyaddress]);
-
-                if(!$address){
-                    $address = new Address();
+                if(isset($_FILES['DriverSignupStep1']['name']['imageFile'])){
+                    $user->imageId = $this->saveImage($model, $driversignupform, 'imageFile');
                 }
 
-                $address->save();
-                $companyaddress->addressfk = $address->idaddress;
-                $companyaddress->save();
+                $this->saveAddress();
 
-                $post['Address'] = $post['DriverSignupStep1'];
-
-                $address->load($post);
-                $address->setAttributes($address->getattributes());
-                $address->save();
+                $user->signup_step_completed = 1;
+                $user->save();
 
                 $this->refresh();
+
             } else {
                 return $this->render('index', [
                     'model'     => $driversignupform,
@@ -95,7 +89,22 @@ class DriverSignupController extends BaseController
 
            if ($model->validate()) {
                 $model->save();
-                $this->refresh();
+
+               $vehicle = Vehicle::findOne(['driverId' => $user->id]);
+               if(isset($_FILES['DriverSignupStep2']['name']['vehiclePhotoFile'])){
+                   $vehicle->imageId = $this->saveImage($model, $driversignupform, 'vehiclePhotoFile');
+               }
+
+               if(isset($_FILES['DriverSignupStep2']['name']['licensePhotoFile'])){
+                   $vehicle->licensePhotoId = $this->saveImage($model, $driversignupform, 'licensePhotoFile');
+               }
+               $vehicle->save();
+
+               $user->signup_step_completed = 2;
+               $user->save();
+
+               $this->refresh();
+
             } else {
                return $this->render('step2_vehicleinfo', [
                    'model'     => $driversignupform,
@@ -128,6 +137,10 @@ class DriverSignupController extends BaseController
             if ($model->load($post)) {
                 if ($model->validate()) {
                     $model->save();
+
+                    $user->signup_step_completed = 3;
+                    $user->save();
+
                     $this->redirect('/driver/index');
                 } else {
                     return $this->render('step3_workinfo', [
@@ -144,6 +157,54 @@ class DriverSignupController extends BaseController
 
     }
 
+    public function saveImage($model, $driversignupform, $image_name){
+
+        $webPath = \Yii::$app->basePath . '/web';
+
+        $imageDir = $webPath . '/upload/images/';
+        if ( ! file_exists($imageDir) ) {
+            FileHelper::createDirectory($imageDir);
+        }
+
+        $image_file = UploadedFile::getInstance($driversignupform, $image_name);
+        //$img_path = $imageDir . $model->imageFile->baseName . '.' . $model->imageFile->extension;
+        //$model->imageFile->saveAs( $img_path );
+
+        $image = new Image();
+        $image->imageFile = $image_file;
+        if ($image->imageFile) {
+            $image->save();
+            $image->saveFiles();
+            $image->save();
+            return $image->id;
+        }
+
+    }
+
+    public function saveAddress(){
+
+        $user = \Yii::$app->user->identity;
+        $post = \Yii::$app->request->post();
+
+        $companyobj = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
+
+        $companyaddress = CompanyAddress::findOne(['companyfk'=>$companyobj->id , 'addresstitle'=>'Default']);
+
+        $address= Address::findOne(['idaddress'=>$companyaddress->idcompanyaddress]);
+
+        if(!$address){
+            $address = new Address();
+        }
+
+        $companyaddress->addressfk = $address->idaddress;
+        $companyaddress->save();
+
+        $post['Address'] = $post['DriverSignupStep1'];
+
+        $address->load($post);
+        $address->setAttributes($address->getattributes());
+        $address->save();
+    }
 
 
 }

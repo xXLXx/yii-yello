@@ -136,8 +136,5 @@ class DriverForm extends UserForm
         $this->image = $user->image;
         $this->userId = $user->id;
 
-        $user->signup_step_completed = 1;
-        $user->save();
-
     }
 }

@@ -26,7 +26,10 @@ class DriverSignupStep2 extends Model
     
     public $licenseNumber;
     public $licensePhotoId;
-    
+
+    public $vehiclePhotoFile;
+    public $licensePhotoFile;
+
     /**
      * @inheritdoc
      */

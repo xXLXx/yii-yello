@@ -28,7 +28,8 @@ class DriverSignupStep1 extends Model
     public $postal_code;
     public $country;
     public $formatted_address;
-    
+    public $imageFile;
+
     /**
      * @inheritdoc
      */

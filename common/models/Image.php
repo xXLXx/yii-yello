@@ -60,9 +60,10 @@ class Image extends \common\models\BaseModel
         if ( ! file_exists($imageDir) ) {
             FileHelper::createDirectory($imageDir);
         }
-        
-        
-        $ext='';
+
+
+        $ext = $this->imageFile->extension;
+        /*$ext='';
         $mimetype = \yii\helpers\FileHelper::getMimeType($this->imageFile);
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imageMimeType: '.$mimetype . PHP_EOL, true), FILE_APPEND);
         switch ($mimetype){
@@ -80,7 +81,7 @@ class Image extends \common\models\BaseModel
 
         if($ext==''){
             return false;
-        }
+        }*/
 
         $originalUrl = '/upload/images/' . $this->id . '.'.$ext;
             
