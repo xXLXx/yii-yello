@@ -21,6 +21,22 @@ class UserForm extends AbstractForm
     public $image;
     public $roleId;
     public $isBlocked;
+
+    public $block_or_unit;
+    public $street_number;
+    public $route;
+    public $locality;
+    public $administrative_area_level_1;
+    public $postal_code;
+    public $country;
+    public $latitude;
+    public $longitude;
+    public $googleplaceid;
+
+    /** for backward-compatibility **/
+    public $lat;
+    public $lng;
+    public $placeid;
     
     /**
      * @inheritdoc
@@ -46,6 +62,8 @@ class UserForm extends AbstractForm
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
             [['isBlocked'], 'boolean'],
+            [['block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code',
+                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
         ];
     }
     

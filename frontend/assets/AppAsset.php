@@ -22,7 +22,8 @@ class AppAsset extends AssetBundle
         'css/styles.css',
         'css/colorbox.css',
         'css/main.css',
-        'css/vanilla.css'
+        'css/vanilla.css',
+        'css/datepicker.css'
     ];
     public $js = [
         'js/cusel-2.5.js',
@@ -37,7 +38,8 @@ class AppAsset extends AssetBundle
         'js/helpers/WaitHelper.js',
         'js/jquery.colorbox-min.js',
         'js/ImageUploadPreview.js',
-        'js/vanilla.js'
+        'js/vanilla.js',
+        'js/bootstrap-datepicker.js'
     ];
     public $depends = [
         'yii\web\YiiAsset'

@@ -67,6 +67,16 @@ class UserDriver extends BaseModel
     }
 
     /**
+     * Override BaseModel default timestamp behavior
+     *
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [];
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
