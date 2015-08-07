@@ -6,7 +6,7 @@
 namespace api\modules\v1\models;
 
 
-class User extends \api\common\models\User
+class User extends \common\models\User
 {
 
 }
