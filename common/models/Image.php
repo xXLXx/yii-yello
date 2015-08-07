@@ -54,6 +54,10 @@ class Image extends \common\models\BaseModel
 
     public function saveFiles()
     {
+        // just to generate the id.
+        // might be better to use random names.
+
+        $this->save(false);
         $webPath = Yii::$app->basePath . '/web';
 
         $imageDir = $webPath . '/upload/images/';
@@ -63,7 +67,7 @@ class Image extends \common\models\BaseModel
         
         
         $ext='';
-        $mimetype = \yii\helpers\FileHelper::getMimeType($this->imageFile);
+        $mimetype = \yii\helpers\FileHelper::getMimeType($this->imageFile->tempName);
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imageMimeType: '.$mimetype . PHP_EOL, true), FILE_APPEND);
         switch ($mimetype){
             case 'image/jpeg':

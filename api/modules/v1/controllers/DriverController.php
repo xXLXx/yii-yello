@@ -45,13 +45,13 @@ class DriverController extends \api\common\controllers\DriverController
                 $model->save();
                 return $model;
             }else{
-                return ['response'=>'did not validate',$model];
+                return ['response'=>'did not validate', $model];
             }
-        }else{
+        } else {
                 return 'post required';
         }
 
-        return $model;
+//        return $model;
 //        return $model->getErrors() ? $model->getErrors() : $model;
     }
 

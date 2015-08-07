@@ -56,6 +56,10 @@ class DriverForm extends UserForm
      */
     public function save()
     {
+        if (!$this->validate()) {
+            return false;
+        }
+
         $transaction = \Yii::$app->db->beginTransaction();
 
         try {
@@ -70,7 +74,6 @@ class DriverForm extends UserForm
                 $image = new Image();
                 $image->imageFile = UploadedFile::getInstanceByName('imageFile');
                 if ($image->imageFile) {
-                    $image->save();
                     $image->saveFiles();
                     $image->save();
                     $user->imageId = $image->id;
@@ -103,6 +106,18 @@ class DriverForm extends UserForm
                 $this->addError(key($error), current($error));
 
                 throw new \yii\db\Exception(current($error));
+            }
+
+            if (!empty($this->lat)) {
+                $this->latitude = $this->lat;
+            }
+
+            if (!empty($this->lng)) {
+                $this->longitude = $this->lng;
+            }
+
+            if (!empty($this->googleplaceid)) {
+                $this->placeid = $this->googleplaceid;
             }
 
             $companyaddress = CompanyAddress::findOneOrCreate(['companyfk' => $company->id , 'addresstitle' => 'Default']);
