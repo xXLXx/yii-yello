@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\FileHelper;
+use yii\helpers\Url;
+
 /**
  * This is the model class for table "Image".
  *
@@ -49,6 +51,24 @@ class Image extends \common\models\BaseModel
             'thumbUrl' => Yii::t('app', 'Thumb Url'),
             'title' => Yii::t('app', 'Title'),
             'alt' => Yii::t('app', 'Alt'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        return [
+            'id',
+            'title',
+            'alt',
+            'originalUrl' => function ($model, $field) {
+                return Url::base(true) . $model->$field;
+            },
+            'thumbUrl' => function ($model, $field) {
+                return Url::base(true) . $model->$field;
+            },
         ];
     }
 
