@@ -62,14 +62,18 @@ class DriverForm extends UserForm
         }
 
         $transaction = \Yii::$app->db->beginTransaction();
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','=================='.PHP_EOL.'    Here we go with another friggin signup    '.PHP_EOL.'==============='.PHP_EOL, FILE_APPEND);
+          //  file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','=================='.PHP_EOL.'    submit:    ' . var_export($this->toArray() . PHP_EOL, true).PHP_EOL.'==============='.PHP_EOL, FILE_APPEND);
 
         try {
             $fullname = (string)  $this->firstName.' '.(string)$this->lastName;
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the savePersonal    '.PHP_EOL , FILE_APPEND);
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('savePersonal' . PHP_EOL, true), FILE_APPEND);
             $user = \Yii::$app->user->identity;
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
             $vehicle = Vehicle::findOneOrCreate(['driverId' => $user->id]);
 
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the imagePersonal    '.PHP_EOL , FILE_APPEND);
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('imagePersonal' . PHP_EOL, true), FILE_APPEND);
             if (isset($_FILES['imageFile'])) {
                 $image = new Image();
@@ -99,7 +103,7 @@ class DriverForm extends UserForm
             }
 
             // add /update company
-            $company->registeredForGST=0;
+            $company->registeredForGST=  $this->registeredForGST;
             $company->companyName=$this->company;
             $company->ABN=$this->abn;
             if (!$company->save()) {
@@ -109,6 +113,11 @@ class DriverForm extends UserForm
                 throw new \yii\db\Exception(current($error));
             }
 
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the Company    '.PHP_EOL , FILE_APPEND);
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($company->toArray() . PHP_EOL, true), FILE_APPEND);
+            
+            
+            
             if (!empty($this->lat)) {
                 $this->latitude = $this->lat;
             }
@@ -117,8 +126,8 @@ class DriverForm extends UserForm
                 $this->longitude = $this->lng;
             }
 
-            if (!empty($this->googleplaceid)) {
-                $this->placeid = $this->googleplaceid;
+            if (!empty($this->placeid)) {
+                $this->googleplaceid = $this->placeid;
             }
 
             $companyaddress = CompanyAddress::findOneOrCreate(['companyfk' => $company->id , 'addresstitle' => 'Default']);
@@ -154,8 +163,12 @@ class DriverForm extends UserForm
                 throw new \yii\db\Exception(current($error));
             }
 
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the CompanyAddress    '.PHP_EOL , FILE_APPEND);
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($companyaddress->toArray() . PHP_EOL, true), FILE_APPEND);
+
             // @todo: jovani - add logic to figure out timezone and currency
 
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the User again    '.PHP_EOL , FILE_APPEND);
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($user->toArray(), true), FILE_APPEND);
             $userDriver->setAttributes($this->getAttributes());
 
@@ -167,8 +180,14 @@ class DriverForm extends UserForm
                 throw new \yii\db\Exception(current($error));
             }
 
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the UserDriver    '.PHP_EOL , FILE_APPEND);
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver . PHP_EOL, true), FILE_APPEND);
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the UserDriver  errors  '.PHP_EOL , FILE_APPEND);
+
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver->getErrors(), true), FILE_APPEND);
-            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
+
+            
+            
             $this->image = $user->image;
             $this->userId = $user->id;
 
@@ -180,6 +199,8 @@ class DriverForm extends UserForm
 
                 throw new \yii\db\Exception(current($error));
             }
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the Vehicle    '.PHP_EOL , FILE_APPEND);
+            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
 
             $transaction->commit();
 
