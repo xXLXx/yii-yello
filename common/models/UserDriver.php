@@ -100,15 +100,7 @@ class UserDriver extends BaseModel
         ];
         return array_merge(parent::attributeLabels(), $labels);
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [];
-    }
-
+    
     /**
      * Get city
      * 
