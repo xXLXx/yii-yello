@@ -42,7 +42,7 @@ class DriverForm extends UserForm
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
             [['block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code',
-                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
+                'country', 'latitude', 'longitude', 'googleplaceid', 'formatted_address', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
         ];
     }
 

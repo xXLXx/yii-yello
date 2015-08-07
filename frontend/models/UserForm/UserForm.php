@@ -32,6 +32,7 @@ class UserForm extends AbstractForm
     public $latitude;
     public $longitude;
     public $googleplaceid;
+    public $formatted_address;
 
     /** for backward-compatibility **/
     public $lat;
@@ -63,7 +64,7 @@ class UserForm extends AbstractForm
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
             [['isBlocked'], 'boolean'],
             [['block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code',
-                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
+                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid', 'formatted_address'], 'safe'], // safe for now
         ];
     }
     
