@@ -92,6 +92,14 @@ class UserDriver extends BaseModel
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [];
+    }
+
+    /**
      * Get city
      * 
      * @return \yii\db\ActiveQuery
