@@ -6,7 +6,6 @@ use common\models\UserDriver;
 use common\models\Vehicle;
 use common\models\Company;
 use common\models\CompanyAddress;
-use common\models\Companytype;
 use common\models\Address;
 use yii\web\UploadedFile;
 
@@ -42,6 +41,8 @@ class DriverForm extends UserForm
             [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
+            [['block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code',
+                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
         ];
     }
 

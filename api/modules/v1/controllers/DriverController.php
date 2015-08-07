@@ -4,6 +4,7 @@
  */
 
 namespace api\modules\v1\controllers;
+use api\modules\v1\models\Driver;
 use api\modules\v1\models\VehicleForm;
 use api\modules\v1\models\DriverForm;
 use api\modules\v1\filters\Auth;
@@ -41,9 +42,8 @@ class DriverController extends \api\common\controllers\DriverController
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('Info' . PHP_EOL, true), FILE_APPEND);
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($post, true), FILE_APPEND);
         if ($model->load($post)) {
-            if ($model->validate()) {
-                $model->save();
-                return $model;
+            if ($model->save()) {
+                return Driver::getCurrent();
             }else{
                 return ['response'=>'did not validate', $model];
             }
