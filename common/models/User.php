@@ -27,7 +27,7 @@ use common\models\query\UserQuery;
  * @property Boolean $isBlocked is user blocked
  * @property integer $signup_step_completed
  * @property User $parentUser parent user
- * 
+ *
  * @property StoreOwner $storeOwner store Owner
  * @property Company $company company
  * @property Franchiser $franchiser franchiser
@@ -120,10 +120,10 @@ class User extends BaseModel implements IdentityInterface
         return $this->hasOne(Image::className(), ['id' => 'imageId']);
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Get userHasStores
      * @return ActiveQuery
@@ -150,7 +150,7 @@ class User extends BaseModel implements IdentityInterface
     {
         $this->tempStores = $stores;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -177,7 +177,7 @@ class User extends BaseModel implements IdentityInterface
     {
         return static::findOne(['username' => $username]);
     }
-    
+
     /**
      * Finds user by email
      *
@@ -304,20 +304,20 @@ class User extends BaseModel implements IdentityInterface
     {
         $this->passwordResetToken = null;
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function beforeSave($insert) 
+    public function beforeSave($insert)
     {
         $this->username = $this->firstName . ' ' . $this->lastName;
         return parent::beforeSave($insert);
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function afterSave($insert, $changedAttributes) 
+    public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
             switch ($this->role->name) {
@@ -386,11 +386,11 @@ class User extends BaseModel implements IdentityInterface
     {
         \Yii::$app->session->set('currentStoreId', $storeId);
     }
-    
+
     /**
      * Get storeOwner
-     * 
-     * @return \yii\db\ActiveRecord 
+     *
+     * @return \yii\db\ActiveRecord
      */
     public function getStoreOwner()
     {
@@ -414,20 +414,20 @@ class User extends BaseModel implements IdentityInterface
     {
         return $this->hasOne(User::className(), ['id' => 'parentId']);
     }
-    
+
     /**
      * Get userDriver
-     * 
-     * @return \yii\db\ActiveRecord 
+     *
+     * @return \yii\db\ActiveRecord
      */
     public function getUserDriver()
     {
         return $this->hasOne(UserDriver::className(), ['userId' => 'id']);
     }
-    
+
     /**
      * Get company
-     * 
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCompany()
@@ -470,8 +470,8 @@ class User extends BaseModel implements IdentityInterface
 
     /**
      * This is referenced by basecontroller at frontend
-     * 
-     * todo: consider running it only on login and setting a validated flag 
+     *
+     * todo: consider running it only on login and setting a validated flag
      * Make sure user info is all there
      * This is the post-signon switchboard that verifies all signup info is there
      * and that subscription is valid this function will find the user's role
@@ -485,7 +485,7 @@ class User extends BaseModel implements IdentityInterface
     public function getSignUpState(){
         $ca=[];   //controller actions
                  // if ca[] is populated and returned, it should have at least
-        
+
         switch ($this->roleId){
             case 1:// yello super admin
             case 8: // yello admin
@@ -493,17 +493,17 @@ class User extends BaseModel implements IdentityInterface
                 // TODO: send to admin dashboard
                 return false;
                 break;
-            
+
             case 2: // Franchiser
             case 10: // franchiserManager
             case 11: // franchiserExtendedManager
                     // make sure franchise info is complete
-                
+
                 //TODO: Vett Franchiser has valid subscription and redirect to signup stage if not.
                 return false;
 
                 break;
-            
+
             case 3: // driver
                 // log user out and send them to generic info page
                 Yii::$app->user->logout();
@@ -513,7 +513,7 @@ class User extends BaseModel implements IdentityInterface
                 ];
                 return $ca;
                 return false;
-                
+
                 break;
             case 4: // manager
             case 6: // storeOwner
@@ -534,16 +534,30 @@ class User extends BaseModel implements IdentityInterface
             case 9: // menu aggregator
             case 12: // MAmanager
                 // TODO: Nothing at this stage
-                
+
                 return false;
                 break;
-                
+
             default:
                 return false;
         }
-        
+
     }
-    
-    
-    
+
+    /**
+     * Get index page the user is to be redirected to
+     *
+     * @return string|array
+     */
+    public function getIndexUrl ()
+    {
+        switch ($this->roleId){
+            case 6:
+                return ['shifts-calendar/index'];
+            default:
+                return ['settings/index'];
+        }
+    }
+
+
     }

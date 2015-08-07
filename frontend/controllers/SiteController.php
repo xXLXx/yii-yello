@@ -76,29 +76,29 @@ class SiteController extends BaseController
         return $this->render('index');
     }
 
-    
-    
-    
+
+
+
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
-            return \Yii::$app->getResponse()->redirect(['settings/index']);
+            return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                return \Yii::$app->getResponse()->redirect(['settings/index']);
-        } 
+            return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
+        }
         return $this->render('login', [
             'model' => $model,
-        ]);        
+        ]);
     }
-    
-    
 
 
-    
-    
-    
+
+
+
+
+
     public function actionLogout()
     {
         if (!Yii::$app->user->isGuest) {
@@ -139,13 +139,13 @@ class SiteController extends BaseController
         if (!$model->load(Yii::$app->request->post())) {
             return $this->render('signup', [
                 'model' => $model,
-            ]); 
+            ]);
         }
         $user = $model->signup();
         if (!$user) {
             return $this->render('signup', [
                 'model' => $model,
-            ]);    
+            ]);
         }
         $email = Yii::$app->mailer->compose()
             ->setTo($user->email)
@@ -173,7 +173,7 @@ class SiteController extends BaseController
         }
         return Yii::$app->getResponse()->redirect(
             ['site/verification']
-        );  
+        );
     }
 
     public function actionVerification()
