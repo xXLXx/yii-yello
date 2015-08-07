@@ -1,6 +1,6 @@
 /**
  * Controller shifts calendar page
- * 
+ *
  * @author markov
  * @updates pottie
  */
@@ -20,11 +20,11 @@ function popCal(){
     calendarObject.again();
 }
 var ShiftsCalendarController = {
-    
+
     data: {},
-    
+
     current: {},
-    
+
     /**
      * Init
      */
@@ -39,7 +39,7 @@ var ShiftsCalendarController = {
             var monthTitle = calendar._data.beginDate.format('MMMM YYYY');
             $('.js-month-title').html(monthTitle);
         };
-        
+
         var calendar = new Calendar('.calendar-wrapper');
         refreshMonthTitle(calendar);
         $('.font-chevron-left').parent('.item').on('click', function() {
@@ -57,9 +57,34 @@ var ShiftsCalendarController = {
             calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
+        $('.datepicker-group').on('click', function () {
+            $(this).find('.datepicker').datepicker('show').on('changeDate', function (ev) {
+                var dateEnd = new Date();
+                var beginDateDiff = begindate;
+                dateEnd.setDate(dateEnd.getDate() + 7 - dateEnd.getDay() + beginDateDiff);
+                var dateStart = new Date(dateEnd);
+                dateStart.setDate(dateStart.getDate() - 6);
+                while (ev.date < dateStart) {
+                    beginDateDiff -= 7;
+                    dateStart.setDate(dateStart.getDate() - 7);
+                    dateEnd.setDate(dateEnd.getDate() - 7);
+                }
+                while (ev.date > dateEnd) {
+                    beginDateDiff += 7;
+                    dateStart.setDate(dateStart.getDate() + 7);
+                    dateEnd.setDate(dateEnd.getDate() + 7);
+                }
 
-        
-        
+                beginDateDiff -= begindate;
+                begindate += beginDateDiff;
+                calendar._data.beginDate.add(beginDateDiff, 'd');
+                calendar.again();
+
+                calendarObject = calendar;
+                refreshMonthTitle(calendar);
+            });
+        });
+
         //setInterval(function(){ calendar.again(); }, 3000);
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
@@ -85,27 +110,27 @@ var ShiftsCalendarController = {
             });
         });
         calendar.onEventClick(function(event) {
-            $.pjax({ 
-                url: event.data.url, 
+            $.pjax({
+                url: event.data.url,
                 container: '#shift-form-widget-pjax'
             });
                 currentselected=event.id;
             $('.sidebar-container').removeClass('without-col-left');
         });
-        
+
         $('#shift-add-bth').on('click', function() {
-            $.pjax({ 
-                url: $(this).attr('href'), 
+            $.pjax({
+                url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax'
             });
             $('.sidebar-container').removeClass('without-col-left');
             return false;
         });
-        
+
         $('#shift-form-widget-pjax').on('pjax:complete', function() {
             colorBoxInit();
             calendar.sourceCallbacksCall();
-            
+
         });
         this.copyWeeklySheetInit();
         calendarObject = calendar;
@@ -113,7 +138,7 @@ var ShiftsCalendarController = {
 
     },
 
-   
+
 
     /**
      * Render state counts
@@ -135,7 +160,7 @@ var ShiftsCalendarController = {
             $('.js-state-id-' + i + ' .count', $container).html(counts[i]);
         }
     },
-    
+
     /**
      * Init copy weekly sheet
      */
@@ -156,7 +181,7 @@ var ShiftsCalendarController = {
                     //}
                 }
             });
-            
+
         });
     }
 };

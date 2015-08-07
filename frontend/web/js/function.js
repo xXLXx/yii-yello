@@ -16,12 +16,12 @@ $(document).ready(function() {
             });
         }
     });
-    
+
     //Placeholder
     $('.j_placeholder').each(function(){
 		new Placeholder($(this));
 	});
-    
+
     //Header
     if($("body .j_fix_header").size() > 0) {
         blockPosition($(".j_fix_header"));
@@ -29,7 +29,7 @@ $(document).ready(function() {
             blockPosition($(".j_fix_header"));
         });
     }
-    
+
     //Checkbox
     $(document).on("click", ".j_checkbox", function() {
         if($(this).hasClass("active")) {
@@ -38,13 +38,13 @@ $(document).ready(function() {
             $(this).addClass("active");
         }
     });
-    
+
     //Radio
     $(document).on("click", ".j_radio", function() {
         $(this).parents(".j_radio_container").find(".j_radio").removeClass("active");
         $(this).addClass("active");
     });
-    
+
     //Input change text type to password type
     if($("html").hasClass("ie8")) {} else {
         $(".j_text_pass_shift").focusin(function() {
@@ -55,7 +55,7 @@ $(document).ready(function() {
             }
         });
     }
-    
+
     //Toggle popup
     $(document).on("click", ".j_toggle_link", function() {
         $(this).parents(".j_toggle_container").find(".j_toggle_block").toggle();
@@ -68,11 +68,11 @@ $(document).ready(function() {
             $ ('.j_toggle_block').hide();
         }
     });
-    
+
     //Popup
     colorBoxInit = function() {
-        if($("body .j_colorbox").size() > 0 || 
-            $("body .j_colorbox_close").size() > 0 || 
+        if($("body .j_colorbox").size() > 0 ||
+            $("body .j_colorbox_close").size() > 0 ||
             $("body .j_colorbox_photo").size() > 0) {
             var colorboxParams = {
                 opacity:0.75,
@@ -96,16 +96,16 @@ $(document).ready(function() {
         }
     };
     colorBoxInit();
-    
+
     $(document).on("click", ".j_colorbox_close", function() {
         $.colorbox.close();
         return false;
     });
-    
+
     function trim(str) {
         return str.replace(/^\s+|\s+$/g, '');
     }
-    
+
     //Scrollpane
     if($("body .j_scrollpane").size() > 0) {
         $(".j_scrollpane").jScrollPane();
@@ -124,8 +124,8 @@ $(document).ready(function() {
                         } else {
                             $(this).disableButton({ text: msg });
                         }
-                    });                    
-            
+                    });
+
             $.ajax({
                 url: form.attr('action'),
                 type: 'post',
@@ -157,7 +157,10 @@ $(document).ready(function() {
 
             });
             return false;
-        })
+        });
+
+    // Datepicker
+    $('.datepicker').datepicker();
 
 });
 
@@ -166,13 +169,13 @@ function Placeholder(container){
 	this.container = $(container);
 	var placeholder = this.container.attr('alt');
 	this.container.removeAttr('placeholder');
-	
+
 	setTimeout(function() {
 		if (trim(_this.container.val()) == '' || trim(_this.container.val()) == placeholder) {
 			_this.container.addClass('placeholder').val(placeholder);
 		}
 	}, 1);
-	
+
 	this.container.bind({
 		focus: function(){
 			if (trim(_this.container.val()) == placeholder) {
