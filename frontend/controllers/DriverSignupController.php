@@ -33,35 +33,39 @@ class DriverSignupController extends BaseController
         $post = \Yii::$app->request->post();
         $driversignupform = new \frontend\models\DriverSignupStep1();
 
+        // process form submit
         if(isset($post['DriverSignupStep1'])){
             $post['DriverForm'] = $post['DriverSignupStep1'];
-            $post['DriverForm']['firstName'] = $user->firstName;
-            $post['DriverForm']['lastName'] = $user->lastName;
+            if ($model->load($post)) {
+                if ($model->validate()) {
+                    $model->save();
+                    // add or replace the image
+                    if(isset($_FILES['DriverSignupStep1']['name']['imageFile'])){
+                        $user->imageId = $this->saveImage($model, $driversignupform, 'imageFile');
+                    }
+                    // save address
+                    $this->saveAddress();
+                    $user->signup_step_completed = 1;
+                    $user->save();
+                    $this->refresh();
+
+                } else {
+                    return $this->render('index', [
+                        'model'     => $driversignupform,
+                        'errors'    => $model->getErrors()
+                    ]);
+                }
+            }else{
+                    return $this->render('index', [
+                        'model'     => $driversignupform,
+                        'errors'    => $model->getErrors()
+                    ]);
+            }
+            
+            
+            
         }
         $model = new DriverForm();
-        if ($model->load($post)) {
-            if ($model->validate()) {
-
-                $model->save();
-
-                if(isset($_FILES['DriverSignupStep1']['name']['imageFile'])){
-                    $user->imageId = $this->saveImage($model, $driversignupform, 'imageFile');
-                }
-
-                $this->saveAddress();
-
-                $user->signup_step_completed = 1;
-                $user->save();
-
-                $this->refresh();
-
-            } else {
-                return $this->render('index', [
-                    'model'     => $driversignupform,
-                    'errors'    => $model->getErrors()
-                ]);
-            }
-        }
 
         //return $model;
 
@@ -185,16 +189,36 @@ class DriverSignupController extends BaseController
 
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
-
-        $companyobj = Company::findOne(['userfk'=>$user->id, 'isPrimary'=>1]);
-
-        $companyaddress = CompanyAddress::findOne(['companyfk'=>$companyobj->id , 'addresstitle'=>'Default']);
-
-        $address= Address::findOne(['idaddress'=>$companyaddress->idcompanyaddress]);
-
-        if(!$address){
-            $address = new Address();
+        $fullname = (string)  $user->firstName.' '.(string)$user->lastName;
+        // make sure a company exists
+        $companyobj = Company::findOneOrCreate(['userfk'=>$user->id, 'isPrimary'=>1]);
+        if($companyobj->isNewRecord){
+                // set defaults
+                $companyobj->registeredForGST= 0;
+                $companyobj->companyName=$fullname;
+                $companyobj->accountName=$fullname;
+                $companyobj->email=$user->email;
         }
+        $companyobj->save();
+        // make sure company address record exists
+        $companyaddress = CompanyAddress::findOneOrCreate(['companyfk' => $companyobj->id , 'addresstitle' => 'Default']);
+        
+        if ($companyaddress->isNewRecord) {
+            // set defaults
+            $companyaddress->addresstype = 1;
+            $companyaddress->contact_name = $fullname;
+            $companyaddress->contact_email = $user->email;
+            $companyaddress->save();
+            }
+            // make sure an address exists
+                $address = Address::findOneOrCreate(['idaddress' => $companyaddress->idcompanyaddress]);
+                $address->setAttributes($this->getAttributes());
+                if (!$address->save()) {
+                    $error = $address->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
 
         $companyaddress->addressfk = $address->idaddress;
         $companyaddress->save();
