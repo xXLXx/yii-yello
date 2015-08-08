@@ -30,8 +30,16 @@ var jsAddressWidget = {
         console.log(place);
 
         for (var component in this.componentForm) {
-            document.getElementById(formname+component).value = '';
-            document.getElementById(formname+component).disabled = false;
+            console.log(component);
+            if(component=='subpremise'){
+                document.getElementById(formname+'block_or_unit').value = '';
+                document.getElementById(formname+'block_or_unit').disabled = false;
+                
+            }else{
+                document.getElementById(formname+component).value = '';
+                document.getElementById(formname+component).disabled = false;
+                
+            }
         }
 
         // Get each component of the address from the place details
@@ -40,7 +48,11 @@ var jsAddressWidget = {
             var addressType = place.address_components[i].types[0];
             if (this.componentForm[addressType]) {
                 var val = place.address_components[i][this.componentForm[addressType]];
-                document.getElementById(formname+addressType).value = val;
+                if(addressType=='subpremise'){
+                    document.getElementById(formname+'block_or_unit').value = val;
+            }else{
+                    document.getElementById(formname+addressType).value = val;
+                }
             }
         }
 

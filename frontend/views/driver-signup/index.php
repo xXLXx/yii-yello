@@ -51,8 +51,8 @@ $this->title = 'Driver Signup / Yello';
                                 <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
                                 <div class="form-group">
                                     <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'driversignupstep1', 'fieldsMapping' => [
-                                        //'subpremise' => 'long_name',
-                                        'block_or_unit' => 'short_name',
+                                        'subpremise' => 'long_name',
+                                        //'block_or_unit' => 'subpre',
                                         'street_number' => 'short_name',
                                         'route' => 'long_name',
                                         'locality' => 'long_name',
