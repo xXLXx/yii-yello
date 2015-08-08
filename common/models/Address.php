@@ -17,6 +17,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $postal_code
  * @property string $country
  * @property string $formatted_address
+ * @property string $googleplaceid
+ * @property string $googleobj
  * @property integer $countryfk
  * @property string $latitude
  * @property string $longitude
@@ -50,7 +52,9 @@ class Address extends BaseModel
             [['route'], 'string', 'max' => 400],
             [['postal_code'], 'string', 'max' => 12],
             [['country'], 'string', 'max' => 150],
-            [['formatted_address'], 'string', 'max' => 1500]
+            [['formatted_address'], 'string', 'max' => 1500],
+            [['googleplaceid'], 'string', 'max' => 150],
+            [['googleobj'], 'string', 'max' => 4000]
         ];
     }
 

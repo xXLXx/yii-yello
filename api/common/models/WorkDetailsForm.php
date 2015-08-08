@@ -11,9 +11,9 @@ class WorkDetailsForm extends \frontend\models\WorkDetailsForm
     /**
      * @inheritdoc
      */
-   /* public function load($data, $formName = null)
+    public function load($data, $formName = null)
     {
         $this->setAttributes($data);
         return true;
-    }*/
+    }
 }

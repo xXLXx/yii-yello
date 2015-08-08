@@ -58,7 +58,11 @@ class VehicleForm extends Model
     {
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('saveVehicle' . PHP_EOL, true), FILE_APPEND);
         $user = \Yii::$app->user->identity;
-        $vehicle = Vehicle::findOne(['driverId' => $user->id]);
+        $vehicle = Vehicle::findOneOrCreate(['driverId' => $user->id]);
+        $userDriver = UserDriver::findOne(['userId' => $user->id]);
+        if (!$userDriver) {
+            $userDriver = new UserDriver();
+        }
         $vehicle->setAttributes($this->getAttributes());
         if (isset($_FILES['vehiclePhotoFile'])) {
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('vehiclePhotoFile' . PHP_EOL, true), FILE_APPEND);
@@ -72,6 +76,7 @@ class VehicleForm extends Model
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
             }
         }
+        $userDriver->driverLicenseNumber = $this->licenseNumber;
         if (isset($_FILES['licensePhotoFile'])) {
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('licensePhotoFile' . PHP_EOL, true), FILE_APPEND);
             $image = new Image();
@@ -81,21 +86,17 @@ class VehicleForm extends Model
                 $image->saveFiles();
                 $image->save();
                 $vehicle->licensePhotoId = $image->id;
+                $userDriver->driverLicensePhoto = $image->id;
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
             }
         }
         $vehicle->save();
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->getErrors(), true), FILE_APPEND);
         $this->licensePhoto = $vehicle->licensePhoto;
         $this->vehiclePhoto = $vehicle->image;
 
-        $userDriver = UserDriver::findOne(['userId' => $user->id]);
-        if (!$userDriver) {
-            $userDriver = new UserDriver();
-        }
-        $userDriver->driverLicenseNumber = $this->licenseNumber;
         $userDriver->save();
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->getErrors(), true), FILE_APPEND);
 
     }
 }
