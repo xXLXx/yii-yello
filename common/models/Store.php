@@ -47,7 +47,6 @@ class Store extends BaseModel
     {
         return [
             [['companyId', 'businessTypeId', 'storeOwnerId', 'paymentScheduleId', 'imageId', 'createdAt', 'updatedAt', 'isArchived'], 'integer'],
-            [['createdAt', 'updatedAt'], 'required'],
             [['title', 'website', 'businessHours', 'storeProfile'], 'string', 'max' => 255]
         ];
     }

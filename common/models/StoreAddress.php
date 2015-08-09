@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "storeaddress".
@@ -19,7 +20,7 @@ use Yii;
  * @property integer $updatedUTC
  * @property integer $isarchived
  */
-class StoreAddress extends \yii\db\ActiveRecord
+class StoreAddress extends BaseModel
 {
     /**
      * @inheritdoc
@@ -60,6 +61,25 @@ class StoreAddress extends \yii\db\ActiveRecord
             'createdUTC' => Yii::t('app', 'Created Utc'),
             'updatedUTC' => Yii::t('app', 'Updated Utc'),
             'isarchived' => Yii::t('app', 'Isarchived'),
+        ];
+    }
+
+    /**
+     * @TODO mark, should we instead make this as `createdAt` and `updatedAt` to be
+     * consistent with the rest?
+     *
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['createdUTC', 'updatedUTC'],
+                    self::EVENT_BEFORE_UPDATE => ['updatedUTC'],
+                ],
+            ]
         ];
     }
 }

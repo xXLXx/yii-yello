@@ -3,14 +3,14 @@ use frontend\widgets\SettingsLeftNavigation;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = \Yii::t('app', 'Add New Store');
+$this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add New Store');
 ?>
 
 <div class="sidebar-container">
     <?= SettingsLeftNavigation::widget(); ?>
     <div class="col-right">
         <h2><?= $this->title ?></h2>
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
         <?= \yii\helpers\Html::activeHiddenInput($model, 'id'); ?>
         <div class="row">
             <div class="col-md-8">

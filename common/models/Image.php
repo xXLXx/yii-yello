@@ -54,6 +54,10 @@ class Image extends \common\models\BaseModel
 
     public function saveFiles()
     {
+        if (!$this->save()) {
+            return false;
+        }
+
         $webPath = Yii::$app->basePath . '/web';
 
         $imageDir = $webPath . '/upload/images/';
@@ -83,6 +87,9 @@ class Image extends \common\models\BaseModel
             return false;
         }*/
 
+        // @TODO: mark, maybe would be better we randomize the name instead of id
+        // so we call the `save()` at once only.
+
         $originalUrl = '/upload/images/' . $this->id . '.'.$ext;
             
         $originalOutput =  $webPath . $originalUrl;
@@ -92,6 +99,7 @@ class Image extends \common\models\BaseModel
         \yii\imagine\Image::thumbnail($originalOutput, 144, 144)->save($thumbOutput);
         $this->originalUrl = $originalUrl;
         $this->thumbUrl = $thumbUrl;
-        return true;
+
+        return $this->save();
     }
 }

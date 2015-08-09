@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\Address;
+use common\models\StoreAddress;
+use common\models\StoresView;
 use common\models\User;
 use common\models\UserHasStore;
 use frontend\models\Exception\UserStoreOwnerUndefinedException;
@@ -83,106 +86,128 @@ class StoreForm extends Model
 
     /**
      * Set data from StoreOwner
+     *
      * @param int $storeId
      */
     public function setData($storeId)
     {
-        $store = Store::findOne($storeId);
+        $store = StoresView::findOne(['id' => $storeId]);
         $this->setAttributes($store->getAttributes());
-        // TODO: add the other tables (make a view?)
-        $this->image = $store->image;
+        $this->image = Image::findOne($store->imageId);
     }
-
-    public function initializeForm(User $user){
-            $storeOwner = $this->getUserStoreOwner($user);
-
-           // var_dump($owner); die;
-            // get owner's deets. this should always return a result
-            $this->ownerid = $storeOwner->userId;
-            $storeOwnerView = \common\models\StoreownerView::findOne(['id'=>$storeOwner->userId]);
-            // set defaults from current user 
-            $this->contact_name = $storeOwnerView->firstName.' '.$storeOwnerView->lastName;
-            $this->contact_email= $storeOwnerView->email;
-            $this->contact_phone= $storeOwnerView->contact_phone;
-    }
-
-
+//
+//    public function initializeForm(User $user){
+//            $storeOwner = $this->getUserStoreOwner($user);
+//
+//           // var_dump($owner); die;
+//            // get owner's deets. this should always return a result
+//            $this->ownerid = $storeOwner->userId;
+//            $storeOwnerView = \common\models\StoreownerView::findOne(['id'=>$storeOwner->userId]);
+//            // set defaults from current user
+//            $this->contact_name = $storeOwnerView->firstName.' '.$storeOwnerView->lastName;
+//            $this->contact_email= $storeOwnerView->email;
+//            $this->contact_phone= $storeOwnerView->contact_phone;
+//    }
 
 
     /**
-     * Save
-     * @param User $user storeOwner
+     * Save this form.
+     * The transactional way shall ensure we save this record at once
+     * with not a single error.
+     *
+     * @param User $user
+     *
+     * @return boolean
      */
     public function save($user)
     {
-        if (!$this->id) {
-            $store = new Store(); //unfinished
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            $image = new Image();
+            $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if ($image->imageFile) {
+                if (!$image->saveFiles()) {
+                    $error = $image->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+            }
+
+            $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather that current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
             $store->storeOwnerId = $userStoreOwner->id;
-            $store->paymentScheduleId=1;
+            $store->paymentScheduleId = 1;
             $store->setAttributes($this->getAttributes());
-            $store->createdAt = time();
-            $store->updatedAt = time();
-            if($store->save()){
-                
-            }else{
+            $store->imageId = $image->id;
+            if (!$store->save()) {
                 $error = $store->getFirstError();
                 $this->addError(key($error), current($error));
-                var_dump(current($error));
+
                 throw new \yii\db\Exception(current($error));
-                
-                
             }
-        } else {
-            $store = Store::findOne($this->id);
-            $store->setAttributes($this->getAttributes());
-            $store->save();
+
+            $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->id]);
+            if (!$userHasStore->save()) {
+                $error = $userHasStore->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            if ($store->isNewRecord) {
+                $address = new Address();
+                $address->setAttributes($this->getAttributes());
+                if (!$address->save()) {
+                    $error = $address->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+
+                $storeaddress = new StoreAddress();
+                $storeaddress->addressfk = $address->idaddress;
+                $storeaddress->storefk = $store->id;
+                $storeaddress->setAttributes($this->getAttributes());
+                if (!$storeaddress->save()) {
+                    $error = $storeaddress->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+            } else {
+                $storeaddress = StoreAddress::findOneOrCreate(['storefk' => $store->id]);
+                $storeaddress->setAttributes($this->getAttributes());
+                if (!$storeaddress->save()) {
+                    $error = $storeaddress->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+                $address = Address::findOneOrCreate(['idaddress' => $storeaddress->addressfk]);
+                $address->setAttributes($this->getAttributes());
+                if (!$address->save()) {
+                    $error = $address->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+            }
+
+            $transaction->commit();
+
+            return true;
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
         }
-        // update or insert the store
-        $image = new Image();
-        $image->save();
-        $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
-        if ($image->imageFile) {
-            $image->saveFiles();
-            $image->save();
-            $store->imageId = $image->id;
-        }
-        // update the image;
-        $store->save();
-        
-        $relation = UserHasStore::find()
-                ->where([
-                    'userId' => $userStoreOwner->id,
-                    'storeId' => $store->id
-                ])
-                ->one();
-        if(!$relation){
-             $rel = new UserHasStore();
-             $rel->storeId = $store->id;
-             $rel->userId =  $userStoreOwner->id;
-             $rel->save();            
-        }
-        
-        // make sure there is a store address
-        $storeaddress = \common\models\StoreAddress::findOne(['storefk'=>$store->id]);
-        if(!$storeaddress){
-            // create the address first to insure relationship integrity
-            $address = new \common\models\Address();
-            $address->setAttributes($this->getAttributes());
-            $address->save();
-            $storeaddress = new \common\models\StoreAddress();
-            $storeaddress->addressfk=$address->idaddress;
-            $storeaddress->save();
-        }else{
-            // address should already exist
-            $address = \common\models\Address::findOne(['idaddress'=>$storeaddress->addressfk]);
-            $address->setAttributes($this->getAttributes());
-            $address->save();
-        }
-        $storeaddress->setAttributes($this->getAttributes());
-        
-        
+
+        return false;
     }
 
 
