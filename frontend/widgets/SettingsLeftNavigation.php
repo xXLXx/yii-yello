@@ -20,12 +20,17 @@ class SettingsLeftNavigation extends Widget
     {
         $currentUserRoleName = \Yii::$app->user->identity->role->name;
         $menuItems = [];
+        
+        
         switch($currentUserRoleName) {
             case Role::ROLE_EMPLOYEE:
                 $menuItems = $this->getEmployeeLinks();
                 break;
             case Role::ROLE_MANAGER:
                 $menuItems = $this->getManagerLinks();
+                break;
+            case Role::ROLE_STORE_OWNER:
+                $menuItems = $this->getDefaultLinks();
                 break;
             case Role::ROLE_FRANCHISER:
                 $menuItems = $this->getFranchiserLinks();
@@ -48,11 +53,16 @@ class SettingsLeftNavigation extends Widget
      */
     private function getEmployeeLinks()
     {
-        return [
-            ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']],
-            ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']],
-            ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']]
-        ];
+        $items=[];
+        $menuItems = [];
+         $menuItems[] =    ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
+         $menuItems[] =    ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
+         $menuItems[] =   ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
+ 
+        $items[]=['heading'=>'Preferences','menuItems'=>$menuItems];
+        return $items;
+        
+        
     }
 
     /**
@@ -60,7 +70,11 @@ class SettingsLeftNavigation extends Widget
      */
     private function getManagerLinks()
     {
-        $menuItems = [];
+       $items=[];
+       $menuItems = [];
+
+        
+        
         $menuItems[] = ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
@@ -68,24 +82,32 @@ class SettingsLeftNavigation extends Widget
         $menuItems[] = ['label' => \Yii::t('app', 'Bank details'), 'url' => ['settings/bank']];
         $menuItems[] = ['label' => \Yii::t('app', 'Pricing Schedules'), 'url' => ['settings/schedules']];
         $menuItems[] = ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/settings/yello']];
-        return $menuItems;
-    }
+        $items[]=['heading'=>\Yii::t('app', 'Preferences'),'menuItems'=>$menuItems];
+        return $items;
+        }
 
     /**
      * @return array
      */
     private function getDefaultLinks()
     {
+        $items=[];
         $menuItems = [];
         $menuItems[] = ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings/users']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Plans & Pricing'), 'url' => ['settings/schedules']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Default Roster'), 'url' => ['settings/roster']];
+        $items[]=['heading'=>\Yii::t('app', 'Preferences'),'menuItems'=>$menuItems];
+        $menuItems=[];
         $menuItems[] = ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Invoices'), 'url' => ['settings/invoices']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Bank details'), 'url' => ['settings/bank']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Pricing Schedules'), 'url' => ['settings/schedules']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/settings/yello']];
-        return $menuItems;
+        $menuItems[] = ['label' => \Yii::t('app', 'Payment details'), 'url' => ['settings/bank']];
+//        $menuItems[] = ['label' => \Yii::t('app', 'Invoices'), 'url' => ['settings/invoices']];
+//        $menuItems[] = ['label' => \Yii::t('app', 'Pricing Schedules'), 'url' => ['settings/schedules']];
+//        $menuItems[] = ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/settings/yello']];
+        $items[]=['heading'=>\Yii::t('app', 'Copmany Account'),'menuItems'=>$menuItems];
+        
+        return $items;
     }
 
     /**
@@ -93,15 +115,17 @@ class SettingsLeftNavigation extends Widget
      */
     private function getFranchiserLinks()
     {
-        return [
-            ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']],
-            ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings-franchiser/users']],
-            ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/']],
-            ['label' => \Yii::t('app', 'Company Details'), 'url' => ['company-details-franchiser/index']],
-            ['label' => \Yii::t('app', 'Invitations'), 'url' => ['settings-franchiser/invitations']],
-            ['label' => \Yii::t('app', 'Bank Details'), 'url' => ['/']],
-            ['label' => \Yii::t('app', 'Invoices'), 'url' => ['/']],
-        ];
+        $items=[];
+        $menuItems = [];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings-franchiser/users']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Company Details'), 'url' => ['company-details-franchiser/index']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Invitations'), 'url' => ['settings-franchiser/invitations']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Bank Details'), 'url' => ['/']];
+        $menuItems[]=             ['label' => \Yii::t('app', 'Invoices'), 'url' => ['/']];
+        $items[]=['heading'=>\Yii::t('app', 'Preferences'),'menuItems'=>$menuItems];
+        return $items;
     }
 
     /**
@@ -109,15 +133,18 @@ class SettingsLeftNavigation extends Widget
      */
     private function getMenuAggregatorLinks()
     {
-        return [
-            ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']],
-            ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings-menu-aggregator/users']],
-            ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/']],
-            ['label' => \Yii::t('app', 'Company Details'), 'url' => ['company-details/index']],
-            ['label' => \Yii::t('app', 'Invitations'), 'url' => ['/']],
-            ['label' => \Yii::t('app', 'Bank Details'), 'url' => ['/']],
-            ['label' => \Yii::t('app', 'Invoices'), 'url' => ['/']],
-        ];
+        $items=[];
+        $menuItems = [];
+           $menuItems[]=  ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
+          $menuItems[]=   ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings-menu-aggregator/users']];
+           $menuItems[]=  ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/']];
+        $menuItems[]= ['label' => \Yii::t('app', 'Company Details'), 'url' => ['company-details/index']];
+        $menuItems[]= ['label' => \Yii::t('app', 'Invitations'), 'url' => ['/']];
+        $menuItems[]= ['label' => \Yii::t('app', 'Bank Details'), 'url' => ['/']];
+        $menuItems[]= ['label' => \Yii::t('app', 'Invoices'), 'url' => ['/']];
+        $items[]=['heading'=>\Yii::t('app', 'Preferences'),'menuItems'=>$menuItems];
+        return $items;
+        
     }
 
 }
