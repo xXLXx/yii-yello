@@ -40,7 +40,7 @@ use common\models\query\UserQuery;
  * @property UserHasCompany[] $userHasCompanies userHasCompanies
 
  * @property UserHasStore[] $userHasStores userHasStores
- * @property Store[] $stores stores
+ * @property view_stores[] $stores stores
  * @property Store $storeCurrent the current selected store
  */
 class User extends BaseModel implements IdentityInterface

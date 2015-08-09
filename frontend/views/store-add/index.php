@@ -51,9 +51,8 @@ $this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add N
                         <?= $form->field($model, 'businessTypeId',['options'=>['class'=>'form-group col-sm-12 col-md-6']])
                                 ->dropDownList(\common\models\BusinessType::find()->select(['title', 'id'])->indexBy('id')->column(),
                                     ['prompt' => 'Select business type ...']); ?>
-                        <?= $form->field($model, 'companyid',['options'=>['class'=>'form-group col-sm-12 col-md-6']])
-                                ->dropDownList(\common\models\Company::find()->select(['companyName', 'id'])->where(['userfk'=>$model->ownerid])->indexBy('id')->column(),
-                                    ['prompt' => 'Select Billing Company...']); ?>
+                        <?= $form->field($model, 'companyId',['options'=>['class'=>'form-group col-sm-12 col-md-6']])
+                                ->dropDownList(\common\models\Company::find()->select(['companyName', 'id'])->where(['userfk'=>$model->ownerid])->indexBy('id')->column()); ?>
 
                     </div>
                     <div class="row">

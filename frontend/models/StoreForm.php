@@ -31,7 +31,7 @@ class StoreForm extends Model
     public $imageFile;
     public $ownerid;
     
-    public $companyid; //billing account from select list of owner's companies
+    public $companyId; //billing account from select list of owner's companies
     public $block_or_unit;
     public $street_number;
     public $route;
@@ -58,7 +58,7 @@ class StoreForm extends Model
         return [
             [
                 [
-                    'id', 'title', 'businessTypeId','companyid',
+                    'id', 'title', 'businessTypeId','companyId',
                     'paymentScheduleId', 'website', 'businessHours',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
                     'formatted_address','latitude','longitude','googleplaceid','googleobj',
@@ -80,7 +80,7 @@ class StoreForm extends Model
             'title' => 'Store Name',
             'administrative_area_level_1' => 'State',
             'locality' => 'Suburb',
-            'companyid' => 'Billing Account'
+            'companyId' => 'Billing Account'
         ];
     }
 
@@ -96,18 +96,18 @@ class StoreForm extends Model
         $this->image = Image::findOne($store->imageId);
     }
 //
-//    public function initializeForm(User $user){
-//            $storeOwner = $this->getUserStoreOwner($user);
-//
-//           // var_dump($owner); die;
-//            // get owner's deets. this should always return a result
-//            $this->ownerid = $storeOwner->userId;
-//            $storeOwnerView = \common\models\StoreownerView::findOne(['id'=>$storeOwner->userId]);
-//            // set defaults from current user
-//            $this->contact_name = $storeOwnerView->firstName.' '.$storeOwnerView->lastName;
-//            $this->contact_email= $storeOwnerView->email;
-//            $this->contact_phone= $storeOwnerView->contact_phone;
-//    }
+    public function initializeForm(User $user){
+            $storeOwner = $this->getUserStoreOwner($user);
+
+           // var_dump($owner); die;
+            // get owner's deets. this should always return a result
+            $this->ownerid = $storeOwner->userId;
+            $storeOwnerView = \common\models\StoreownerView::findOne(['id'=>$storeOwner->userId]);
+            // set defaults from current user
+            $this->contact_name = $storeOwnerView->firstName.' '.$storeOwnerView->lastName;
+            $this->contact_email= $storeOwnerView->email;
+            $this->contact_phone= $storeOwnerView->contact_phone;
+    }
 
 
     /**
@@ -122,9 +122,11 @@ class StoreForm extends Model
     public function save($user)
     {
         if (!$this->validate()) {
+
             return false;
         }
 
+        
         $transaction = \Yii::$app->db->beginTransaction();
         try {
             $image = new Image();
@@ -137,9 +139,9 @@ class StoreForm extends Model
                     throw new \yii\db\Exception(current($error));
                 }
             }
-
+            $image->save();
             $store = Store::findOneOrCreate(['id' => $this->id]);
-            // get the store owner rather that current user in case current user is manager
+            // get the store owner rather than current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
             $store->storeOwnerId = $userStoreOwner->id;
             $store->paymentScheduleId = 1;
@@ -163,6 +165,7 @@ class StoreForm extends Model
             if ($store->isNewRecord) {
                 $address = new Address();
                 $address->setAttributes($this->getAttributes());
+                $address->setAttribute('addresstitle', 'Default');
                 if (!$address->save()) {
                     $error = $address->getFirstError();
                     $this->addError(key($error), current($error));
@@ -181,7 +184,12 @@ class StoreForm extends Model
                     throw new \yii\db\Exception(current($error));
                 }
             } else {
-                $storeaddress = StoreAddress::findOneOrCreate(['storefk' => $store->id]);
+                $storeaddress = StoreAddress::findOne(['storefk' => $store->id,'addresstitle'=>'Default']);
+                if(!$storeaddress){
+                    $storeaddress = new StoreAddress();
+                    $storeaddress ->storefk=$store->id;
+                    $storeaddress->addressfk=0;
+                }
                 $storeaddress->setAttributes($this->getAttributes());
                 if (!$storeaddress->save()) {
                     $error = $storeaddress->getFirstError();
@@ -189,16 +197,31 @@ class StoreForm extends Model
 
                     throw new \yii\db\Exception(current($error));
                 }
-                $address = Address::findOneOrCreate(['idaddress' => $storeaddress->addressfk]);
-                $address->setAttributes($this->getAttributes());
+                $address = Address::findOne(['idaddress' => $storeaddress->addressfk]);
+                if(!$address){
+                    $address = new Address();
+                }
+                    $address->setAttributes($this->getAttributes());
+                
                 if (!$address->save()) {
                     $error = $address->getFirstError();
                     $this->addError(key($error), current($error));
 
                     throw new \yii\db\Exception(current($error));
                 }
-            }
 
+                $storeaddress->addressfk=$address->idaddress;
+
+                if (!$storeaddress->save()) {
+                    $error = $storeaddress->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }                
+                
+                }
+
+            
             $transaction->commit();
 
             return true;

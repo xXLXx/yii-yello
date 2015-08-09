@@ -25,7 +25,9 @@ class StoreAddController extends Controller
         if ($model->load($post) && $model->save($user)) {
             $this->redirect(['your-stores/index']);
         }
-        
+        if(!$model->load($post)){
+            $model->initializeForm($user);
+        }
         return $this->render('index', compact('model'));
     }
 }
