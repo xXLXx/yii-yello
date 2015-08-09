@@ -21,20 +21,14 @@ class StoreForm extends Model
     public $title;
     public $businessTypeId;
     public $paymentScheduleId;
-    public $address1;
-    public $address2;
-    public $suburb;
-    public $stateId;
-    public $contactPerson;
-    public $phone;
-    public $abn;
     public $website;
-    public $email;
     public $businessHours;
     public $storeProfile;
     public $image;
     public $imageFile;
-
+    public $ownerid;
+    
+    public $companyid; //billing account from select list of owner's companies
     public $block_or_unit;
     public $street_number;
     public $route;
@@ -45,6 +39,13 @@ class StoreForm extends Model
     public $formatted_address;
     public $latitude;
     public $longitude;
+    public $googleplaceid;
+    public $googleobj;
+    
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    
 
     /**
      * @inheritdoc
@@ -54,10 +55,12 @@ class StoreForm extends Model
         return [
             [
                 [
-                    'id', 'title', 'businessTypeId',
-                    'paymentScheduleId', 'address1', 'address2',
-                    'suburb', 'stateId', 'contactPerson', 'phone', 'abn', 'website', 'email',
-                    'businessHours', 'storeProfile', 'image', 'imageFile'
+                    'id', 'title', 'businessTypeId','companyid',
+                    'paymentScheduleId', 'website', 'businessHours',
+                    'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
+                    'formatted_address','latitude','longitude','googleplaceid','googleobj',
+                    'contact_name','contact_phone','contact_email',
+                     'storeProfile', 'image', 'imageFile'
                 ],
                 'safe'
             ],
@@ -74,6 +77,7 @@ class StoreForm extends Model
             'title' => 'Store Name',
             'administrative_area_level_1' => 'State',
             'locality' => 'Suburb',
+            'companyid' => 'Billing Account'
         ];
     }
 
@@ -85,8 +89,25 @@ class StoreForm extends Model
     {
         $store = Store::findOne($storeId);
         $this->setAttributes($store->getAttributes());
+        // TODO: add the other tables (make a view?)
         $this->image = $store->image;
     }
+
+    public function initializeForm(User $user){
+            $storeOwner = $this->getUserStoreOwner($user);
+
+           // var_dump($owner); die;
+            // get owner's deets. this should always return a result
+            $this->ownerid = $storeOwner->userId;
+            $storeOwnerView = \common\models\StoreownerView::findOne(['id'=>$storeOwner->userId]);
+            // set defaults from current user 
+            $this->contact_name = $storeOwnerView->firstName.' '.$storeOwnerView->lastName;
+            $this->contact_email= $storeOwnerView->email;
+            $this->contact_phone= $storeOwnerView->contact_phone;
+    }
+
+
+
 
     /**
      * Save
@@ -95,15 +116,30 @@ class StoreForm extends Model
     public function save($user)
     {
         if (!$this->id) {
-            $store = new Store();
+            $store = new Store(); //unfinished
+            // get the store owner rather that current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
-            $store->companyId = $userStoreOwner->company->id;
             $store->storeOwnerId = $userStoreOwner->id;
+            $store->paymentScheduleId=1;
+            $store->setAttributes($this->getAttributes());
+            $store->createdAt = time();
+            $store->updatedAt = time();
+            if($store->save()){
+                
+            }else{
+                $error = $store->getFirstError();
+                $this->addError(key($error), current($error));
+                var_dump(current($error));
+                throw new \yii\db\Exception(current($error));
+                
+                
+            }
         } else {
             $store = Store::findOne($this->id);
+            $store->setAttributes($this->getAttributes());
+            $store->save();
         }
-
-        $store->setAttributes($this->getAttributes());
+        // update or insert the store
         $image = new Image();
         $image->save();
         $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
@@ -112,8 +148,41 @@ class StoreForm extends Model
             $image->save();
             $store->imageId = $image->id;
         }
+        // update the image;
         $store->save();
-        $this->createUserHasStoreRealtion($user, $store);
+        
+        $relation = UserHasStore::find()
+                ->where([
+                    'userId' => $userStoreOwner->id,
+                    'storeId' => $store->id
+                ])
+                ->one();
+        if(!$relation){
+             $rel = new UserHasStore();
+             $rel->storeId = $store->id;
+             $rel->userId =  $userStoreOwner->id;
+             $rel->save();            
+        }
+        
+        // make sure there is a store address
+        $storeaddress = \common\models\StoreAddress::findOne(['storefk'=>$store->id]);
+        if(!$storeaddress){
+            // create the address first to insure relationship integrity
+            $address = new \common\models\Address();
+            $address->setAttributes($this->getAttributes());
+            $address->save();
+            $storeaddress = new \common\models\StoreAddress();
+            $storeaddress->addressfk=$address->idaddress;
+            $storeaddress->save();
+        }else{
+            // address should already exist
+            $address = \common\models\Address::findOne(['idaddress'=>$storeaddress->addressfk]);
+            $address->setAttributes($this->getAttributes());
+            $address->save();
+        }
+        $storeaddress->setAttributes($this->getAttributes());
+        
+        
     }
 
 
@@ -176,31 +245,5 @@ class StoreForm extends Model
         throw new UserStoreOwnerUndefinedException($user, 'Cannot detect storeOwner');
     }
 
-    /**
-     * Save relation between user & store if user is not storeOwner (if he is manager || yelloAdmin)
-     *
-     * @param User $user
-     * @param Store $store
-     *
-     * @return void
-     */
-    private function createUserHasStoreRealtion(User $user, Store $store)
-    {
-        if (!$user->storeOwner) {
-            $relation = UserHasStore::find()
-                ->where([
-                    'userId' => $user->id,
-                    'storeId' => $store->id
-                ])
-                ->one();
-            if ($relation) {
-                return;
-            }
 
-            $relation = new UserHasStore();
-            $relation->storeId = $store->id;
-            $relation->userId = $user->id;
-            $relation->save();
-        }
-    }
 }

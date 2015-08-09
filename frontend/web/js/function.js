@@ -159,8 +159,6 @@ $(document).ready(function() {
             return false;
         });
 
-    // Datepicker
-    $('.datepicker').datepicker();
 
 });
 

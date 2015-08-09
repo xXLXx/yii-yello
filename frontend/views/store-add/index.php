@@ -27,36 +27,38 @@ $this->title = \Yii::t('app', 'Add New Store');
                             'country' => 'long_name',
                             'postal_code' => 'short_name'
                         ]]); ?>
+
+                                    <?php echo $form->field($model, 'block_or_unit',['inputOptions'=>['class'=>'form-control','placeholder'=>'Unit','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']])->label('Street'); ?>
+                                    <?php echo $form->field($model, 'street_number',['inputOptions'=>['class'=>'form-control','placeholder'=>'St #','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']  ])->label('&nbsp;'); ?>
+                                    <?php echo $form->field($model, 'route',['inputOptions'=>['class'=>'form-control','placeholder'=>'Street name','disabled'=>'true'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']])->label('&nbsp;'); ?>
+                                    <?php echo $form->field($model, 'locality',['inputOptions'=>['class'=>'form-control','disabled'=>'true'] ,'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;'] ]); ?>
+                                    <?php echo $form->field($model, 'administrative_area_level_1',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
+                                    <?php echo $form->field($model, 'postal_code',['inputOptions'=>['class'=>'form-control stripeform','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3 ','style'=>'padding-left:0;padding-right:5px;']]); ?>
+                                    <?php echo $form->field($model, 'country',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>     
+
+
+                    </div>
+                  
+                    <div class="row">
+                        <?= $form->field($model, 'contact_name',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
+                        <?= $form->field($model, 'contact_phone',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
                     </div>
                     <div class="row">
-                        <?= $form->field($model, 'street_number',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->label(false); ?>
-                        <?= $form->field($model, 'route',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->label(false); ?>
-                    </div>
-                    <div class="row">
-                        <?= $form->field($model, 'locality',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                        <?= $form->field($model, 'administrative_area_level_1',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                    </div>
-                    <div class="row">
-                        <?= $form->field($model, 'postal_code',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                        <?= $form->field($model, 'country',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                    </div>
-                    <div class="row">
-                        <?= $form->field($model, 'contactPerson',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                        <?= $form->field($model, 'phone',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
+                        <?= $form->field($model, 'contact_email',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
+                        <?= $form->field($model, 'website',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>                    
                     </div>
                     <div class="row">
                         <?= $form->field($model, 'businessTypeId',['options'=>['class'=>'form-group col-sm-12 col-md-6']])
                                 ->dropDownList(\common\models\BusinessType::find()->select(['title', 'id'])->indexBy('id')->column(),
                                     ['prompt' => 'Select business type ...']); ?>
-                        <?= $form->field($model, 'abn',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
+                        <?= $form->field($model, 'companyid',['options'=>['class'=>'form-group col-sm-12 col-md-6']])
+                                ->dropDownList(\common\models\Company::find()->select(['companyName', 'id'])->where(['userfk'=>$model->ownerid])->indexBy('id')->column(),
+                                    ['prompt' => 'Select Billing Company...']); ?>
+
                     </div>
                     <div class="row">
-                        <?= $form->field($model, 'website',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                        <?= $form->field($model, 'email',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                    </div>
-                    <div class="row">
-                        <?= $form->field($model, 'businessHours',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
-                        <?= $form->field($model, 'storeProfile',['options'=>['class'=>'form-group col-sm-12 col-md-6']]); ?>
+                        <?= $form->field($model, 'businessHours',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->textarea(); ?>
+                        <?= $form->field($model, 'storeProfile',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->textarea(); ?>
                     </div>
                 </fieldset>
             </div>
