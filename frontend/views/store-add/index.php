@@ -79,7 +79,7 @@ $this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add N
         <div class="border-top-block">
             <?= Html::a(\Yii::t('app', 'Cancel'), ['your-stores/index'], ['class' => 'btn white'])?>
             <?php $submitName = $model->id ? \Yii::t('app', 'Save') : \Yii::t('app', 'Add Store');?>
-            <?= Html::submitButton($submitName, ['class' => 'btn blue']); ?>
+            <?= Html::submitButton($submitName, ['class' => 'btn blue disableme']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
