@@ -39,10 +39,12 @@ class DriverForm extends UserForm
                 'message' => \Yii::t('app', 'Please enter your Personal Profile.')
             ],
             [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
+//            [['formatted_address'],'string','max'=>1500],
+//            [['googleobj'],'string','max'=>4000],
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
             [['block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code',
-                'country', 'latitude', 'longitude', 'googleplaceid', 'lat', 'lng', 'placeid'], 'safe'], // safe for now
+                'country', 'latitude', 'longitude', 'googleplaceid'], 'safe'], // safe for now
         ];
     }
 
