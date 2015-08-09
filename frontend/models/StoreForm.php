@@ -138,8 +138,8 @@ class StoreForm extends Model
 
                     throw new \yii\db\Exception(current($error));
                 }
+                $image->save();
             }
-            $image->save();
             $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather than current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
