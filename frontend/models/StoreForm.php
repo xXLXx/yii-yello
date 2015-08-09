@@ -96,6 +96,13 @@ class StoreForm extends Model
         $this->image = Image::findOne($store->imageId);
     }
 //
+
+    public function getStoreOwner($user){
+            $storeOwner = $this->getUserStoreOwner($user);
+            $this->ownerid = $storeOwner->userId;
+        
+    }
+    
     public function initializeForm(User $user){
             $storeOwner = $this->getUserStoreOwner($user);
 
@@ -110,6 +117,8 @@ class StoreForm extends Model
     }
 
 
+    
+    
     /**
      * Save this form.
      * The transactional way shall ensure we save this record at once
@@ -139,6 +148,7 @@ class StoreForm extends Model
                     throw new \yii\db\Exception(current($error));
                 }
                 $image->save();
+                $store->imageId = $image->id;
             }
             $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather than current user in case current user is manager
@@ -146,7 +156,6 @@ class StoreForm extends Model
             $store->storeOwnerId = $userStoreOwner->id;
             $store->paymentScheduleId = 1;
             $store->setAttributes($this->getAttributes());
-            $store->imageId = $image->id;
             if (!$store->save()) {
                 $error = $store->getFirstError();
                 $this->addError(key($error), current($error));

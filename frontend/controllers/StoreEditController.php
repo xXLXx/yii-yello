@@ -22,7 +22,9 @@ class StoreEditController extends Controller
     public function actionIndex()
     {
         $model = new StoreForm();
-
+        // get the store owner id
+        $user = \Yii::$app->user->identity;
+        $model->getStoreOwner($user);
         if ($model->load(\Yii::$app->request->post()) && $model->save(\Yii::$app->user->identity)) {
             $this->redirect(['your-stores/index']);
         }
