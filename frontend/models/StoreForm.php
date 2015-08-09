@@ -66,8 +66,27 @@ class StoreForm extends Model
                      'storeProfile', 'image', 'imageFile'
                 ],
                 'safe'
-            ],
-            [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif']
+            ]
+            
+            ,['title', 'required', 
+                'message' => \Yii::t('app', 'Please enter store name.')
+            ]
+            ,['contact_name', 'required', 
+                'message' => \Yii::t('app', 'Please enter a contact name.')
+            ]
+            
+            ,['contact_email', 'required', 
+                'message' => \Yii::t('app', 'Please enter a contact email.')
+            ]
+            
+            ,['contact_phone', 'required', 
+                'message' => \Yii::t('app', 'Please enter a contact phone.')
+            ]
+            ,['businessTypeId', 'required', 
+                'message' => \Yii::t('app', 'Please choose a business type.')
+            ]
+            
+            ,[['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif']
         ];
     }
 
@@ -137,7 +156,8 @@ class StoreForm extends Model
 
         
         $transaction = \Yii::$app->db->beginTransaction();
-        try {
+       // try {
+            $updateimageid=false;
             $image = new Image();
             $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
             if ($image->imageFile) {
@@ -148,7 +168,7 @@ class StoreForm extends Model
                     throw new \yii\db\Exception(current($error));
                 }
                 $image->save();
-                $store->imageId = $image->id;
+                $updateimageid=true;
             }
             $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather than current user in case current user is manager
@@ -156,6 +176,10 @@ class StoreForm extends Model
             $store->storeOwnerId = $userStoreOwner->id;
             $store->paymentScheduleId = 1;
             $store->setAttributes($this->getAttributes());
+
+            if($updateimageid){
+                $store->imageId = $image->id;
+            }
             if (!$store->save()) {
                 $error = $store->getFirstError();
                 $this->addError(key($error), current($error));
@@ -163,6 +187,7 @@ class StoreForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
+            
             $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->id]);
             if (!$userHasStore->save()) {
                 $error = $userHasStore->getFirstError();
@@ -234,10 +259,10 @@ class StoreForm extends Model
             $transaction->commit();
 
             return true;
-        } catch (\Exception $e) {
-            \Yii::error($e->getMessage());
-            $transaction->rollBack();
-        }
+//        } catch (\Exception $e) {
+//            \Yii::error($e->getMessage());
+//            $transaction->rollBack();
+//        }
 
         return false;
     }
