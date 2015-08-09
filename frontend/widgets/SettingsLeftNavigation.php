@@ -96,12 +96,12 @@ class SettingsLeftNavigation extends Widget
         $menuItems[] = ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Manage Users'), 'url' => ['settings/users']];
         $menuItems[] = ['label' => \Yii::t('app', 'Plans & Pricing'), 'url' => ['settings/schedules']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Default Roster'), 'url' => ['settings/roster']];
+       // $menuItems[] = ['label' => \Yii::t('app', 'Default Roster'), 'url' => ['settings/roster']];
         $items[]=['heading'=>\Yii::t('app', 'Preferences'),'menuItems'=>$menuItems];
         $menuItems=[];
         $menuItems[] = ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Payment details'), 'url' => ['settings/bank']];
+        //$menuItems[] = ['label' => \Yii::t('app', 'Payment details'), 'url' => ['settings/bank']];
 //        $menuItems[] = ['label' => \Yii::t('app', 'Invoices'), 'url' => ['settings/invoices']];
 //        $menuItems[] = ['label' => \Yii::t('app', 'Pricing Schedules'), 'url' => ['settings/schedules']];
 //        $menuItems[] = ['label' => \Yii::t('app', 'Yello Corporate'), 'url' => ['/settings/yello']];
