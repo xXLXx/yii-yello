@@ -46,10 +46,10 @@ class StoreSignupController extends BaseController
         $post = \Yii::$app->request->post();
         $model = new \frontend\models\StoreSignupForm();
 
-        if ($model->load($post) && $model->saveStepOne($user)) {
+        if ($model->load($post) && $model->save($user)) {
             $this->redirect(['step-two']);
         } else {
-            $model->loadStepOne($user);
+            $model->loadData($user);
         }
 
         return $this->render('index', [

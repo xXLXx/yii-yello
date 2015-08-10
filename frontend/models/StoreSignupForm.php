@@ -109,7 +109,7 @@ class StoreSignupForm extends Model
      *
      * @return boolean
      */
-    public function saveStepOne($user)
+    public function save($user)
     {
         if (!$this->validate()) {
             return false;
@@ -184,7 +184,7 @@ class StoreSignupForm extends Model
 //        $this->createUserHasStoreRealtion($user, $store);
     }
 
-    public function loadStepOne($user)
+    public function loadData($user)
     {
         $company = $user->company;
         if ($company) {
