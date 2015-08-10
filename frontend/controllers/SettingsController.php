@@ -72,14 +72,14 @@ class SettingsController extends BaseController
         Yii::$app->user->setReturnUrl(Yii::$app->request->url);
         $roleGroups = [
             'manager' => [
-                'title' => 'Manager Staff',
+                'title' => 'Admin Users',
                 'roles' => [
                     'manager',
                     'yelloAdmin'
                 ]
             ],
             'employee' => [
-                'title' => 'Employee',
+                'title' => 'Users',
                 'roles' => [
                     'employee'
                 ]
