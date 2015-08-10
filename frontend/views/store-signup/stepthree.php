@@ -162,6 +162,7 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
                     
 
         <div class="create-footer text-right" style="margin-top:30px;">
+            <a href="/store-signup/step-two" class="text-icon icon-arrow-left blue-text inline-block valign-middle">Previous Step</a>
             <?= Html::submitButton(\Yii::t('app', 'Finish'), ['class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Finish']); ?>
         </div>
         <?php ActiveForm::end(); ?>

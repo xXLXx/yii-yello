@@ -71,8 +71,13 @@ class BaseController extends Controller
 
     /**
      * Check user signup completeness. Redirect to appropriate signup page.
-     *
+     * 
      * @return array
+     * 
+     * JOVANI: this function should still allow users to visit certain other pages, and should also allow for error pages
+     * See the function above - allows for error pages and array of allowed pages. does not redirect if request matches any
+     * Please either change function below, or change to function above and corresponding function in User
+     * Thankx :)
      */
     public function behaviors()
     {
