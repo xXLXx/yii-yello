@@ -77,49 +77,49 @@ class BaseController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => false,
-                        'matchCallback' => function ($rule, $action) {
-                            $user = \Yii::$app->user->identity;
-                            $role = $user->role;
-
-                            // Deny access if user is driver and driver signup not yet completed
-                            // but exclude processing if route is intended signup page.
-                            $currentRoute = '/' . $this->id . '/' . $action->id;
-                            if ($role->name == Role::ROLE_DRIVER && $user->signup_step_completed < \Yii::$app->params['driver.signup_completion_step']
-                                    && $currentRoute !== self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]) {
-                                return true;
-                            }
-
-                            // Deny access if user is storeown and store signup not yet completed
-                            // but exclude processing if route is intended signup page.
-                            if ($role->name == Role::ROLE_STORE_OWNER && $user->signup_step_completed < \Yii::$app->params['storeOwner.signup_completion_step']
-                                && $currentRoute !== self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]) {
-                                return true;
-                            }
-
-                            return false;
-                        }
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@']
-                    ],
-                ],
-
-                'denyCallback' => function ($rule, $action) {
-                    if (\Yii::$app->user->isGuest) {
-                        \Yii::$app->user->loginRequired();
-                    } else {
-                        $user = \Yii::$app->user->identity;
-                        $role = $user->role;
-                        \Yii::$app->getResponse()->redirect(self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]);
-                    }
-                }
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'allow' => false,
+//                        'matchCallback' => function ($rule, $action) {
+//                            $user = \Yii::$app->user->identity;
+//                            $role = $user->role;
+//
+//                            // Deny access if user is driver and driver signup not yet completed
+//                            // but exclude processing if route is intended signup page.
+//                            $currentRoute = '/' . $this->id . '/' . $action->id;
+//                            if ($role->name == Role::ROLE_DRIVER && $user->signup_step_completed < \Yii::$app->params['driver.signup_completion_step']
+//                                    && $currentRoute !== self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]) {
+//                                return true;
+//                            }
+//
+//                            // Deny access if user is storeown and store signup not yet completed
+//                            // but exclude processing if route is intended signup page.
+//                            if ($role->name == Role::ROLE_STORE_OWNER && $user->signup_step_completed < \Yii::$app->params['storeOwner.signup_completion_step']
+//                                && $currentRoute !== self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]) {
+//                                return true;
+//                            }
+//
+//                            return false;
+//                        }
+//                    ],
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['@']
+//                    ],
+//                ],
+//
+//                'denyCallback' => function ($rule, $action) {
+//                    if (\Yii::$app->user->isGuest) {
+//                        \Yii::$app->user->loginRequired();
+//                    } else {
+//                        $user = \Yii::$app->user->identity;
+//                        $role = $user->role;
+//                        \Yii::$app->getResponse()->redirect(self::$signup_steps_routes[$role->name][$user->signup_step_completed + 1]);
+//                    }
+//                }
+//            ],
         ];
     }
 }

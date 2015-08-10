@@ -433,7 +433,7 @@ class User extends BaseModel implements IdentityInterface
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['userfk' => 'id'])
-            ->where(['isprimary' => 1]);
+            ->where(['isPrimary' => 1]);
     }
 
     /**

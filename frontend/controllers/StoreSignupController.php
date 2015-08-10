@@ -13,6 +13,12 @@ use yii\filters\AccessControl;
  */
 class StoreSignupController extends BaseController
 {
+    public function init()
+    {
+        parent::init();
+
+        $this->layout = 'signup';
+    }
     /**
      * @inheritdoc
      */
@@ -36,19 +42,18 @@ class StoreSignupController extends BaseController
      */
     public function actionIndex()
     {
-        
-        $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
-        $storeSignupForm = new \frontend\models\StoreSignupForm();
-        if ($storeSignupForm->load($post)) {
+        $model = new \frontend\models\StoreSignupForm();
+
+        if ($model->load($post) && $model->save($user)) {
+            $this->redirect(['step-two']);
         } else {
-            // TODO: change code to get info rom new tables:
-            $user = \Yii::$app->user->identity;
-            //$storeSignupForm->setData($user);
+            $model->loadData($user);
         }
+
         return $this->render('index', [
-            'model'     => $storeSignupForm
+            'model'     => $model
         ]);
     }
     
