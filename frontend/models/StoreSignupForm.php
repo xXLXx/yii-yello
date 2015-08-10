@@ -120,6 +120,7 @@ class StoreSignupForm extends Model
         try {
             $company = Company::findOneOrCreate(['id' => $this->companyId]);
             $company->setAttributes($this->getAttributes());
+            $company->accountName=$user->firstName.' '.$user->lastName;
             $company->userfk = $user->id;
             $company->isPrimary = 1;
             if (!$company->save()) {
@@ -140,8 +141,10 @@ class StoreSignupForm extends Model
             }
             $this->addressfk = $address->idaddress;
 
-            $companyAddress = CompanyAddress::findOneOrCreate(['companyfk' => $company->id, 'addressfk' => $address->idaddress]);
+            $companyAddress = CompanyAddress::findOneOrCreate(['companyfk' => $company->id, 'addressfk' => $address->idaddress, 'addresstitle'=>'Default','addresstype'=>1]);
             $companyAddress->setAttributes($this->getAttributes());
+            $companyAddress->contact_name=$user->firstName.' '.$user->lastName;
+            $companyAddress->contact_email=$user->email;
             if (!$companyAddress->save()) {
                 $error = $companyAddress->getFirstError();
                 $this->addError(key($error), current($error));

@@ -6,6 +6,8 @@ use common\models\Store;
 use common\models\StoreAddress;
 use common\models\StoreOwner;
 use common\models\User;
+use common\models\Image;
+use yii\web\UploadedFile;
 use common\models\UserHasStore;
 use yii\base\Model;
 use Yii;
@@ -79,6 +81,38 @@ class SignupStoreFirstStore extends Model
             ],
 
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif']
+
+            ,['storename', 'required', 
+                'message' => \Yii::t('app', 'Please enter store name.')
+            ]
+
+            
+            ,['businessTypeId', 'required', 
+                'message' => \Yii::t('app', 'Please choose a business type.')
+            ]
+
+            
+            ,['contact_name', 'required', 
+                'message' => \Yii::t('app', 'Please enter a contact name.')
+            ]
+
+            
+            ,['contact_phone', 'required', 
+                'message' => \Yii::t('app', 'Please enter contact phone number.')
+            ]
+
+            
+            ,['contact_email', 'required', 
+                'message' => \Yii::t('app', 'Please enter a contact email.')
+            ]
+
+            ,['contact_email', 'email', 
+                'message' => \Yii::t('app', 'Please enter a valid email address.')
+            ]
+
+            
+            
+            
         ];
     }
 
@@ -86,6 +120,7 @@ class SignupStoreFirstStore extends Model
     public function attributeLabels()
     {
         $labels = [
+            'businessTypeId' => 'Business Type',
             'administrative_area_level_1'=>'State',
             'postal_code'=>'Postcode',
             'route'=>'',
@@ -112,6 +147,22 @@ class SignupStoreFirstStore extends Model
         $transaction = \Yii::$app->db->beginTransaction();
 
         try {
+            
+            $updateimageid=false;
+            $image = new Image();
+            $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if ($image->imageFile) {
+                if (!$image->saveFiles()) {
+                    $error = $image->getFirstError();
+                    $this->addError(key($error), current($error));
+
+                    throw new \yii\db\Exception(current($error));
+                }
+                $image->save();
+                $updateimageid=true;
+            }
+            
+            
             $storeOwner = new StoreOwner([
                 'companyId' => $this->companyId,
                 'userId' => $user->id,
@@ -135,6 +186,7 @@ class SignupStoreFirstStore extends Model
             $store = new Store();
             $store->setAttributes($this->getAttributes());
             $store->storeOwnerId = $storeOwner->id;
+            $store->title=$this->storename;
             if (!$store->save()) {
                 $error = $store->getFirstError();
                 $this->addError(key($error), current($error));
@@ -145,6 +197,11 @@ class SignupStoreFirstStore extends Model
             $storeAddress = new StoreAddress([
                 'storefk' => $store->id,
                 'addressfk' => $address->idaddress,
+                'contact_name'=>$this->contact_name,
+                'contact_email'=>$this->contact_email,
+                'contact_phone'=> $this->contact_phone,
+                'addresstitle'=>'Default',
+                'addresstype'=>1
             ]);
             if (!$storeAddress->save()) {
                 $error = $storeAddress->getFirstError();
@@ -166,6 +223,11 @@ class SignupStoreFirstStore extends Model
 
             $user->signup_step_completed = 3;
             $user->save(false);
+            if($updateimageid){
+                $store->imageId=$image->id;
+            }
+            $store->save();
+            \Yii::$app->session->set('currentStoreId', $store->id);
 
             $transaction->commit();
 

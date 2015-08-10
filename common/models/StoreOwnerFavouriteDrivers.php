@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $createdAt
  * @property integer $updatedAt
  * @property integer $isArchived
+ * @property integer $storefk
  */
 class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
 {
@@ -47,7 +48,7 @@ class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['storeOwnerId', 'driverId'], 'integer']
+            [['storeOwnerId', 'driverId','storefk'], 'integer']
         ];
     }
 
@@ -63,6 +64,7 @@ class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'isArchived' => 'Is Archived',
+            'storefk' => 'Store ID'
         ];
     }
 }

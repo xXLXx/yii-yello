@@ -35,7 +35,7 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
         <?php
         $form = ActiveForm::begin([
                     'id' => 'store-signup-step-three',
-                    'options' => ['role'=>'form','autocomplete'=>'off'],
+                    'options' => ['role'=>'form','autocomplete'=>'off', 'enctype' => 'multipart/form-data'],
                     'fieldConfig' => [
                         'template' => '<div class="">{label}{input}{error}</div>',
                         'options' =>['autocomplete'=>'false'],
@@ -58,8 +58,10 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
                     </div>
                 </div>
                 <div class="col col-md-6 col-lg-6">
-                   
-
+                                <?php echo $form->field($model, 'storename'); ?>
+                                <?= $form->field($model, 'businessTypeId',['options'=>['class'=>'form-group']])
+                                ->dropDownList(\common\models\BusinessType::find()->select(['title', 'id'])->indexBy('id')->column(),
+                                    ['prompt' => 'Select business type ...']); ?>
 
                 </div>
             </div>
@@ -103,10 +105,63 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
         </div>
                                  
                     
+                    <hr style="width:90%;margin:30px;">
 
+                    
+        <div class="create-body">
+            <div class="row" style="margin-top:30px;">
+                <div class="col col-md-6 col-lg-6">
+                    <div class="col col-md-10">
+                        <h3>Contact Details</h3>
+                        <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                        <div class="help-block help-block-error error-message payment-errors"></div>
+                    </div>
+                </div>
+                <div class="col col-md-6 col-lg-6">
+                                <?php echo $form->field($model, 'contact_name'); ?>
+                                <?php echo $form->field($model, 'contact_phone'); ?>
+                                <?php echo $form->field($model, 'contact_email'); ?>
+                                <?php echo $form->field($model, 'website'); ?>
+
+                </div>
+            </div>
+        </div>
+
+                    
+                    <hr style="width:90%;margin:30px;">
+
+                    
+        <div class="create-body">
+            <div class="row" style="margin-top:30px;">
+                <div class="col col-md-6 col-lg-6">
+                    <div class="col col-md-10">
+                        <h3>Store Profile</h3>
+                        <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                        <div class="help-block help-block-error error-message payment-errors"></div>
+                    </div>
+                </div>
+                <div class="col col-md-6 col-lg-6">
+                                <?php echo $form->field($model, 'businessHours')->textarea(); ?>
+                                <?php echo $form->field($model, 'storeProfile')->textarea(); ?>
+                            <div class="user-photo-container">
+                                <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/temp/07.png' ?>"/>
+                            </div>
+                            <div class="upload-file">
+                                <div class="blue-text">Upload logo</div>
+                                <?=
+                                Html::activeFileInput($model, 'imageFile', [
+                                    'class' => 'j_image-file-input',
+                                    'id'    => 'image'
+                                ]);
+                                ?>
+                            </div>
+                </div>
+            </div>
+        </div>                    
+                    
 
         <div class="create-footer text-right" style="margin-top:30px;">
-            <?= Html::submitButton(\Yii::t('app', 'Next Step'), ['class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Next Step']); ?>
+            <?= Html::submitButton(\Yii::t('app', 'Finish'), ['class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Finish']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>      
