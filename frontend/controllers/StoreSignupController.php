@@ -57,24 +57,24 @@ class StoreSignupController extends BaseController
         ]);
     }
     
-    public function actionStepTwo(){
-        // cannot use address widget
-        
-        $this->layout='signup';
+    public function actionStepTwo()
+    {
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
-        $storeSignupForm = new \frontend\models\SignupStorePaymentDetails();
-        if ($storeSignupForm->load($post)) {
-        } else {
-            // TODO: change code to get info rom new tables:
+        $model = new \frontend\models\SignupStorePaymentDetails([
+            'companyId' => $user->company->id,
+        ]);
+        if ($model->load($post) && $model->save()) {
+            $this->redirect(['step-three']);
         }
+
         return $this->render('steptwo', [
-            'model'     => $storeSignupForm
+            'model'     => $model
         ]);
     }
 
-    public function actionStepThree(){
-        $this->layout='signup';
+    public function actionStepThree()
+    {
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
         $storeSignupFirstStoreForm = new \frontend\models\SignupStoreFirstStore();

@@ -37,6 +37,7 @@ $wholerow = ['options' => ['class' => '']];
         $form = ActiveForm::begin([
                     'layout' => 'horizontal',
                     'id' => 'store-signup-step-two',
+                    'enableClientValidation' => false,
                     'options' => ['role'=>'form','autocomplete'=>'off','onsubmit'=>'return false'],
                     'fieldConfig' => [
                         'template' => '<div class="">{label}{input}{error}</div>',
@@ -49,6 +50,7 @@ $wholerow = ['options' => ['class' => '']];
                     ],
         ]);
         ?>
+        <?php echo Html::activeHiddenInput($model, 'companyId'); ?>
         <div class="create-body">
             <div class="row" style="margin-top:30px;">
                 <div class="col col-md-6 col-lg-6">
@@ -101,16 +103,16 @@ $wholerow = ['options' => ['class' => '']];
                                 </div>
                             </div>
                             <div class="col col-md-6 col-lg-6" id="address">
-                                <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
+                                <input autocomplete="false" name="hidden" type="text" style="display:none;">
 
                                 <input class="form-control" id="autocomplete" placeholder="Enter your billing address here" autocomplete="off" onfocus="geolocatestripe()" type="text">
-                                
+
                                     <?php echo $form->field($model, 'address_line1',['inputOptions'=>['data-stripe'=>'address_line1','class'=>'form-control stripeform']]); ?>
                                     <?php echo $form->field($model, 'address_line2',['inputOptions'=>['data-stripe'=>'address_line2','class'=>'form-control stripeform']  ]); ?>
                                     <?php echo $form->field($model, 'address_city',['inputOptions'=>['data-stripe'=>'address_city','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']]); ?>
                                     <?php echo $form->field($model, 'address_state',['inputOptions'=>['data-stripe'=>'address_state','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
                                     <?php echo $form->field($model, 'address_zip',['inputOptions'=>['data-stripe'=>'address_zip','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3 ','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'address_country',['inputOptions'=>['data-stripe'=>'address_country','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>                            
+                                    <?php echo $form->field($model, 'address_country',['inputOptions'=>['data-stripe'=>'address_country','class'=>'form-control stripeform'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
 
                             </div>
                         </div>
@@ -120,7 +122,7 @@ $wholerow = ['options' => ['class' => '']];
 
 
         <div class="create-footer text-right" style="margin-top:30px;">
-            <?= Html::submitButton(\Yii::t('app', 'Next Step'), ['class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Next Step']); ?>
+            <?= Html::button(\Yii::t('app', 'Next Step'), ['id' => 'btn-submit', 'class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Next Step']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>      
