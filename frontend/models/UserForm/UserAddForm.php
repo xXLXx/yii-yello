@@ -29,7 +29,7 @@ class UserAddForm extends AbstractForm
     public $image;
     public $roleId;
     public $isAdmin;
-    public $stores;
+    public $storeslist;
 
     /**
      * @inheritdoc
@@ -53,7 +53,7 @@ class UserAddForm extends AbstractForm
             ['email', 'validateUniqueEmail'],
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
-            ['stores', 'safe']
+            ['storeslist', 'safe']
         ];
     }
 
@@ -94,7 +94,7 @@ class UserAddForm extends AbstractForm
             $this->isAdmin = true;
             $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
             $this->roleId = $role->id;
-            $this->stores = $this->getStoresArrayMap();
+            $this->storeslist = $this->getStoresArrayMap();
         }
         $this->image = $user->image;
     }

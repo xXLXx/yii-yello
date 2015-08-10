@@ -518,7 +518,17 @@ class User extends BaseModel implements IdentityInterface
             case 4: // manager
             case 6: // storeOwner
                 // TODO: Vett storeowner has valid subscription and redirect to signup stage if not
-
+                // make sure user has company
+                $company=$this->company;
+                if(!$company){
+                    array_push($ca,['store-signup','index',true]);
+                    return $ca;
+                    }
+                    array_push($ca,['store-signup','index',false]);
+                    // make sure the user has a storeowner
+                
+                
+                
                 return false;
 //                if(!$this->getUserHasStores()){
 //                   array_push($ca,['store-add','index'],true);

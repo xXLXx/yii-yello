@@ -63,6 +63,7 @@ UserAddAsset::register($this);
                         <?= Html::error($model, 'email', ['class' => 'error-message']) ?>
                     </td>
                 </tr>
+    <?php if ($canSetIsAdmin): ?>
                 <tr>
                     <td>
                         <label for="userRole">Role</label>
@@ -73,6 +74,8 @@ UserAddAsset::register($this);
                         ?>
                     </td>
                 </tr>
+    <?php endif; ?>
+
                 <tr>
                     <td>
                         <label for="stores"><?= \Yii::t('app', 'Stores'); ?></label>
@@ -131,18 +134,6 @@ UserAddAsset::register($this);
             </div>
         </div>
     </div>
-    <?php if ($canSetIsAdmin): ?>
-        <div class="checkbox-input js-admin-priv-container <?php if (!$model->isManager()): ?> hide<?php endif; ?>">
-            <?= Html::checkbox($model->formName() . '[isAdmin]', $model->isAdmin, ['id' => 'is-admin']) ?>
-            <label for="is-admin" class="j_checkbox <?php if ($model->isAdmin): ?>active<?php endif; ?>">
-                <?= \Yii::t('app', 'This user has Admin privileges'); ?>
-            </label>
-        </div>
-        <br>
-        <p class="text-icon font-exclamation-triangle gray-text icon-orange">
-            <?= \Yii::t('app', 'Admins have full access to user management, import/export, upgrade, and apply account customizations.'); ?>
-        </p>
-    <?php endif; ?>
     <div class="border-top-block">
         <?= Html::resetButton(\Yii::t('app', 'Cancel'), ['class' => 'btn']); ?>
         <?= Html::submitButton(\Yii::t('app', 'Add user'), ['class' => 'btn blue']); ?>
