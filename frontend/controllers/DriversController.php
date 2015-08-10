@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use common\models\Driver;
+use common\models\DriverHasStore;
 use common\models\search\DriverSearch;
-use common\models\ShiftRequestReview;
+use common\models\ShiftHasDriver;
+use common\models\ShiftReviews;
 use common\models\ShiftState;
 use common\models\Shift;
 use yii\helpers\Json;
@@ -88,12 +90,14 @@ class DriversController extends BaseController
     public function actionProfile($id)
     {
         $driver = Driver::findOne($id);
-        if (!$driver->userDriver)
-        {
+        if (!$driver->userDriver) {
             return false;
         }
+
+        $connected = DriverHasStore::isConnected($id);
+
         $completedShiftState = ShiftState::findOne(['name' => ShiftState::STATE_COMPLETED]);
-		//TODO: Lalit - please comment changes
+        //TODO: Lalit - please comment changes
         $completedShift = Shift::findAll(['shiftStateId' => $completedShiftState->id]);
         $shiftData = Shift::find()
             ->where(['shiftStateId' => $completedShiftState->id])
@@ -103,13 +107,18 @@ class DriversController extends BaseController
             ->asArray()
             ->one();
 
-        //$deliveriesCount = 10;
-        $reviews = ShiftRequestReview::find()->all();
+        $reviews = ShiftReviews::find(
+            ['driverId' => $id]
+        )
+        ->with(['store'])
+        ->all();
+
         return $this->render('profile', [
             'driver' => $driver,
             'completedShiftCount' => $shiftData['completedShift'],
             'deliveriesCount' => $shiftData['deliveriesCount'] ?: 0,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'connected' => $connected
         ]);
 
     }

@@ -111,4 +111,10 @@ class ShiftHasDriver extends \common\models\BaseModel
         }
         return parent::afterSave($insert, $changedAttributes);
     }
+
+    public function getShift(){
+
+            return $this->hasOne(Shift::className(), ['id' => 'shiftId']);
+
+    }
 }

@@ -21,15 +21,30 @@
                     <div class="user-photo-info-inner">
                         <h2><?= $driver->username ?></h2>
                         <div class="text-small-11 gray-text">Yello ID: #<?= $driver->id ?></div>
-                                    <div>
-                                        <span class="star-block">
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-half"></span>
-                                            <span class="font-star"></span>
-                                        </span>
-                                    </div>
+                            <div>
+                                <span class="star-block">
+
+                                <?php
+                                echo \kartik\rating\StarRating::widget([
+                                    'name' => 'rating_2',
+                                    'value' => 2.5,
+                                    'disabled' => true,
+                                    'pluginOptions' => [
+                                        'showClear' => false,
+                                        'size'  => 'xs',
+                                        'showCaption' => false,
+                                        //'glyphicon' => false,
+                                        //'ratingClass' => 'font-star-two'
+                                    ]
+                                ]);
+                                ?>
+                                    <!--<span class="font-star-two"></span>
+                                    <span class="font-star-two"></span>
+                                    <span class="font-star-two"></span>
+                                    <span class="font-star"></span>
+                                    <span class="font-star"></span>-->
+                                </span>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -40,17 +55,19 @@
             <h4>Public details</h4>
             <table class="strip-table">
                 <col width="30%" />
-                <tr class="tr-gray">
+                <!--<tr class="tr-gray">
                     <td class="gray-text">Availability</td>
-                    <td><?= $driver->userDriver->availability ?></td>
-                </tr>
+                    <td><?/*= $driver->userDriver->availability */?></td>
+                </tr>-->
                 <tr>
                     <td class="gray-text">Vehicle</td>
                     <td>
                         <?php if ($driver->vehicle):?>
                             <?= $driver->vehicle->vehicleType->title ?>
-                            (<?= $driver->vehicle->model ?>, <?= $driver->vehicle->year ?>)
-                            <a href="#">View</a>
+                            (<?= $driver->vehicle->model ?>, <?= $driver->vehicle->year ?>, <?= $driver->vehicle->registration; ?>)
+                            <?php if($connected){ ?>
+                            <a href="<?= $driver->vehicle->image->originalUrl ?>" class="j_colorbox_photo">View</a>
+                            <?php } ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -59,7 +76,7 @@
                     <td>
                         <?php if($driver->userDriver->driverLicenseNumber): ?>
                             <span class="link-icon"><span class="round-btn green font-check"></span>Submited</span>
-                            <a href="#">View</a>
+                            <?php if($connected){ ?><a href="<?= $driver->userDriver->driverLicensePhoto ?>" class="j_colorbox_photo photo">View</a><?php } ?>
                         <?php else: ?>
                             <span class="link-icon"><span class="round-btn red font-x"></span>Not submited</span>
                         <?php endif; ?>
@@ -76,6 +93,7 @@
                     </td>
                 </tr>
             </table>
+            <?php if($connected){ ?>
             <h4>Private details</h4>
             <table class="strip-table">
                 <col width="30%" />
@@ -85,7 +103,7 @@
                 </tr>
                 <tr>
                     <td class="gray-text">Address</td>
-                    <td><?// TODO:jovani  $driver->userDriver->address1 ?></td>
+                    <td><?php //$driver->userDriver->address ?></td>
                 </tr>
                 <tr class="tr-gray">
                     <td class="gray-text">Phone</td>
@@ -103,12 +121,15 @@
                     <td></td>
                 </tr>
             </table>
-            <h4>Locations</h4>
-<!--  TODO:jovani          <div class="location-list">
-                <?//php foreach ($driver->suburbs as $suburb): ?>
-                    <div class="location-item"><?//= $suburb->title ?></div>
-                <?//php endforeach; ?>
-            </div>-->
+            <?php } ?>
+            <!-- <h4>Locations</h4>
+                 TODO:jovani
+                  <div class="location-list">
+                <?/*//php foreach ($driver->suburbs as $suburb): */?>
+                    <div class="location-item"><?/*//= $suburb->title */?></div>
+                <?/*//php endforeach; */?>
+                 </div>
+            -->
             <h4>Profile</h4>
             <div><?= $driver->userDriver->personalProfile ?></div>
             </div>
@@ -142,7 +163,8 @@
                         <div class="company-list">
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
-                                    <h5><?= $review->title ?></h5>
+                                    <?php //$review->store->title; ?>
+                                    <h5><?= $review->id; ?></h5>
                                         <span class="star-block big">
                                             <span class="font-star-two"></span>
                                             <span class="font-star-two"></span>
@@ -150,7 +172,7 @@
                                             <span class="font-star-half"></span>
                                             <span class="font-star"></span>
                                         </span>
-                                    <div><?= $review->text?></div>
+                                    <div><?= $review->text; ?></div>
                                     <div class="gray-text">
                                         <?php
                                             $dateTime = new \DateTime();

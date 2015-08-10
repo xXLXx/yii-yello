@@ -93,6 +93,10 @@ $(document).ready(function() {
                 }
             }
             $(".j_colorbox").colorbox(colorboxParams);
+            colorboxParams.photo = true;
+            colorboxParams.maxWidth = "90%";
+            colorboxParams.maxHeight = "90%";
+            $(".j_colorbox_photo").colorbox(colorboxParams);
         }
     };
     colorBoxInit();

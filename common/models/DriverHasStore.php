@@ -136,11 +136,19 @@ class DriverHasStore extends \common\models\BaseModel
         );
     }
 
-    public static function inviteAccepted($user_id, $store_id, $accept_status = 0){
+    public static function isConnected($driver_id){
 
-        if(!DriverHasStore::find()->where( ['driverId' => $user_id, 'storeId' => $store_id] )->one()){
+        $user = \Yii::$app->user->identity;
+        $store_id = $user->storeOwner->storeCurrent->id;
+        return (boolean) DriverHasStore::find()->where( ['driverId' => $driver_id, 'storeId' => $store_id] )->one();
+
+    }
+
+    public static function inviteAccepted($driver_id, $store_id, $accept_status = 0){
+
+        if(!DriverHasStore::find()->where( ['driverId' => $driver_id, 'storeId' => $store_id] )->one()){
             $driver_has_store = new DriverHasStore();
-            $driver_has_store->driverId = $user_id;
+            $driver_has_store->driverId = $driver_id;
             $driver_has_store->storeId = $store_id;
             $driver_has_store->createdAt = time();
             $driver_has_store->updatedAt = time();
