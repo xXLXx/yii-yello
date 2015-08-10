@@ -122,6 +122,7 @@ class StoreSignupForm extends Model
             $company->setAttributes($this->getAttributes());
             $company->accountName=$user->firstName.' '.$user->lastName;
             $company->userfk = $user->id;
+            $company->email=$user->email;
             $company->isPrimary = 1;
             if (!$company->save()) {
                 $error = $company->getFirstError();

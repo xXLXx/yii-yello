@@ -2,8 +2,11 @@
 use frontend\widgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
-$this->title = \Yii::t('app', 'Manage Users');
+        $owner = Yii::$app->user->identity;
+        if (!$owner->storeOwner) {
+           $owner =  $owner->parentUser;
+        }
+        $this->title = \Yii::t('app', 'Manage Users');
 ?>
 
 <div class="sidebar-container">
@@ -17,6 +20,19 @@ $this->title = \Yii::t('app', 'Manage Users');
         <?php foreach ($userGroups as $group): ?>
             <h5><?= $group['title'] ?></h5>
             <div class="users-list">
+                    <?php if($owner){?>
+                
+                    <div class="users-list-item">
+                        <div class="user-photo-container">
+                            <img src="<?= $owner->image? $owner->image->thumbUrl : '/img/temp/02.jpg' ?>" alt="<?= $owner->firstName ?>" />
+                        </div>
+                            <div class="user-role"><span><?= \Yii::t('app', 'Owner') ?></span></div>
+                        <div class="user-title"><?= $owner->username ?></div>
+                    </div>                
+                    <?php }
+                    $owner=false;
+                     ?>
+                
                 <?php foreach ($group['users'] as $user): ?>
                     <div class="users-list-item">
                         <div class="user-photo-container">

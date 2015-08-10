@@ -77,10 +77,12 @@ class StoreSignupController extends BaseController
     {
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
+        $companyaddress = $user->companyAddress;
         $model = new \frontend\models\SignupStoreFirstStore([
             'companyId' => $user->company->id,
-            'contact_name'=> $user->firstName.' '.$user->lastName,
-            'contact_email'=>$user->email
+            'contact_name'=> $companyaddress->contact_name,
+            'contact_email'=>$companyaddress->contact_email,
+                'contact_phone'=>$companyaddress->contact_phone
         ]);
         if ($model->load($post) && $model->save($user)) {
             $this->redirect(['settings/index']);

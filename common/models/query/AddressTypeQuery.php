@@ -10,7 +10,7 @@ use common\models\AddressType;
  */
 class AddressTypeQuery extends \yii\db\ActiveQuery
 {
-    public function byType($type = AddressType::TYPE_DEFAULT)
+    public function byType($type = AddressType::TYPE_POSTAL)
     {
         $this->andWhere(array('addresstype' => $type));
         return $this;

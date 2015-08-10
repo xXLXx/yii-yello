@@ -162,11 +162,16 @@ class SignupStoreFirstStore extends Model
                 $updateimageid=true;
             }
             
-            
+            $storeOwner = $user->storeOwner;
+            if(!$storeOwner){
             $storeOwner = new StoreOwner([
-                'companyId' => $this->companyId,
+                'companyId' => $this->$user->company->id,
                 'userId' => $user->id,
-            ]);
+            ]);            }
+            $storeOwner->companyId=$user->company->id;
+                
+
+
             if (!$storeOwner->save()) {
                 $error = $storeOwner->getFirstError();
                 $this->addError(key($error), current($error));

@@ -72,13 +72,14 @@ class CompanyForm extends Model
     
     
     /**
-     * Set data from StoreOwner
+     * Set data from everywhere
      * 
      * @param StoreOwner $storeOwner storeOwner
      */
-    public function setData( StoreOwner $storeOwner)
+    public function setData($user)
     {
-        $company = $storeOwner->company;
+        $owner = $user->storeOwner;
+        $company=$owner->company;
         if (!$company) {
             $company = new Company();
             $company->save();
@@ -101,7 +102,7 @@ class CompanyForm extends Model
     {
         $transaction = \Yii::$app->db->beginTransaction();
 
-        try {
+//        try {
             $company = Company::findOneOrCreate($this->id);
             $company->ABN = $this->ABN;
             $company->accountName = $this->accountName;
@@ -148,7 +149,7 @@ class CompanyForm extends Model
             $companyAddress->contact_name = $this->contact_name;
             $companyAddress->contact_phone = $this->contact_phone;
             $companyAddress->contact_email = $this->contact_email;
-            $companyAddress->addresstype = AddressType::find()->byType(AddressType::TYPE_DEFAULT)->one()->idaddresstypes;
+            $companyAddress->addresstype = AddressType::find()->byType(AddressType::TYPE_POSTAL)->one()->idaddresstypes;
 
             if (!$companyAddress->save()) {
                 $error = $companyAddress->getFirstError();
@@ -161,10 +162,10 @@ class CompanyForm extends Model
 
             $transaction->commit();
             return true;
-        } catch (\Exception $e) {
-            \Yii::error($e->getMessage());
-            $transaction->rollBack();
-        }
+//        } catch (\Exception $e) {
+//            \Yii::error($e->getMessage());
+//            $transaction->rollBack();
+//        }
 
         return false;
     }

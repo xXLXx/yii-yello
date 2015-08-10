@@ -27,7 +27,7 @@ class CompanyDetailsController extends BaseController
             // 
             
             $user = \Yii::$app->user->identity;
-            $companyForm->setData($user->storeOwner);
+            $companyForm->setData($user);
         }
         return $this->render('index', [
             'model'     => $companyForm

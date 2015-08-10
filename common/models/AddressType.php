@@ -14,7 +14,6 @@ use Yii;
  */
 class AddressType extends \yii\db\ActiveRecord
 {
-    const TYPE_DEFAULT = 'default';
     const TYPE_POSTAL = 'postal';
     const TYPE_LOCATION = 'location';
 

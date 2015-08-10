@@ -74,6 +74,7 @@ class SettingsController extends BaseController
             'manager' => [
                 'title' => 'Admin Users',
                 'roles' => [
+                    'storeOwner',
                     'manager',
                     'yelloAdmin'
                 ]
@@ -93,7 +94,7 @@ class SettingsController extends BaseController
             $userGroups[$key]['users'] = $this->getUsersToManage(['roleId' => $roleIds]);
         }
         $rolesAdd = Role::findAll([
-            'name' => [Role::ROLE_MANAGER, Role::ROLE_EMPLOYEE]
+            'name' => [Role::ROLE_MANAGER, Role::ROLE_EMPLOYEE, Role::ROLE_STORE_OWNER]
         ]);
         return $this->render('users', [
             'userGroups' => $userGroups,
