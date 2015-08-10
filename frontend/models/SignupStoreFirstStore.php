@@ -1,7 +1,12 @@
 <?php
 namespace frontend\models;
 
+use common\models\Address;
+use common\models\Store;
+use common\models\StoreAddress;
+use common\models\StoreOwner;
 use common\models\User;
+use common\models\UserHasStore;
 use yii\base\Model;
 use Yii;
 use common\models\Role;
@@ -23,8 +28,10 @@ class SignupStoreFirstStore extends Model
     ];
 
     public $storename;
-    public $businesstype;
-    
+    public $businessTypeId;
+    public $companyId;
+//    public $storeOwnerId;
+
     public $block_or_unit;
     public $street_number;
     public $route;
@@ -33,6 +40,8 @@ class SignupStoreFirstStore extends Model
     public $postal_code;
     public $country;
     public $formatted_address;
+    public $googleplaceid;
+    public $googleobj;
 
 
     // company address
@@ -55,11 +64,20 @@ class SignupStoreFirstStore extends Model
         return [
             [
                 [
-                    'id', 'title', 'businessTypeId',
+                    'businessTypeId',
                     'businessHours', 'storeProfile', 'image', 'imageFile'
                 ],
                 'safe'
             ],
+
+            [
+                [
+                    'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1',
+                    'postal_code', 'country', 'formatted_address', 'googleplaceid', 'googleobj',
+                ],
+                'safe'
+            ],
+
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif']
         ];
     }
@@ -76,41 +94,88 @@ class SignupStoreFirstStore extends Model
             'locality'=>'Suburb'
         ];
         return array_merge(parent::attributeLabels(), $labels);
-    }    
-        
-    public function getBusinessTypeArrayMap()
-    {
-        $businessTypes = BusinessType::find()
-            ->select(['id', 'title'])
-            ->asArray()
-            ->all();
-        $result = [
-            null => \Yii::t('app', 'Select business type')
-        ];
-        foreach ($businessTypes as $item) {
-            $result[$item['id']] = $item['title'];
-        }
-        return $result;
     }
 
     /**
-     * @param User $user
-     * @return \common\models\StoreOwner
-     * @throws UserStoreOwnerUndefinedException
+     * Save data from step-one
+     *
+     * @param \common\models\User $user
+     *
+     * @return boolean
      */
-    private function getUserStoreOwner(User $user)
+    public function save($user)
     {
-        if ($user->storeOwner) {
-            return $user->storeOwner;
+        if (!$this->validate()) {
+            return false;
         }
 
-        if ($user->parentUser && $user->parentUser->storeOwner) {
-            return $user->parentUser->storeOwner;
+        $transaction = \Yii::$app->db->beginTransaction();
+
+        try {
+            $storeOwner = new StoreOwner([
+                'companyId' => $this->companyId,
+                'userId' => $user->id,
+            ]);
+            if (!$storeOwner->save()) {
+                $error = $storeOwner->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $address = new Address();
+            $address->setAttributes($this->getAttributes());
+            if (!$address->save()) {
+                $error = $address->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $store = new Store();
+            $store->setAttributes($this->getAttributes());
+            $store->storeOwnerId = $storeOwner->id;
+            if (!$store->save()) {
+                $error = $store->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $storeAddress = new StoreAddress([
+                'storefk' => $store->id,
+                'addressfk' => $address->idaddress,
+            ]);
+            if (!$storeAddress->save()) {
+                $error = $storeAddress->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $userHasStore = new UserHasStore([
+                'userId' => $user->id,
+                'storeId' => $store->id
+            ]);
+            if (!$userHasStore->save()) {
+                $error = $userHasStore->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $user->signup_step_completed = 3;
+            $user->save(false);
+
+            $transaction->commit();
+
+            return true;
+
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
         }
 
-        throw new UserStoreOwnerUndefinedException($user, 'Cannot detect storeOwner');
+        return false;
     }
-    
-    
-    
 }

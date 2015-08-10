@@ -203,6 +203,7 @@ p {padding:0; margin:0 0 16px;}
             .sidebar-container.sidebar-actions:after {width:302px; background:#fff; box-shadow:-2px 2px 2px rgba(0,0,0,0.1) inset;}
             .sidebar-container.sidebar-actions .col-left {width:220px;}
             .sidebar-container.sidebar-actions .col-right {padding:0 0 0 302px;}
+            .sidebar-container.sidebar-actions .loading {opacity: .5; pointer-events: none;}
         .two-column {}
             .two-column:after {content:""; position:absolute; top:0; left:50%; width:6px; bottom:0; margin:0 0 0 -5px; background:#fff; box-shadow:-2px 2px 2px rgba(0,0,0,0.1) inset;}
             .two-column .col-left,

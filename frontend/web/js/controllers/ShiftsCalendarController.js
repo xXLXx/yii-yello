@@ -9,6 +9,7 @@ var calendarObject;
 var calendarInterval;
 var begindate=0;
 var currentselected=0;
+var pjaxTimeout = 30000;
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -115,7 +116,8 @@ var ShiftsCalendarController = {
         calendar.onEventClick(function(event) {
             $.pjax({
                 url: event.data.url,
-                container: '#shift-form-widget-pjax'
+                container: '#shift-form-widget-pjax',
+                timeout: pjaxTimeout
             });
                 currentselected=event.id;
             $('.sidebar-container').removeClass('without-col-left');
@@ -124,16 +126,21 @@ var ShiftsCalendarController = {
         $('#shift-add-bth').on('click', function() {
             $.pjax({
                 url: $(this).attr('href'),
-                container: '#shift-form-widget-pjax'
+                container: '#shift-form-widget-pjax',
+                timeout: pjaxTimeout
             });
             $('.sidebar-container').removeClass('without-col-left');
             return false;
         });
 
+        $('#shift-form-widget-pjax').on('pjax:beforeSend', function () {
+            $(this).addClass('loading');
+        });
+
         $('#shift-form-widget-pjax').on('pjax:complete', function() {
             colorBoxInit();
             calendar.sourceCallbacksCall();
-
+            $(this).removeClass('loading');
         });
         this.copyWeeklySheetInit();
         calendarObject = calendar;
