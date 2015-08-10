@@ -211,9 +211,9 @@ $this->registerJs('$(function(){DriversFilter.init(); AddFavouriteDriver.init();
                             </table>
                         </div>
                     </div>
-                    <input name="name" id="search" class="text-input small search" type="text" alt="Search" placeholder="Search"
-                        <?php if (!empty($searchParams['name'])): ?>
-                            value="<?= $searchParams['name'] ?>"
+                    <input name="searchText" id="search" class="text-input small search" type="text" alt="Search" placeholder="Search"
+                        <?php if (!empty($searchParams['searchText'])): ?>
+                            value="<?= $searchParams['searchText'] ?>"
                         <?php endif; ?>
                         />
 
