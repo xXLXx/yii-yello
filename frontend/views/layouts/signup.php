@@ -19,7 +19,7 @@ AppAsset::register($this);
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
-<link rel="shortcut icon" href=“/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png" />
 <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
