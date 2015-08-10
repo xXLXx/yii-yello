@@ -112,8 +112,10 @@ class UserAddForm extends AbstractForm
             $user->parentId = $this->getStoreOwnerId($currentUser);
         }
         $user->setAttributes($this->getAttributes());
+        $role = Role::findOne(['name' => Role::ROLE_EMPLOYEE]);
+        $user->roleId =  $role->id;
         if ($this->isAdmin && $this->isManager()) {
-            $role = Role::findOne(['name' => Role::ROLE_YELLO_ADMIN]);
+            $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
             $user->roleId = $role->id;
         }
         if ($this->password) {
@@ -134,6 +136,7 @@ class UserAddForm extends AbstractForm
         $user->active = true;
         $user->save();
         $this->image = $user->image;
+        $this->stores=$this->storeslist;
         $this->saveUserStoreRelations($user);
     }
 
