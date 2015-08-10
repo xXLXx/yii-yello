@@ -69,7 +69,7 @@ class SignupStorePaymentDetails extends Model
      *
      * @return boolean
      */
-    public function save()
+    public function save($user)
     {
         if (!$this->validate()) {
             return false;
@@ -77,6 +77,9 @@ class SignupStorePaymentDetails extends Model
 
         $company = Company::findOne(['id' => $this->companyId]);
         $company->stripeid = $this->stripeId;
+
+        $user->signup_step_completed = 3;
+        $user->save(false);
 
         return $company->save(false);
     }
