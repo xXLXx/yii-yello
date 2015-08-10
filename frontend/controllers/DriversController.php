@@ -23,10 +23,12 @@ class DriversController extends BaseController
     {
         $searchParams = \Yii::$app->request->getQueryParams();
 
-            if (!in_array('category', $searchParams)) {
-                array_push($searchParams, ['category'=>'all']);
-            }        
-        
+        //$storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
+
+        if (!isset($searchParams['category'])) {
+            $searchParams['category'] = "all";
+        }
+
         $searchModel = new DriverSearch();
         $dataProvider = $searchModel->search($searchParams);
         $driversCount = $dataProvider->count;

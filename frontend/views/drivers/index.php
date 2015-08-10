@@ -21,19 +21,19 @@ $this->registerJs('$(function(){DriversFilter.init(); AddFavouriteDriver.init();
                         <?php if (empty($searchParams['category']) || $searchParams['category'] == 'all'): ?>
                             active
                         <?php endif; ?>">
-                        <?= \Yii::t('app', 'All Drivers') ?>
+                        <a href="?category=all"><?= \Yii::t('app', 'All Drivers') ?></a>
                     </label>
                     <label for="category-my" class="item
                         <?php if (!empty($searchParams['category']) && $searchParams['category'] == 'my'): ?>
                             active
                         <?php endif; ?>">
-                        <?= \Yii::t('app', 'My Drivers') ?>
+                        <a href="?category=my"><?= \Yii::t('app', 'My Drivers') ?></a>
                     </label>
                     <label for="category-favourites" class="item
                         <?php if (!empty($searchParams['category']) && $searchParams['category'] == 'favourites'): ?>
                             active
                         <?php endif; ?>">
-                        <?= \Yii::t('app', 'Favourites') ?>
+                        <a href="?category=favourites"><?= \Yii::t('app', 'Favourites') ?></a>
                     </label>
                 </div>
                 <div class="inline-header-block">

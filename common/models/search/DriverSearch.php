@@ -108,11 +108,11 @@ class DriverSearch extends Driver
             );
         }
 
-        if(!empty($params['storeid'])){
-            
+        if (!empty($params['storeid'])) {
+
         }
-        
-        
+
+
         if (!empty($params['category']) && $params['category'] == 'favourites') {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('storeOwnerFavouriteDrivers');
@@ -126,20 +126,21 @@ class DriverSearch extends Driver
         if (!empty($params['category']) && $params['category'] == 'all') {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->join('LEFT OUTER JOIN', 'driverHasStore',
-                'driverHasStore.driverId =user.id');     
+                'driverHasStore.driverId =user.id');
             $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
-                'StoreOwnerFavouriteDrivers.driverId =user.Id');     
-            
+                'StoreOwnerFavouriteDrivers.driverId =user.Id');
+
             $query->andFilterWhere(
                 [
                     'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
                     'DriverHasStore.isAcceptedByDriver' => 1
                 ]
-            );            
+            );
             $query->orWhere([
-                  'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id
+                'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id
             ]);
         }
+
         if (!empty($params['category']) && $params['category'] == 'my') {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('driverHasStore');
@@ -150,45 +151,46 @@ class DriverSearch extends Driver
                 ]
             );
         }
+
         if (!empty($params['category']) && $params['category'] == 'uninvited') {
+        //if (empty($params['category'])) {
             $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->join('LEFT OUTER JOIN', 'driverHasStore',
-                'driverHasStore.driverId =user.id');     
+                'driverHasStore.driverId =user.id');
             $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
-                'StoreOwnerFavouriteDrivers.driverId =user.Id');     
-//            
-//            $query->andFilterWhere(
-//                [
-//                    [],
-//                //    ['!=','DriverHasStore.isAcceptedByDriver', 1]
-//                ]
-//            );            
-//            $query->andWhere([
-//               '!=',   'StoreOwnerFavouriteDrivers.storeOwnerId' , $storeOwner->id,
-//            ]);
-//            $query->andWhere([
-//                '!=','DriverHasStore.storeId', $storeOwner->id,
-//            ]);
-        }        
-        
+                'StoreOwnerFavouriteDrivers.driverId =user.Id');
+
+            /*$query->andFilterWhere(
+                [
+                   [],
+                //    ['!=','DriverHasStore.isAcceptedByDriver', 1]
+                ]
+            );
+            $query->andWhere([
+                '!=', 'StoreOwnerFavouriteDrivers.storeOwnerId', $storeOwner->id,
+            ]);
+            $query->andWhere([
+                '!=', 'DriverHasStore.storeId', $storeOwner->id,
+            ]);*/
+        }
+
         return $query;
     }
-    
-    public function getCount($params){
+
+    public function getCount($params)
+    {
         $query = $this->buildQuery($params);
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);
-        
+
         if (!$this->validate()) {
             return 0;
         }
 
         return $dataProvider->count;
-        
+
     }
-
-
 
 
     /**
@@ -207,7 +209,7 @@ class DriverSearch extends Driver
                 'pageSize' => 10
             ]
         ]);
-        
+
         if (!$this->validate()) {
             return $dataProvider;
         }

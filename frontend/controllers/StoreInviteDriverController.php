@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use common\models\StoreOwnerFavouriteDrivers;
 use frontend\models\SignupInvitationsForm;
 use Yii;
 use yii\helpers\Html;
@@ -26,6 +27,7 @@ class StoreInviteDriverController extends BaseController
 
             $driver_id = $params['StoreInviteDriverForm']['driverId'];
 
+            //Driver not in the yello database. So, Invite through email if email provided else return error.
             if(!$driver_id && filter_var($params['invite_driver_input'], FILTER_VALIDATE_EMAIL) !== false){
                 $invite_email =  $params['StoreInviteDriverForm']['email'] = $params['invite_driver_input'];
                 $invite_status = $this->invite_driver($invite_email);
@@ -43,6 +45,16 @@ class StoreInviteDriverController extends BaseController
             if ($storeInviteDriverForm->validate()) {
                 $storeInviteDriverForm->save();
                 $driver_data = Driver::findOne($driver_id);
+
+                //Add driver to favourite
+                $user = \Yii::$app->user->identity;
+                $storeOwnerId = $user->storeOwner->id;
+                $fav = new StoreOwnerFavouriteDrivers();
+                $fav->driverId = $driver_id;
+                $fav->storeOwnerId = $storeOwnerId;
+                $fav->save();
+
+
                 return $this->render('success', [
                     'username' => $driver_data['username']
                 ]);
