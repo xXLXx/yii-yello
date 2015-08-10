@@ -33,7 +33,6 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
         <div class="f-right top-right-container">
             <div class="period-list clearfix">
                 <div class="item datepicker-group">
-                    <span class="icon-calendar-2"></span>
                     <?=
                         DatePicker::widget([
                             'attribute'     => 'date',
@@ -43,6 +42,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
                             ]
                         ]);
                     ?>
+                    <span class="icon-calendar-2"></span>
                 </div>
             </div>
             <div class="period-list clearfix">

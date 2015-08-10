@@ -288,7 +288,7 @@ a.blue-text {text-decoration:none;}
     .datepicker-wrapp:after {content:"\e31f"; position:absolute; top:5px; right:8px; font-size:12px; font-family:"streamline-30px";}
     .datepicker-wrapp label {line-height:28px;}
     .datepicker-wrapp .text-input {width:114px; padding-right:28px; letter-spacing:-1px; margin:0 0 0 8px;}
-.datepicker-hidden {opacity: 0; width: 0px; padding: 0px; margin: 0px; border: none;}
+.datepicker-hidden {opacity: 0; width: 0px; padding: 0px; margin: 0px; border: none; position: absolute;}
 
 .textarea {display:inline-block; vertical-align:top; box-sizing:border-box; border-radius:4px; background:#fff; border:1px solid #c4c8ce; outline:none; font:300 13px/18px 'Open Sans', sans-serif; color:#000; padding:6px 10px;}
 .textarea:focus {border-color:#3bafda; box-shadow:0 0 2px rgba(59,175,218,0.3);}
