@@ -57,33 +57,36 @@ var ShiftsCalendarController = {
             calendarObject = calendar;
             refreshMonthTitle(calendar);
         });
-        //$('.datepicker-group').on('click', function () {
-        //    $(this).find('.datepicker').datepicker('show').on('changeDate', function (ev) {
-        //        var dateEnd = new Date();
-        //        var beginDateDiff = begindate;
-        //        dateEnd.setDate(dateEnd.getDate() + 7 - dateEnd.getDay() + beginDateDiff);
-        //        var dateStart = new Date(dateEnd);
-        //        dateStart.setDate(dateStart.getDate() - 6);
-        //        while (ev.date < dateStart) {
-        //            beginDateDiff -= 7;
-        //            dateStart.setDate(dateStart.getDate() - 7);
-        //            dateEnd.setDate(dateEnd.getDate() - 7);
-        //        }
-        //        while (ev.date > dateEnd) {
-        //            beginDateDiff += 7;
-        //            dateStart.setDate(dateStart.getDate() + 7);
-        //            dateEnd.setDate(dateEnd.getDate() + 7);
-        //        }
-        //
-        //        beginDateDiff -= begindate;
-        //        begindate += beginDateDiff;
-        //        calendar._data.beginDate.add(beginDateDiff, 'd');
-        //        calendar.again();
-        //
-        //        calendarObject = calendar;
-        //        refreshMonthTitle(calendar);
-        //    });
-        //});
+        $('.datepicker-group').on('click', function () {
+            $(this).find('.hasDatepicker').datepicker('show');
+            $(this).find('.hasDatepicker').on('change', function () {
+                var pickerDate = $(this).datepicker('getDate');
+
+                var dateEnd = new Date();
+                var beginDateDiff = begindate;
+                dateEnd.setDate(dateEnd.getDate() + 7 - dateEnd.getDay() + beginDateDiff);
+                var dateStart = new Date(dateEnd);
+                dateStart.setDate(dateStart.getDate() - 6);
+                while (pickerDate < dateStart) {
+                   beginDateDiff -= 7;
+                   dateStart.setDate(dateStart.getDate() - 7);
+                   dateEnd.setDate(dateEnd.getDate() - 7);
+                }
+                while (pickerDate > dateEnd) {
+                    beginDateDiff += 7;
+                   dateStart.setDate(dateStart.getDate() + 7);
+                   dateEnd.setDate(dateEnd.getDate() + 7);
+                }
+
+                beginDateDiff -= begindate;
+                begindate += beginDateDiff;
+                calendar._data.beginDate.add(beginDateDiff, 'd');
+                calendar.again();
+
+                calendarObject = calendar;
+                refreshMonthTitle(calendar);
+            });
+        });
 
         //setInterval(function(){ calendar.again(); }, 3000);
         calendar.source(function(beginDate, endDate, provide) {

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Company;
 use common\models\User;
 use yii\base\Model;
 use Yii;
@@ -23,6 +24,8 @@ class SignupStorePaymentDetails extends Model
     ];
 
     public $cardholdername;
+    public $stripeId;
+    public $companyId;
     public $address_line1;
     public $address_line2;
     public $address_city;
@@ -37,10 +40,11 @@ class SignupStorePaymentDetails extends Model
     public function rules()
     {
         return [
-            [['cardholdername'], 'filter', 'filter' => 'trim'],
-            ['cardholdername', 'required', 
-                'message' => \Yii::t('app', 'Please enter the name appearing on the card.')
-            ],
+//            [['cardholdername'], 'filter', 'filter' => 'trim'],
+//            ['cardholdername', 'required',
+//                'message' => \Yii::t('app', 'Please enter the name appearing on the card.')
+//            ],
+            ['stripeId', 'required'],
         ];
     }
 
@@ -53,22 +57,27 @@ class SignupStorePaymentDetails extends Model
             'address_state'=> \Yii::t('app', 'State'),
             'address_zip'=> \Yii::t('app', 'Postcode'),
             'address_country'=> \Yii::t('app', 'Country')
-            
+
         ];
         return array_merge(parent::attributeLabels(), $labels);
-    }    
-        
-    /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
-     */
-    public function signup()
-    {
-        if ($this->validate()) {
-                return true;
-            }
+    }
 
-        return false;
+    /**
+     * Save payment details data (step-two)
+     *
+     * @param \common\models\User $user
+     *
+     * @return boolean
+     */
+    public function save()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $company = Company::findOne(['id' => $this->companyId]);
+        $company->stripeid = $this->stripeId;
+
+        return $company->save(false);
     }
 }

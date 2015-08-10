@@ -7,6 +7,7 @@ use frontend\widgets\ShiftStatesCount\ShiftStatesCountWidget;
 use yii\helpers\Html;
 use frontend\assets\ShiftsCalendarAsset;
 use yii\helpers\Url;
+use yii\jui\DatePicker;
 
 ShiftsCalendarAsset::register($this);
 
@@ -32,8 +33,16 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
         <div class="f-right top-right-container">
             <div class="period-list clearfix">
                 <div class="item datepicker-group">
+                    <?=
+                        DatePicker::widget([
+                            'attribute'     => 'date',
+                            'dateFormat'    => 'dd-MM-yyyy',
+                            'options' => [
+                                'class'         => 'text-input small datepicker-hidden',
+                            ]
+                        ]);
+                    ?>
                     <span class="icon-calendar-2"></span>
-                    <input type="text" class="datepicker">
                 </div>
             </div>
             <div class="period-list clearfix">

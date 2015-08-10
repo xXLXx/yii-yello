@@ -21,30 +21,27 @@
             // token contains id, last4, and card type
             var token = response.id;
             // Insert the token into the form so it gets submitted to the server
-            $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+            $form.append($('<input type="hidden" name="SignupStorePaymentDetails[stripeId]" />').val(token));
             // and submit
-            alert(token);
+            //alert(token);
                 $form.get(0).submit();
           }
         };
 
 
         jQuery(function ($) {
-            $('#store-signup-step-two').submit(function (event) {
-                var $form = $(this);
-                // Disable the submit button to prevent repeated clicks
+            var $form = $('#store-signup-step-two');
+            $('#btn-submit').on('click', function(e){
                 $form.find('button').prop('disabled', true);
                 Stripe.card.createToken($form, stripeResponseHandler);
-                // Prevent the form from submitting with the default action
-                return false;
             });
         });
 
 
     /*====================================================
-     * 
+     *
      *                    GOOGLE MAPS
-     * 
+     *
      ====================================================*/
         var formname = 'store-signup-step-two';
         var placeSearch, autocomplete;
@@ -125,7 +122,7 @@
           }
           //SignupStorePaymentDetails[address_line1]
           popstripe('address_line1',addressline1);
-          
+
         }
         // [END region_fillform]
 
@@ -145,7 +142,7 @@
             });
           }
         }
-        // [END region_geolocation]    
+        // [END region_geolocation]
 
         function popstripe(fname,fdata){
            var stripes =$(document).find(".stripeform");
@@ -155,16 +152,15 @@
                }
            });
         }
-    
-    
+
+
     // this is a quick layout fix. TODO: lalit
     window.onload = function(){
         initialize();
-        
+
         //TODO: Jovani - please fix layout gap,
-        // - move address functionality to widget 
+        // - move address functionality to widget
         // - add latitude longitude population from form
         // - see controller for update functions
-        
+
  }
-    

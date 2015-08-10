@@ -208,8 +208,8 @@ p {padding:0; margin:0 0 16px;}
             .two-column .col-left,
             .two-column .col-right {width:50%; padding-right:41px; box-sizing:border-box;}
             .two-column .col-right {padding-left:41px; padding-right:0;}
-        
-    
+
+
 /* Text style */
 .gray-text {color:#979797;}
 .middle-gray-text {color:#a9a9a9;}
@@ -246,8 +246,8 @@ a.blue-text {text-decoration:none;}
 .link-icon {position:relative; padding:0 0 0 14px; text-decoration:none;}
     .link-icon:before {position:absolute; top:4px; left:0; font-size:11px;}
     .link-icon span {position:absolute; top:4px; left:0; font-size:10px;}
-   
-   
+
+
 /* Card icon style */
 .card-icon {position:relative; padding:0 0 0 47px; line-height:20px; display:inline-block;}
     .card-icon:after {content:""; position:absolute; top:0; left:0; width:32px; height:20px; background:url('../img/card.png') no-repeat -100em -100em;}
@@ -288,6 +288,7 @@ a.blue-text {text-decoration:none;}
     .datepicker-wrapp:after {content:"\e31f"; position:absolute; top:5px; right:8px; font-size:12px; font-family:"streamline-30px";}
     .datepicker-wrapp label {line-height:28px;}
     .datepicker-wrapp .text-input {width:114px; padding-right:28px; letter-spacing:-1px; margin:0 0 0 8px;}
+.datepicker-hidden {opacity: 0; width: 0px; padding: 0px; margin: 0px; border: none; position: absolute;}
 
 .textarea {display:inline-block; vertical-align:top; box-sizing:border-box; border-radius:4px; background:#fff; border:1px solid #c4c8ce; outline:none; font:300 13px/18px 'Open Sans', sans-serif; color:#000; padding:6px 10px;}
 .textarea:focus {border-color:#3bafda; box-shadow:0 0 2px rgba(59,175,218,0.3);}
@@ -314,7 +315,7 @@ a.blue-text {text-decoration:none;}
     .radio-input label.active:after {background-position:0 -21px;}
     .radio-input label.disabled:after {background-position:0 -42px;}
     .radio-input label.disabled.active:after {background-position:0 -63px;}
-    
+
 .upload-file {height:18px; overflow:hidden; max-width:145px; position:relative;}
     .upload-file input {position:absolute; top:0; left:0; right:0; cursor:pointer; opacity:0; filter:alpha(opacity=0);}
 
@@ -375,7 +376,7 @@ a.blue-text {text-decoration:none;}
     .cusel .cuselOptHover {background: #f5f5f5;}
     .cusel .cuselActive,
     .cusel .cuselActive:hover {background: #3bafda; color: #fff; cursor: default;}
-    
+
     .classDisCusel{cursor: default; background:#f4f5f6; border-color:#d8d8d8; box-shadow:none; color:#a9b2bd;}
     .classDisCusel .cuselText {cursor: default;}
     .classDisCusel .cuselFrameRight:after {color:#d3d8df;}
@@ -554,7 +555,7 @@ a.blue-text {text-decoration:none;}
                 .user-photo-info span {display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis;}
                 .user-photo-info .gray-text {font-weight:400; font-size:13px;}
                     .user-photo-info .gray-text a {color:#979797; text-decoration:none;}
-    
+
 
 /* Sidebar menu */
 .sidebar-menu {margin:0 0 8px; padding:7px 0 0;}
@@ -565,8 +566,8 @@ a.blue-text {text-decoration:none;}
             .sidebar-menu ul li a {padding:3px 7px 4px; border-radius:4px; color:#979797; text-decoration:none; display:inline-block;}
             .sidebar-menu ul li a:hover {color:#000;}
             .sidebar-menu ul li a.active {color:#fff; background:#fad00a;}
-            
-            
+
+
 /* Profile page */
 .profile-settings {}
     .profile-settings td {padding:0 20px 10px 0;}
@@ -598,7 +599,7 @@ a.blue-text {text-decoration:none;}
         .border-top-block .text-icon {padding-left:15px;}
         .border-top-block .text-icon.big-padding-2 {padding-left:28px;}
         .border-top-block .border-top-block-inner {padding-right:41px;}
-        
+
 
 /* Users page */
 .users-list {margin:20px 0 0 -18px;}
@@ -616,7 +617,7 @@ a.blue-text {text-decoration:none;}
             .users-list-item .user-panel-button a.font-unlock,
             .users-list-item .user-panel-button a.font-lock {left:auto; right:0;}
 
-            
+
 /* Company page */
 .company-logo {margin:8px 0;}
     .company-logo-container {overflow:hidden; border:1px solid #dedede; background:#f3f3f3; height:70px; width:70px;}
@@ -634,7 +635,7 @@ a.blue-text {text-decoration:none;}
         .company-logo.profile-view .company-logo-container {height:78px; width:78px;}
         .company-logo.profile-view .company-logo-container.no-photo {font-size:32px; line-height:78px;}
         .company-logo.profile-view .company-info {padding:7px 0 0 100px; min-height:71px;}
-        
+
 
 /* Invoices */
 .border-table {width:100%; margin:0 0 20px;}
@@ -696,7 +697,7 @@ a.blue-text {text-decoration:none;}
 .border-table.pricing .current-tr {border:2px solid #3bafda; position:relative;}
 .border-table.pricing .current-tr td {position:relative;}
     .border-table.pricing .current-tr .sticker {position:absolute; top:-1px; left:-1px; background:#3bafda url('../img/sticker-bg.png') no-repeat 100% 2px; color:#fff; border:none; line-height:15px; padding-left:5px; padding-right:18px; letter-spacing:-1px; font-size:11px; border-radius:0;}
-.pricing-container {border-radius: 6px; border: 1px solid #DEDEDE; border-bottom:none; margin-bottom: 20px; overflow:hidden;}  
+.pricing-container {border-radius: 6px; border: 1px solid #DEDEDE; border-bottom:none; margin-bottom: 20px; overflow:hidden;}
 .pricing-container.inline-block {margin: 0 2% 0 0; width:50%;}
 .big-text {font-size: 38px; margin-bottom: 8px;}
 .border-table.pricing.small-padding th,  .border-table.pricing.small-padding td {padding: 8px 0;}
@@ -715,8 +716,8 @@ a.blue-text {text-decoration:none;}
     .pagination span.active {color:#fff; background:#3bafda; border:1px solid #3bafda; margin:0 0 0 -1px;}
     .pagination .arrow {line-height:28px;}
     .pagination span.arrow {color:#ccc;}
-    
-    
+
+
 /* Schedules page */
 .border-side-list {}
 .border-side-list.p {margin:0 0 16px -6px;}
@@ -750,8 +751,8 @@ a.blue-text {text-decoration:none;}
     .border-top-list.shifts-view .border-top-item {padding:12px 0;}
     .popup.width-396 .border-top-item {padding:12px 25px;}
         .popup.width-396 .border-top-item .f-left {width:33%;}
-        
-        
+
+
 /* Dashboard page */
 .top-filter {margin:0 0 15px;}
     .view-search {display:inline-block; vertical-align:top; margin:0 0 14px 17px;}
@@ -831,50 +832,50 @@ a.blue-text {text-decoration:none;}
         .calendar-table-item {display:table; width:100%; height:62px; background:#f3f3f3;cursor:pointer;}
             .calendar-table-cell {display:table-cell; vertical-align:middle; border:none; border-left:3px solid #a9a9a9; position:relative; min-width:60px; text-decoration:none; color:#000;}
                 .calendar-table-cell .bold-text {word-break:break-all; display:block;}
-                
-                
+
+
         .calendar-table-item.red {background:#ffdada;}
             .red .calendar-table-cell {border-color:#ff7d6a; color:#ff0000;}
-            
+
         .calendar-table-item.orange {background:#fff7d3;}
             .orange .calendar-table-cell {border-color:#f5a623; color:#f5a623;}
-        
-            
+
+
             .calendar-table-item.yellow {background:#fff7d3;}
             .yellow .calendar-table-cell {border-color:#f5a623; color:#f5a623;}
-        
-            
+
+
             .calendar-table-item.lime {background:#b8e986;}
             .lime .calendar-table-cell {border-color:#59a600; color:#59a600;}
-        
-            
+
+
             .calendar-table-item.green {background:#dff9e5;}
             .green .calendar-table-cell {border-color:#59a600; color:#59a600;}
-        
-            
+
+
             .calendar-table-item.aqua {background:#17fffb;}
             .aqua .calendar-table-cell {border-color:#17fffb; color:#000;}
-        
-            
+
+
             .calendar-table-item.blue {background:#d2e7ff;}
             .blue .calendar-table-cell {border-color:#30639f; color:#30639f;}
-        
+
             .calendar-table-item.violet {background:#edd8ff;}
             .violet .calendar-table-cell {border-color:#b378e5; color:#b277eb;}
-        
+
             .calendar-table-item.pink {background:#ff17b1;}
             .pink .calendar-table-cell {border-color:#ff17b1; color:fff;}
-            
-            
+
+
             .cell-count {position:absolute; top:6px; left:-9px; color:#fff; font-size:10px; line-height:18px; padding:0 6px; border-radius:8px; background:#ff3d3d;}
 
             .calendar-table-item.white {background:#fff;}
             .white .calendar-table-cell {border-left:none;}
-            
-            
+
+
         .calendar-table-item.active {background:#a9a9a9;}
             .active .calendar-table-cell {color:#fff; border-color:#a9a9a9;}
-        
+
         .calendar-table-item.active.red {background:#ff7d6a;}
             .active.red .calendar-table-cell {border-color:#ff7d6a;}
 
@@ -883,13 +884,13 @@ a.blue-text {text-decoration:none;}
 
             .calendar-table-item.active.yellow {background:#f5a623;}
             .active.yellow .calendar-table-cell {border-color:#f5a623;}
-            
+
         .calendar-table-item.active.lime {background:#6cff17;}
             .active.lime .calendar-table-cell {color:#000;border-color:#6cff17;}
 
         .calendar-table-item.active.green {background:#59a600;}
             .active.green .calendar-table-cell {border-color:#59a600;}
-            
+
         .calendar-table-item.active.aqua {background:#ff7d6a;}
             .active.aqua .calendar-table-cell {border-color:#ff7d6a;}
 
@@ -899,12 +900,12 @@ a.blue-text {text-decoration:none;}
 
             .calendar-table-item.active.violet {background:#b277e5;}
             .active.violet .calendar-table-cell {border-color:#b277e5;}
-        
+
             .calendar-table-item.active.pink {background:#b277e5;}
             .active.pink .calendar-table-cell {border-color:#b277e5;}
-        
 
-            
+
+
             .inline-input-block {margin:9px 0 0;}
     .inline-input-block .bold-text {margin:0 0 7px; display:block;}
     .inline-input-block .checkbox-input,
@@ -1029,8 +1030,8 @@ a.blue-text {text-decoration:none;}
 .ie8 .input-wrapp.date .text-input{width:168px;}
 .ie8 .input-wrapp .text-block.f-right{padding:0 8px;}
 .ie8 .tooltip{border:1px solid #dcdcdc;}
-    
-    
+
+
 @media only screen and (max-width:1450px) {
     .login-block img {width:150%; margin:0 0 0 -25%;}
 }
@@ -1145,10 +1146,10 @@ a.blue-text {text-decoration:none;}
 }
 .state {
   color: #a9a9a9;
-} 
+}
 .state.green {
   color: #59a600;
-} 
+}
 .state.red {
   color: #ff262a;
 }
