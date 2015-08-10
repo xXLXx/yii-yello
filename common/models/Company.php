@@ -78,4 +78,25 @@ class Company extends BaseModel
         return $this->hasMany(Address::className(), ['idaddress' => 'addressfk'])->
             viaTable('companyaddress', ['companyfk' => 'id']);
     }
+
+    /**
+     * Get CompanyAddress
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompanyAddress()
+    {
+        return $this->hasOne(CompanyAddress::className(), ['companyfk' => 'id']);
+    }
+
+    /**
+     * Get Address
+     *
+     * @return \yii\db\ActiveRecord
+     */
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
+            ->via('companyAddress');
+    }
 }

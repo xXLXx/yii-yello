@@ -63,6 +63,14 @@ var jsAddressWidget = {
         if (document.getElementById(formname+'longitude')) {
             document.getElementById(formname+'longitude').value = place.geometry.location.lng();
         }
+
+        if (document.getElementById(formname+'googleplaceid')) {
+            document.getElementById(formname+'googleplaceid').value = place.place_id;
+        }
+
+        if (document.getElementById(formname+'googleobj')) {
+            document.getElementById(formname+'googleobj').value = JSON.stringify(place);
+        }
     },
     // [END region_fillform]
 

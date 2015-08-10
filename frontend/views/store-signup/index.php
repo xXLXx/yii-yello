@@ -46,8 +46,10 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                                 </div>
                             </div>
                             <div class="col col-md-6 col-lg-6">
-                                <?php echo $form->field($model, 'companyname'); ?>
-                                <?php echo $form->field($model, 'abn'); ?>
+                                <?php echo Html::activeHiddenInput($model, 'companyId'); ?>
+                                <?php echo Html::activeHiddenInput($model, 'addressfk'); ?>
+                                <?php echo $form->field($model, 'companyName'); ?>
+                                <?php echo $form->field($model, 'ABN'); ?>
                                 <?php echo $form->field($model, 'contact_phone'); ?>
                             </div>
                         </div>
@@ -68,7 +70,6 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                                 <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
                                 <div class="form-group">
                                     <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'storesignupform', 'fieldsMapping' => [
-                                        'subpremise' => 'long_name',
                                         'street_number' => 'short_name',
                                         'route' => 'long_name',
                                         'locality' => 'long_name',
@@ -77,7 +78,8 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                                         'postal_code' => 'short_name'
                                     ]]); ?>
                                 </div>
-
+                                    <?php echo Html::activeHiddenInput($model, 'googleplaceid'); ?>
+                                    <?php echo Html::activeHiddenInput($model, 'googleobj'); ?>
                                     <?php echo $form->field($model, 'block_or_unit',['inputOptions'=>['class'=>'form-control','placeholder'=>'Unit','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']]); ?>
                                     <?php echo $form->field($model, 'street_number',['inputOptions'=>['class'=>'form-control','placeholder'=>'St #','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']  ]); ?>
                                     <?php echo $form->field($model, 'route',['inputOptions'=>['class'=>'form-control','placeholder'=>'Street name','disabled'=>'true'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']]); ?>
@@ -88,8 +90,6 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                             </div>
                         </div>
                     </div>
-                                        
-                    
                     
                     <div class="create-footer text-right" style="margin-top:30px;">
                         <?= Html::submitButton(\Yii::t('app', 'Next Step'), ['class' => 'btn blue uppercase disableme']); ?>

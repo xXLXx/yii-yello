@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\Address;
+use common\models\Company;
+use common\models\CompanyAddress;
 use common\models\User;
 use common\models\UserHasStore;
 use frontend\models\Exception\UserStoreOwnerUndefinedException;
@@ -18,11 +21,12 @@ class StoreSignupForm extends Model
 {
     // company record - all other company info is hardcoded for signup
     public $id; // storeid
-    public $companyid;
-    public $companyname;
-    public $abn;
+    public $companyId;
+    public $companyName;
+    public $ABN; // to be consistent with the table field.
     
     // company address
+    public $addressfk;
     public $contact_email;
     public $contact_phone;
     public $contact_name;
@@ -35,6 +39,8 @@ class StoreSignupForm extends Model
     public $postal_code;
     public $country;
     public $formatted_address;
+    public $googleplaceid;
+    public $googleobj;
     
     /**
      * @inheritdoc
@@ -42,19 +48,10 @@ class StoreSignupForm extends Model
     public function rules()
     {
         return [
-            [
-                [
-                    'id', 'companyid', 'companyname', 'abn',
-                    'contact_email', 'contact_phone', 'contact_name',
-                    'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
-                    'formatted_address'
-                ],
-                'safe'
-            ]
-            ,['companyname', 'required', 
+            ['companyName', 'required',
                 'message' => \Yii::t('app', 'Please enter company name.')
             ]
-            ,['abn', 'required', 
+            ,['ABN', 'required',
                 'message' => \Yii::t('app', 'Please enter company ABN.')
             ]
             ,['contact_email', 'email', 
@@ -62,7 +59,16 @@ class StoreSignupForm extends Model
             ]
             ,['contact_phone', 'required', 
                 'message' => \Yii::t('app', 'Please enter a phone number.')
-            ]
+            ],
+            [
+                [
+                    'id', 'companyId', 'companyName', 'ABN',
+                    'contact_email', 'contact_phone', 'contact_name',
+                    'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1',
+                    'postal_code', 'country', 'formatted_address', 'googleplaceid', 'googleobj', 'addressfk',
+                ],
+                'safe'
+            ],
         ];
     }
 
@@ -83,21 +89,79 @@ class StoreSignupForm extends Model
         
     
     
-    /**
-     * Set data from StoreOwner
-     * @param int $storeId
-     */
-    public function setData(User $user)
-    {
-        $company = $this->getUserPrimaryCompany($user);
-    }
+//    /**
+//     * Set data from StoreOwner
+//     * @param int $storeId
+//     */
+//    public function setData(User $user)
+//    {
+//        $company = $this->getUserPrimaryCompany($user);
+//        if ($company) {
+//            $this->setAttributes($company->getAttributes());
+//            $this->companyId = $company->id;
+//        }
+//    }
 
     /**
-     * Save
-     * @param User $user storeOwner
+     * Save data from step-one
+     *
+     * @param \common\models\User $user
+     *
+     * @return boolean
      */
-    public function save($user)
+    public function saveStepOne($user)
     {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $transaction = \Yii::$app->db->beginTransaction();
+
+        try {
+            $company = Company::findOneOrCreate(['id' => $this->companyId]);
+            $company->setAttributes($this->getAttributes());
+            $company->userfk = $user->id;
+            $company->isPrimary = 1;
+            if (!$company->save()) {
+                $error = $company->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+            $this->companyId = $company->id;
+
+            $address = Address::findOneOrCreate(['idaddress' => $this->addressfk]);
+            $address->setAttributes($this->getAttributes());
+            if (!$address->save()) {
+                $error = $address->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+            $this->addressfk = $address->idaddress;
+
+            $companyAddress = CompanyAddress::findOneOrCreate(['companyfk' => $company->id, 'addressfk' => $address->idaddress]);
+            $companyAddress->setAttributes($this->getAttributes());
+            if (!$companyAddress->save()) {
+                $error = $companyAddress->getFirstError();
+                $this->addError(key($error), current($error));
+
+                throw new \yii\db\Exception(current($error));
+            }
+
+            $user->signup_step_completed = 1;
+            $user->save(false);
+
+            $transaction->commit();
+
+            return true;
+
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
+
+        return false;
 //        if (!$this->id) {
 //            $store = new Store();
 //            $userStoreOwner = $this->getUserStoreOwner($user);
@@ -118,6 +182,20 @@ class StoreSignupForm extends Model
 //        }
 //        $store->save();
 //        $this->createUserHasStoreRealtion($user, $store);
+    }
+
+    public function loadStepOne($user)
+    {
+        $company = $user->company;
+        if ($company) {
+            $this->setAttributes($company->getAttributes());
+            $this->companyId = $company->id;
+
+            if ($company->address) {
+                $this->setAttributes($company->address->getAttributes());
+                $this->setAttributes($company->companyAddress->getAttributes());
+            }
+        }
     }
 
 
