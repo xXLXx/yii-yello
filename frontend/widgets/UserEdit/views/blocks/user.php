@@ -62,7 +62,8 @@ use yii\helpers\Html;
         <tr>
             <td>
                 <label for="confirm"><?= \Yii::t('app', 'Repeat Password') ?></label>
-                <?= 
+                <label for="confirm"><?= \Yii::t('app', 'Repeat Password') ?></label>
+                <?=
                     Html::activePasswordInput($model, 'confirm', [
                         'class' => 'text-input',
                         'id'    => 'confirm'

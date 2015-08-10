@@ -34,10 +34,6 @@ class UserAddWidget extends \yii\base\Widget
                 $model->save();
                 return \Yii::$app->response->redirect(['settings/users']);
             }
-        } else {
-            if ($this->roleId) {
-                $model->roleId = $this->roleId;
-            }
         }
         $managerRole = Role::findOne(['name' => Role::ROLE_MANAGER]);
         return $this->render('default', [
@@ -45,20 +41,7 @@ class UserAddWidget extends \yii\base\Widget
             'json' => Json::encode([
                 'managerRoleId' => $managerRole->id
             ]),
-            'canSetIsAdmin' => $this->canUserSetIsAdmin(Yii::$app->user->identity),
-        ]);
-    }
-
-    /**
-     * @param User $user
-     * @return bool
-     */
-    private function canUserSetIsAdmin(User $user)
-    {
-        return in_array($user->role->name, [
-            Role::ROLE_FRANCHISER,
-            Role::ROLE_MENU_AGGREGATOR,
-            Role::ROLE_STORE_OWNER
+            'canSetIsAdmin' => \Yii::$app->user->can('PromoteUserAsAdmin'),
         ]);
     }
 }

@@ -160,6 +160,9 @@ class RbacController extends Controller
         $closeAccount = $auth->createPermission('CloseAccount');
         $auth->add($closeAccount);
 
+        $promoteUserAsAdmin = $auth->createPermission('PromoteUserAsAdmin');
+        $auth->add($promoteUserAsAdmin);
+
         /*** Roles ***/
 
         // Let's add manually from matrix and roles table
@@ -175,7 +178,7 @@ class RbacController extends Controller
         $driver->ruleName = $rule->name;
         $auth->add($driver);
 
-        $manager = $auth->createRole('manager'); // not on matrix
+        $manager = $auth->createRole('manager'); // Store Manager/Admin
         $manager->ruleName = $rule->name;
         $auth->add($manager);
 
@@ -186,8 +189,6 @@ class RbacController extends Controller
         $storeOwner = $auth->createRole('storeOwner'); // Store Account Owner
         $storeOwner->ruleName = $rule->name;
         $auth->add($storeOwner);
-
-        // @todo: We dont have yet for Store Admin
 
         $employee = $auth->createRole('employee'); // Store Account User
         $employee->ruleName = $rule->name;
@@ -224,8 +225,9 @@ class RbacController extends Controller
         // What the franchise manager have, the franchiser got it.
         $auth->addChild($franchiser, $franchiseManager);
 
-        // What an employee have, the owner should have it too.
-        $auth->addChild($storeOwner, $employee);
+        // What an employee have, the manager have and so is the owner should have them too.
+        $auth->addChild($manager, $employee);
+        $auth->addChild($storeOwner, $manager);
 
         // What those managers and owners have, the yellowadmin will have it, and so the superadmin
         $auth->addChild($yelloAdmin, $storeOwner);
@@ -282,6 +284,7 @@ class RbacController extends Controller
         $auth->addChild($storeOwner, $enableDisablePaymentMethod);
         $auth->addChild($storeOwner, $deleteStore);
         $auth->addChild($storeOwner, $closeAccount);
+        $auth->addChild($storeOwner, $promoteUserAsAdmin);
 
         $auth->addChild($yelloAdmin, $approveDisableUsersSiteWide);
         $auth->addChild($yelloAdmin, $editSubscription);

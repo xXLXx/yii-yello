@@ -58,17 +58,6 @@ class UserAddForm extends AbstractForm
     }
 
     /**
-     * Is manager?
-     *
-     * @return bool
-     */
-    public function isManager()
-    {
-        $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
-        return $this->roleId == $role->id;
-    }
-
-    /**
      * Get roles array map
      */
     public function getRoleArrayMap()
@@ -114,7 +103,7 @@ class UserAddForm extends AbstractForm
         $user->setAttributes($this->getAttributes());
         $role = Role::findOne(['name' => Role::ROLE_EMPLOYEE]);
         $user->roleId =  $role->id;
-        if ($this->isAdmin && $this->isManager()) {
+        if ($this->isAdmin) {
             $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
             $user->roleId = $role->id;
         }
@@ -136,7 +125,7 @@ class UserAddForm extends AbstractForm
         $user->active = true;
         $user->save();
         $this->image = $user->image;
-        $this->stores=$this->storeslist;
+        $this->stores = $this->storeslist;
         $this->saveUserStoreRelations($user);
     }
 

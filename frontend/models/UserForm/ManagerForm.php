@@ -40,9 +40,7 @@ class ManagerForm extends StoresAwareUserForm
     {
         parent::setData($user);
         if ($user->role->name === Role::ROLE_MANAGER) {
-            $this->isAdmin = false;
-            $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
-            $this->roleId = $role->id;
+            $this->isAdmin = true;
         }
     }
 

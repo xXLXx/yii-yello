@@ -148,7 +148,14 @@ class User extends BaseModel implements IdentityInterface
      */
     public function setStores($stores)
     {
-        $this->tempStores = $stores;
+        if (empty($stores)) {
+            return true;
+        }
+
+        foreach ($stores as $storeId) {
+            $store = Store::findOne($storeId);
+            $this->link('stores', $store);
+        }
     }
 
     /**

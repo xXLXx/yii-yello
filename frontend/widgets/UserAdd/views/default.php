@@ -74,7 +74,7 @@ UserAddAsset::register($this);
                                 <?php foreach ($model->getStoresArrayMap() as $id => $store): /** @var \common\models\Store $store */ ?>
                                     <?php if ($counter%3 == 0): ?><div class="table-cell-item"><?php endif; ?>
                                     <div class="checkbox-input">
-                                        <input type="checkbox" id="stores<?= $id ?>" value="<?= $id ?>" <?php if ($model->hasUserStoreRelation($id)): ?>checked="checked"<?php endif; ?> name="<?= $model->formName() ?>[stores][]">
+                                        <input type="checkbox" id="stores<?= $id ?>" value="<?= $id ?>" <?php if ($model->hasUserStoreRelation($id)): ?>checked="checked"<?php endif; ?> name="<?= $model->formName() ?>[storeslist][]">
                                         <label for="stores<?= $id ?>" class="j_checkbox <?php if ($model->hasUserStoreRelation($id)): ?>active<?php endif; ?>"><?= $store ?></label>
                                     </div>
                                     <?php $counter++ ?>
@@ -125,7 +125,7 @@ UserAddAsset::register($this);
     </div>
 
     <?php if ($canSetIsAdmin): ?>		
-        <div class="checkbox-input js-admin-priv-container <?php if (!$model->isManager()): ?> hide<?php endif; ?>">		
+        <div class="checkbox-input js-admin-priv-container">
             <?= Html::checkbox($model->formName() . '[isAdmin]', $model->isAdmin, ['id' => 'is-admin']) ?>		
             <label for="is-admin" class="j_checkbox <?php if ($model->isAdmin): ?>active<?php endif; ?>">		
                 <?= \Yii::t('app', 'This user has Admin privileges'); ?>		

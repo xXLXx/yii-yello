@@ -12,18 +12,7 @@ $this->title = \Yii::t('app', 'Manage Users');
         <h2 class="with-button inline-block"><?= $this->title ?></h2>
         
         <div class="toggle-popup-container j_toggle_container">
-            <span class="btn blue small">
-                <a class="j_toggle_link" href="javascript:;"><?= \Yii::t('app', 'Add user'); ?></a>
-                <span class="btn blue small font-triangle-down j_toggle_link"></span>
-            </span>
-            <div class="info-popup j_toggle_block" style="display: none;">
-                <?php foreach ($rolesAdd as $role): ?>
-                    <a class="info-item" 
-                        href="<?= Url::to(['store-owner-user-add/index', 'roleId' => $role->id]); ?>">
-                        <?= \Yii::t('app', $role->title); ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
+            <a type="button" class="btn blue small" href="<?= Url::to(['store-owner-user-add/index']); ?>">Add User</a>
         </div>
         <?php foreach ($userGroups as $group): ?>
             <h5><?= $group['title'] ?></h5>

@@ -14,9 +14,7 @@ $this->registerJs('ImageUploadPreview.init();');
         <h2><a href="<?= Url::to(['settings/users']); ?>" class="middle-gray-text">
             <?= \Yii::t('app', 'Manage Users'); ?></a> / <?= \Yii::t('app', 'Add User'); ?></h2>
         <?= 
-            UserAddWidget::widget([
-                'roleId'    => $roleId
-            ]);
+            UserAddWidget::widget();
         ?>
     </div>
 </div>

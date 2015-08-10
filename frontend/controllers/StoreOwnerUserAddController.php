@@ -14,10 +14,8 @@ class StoreOwnerUserAddController extends BaseController
     /**
      * Form manager add
      */
-    public function actionIndex($roleId)
+    public function actionIndex()
     {
-        return $this->render('index', [
-            'roleId' => $roleId
-        ]);
+        return $this->render('index');
     }
 }
