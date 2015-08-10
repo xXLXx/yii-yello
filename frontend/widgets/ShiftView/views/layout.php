@@ -7,16 +7,17 @@ use frontend\widgets\ShiftView\assets\ShiftViewAsset;
 ShiftViewAsset::register($this);
 
 ?>
-<?php 
+<?php
     Pjax::begin([
         'id' => "shift-form-widget-pjax",
         'enablePushState' => true,
-        'linkSelector'    => '.js-pjax'
-    ]); 
+        'linkSelector'    => '.js-pjax',
+        'timeout'         => 30000
+    ]);
 ?>
 
     <?php if ($shift->isEditable()): ?>
-    <a class="btn blue small f-right top-right-button js-pjax" 
+    <a class="btn blue small f-right top-right-button js-pjax"
        href="<?= Url::to(['shifts-calendar/shift-edit', 'shiftId' => $shift->id]); ?>">
         <span class="font-pencil"></span>
     </a>

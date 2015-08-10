@@ -68,7 +68,7 @@ trait StoresAwareTrait
      */
     public function saveUserStoreRelations(User $user)
     {
-        $user->setStores($this->storeslist);
+        $user->setStores($this->stores);
     }
 
     public function hasUserStoreRelation($storeId)

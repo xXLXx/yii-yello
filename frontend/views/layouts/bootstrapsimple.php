@@ -49,6 +49,7 @@ AppAsset::register($this);
     width: 100%;
     background: #000 url('/img/login-bg.jpg') repeat-y;
     background-size: 100% auto;
+    
     }
     .centered{
         position:fixed;
@@ -61,9 +62,11 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
         <a class="logo masthead" href="/" title="Yello">Yello</a>
         <div class="wrap">
-            <div class="centered">
+            <center>
+                <div style="margin-top:100px;">
                     <?= $content ?>
-            </div>
+                    </div>
+            </center>
         </div>
     <?php $this->endBody() ?>
 </body>

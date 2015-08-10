@@ -64,7 +64,7 @@ class StoreSignupController extends BaseController
         $model = new \frontend\models\SignupStorePaymentDetails([
             'companyId' => $user->company->id,
         ]);
-        if ($model->load($post) && $model->save()) {
+        if ($model->load($post) && $model->save($user)) {
             $this->redirect(['step-three']);
         }
 
@@ -77,13 +77,15 @@ class StoreSignupController extends BaseController
     {
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
-        $storeSignupFirstStoreForm = new \frontend\models\SignupStoreFirstStore();
-        if ($storeSignupFirstStoreForm->load($post)) {
-        } else {
-            // TODO: change code to get info rom new tables:
+        $model = new \frontend\models\SignupStoreFirstStore([
+            'companyId' => $user->company->id,
+        ]);
+        if ($model->load($post) && $model->save($user)) {
+            $this->redirect(['settings/index']);
         }
+
         return $this->render('stepthree', [
-            'model'     => $storeSignupFirstStoreForm
+            'model' => $model
         ]);
     }    
     

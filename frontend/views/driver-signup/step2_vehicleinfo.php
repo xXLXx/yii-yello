@@ -67,8 +67,8 @@ $this->title = 'Driver Signup / Yello';
                     ->label(false);; ?>
 
                                <?php echo $form->field($model, 'make') ?>
-                                <?php echo $form->field($model, 'registration') ?>
-                               <?php echo $form->field($model, 'model',['options'=>['class'=>'col col-sm-8 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:0;']]) ?>
+                                <?php echo $form->field($model, 'model') ?>
+                               <?php echo $form->field($model, 'registration',['options'=>['class'=>'col col-sm-8 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:0;']]) ?>
                                <?php echo $form->field($model, 'year',['options'=>['class'=>'col col-sm-4 col-md-3 col-lg-3 pull-right','style'=>'padding-left:0;padding-right:0;']]) ?>
                                 
                                 <div class="input-block inline-block">
