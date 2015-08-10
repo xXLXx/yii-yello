@@ -70,6 +70,7 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                                 <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
                                 <div class="form-group">
                                     <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'storesignupform', 'fieldsMapping' => [
+                                        'subpremise'=>'long_name',
                                         'street_number' => 'short_name',
                                         'route' => 'long_name',
                                         'locality' => 'long_name',
