@@ -1,12 +1,30 @@
+<?php
+use frontend\assets\DriversAsset;
+
+DriversAsset::register($this);
+$this->registerJs('$(function(){ AddFavouriteDriver.init(); StoreInviteDriverController.init(); InviteDriver.init()})');
+?>
  <div class="two-column">
         <div class="col-left f-left">
             <h2><a class="gray-text" href="drivers.html">Drivers /</a> Driver profile</h2>
             <div class="info-panel blue f-right">
                 <span class="info-link" title="Info"></span>
                 <div class="info-popup">
-                    <div class="info-item font-letter-mail">Email</div>
+                    <a class="info-item font-letter-mail"href="mailto:lalit.jhandai@gmail.com">Email</a>
                     <div class="info-item font-edit-write">Add Note</div>
-                    <div class="info-item font-delete-garbage-streamline">Archive</div>
+                    <div class="info-item font-link j_invite-driver" data-driverid="9">Invite to store</div>
+                    <div class="info-item font-star-two j_add-favourite-driver
+                        <?php if ($driver->favouriteForCurrentStoreOwner()): ?>
+                         hidden
+                        <?php endif; ?>" data-driverid="9">
+                        Add to Favourites
+                    </div>
+                    <div class="info-item red-text font-star-two j_remove-favourite-driver
+                        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+                            hidden
+                        <?php endif; ?>" data-driverid="9">
+                        Remove from Favourites
+                    </div>
                 </div>
             </div>
             <div class="driver-info profile-view clearfix">
@@ -24,26 +42,15 @@
                             <div>
                                 <span class="star-block">
 
-                                <?php
-                                echo \kartik\rating\StarRating::widget([
-                                    'name' => 'rating_2',
-                                    'value' => 2.5,
-                                    'disabled' => true,
-                                    'pluginOptions' => [
-                                        'showClear' => false,
-                                        'size'  => 'xs',
-                                        'showCaption' => false,
-                                        //'glyphicon' => false,
-                                        //'ratingClass' => 'font-star-two'
-                                    ]
-                                ]);
-                                ?>
+                                <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg]); ?>
                                     <!--<span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star"></span>
                                     <span class="font-star"></span>-->
                                 </span>
+                                <div class="border-side-list j_favourites_info" style="display:none;"><span><a class="black-text" href="#" onclick="$('.j_remove_favourites').trigger('click'); $('.j_add_note').trigger('click'); return false;">Invited to your store</a></span><span class="red-text">Cancel</span></div>
+                                <div class="border-side-list j_add_note_link" style="display:none;"><span><a class="green-text" href="#">Conntected to your store</a></span><span><a class="red-text link-icon font-link-broken" href="#" onclick="$('.j_add_note_link').toggle(); return false;">Disconnect</a></span></div>
                             </div>
                     </div>
                 </div>
@@ -163,14 +170,9 @@
                         <div class="company-list">
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
-                                    <?php //$review->store->title; ?>
-                                    <h5><?= $review->id; ?></h5>
+                                    <h5><?= $review->store->title; ?></h5>
                                         <span class="star-block big">
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-half"></span>
-                                            <span class="font-star"></span>
+                                           <?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?>
                                         </span>
                                     <div><?= $review->text; ?></div>
                                     <div class="gray-text">

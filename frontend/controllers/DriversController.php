@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use common\models\Driver;
 use common\models\DriverHasStore;
 use common\models\search\DriverSearch;
-use common\models\ShiftHasDriver;
 use common\models\ShiftReviews;
 use common\models\ShiftState;
 use common\models\Shift;
@@ -65,6 +64,28 @@ class DriversController extends BaseController
     }
 
     /**
+     * Invite driver to store
+     *
+     * @return string
+     */
+    public function actionInvite()
+    {
+        $post = \Yii::$app->request->post();
+        $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
+        $storeOwnerId = $storeOwner->id;
+        $driver = Driver::findOne($post['driverId']);
+        if (!$driver || $driver->favouriteForStoreOwner($storeOwnerId)) {
+            return Json::encode([
+                'success' => false
+            ]);
+        }
+        $storeOwner->addFavouriteDriver($driver->id);
+        return Json::encode([
+            'success' => true
+        ]);
+    }
+
+    /**
      * Remove driver from favourites
      *
      * @return string  
@@ -107,17 +128,26 @@ class DriversController extends BaseController
             ->asArray()
             ->one();
 
-        $reviews = ShiftReviews::find(
-            ['driverId' => $id]
-        )
-        ->with(['store'])
-        ->all();
+        $reviews = ShiftReviews::find()
+            ->with('store')
+            ->where(['driverId' => $id])
+            ->all();
+
+        $review_sum = 0;
+        foreach($reviews as $review){
+            $review_sum += $review['stars'];
+        }
+        $review_avg = 0;
+        if(count($reviews)){
+            $review_avg = $review_sum / count($reviews);
+        }
 
         return $this->render('profile', [
             'driver' => $driver,
             'completedShiftCount' => $shiftData['completedShift'],
             'deliveriesCount' => $shiftData['deliveriesCount'] ?: 0,
             'reviews' => $reviews,
+            'review_avg' => $review_avg,
             'connected' => $connected
         ]);
 
