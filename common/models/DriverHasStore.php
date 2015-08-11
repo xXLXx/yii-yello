@@ -96,7 +96,7 @@ class DriverHasStore extends \common\models\BaseModel
             throw new UnauthorizedHttpException(Yii::t('app', 'The invitation may be declined by its Driver only'));
         }
         $this->updateAttributes([
-            'isArchived' => 1,
+            'isArchived' => 1
         ]);
         return $this;
     }
@@ -140,7 +140,26 @@ class DriverHasStore extends \common\models\BaseModel
 
         $user = \Yii::$app->user->identity;
         $store_id = $user->storeOwner->storeCurrent->id;
-        return (boolean) DriverHasStore::find()->where( ['driverId' => $driver_id, 'storeId' => $store_id] )->one();
+        return (boolean) DriverHasStore::find()->where(
+            [
+                'driverId' => $driver_id, 'storeId' => $store_id,
+                'isAcceptedByDriver' => 1, 'isArchived' => 0
+            ]
+        )->one();
+
+    }
+
+    public static function isInvited($driver_id){
+
+        $user = \Yii::$app->user->identity;
+        $store_id = $user->storeOwner->storeCurrent->id;
+        return (boolean) DriverHasStore::find()->where(
+            [
+                'driverId' => $driver_id,
+                'storeId' => $store_id,
+                'isArchived' => 0
+            ]
+        )->one();
 
     }
 

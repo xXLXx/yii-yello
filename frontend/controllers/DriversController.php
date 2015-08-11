@@ -8,6 +8,7 @@ use common\models\search\DriverSearch;
 use common\models\ShiftReviews;
 use common\models\ShiftState;
 use common\models\Shift;
+use frontend\models\StoreInviteDriverForm;
 use yii\helpers\Json;
 
 /**
@@ -71,19 +72,70 @@ class DriversController extends BaseController
     public function actionInvite()
     {
         $post = \Yii::$app->request->post();
-        $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
-        $storeOwnerId = $storeOwner->id;
         $driver = Driver::findOne($post['driverId']);
-        if (!$driver || $driver->favouriteForStoreOwner($storeOwnerId)) {
+
+        ///$storeHasDriver = ::findOne($post['driverId']);
+        if (!$driver || DriverHasStore::isInvited($driver->id)) {
             return Json::encode([
                 'success' => false
             ]);
         }
-        $storeOwner->addFavouriteDriver($driver->id);
+
+        $storeInviteDriverForm = new StoreInviteDriverForm();
+        $params['StoreInviteDriverForm']['driverId'] = $post['driverId'];
+        if ($storeInviteDriverForm->load($params)) {
+
+            if ($storeInviteDriverForm->validate()) {
+
+                $storeInviteDriverForm->save();
+
+                return Json::encode([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return Json::encode([
+            'success' => false
+        ]);
+    }
+
+    /**
+     * Disconnect driver from store
+     *
+     * @return string
+     */
+    public function actionDisconnect()
+    {
+        $post = \Yii::$app->request->post();
+        $driver = Driver::findOne($post['driverId']);
+
+        ///$storeHasDriver = ::findOne($post['driverId']);
+        if (!$driver || !DriverHasStore::isInvited($driver->id)) {
+            return Json::encode([
+                'success' => false
+            ]);
+        }
+
+
+
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+
+        $driverHasStore = DriverHasStore::findOne(
+            [
+                'storeId' => $storeId,
+                'driverId' => $driver->id
+            ]
+        );
+        $driverHasStore->delete();
+
         return Json::encode([
             'success' => true
         ]);
     }
+
+
 
     /**
      * Remove driver from favourites
@@ -116,6 +168,7 @@ class DriversController extends BaseController
         }
 
         $connected = DriverHasStore::isConnected($id);
+        $invited = DriverHasStore::isInvited($id);
 
         $completedShiftState = ShiftState::findOne(['name' => ShiftState::STATE_COMPLETED]);
         //TODO: Lalit - please comment changes
@@ -148,7 +201,8 @@ class DriversController extends BaseController
             'deliveriesCount' => $shiftData['deliveriesCount'] ?: 0,
             'reviews' => $reviews,
             'review_avg' => $review_avg,
-            'connected' => $connected
+            'connected' => $connected,
+            'invited' => $invited
         ]);
 
     }

@@ -10,10 +10,11 @@ var InviteDriver = {
      */
     options: {
         inviteButtonSelector: '.j_invite-driver',
-        removeButtonSelector: '.j_remove-favourite-driver',
-        favouriteStar: '.j_favourite-star',
+        removeButtonSelector: '.j_disconnect-driver',
         inviteUrl: '/drivers/invite',
-        removeUrl: '/drivers/remove-favourite'
+        removeUrl: '/drivers/disconnect',
+        inviteMessageSelector: '.j_invited_message',
+        confirmMessageSelector: '.j_confirm_message'
     },
 
     /**
@@ -33,6 +34,8 @@ var InviteDriver = {
         var self = this,
             addButton = this.options.addButtonSelector,
             removeButton = this.options.removeButtonSelector,
+            inviteDiv = this.options.inviteMessageSelector,
+            confirmDiv = this.options.confirmMessageSelector,
             star = this.options.favouriteStar;
 
         $(document).on('click', this.options.inviteButtonSelector, function (e) {
@@ -47,9 +50,9 @@ var InviteDriver = {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(star).removeClass('hidden');
                         $row.find(addButton).addClass('hidden');
-                        $row.find(removeButton).removeClass('hidden');
+                        //$row.find(removeButton).removeClass('hidden');
+                        $(inviteDiv).removeClass('hidden');
                     }
                 },
                 dataType: 'json'
@@ -59,12 +62,8 @@ var InviteDriver = {
         $(document).on('click', this.options.removeButtonSelector, function (e) {
             e.preventDefault();
             driverId = $(this).data('driverid');
-            if(!driverId) {
-                var $row = $(this).closest('tr'),
-                    driverId = $row.data('key');
-            } else {
-                $row = $('.info-popup');
-            }
+            $row = $('.info-popup');
+
             $.ajax({
                 type: 'POST',
                 url: self.options.removeUrl,
@@ -73,9 +72,11 @@ var InviteDriver = {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(star).addClass('hidden');
                         $row.find(addButton).removeClass('hidden');
-                        $row.find(removeButton).addClass('hidden');
+                        //$row.find(removeButton).addClass('hidden');
+
+                        $(confirmDiv).addClass('hidden');
+                        $(inviteDiv).addClass('hidden');
                     }
                 },
                 dataType: 'json'

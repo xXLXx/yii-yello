@@ -7,7 +7,7 @@ Yii::$container->set('kartik\rating\StarRating', [
         'showClear' => false,
         'size'  => 'xs',
         'showCaption' => false,
-        //'glyphicon' => false,
-        //'ratingClass' => 'font-star-two'
+        'glyphicon' => false,
+        'ratingClass' => 'star-block big'
     ]
 ]);
