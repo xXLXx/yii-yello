@@ -32,7 +32,7 @@ var InviteDriver = {
      */
     initEvents: function () {
         var self = this,
-            addButton = this.options.addButtonSelector,
+            inviteButton = this.options.inviteButtonSelector,
             removeButton = this.options.removeButtonSelector,
             inviteDiv = this.options.inviteMessageSelector,
             confirmDiv = this.options.confirmMessageSelector,
@@ -41,7 +41,7 @@ var InviteDriver = {
         $(document).on('click', this.options.inviteButtonSelector, function (e) {
             e.preventDefault();
             driverId = $(this).data('driverid');
-            $row = $('.info-popup');
+
             $.ajax({
                 type: 'POST',
                 url: self.options.inviteUrl,
@@ -50,7 +50,7 @@ var InviteDriver = {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(addButton).addClass('hidden');
+                        $(inviteButton).addClass('hidden');
                         //$row.find(removeButton).removeClass('hidden');
                         $(inviteDiv).removeClass('hidden');
                     }
@@ -62,7 +62,7 @@ var InviteDriver = {
         $(document).on('click', this.options.removeButtonSelector, function (e) {
             e.preventDefault();
             driverId = $(this).data('driverid');
-            $row = $('.info-popup');
+
 
             $.ajax({
                 type: 'POST',
@@ -72,8 +72,7 @@ var InviteDriver = {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(addButton).removeClass('hidden');
-                        //$row.find(removeButton).addClass('hidden');
+                        $(inviteButton).removeClass('hidden');
 
                         $(confirmDiv).addClass('hidden');
                         $(inviteDiv).addClass('hidden');

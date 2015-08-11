@@ -13,9 +13,9 @@ $driverId = $driver->id;
                 <div class="info-popup">
                     <a class="info-item font-letter-mail"href="mailto:lalit.jhandai@gmail.com">Email</a>
                     <div class="info-item font-edit-write">Add Note</div>
-                    <?php if(!$invited){ ?>
-                    <div class="info-item font-link j_invite-driver" data-driverid="<?= $driverId; ?>">Invite to store</div>
-                    <?php } ?>
+
+                    <div class="info-item font-link j_invite-driver <?php if($invited){ ?> hidden <?php } ?>" data-driverid="<?= $driverId; ?>">Invite to store</div>
+
                     <div class="info-item font-star-two j_add-favourite-driver
                         <?php if ($driver->favouriteForCurrentStoreOwner()): ?>
                          hidden
