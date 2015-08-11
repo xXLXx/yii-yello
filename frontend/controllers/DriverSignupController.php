@@ -22,13 +22,21 @@ use yii\web\UploadedFile;
 class DriverSignupController extends BaseController
 {
     /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->layout = 'signup';
+    }
+
+    /**
      * Page one of driver signup
      * This should reflect phone app in its behaviour
      */
     public function actionIndex()
     {
-
-        $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
         $driversignupform = new \frontend\models\DriverSignupStep1();
@@ -77,84 +85,34 @@ class DriverSignupController extends BaseController
 
     }
 
-
     public function actionVehicleInfo()
     {
-        // hi jovani, this not saving images  
-        $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
 
-        $driversignupform = new \frontend\models\DriverSignupStep2();
-        
-        
-        if(isset($post['DriverSignupStep2'])){
-            $post['VehicleForm'] = $post['DriverSignupStep2'];
+        $model = new \frontend\models\DriverSignupStep2();
+        $model->setData($user);
+
+        if ($model->load($post) && $model->save($user)) {
+            return $this->redirect(['work-info']);
         }
-        $model = new VehicleForm();
-        if ($model->load($post)) {
 
-           
-            
-           if ($model->validate()) {
-                $model->save($user);// save is empty at the moment
-                $vehicle = Vehicle::findOne(['driverId' => $user->id]);
-               $vehicle->save();
-
-               $user->signup_step_completed = 2;
-               $user->save();
-                $this->redirect(['driver-signup/work-info']);
-
-            } else {
-               return $this->render('step2_vehicleinfo', [
-                   'model'     => $driversignupform,
-                   'errors'    => $model->getErrors()
-               ]);
-            }
-
-        }
-        //return $model;
-
-        return $this->render('step2_vehicleinfo', [
-            'model'     => $driversignupform
-        ]);
-
+        return $this->render('step2_vehicleinfo', compact('model'));
     }
 
 
     public function actionWorkInfo()
     {
-        // hi jovani this is not saving data
-        $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
-        $driversignupform = new \frontend\models\DriverSignupStep3();
+        $model = new \frontend\models\DriverSignupStep3();
+        $model->setData($user);
 
-
-        if(isset($post['DriverSignupStep3'])){
-            $post['WorkDetailsForm'] = $post['DriverSignupStep3'];
-            $model = new WorkDetailsForm();
-            if ($model->load($post)) {
-                if ($model->validate()) {
-                    $model->save();
-
-                    $user->signup_step_completed = 3;
-                    $user->save();
-
-                    $this->redirect('/driver/index');
-                } else {
-                    return $this->render('step3_workinfo', [
-                        'model'     => $driversignupform,
-                        'errors'    => $model->getErrors()
-                    ]);
-                }
-            }
+        if ($model->load($post) && $model->save($user)) {
+            return $this->redirect(['driver/index']);
         }
 
-        return $this->render('step3_workinfo', [
-            'model' => $driversignupform
-        ]);
-
+        return $this->render('step3_workinfo', compact('model'));
     }
 
     public function saveImage($driversignupform, $image_name){

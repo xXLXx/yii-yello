@@ -48,7 +48,7 @@ class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['storeOwnerId', 'driverId','storefk'], 'integer']
+            [['storeOwnerId', 'driverId', 'storefk'], 'integer']
         ];
     }
 

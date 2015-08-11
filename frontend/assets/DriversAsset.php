@@ -13,7 +13,9 @@ class DriversAsset extends AssetBundle
     ];
     public $js = [
         'js/DriversFilter.js',
-        'js/AddFavouriteDriver.js'
+        'js/AddFavouriteDriver.js',
+        'js/InviteDriver.js',
+        'js/DriverNote.js'
     ];
     public $depends = [
         'frontend\assets\StoreInviteDriverAsset'

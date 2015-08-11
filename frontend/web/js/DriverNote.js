@@ -1,18 +1,18 @@
 /**
  * Adding and removing store owner's favourite drivers
  *
- * @type {{options: {addButtonSelector: string, removeButtonSelector: string, favouriteStar: string, addUrl: string, removeUrl: string}, init: Function, initEvents: Function}}
+ * @type {{options: {inviteButtonSelector: string, removeButtonSelector: string, favouriteStar: string, addUrl: string, removeUrl: string}, init: Function, initEvents: Function}}
  */
-var AddFavouriteDriver = {
+var DriverNote = {
 
     /**
      * Options
      */
     options: {
-        addButtonSelector: '.j_add-favourite-driver',
+        inviteButtonSelector: '.j_invite-driver',
         removeButtonSelector: '.j_remove-favourite-driver',
         favouriteStar: '.j_favourite-star',
-        addUrl: '/drivers/add-favourite',
+        inviteUrl: '/drivers/invite',
         removeUrl: '/drivers/remove-favourite'
     },
 
@@ -35,19 +35,13 @@ var AddFavouriteDriver = {
             removeButton = this.options.removeButtonSelector,
             star = this.options.favouriteStar;
 
-        $(document).on('click', this.options.addButtonSelector, function (e) {
+        $(document).on('click', this.options.inviteButtonSelector, function (e) {
             e.preventDefault();
-            
             driverId = $(this).data('driverid');
-            if(!driverId){
-                var $row = $(this).closest('tr'),
-                driverId = $row.data('key');
-            } else {
-                $row = $('.info-popup');
-            }
+            $row = $('.info-popup');
             $.ajax({
                 type: 'POST',
-                url: self.options.addUrl,
+                url: self.options.inviteUrl,
                 data: {
                     driverId: driverId
                 },

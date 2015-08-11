@@ -1,12 +1,33 @@
+<?php
+use frontend\assets\DriversAsset;
+
+DriversAsset::register($this);
+$this->registerJs('$(function(){ AddFavouriteDriver.init(); StoreInviteDriverController.init(); InviteDriver.init(); DriverNote.init()})');
+$driverId = $driver->id;
+?>
  <div class="two-column">
         <div class="col-left f-left">
             <h2><a class="gray-text" href="drivers.html">Drivers /</a> Driver profile</h2>
             <div class="info-panel blue f-right">
                 <span class="info-link" title="Info"></span>
                 <div class="info-popup">
-                    <div class="info-item font-letter-mail">Email</div>
+                    <a class="info-item font-letter-mail"href="mailto:lalit.jhandai@gmail.com">Email</a>
                     <div class="info-item font-edit-write">Add Note</div>
-                    <div class="info-item font-delete-garbage-streamline">Archive</div>
+
+                    <div class="info-item font-link j_invite-driver <?php if($invited){ ?> hidden <?php } ?>" data-driverid="<?= $driverId; ?>">Invite to store</div>
+
+                    <div class="info-item font-star-two j_add-favourite-driver
+                        <?php if ($driver->favouriteForCurrentStoreOwner()): ?>
+                         hidden
+                        <?php endif; ?>" data-driverid="<?= $driverId; ?>">
+                        Add to Favourites
+                    </div>
+                    <div class="info-item red-text font-star-two j_remove-favourite-driver
+                        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+                            hidden
+                        <?php endif; ?>" data-driverid="<?= $driverId; ?>">
+                        Remove from Favourites
+                    </div>
                 </div>
             </div>
             <div class="driver-info profile-view clearfix">
@@ -22,28 +43,18 @@
                         <h2><?= $driver->username ?></h2>
                         <div class="text-small-11 gray-text">Yello ID: #<?= $driver->id ?></div>
                             <div>
-                                <span class="star-block">
 
-                                <?php
-                                echo \kartik\rating\StarRating::widget([
-                                    'name' => 'rating_2',
-                                    'value' => 2.5,
-                                    'disabled' => true,
-                                    'pluginOptions' => [
-                                        'showClear' => false,
-                                        'size'  => 'xs',
-                                        'showCaption' => false,
-                                        //'glyphicon' => false,
-                                        //'ratingClass' => 'font-star-two'
-                                    ]
-                                ]);
-                                ?>
-                                    <!--<span class="font-star-two"></span>
+
+                                <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg]); ?>
+                                <span class="star-block">
+                                    <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star"></span>
-                                    <span class="font-star"></span>-->
+                                    <span class="font-star"></span>
                                 </span>
+                                <div class="border-side-list j_invited_message <?php if(!$invited || $connected){ ?> hidden <?php } ?>"><span>Invited to your store</span><span class="red-text"><a class="red-text j_disconnect-driver" href="#" data-driverid="<?= $driverId; ?>">Cancel</a></span></div>
+                                <div class="border-side-list j_confirm_message <?php if(!$connected){ ?> hidden <?php } ?>"><span class="green-text">Connected to your store</span><span><a class="red-text link-icon font-link-broken j_disconnect-driver" href="#" data-driverid="<?= $driverId; ?>">Disconnect</a></span></div>
                             </div>
                     </div>
                 </div>
@@ -163,15 +174,8 @@
                         <div class="company-list">
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
-                                    <?php //$review->store->title; ?>
-                                    <h5><?= $review->id; ?></h5>
-                                        <span class="star-block big">
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-two"></span>
-                                            <span class="font-star-half"></span>
-                                            <span class="font-star"></span>
-                                        </span>
+                                    <h5><?= $review->store->title; ?></h5>
+                                    <?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?>
                                     <div><?= $review->text; ?></div>
                                     <div class="gray-text">
                                         <?php

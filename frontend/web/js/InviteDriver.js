@@ -1,19 +1,20 @@
 /**
  * Adding and removing store owner's favourite drivers
  *
- * @type {{options: {addButtonSelector: string, removeButtonSelector: string, favouriteStar: string, addUrl: string, removeUrl: string}, init: Function, initEvents: Function}}
+ * @type {{options: {inviteButtonSelector: string, removeButtonSelector: string, favouriteStar: string, addUrl: string, removeUrl: string}, init: Function, initEvents: Function}}
  */
-var AddFavouriteDriver = {
+var InviteDriver = {
 
     /**
      * Options
      */
     options: {
-        addButtonSelector: '.j_add-favourite-driver',
-        removeButtonSelector: '.j_remove-favourite-driver',
-        favouriteStar: '.j_favourite-star',
-        addUrl: '/drivers/add-favourite',
-        removeUrl: '/drivers/remove-favourite'
+        inviteButtonSelector: '.j_invite-driver',
+        removeButtonSelector: '.j_disconnect-driver',
+        inviteUrl: '/drivers/invite',
+        removeUrl: '/drivers/disconnect',
+        inviteMessageSelector: '.j_invited_message',
+        confirmMessageSelector: '.j_confirm_message'
     },
 
     /**
@@ -31,31 +32,27 @@ var AddFavouriteDriver = {
      */
     initEvents: function () {
         var self = this,
-            addButton = this.options.addButtonSelector,
+            inviteButton = this.options.inviteButtonSelector,
             removeButton = this.options.removeButtonSelector,
+            inviteDiv = this.options.inviteMessageSelector,
+            confirmDiv = this.options.confirmMessageSelector,
             star = this.options.favouriteStar;
 
-        $(document).on('click', this.options.addButtonSelector, function (e) {
+        $(document).on('click', this.options.inviteButtonSelector, function (e) {
             e.preventDefault();
-            
             driverId = $(this).data('driverid');
-            if(!driverId){
-                var $row = $(this).closest('tr'),
-                driverId = $row.data('key');
-            } else {
-                $row = $('.info-popup');
-            }
+
             $.ajax({
                 type: 'POST',
-                url: self.options.addUrl,
+                url: self.options.inviteUrl,
                 data: {
                     driverId: driverId
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(star).removeClass('hidden');
-                        $row.find(addButton).addClass('hidden');
-                        $row.find(removeButton).removeClass('hidden');
+                        $(inviteButton).addClass('hidden');
+                        //$row.find(removeButton).removeClass('hidden');
+                        $(inviteDiv).removeClass('hidden');
                     }
                 },
                 dataType: 'json'
@@ -65,12 +62,8 @@ var AddFavouriteDriver = {
         $(document).on('click', this.options.removeButtonSelector, function (e) {
             e.preventDefault();
             driverId = $(this).data('driverid');
-            if(!driverId) {
-                var $row = $(this).closest('tr'),
-                    driverId = $row.data('key');
-            } else {
-                $row = $('.info-popup');
-            }
+
+
             $.ajax({
                 type: 'POST',
                 url: self.options.removeUrl,
@@ -79,9 +72,10 @@ var AddFavouriteDriver = {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $row.find(star).addClass('hidden');
-                        $row.find(addButton).removeClass('hidden');
-                        $row.find(removeButton).addClass('hidden');
+                        $(inviteButton).removeClass('hidden');
+
+                        $(confirmDiv).addClass('hidden');
+                        $(inviteDiv).addClass('hidden');
                     }
                 },
                 dataType: 'json'

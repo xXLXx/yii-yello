@@ -49,23 +49,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'vehicleTypeId')  ->radioList(
-                            [1 => 'Car', 2 => 'Bike'],
-                            [
-                                'item' => function($index, $label, $name, $checked, $value) { //todo: fix layout to match other radios on site.
-
-                                    $return = '<label class="modal-radio form-label">';
-                                    $return .= '<input type="radio" name="' . $name . '" value="' . $value . '" >';
-                                    $return .= '<i></i>';
-                                    $return .= '<span>' . ucwords($label) . '</span>';
-                                    $return .= '</label>';
-
-                                    return $return;
-                                }
-                            ]
-                        )
-                    ->label(false);; ?>
-
+                                <?php echo $form->field($model, 'vehicleTypeId')->radioList(['1' => 'Car', '2' => 'Bike'],['class' => 'form-inline form-group'])->label(false); ?>
                                <?php echo $form->field($model, 'make') ?>
                                 <?php echo $form->field($model, 'model') ?>
                                <?php echo $form->field($model, 'registration',['options'=>['class'=>'col col-sm-8 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:0;']]) ?>
