@@ -47,7 +47,7 @@ class StoreSignupController extends BaseController
         $model = new \frontend\models\StoreSignupForm();
 
         if ($model->load($post) && $model->save($user)) {
-            $this->redirect(['step-two']);
+            return $this->redirect(['step-two']);
         } else {
             $model->loadData($user);
         }
@@ -65,7 +65,7 @@ class StoreSignupController extends BaseController
             'companyId' => $user->company->id,
         ]);
         if ($model->load($post) && $model->save($user)) {
-            $this->redirect(['step-three']);
+            return $this->redirect(['step-three']);
         }
 
         return $this->render('steptwo', [
@@ -85,7 +85,7 @@ class StoreSignupController extends BaseController
                 'contact_phone'=>$companyaddress->contact_phone
         ]);
         if ($model->load($post) && $model->save($user)) {
-            $this->redirect(['settings/index']);
+            return $this->redirect(['settings/index']);
         }
 
         return $this->render('stepthree', [
