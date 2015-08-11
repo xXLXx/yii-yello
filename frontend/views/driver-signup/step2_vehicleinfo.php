@@ -79,8 +79,11 @@ $this->title = 'Driver Signup / Yello';
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
                                                 <div class="link-icon font-picture-streamline blue-text">Upload Photo</div>
-                                                <?= $form->field($model, 'vehiclePhotoFile')->fileInput() ?>
-                                                <!--<input type="file" size="1" name="photo" id="photo">-->
+                                                <?=
+                                Html::activeFileInput($model, 'vehiclePhotoFile', [
+//                                    'id'    => 'image'
+                                ]);
+                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -119,8 +122,12 @@ $this->title = 'Driver Signup / Yello';
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
                                                 <div class="link-icon font-picture-streamline blue-text">Upload Photo</div>
-                                                <?= $form->field($model, 'licensePhotoFile')->fileInput() ?>
-                                                <!--<input type="file" size="1" name="licensePhotoId" id="licensePhotoId">-->
+                                <?=
+                                Html::activeFileInput($model, 'licensePhotoFile', [
+                                //   'id'    => 'image'
+                                ]);
+                                ?>                                                
+                                        
                                             </div>
                                         </div>
                                     </div>

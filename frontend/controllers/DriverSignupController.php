@@ -36,36 +36,37 @@ class DriverSignupController extends BaseController
         // process form submit
         if(isset($post['DriverSignupStep1'])){
             $post['DriverForm'] = $post['DriverSignupStep1'];
-            if ($model->load($post)) {
-                if ($model->validate()) {
-                    $model->save();
+            if ($driversignupform->load($post)) {
+                //if ($driversignupform->validate()) {
+                    $driversignupform->saveStep1($user);
                     // add or replace the image
                     if(isset($_FILES['DriverSignupStep1']['name']['imageFile'])){
-                        $user->imageId = $this->saveImage($model, $driversignupform, 'imageFile');
+                        $user->imageId = $this->saveImage($driversignupform, 'imageFile');
                     }
                     // save address
-                    $this->saveAddress();
                     $user->signup_step_completed = 1;
                     $user->save();
-                    $this->refresh();
-
-                } else {
-                    return $this->render('index', [
-                        'model'     => $driversignupform,
-                        'errors'    => $model->getErrors()
-                    ]);
-                }
+                    return \Yii::$app->getResponse()->redirect(['/driver-signup/vehicle-info']);
+//                } else {
+//                    return $this->render('index', [
+//                        'model'     => $driversignupform,
+//                        'errors'    => $driversignupform->getErrors()
+//                    ]);
+//                }
             }else{
                     return $this->render('index', [
                         'model'     => $driversignupform,
-                        'errors'    => $model->getErrors()
+                        'errors'    => $driversignupform->getErrors()
                     ]);
             }
             
             
             
+        }else{
+            // TODO: check for existing data
+            
+            
         }
-        $model = new DriverForm();
 
         //return $model;
 
@@ -79,35 +80,30 @@ class DriverSignupController extends BaseController
 
     public function actionVehicleInfo()
     {
+        // hi jovani, this not saving images  
         $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
 
         $driversignupform = new \frontend\models\DriverSignupStep2();
-
+        
+        
         if(isset($post['DriverSignupStep2'])){
             $post['VehicleForm'] = $post['DriverSignupStep2'];
         }
         $model = new VehicleForm();
         if ($model->load($post)) {
 
+           
+            
            if ($model->validate()) {
-                $model->save();
-
-               $vehicle = Vehicle::findOne(['driverId' => $user->id]);
-               if(isset($_FILES['DriverSignupStep2']['name']['vehiclePhotoFile'])){
-                   $vehicle->imageId = $this->saveImage($model, $driversignupform, 'vehiclePhotoFile');
-               }
-
-               if(isset($_FILES['DriverSignupStep2']['name']['licensePhotoFile'])){
-                   $vehicle->licensePhotoId = $this->saveImage($model, $driversignupform, 'licensePhotoFile');
-               }
+                $model->save($user);// save is empty at the moment
+                $vehicle = Vehicle::findOne(['driverId' => $user->id]);
                $vehicle->save();
 
                $user->signup_step_completed = 2;
                $user->save();
-
-               $this->refresh();
+                $this->redirect(['driver-signup/work-info']);
 
             } else {
                return $this->render('step2_vehicleinfo', [
@@ -128,7 +124,7 @@ class DriverSignupController extends BaseController
 
     public function actionWorkInfo()
     {
-
+        // hi jovani this is not saving data
         $this->layout='signup';
         $user = \Yii::$app->user->identity;
         $post = \Yii::$app->request->post();
@@ -161,7 +157,7 @@ class DriverSignupController extends BaseController
 
     }
 
-    public function saveImage($model, $driversignupform, $image_name){
+    public function saveImage($driversignupform, $image_name){
 
         $webPath = \Yii::$app->basePath . '/web';
 
@@ -212,7 +208,11 @@ class DriverSignupController extends BaseController
             }
             // make sure an address exists
                 $address = Address::findOneOrCreate(['idaddress' => $companyaddress->idcompanyaddress]);
-                $address->setAttributes($this->getAttributes());
+                $post['Address'] = $post['DriverSignupStep1'];
+
+                $address->load($post);
+                $address->setAttributes($address->getattributes());
+                $address->save();
                 if (!$address->save()) {
                     $error = $address->getFirstError();
                     $this->addError(key($error), current($error));
@@ -223,11 +223,6 @@ class DriverSignupController extends BaseController
         $companyaddress->addressfk = $address->idaddress;
         $companyaddress->save();
 
-        $post['Address'] = $post['DriverSignupStep1'];
-
-        $address->load($post);
-        $address->setAttributes($address->getattributes());
-        $address->save();
     }
 
 
