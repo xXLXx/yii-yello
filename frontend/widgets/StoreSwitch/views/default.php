@@ -11,7 +11,8 @@
         <h4><?= \Yii::t('app', 'Store') ?></h4>
         <?= Html::dropDownList('stores', $storeCurrent->id, $storeArrayMap, [
             'id'    => 'switchCurrentStore',
-            'class' => 'store-select select-180 j_select'
+            'class' => 'store-select select-180 j_select',
+            'style' =>'width:180px;'
         ]); ?>
     </div>
 <?php
