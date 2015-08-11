@@ -121,7 +121,7 @@ $wholerow = ['options' => ['class' => '']];
                     
 
 
-        <div class="create-footer text-right" style="margin-top:30px;"><a href="/store-signup" class="text-icon icon-arrow-left blue-text inline-block valign-middle">Previous Step</a>
+        <div class="create-footer text-right" style="margin-top:30px;">
             <?= Html::button(\Yii::t('app', 'Next Step'), ['id' => 'btn-submit', 'class' => 'btn blue uppercase disableme','data-disabledmsg'=>'Saving...','data-enabledmsg'=>'Next Step']); ?>
         </div>
         <?php ActiveForm::end(); ?>
