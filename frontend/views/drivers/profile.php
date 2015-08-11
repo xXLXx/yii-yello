@@ -2,7 +2,7 @@
 use frontend\assets\DriversAsset;
 
 DriversAsset::register($this);
-$this->registerJs('$(function(){ AddFavouriteDriver.init(); StoreInviteDriverController.init(); InviteDriver.init()})');
+$this->registerJs('$(function(){ AddFavouriteDriver.init(); StoreInviteDriverController.init(); InviteDriver.init(); DriverNote.init()})');
 ?>
  <div class="two-column">
         <div class="col-left f-left">
