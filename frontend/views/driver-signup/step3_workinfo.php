@@ -49,7 +49,7 @@ $this->title = 'Driver Signup / Yello';
                             <div class="col col-md-6">
                                 <?php echo $form->field($model, 'registeredForGST')  ->checkbox(); ?>
                                <?php echo $form->field($model, 'companyName') ?>
-                               <?php echo $form->field($model, 'abn') ?>
+                               <?php echo $form->field($model, 'ABN') ?>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                               <?php echo $form->field($model, 'isAllowedToWorkInAustralia')->checkbox() ?>
+                               <?php echo $form->field($model, 'isAvailableToWork')->checkbox() ?>
                                <?php echo $form->field($model, 'agreedDriverTandC')->checkbox() ?>
                             </div>
                         </div>

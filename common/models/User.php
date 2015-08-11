@@ -42,6 +42,7 @@ use common\models\query\UserQuery;
  * @property UserHasStore[] $userHasStores userHasStores
  * @property view_stores[] $stores stores
  * @property Store $storeCurrent the current selected store
+ * @property Vehicle $vehicle
  */
 class User extends BaseModel implements IdentityInterface
 {
@@ -463,6 +464,16 @@ class User extends BaseModel implements IdentityInterface
     {
         return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
             ->via('companyAddress');
+    }
+
+    /**
+     * Get vehicle.
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVehicle()
+    {
+        return $this->hasOne(Vehicle::className(), ['driverId' => 'id']);
     }
 
     /**
