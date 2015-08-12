@@ -270,9 +270,7 @@ class Shift extends BaseModel
      */
     public function getDrivers()
     {
-        $driver = $this->getClassName('Driver');
-        return $this
-            ->hasMany($driver, ['id' => 'driverId'])
+        return $this->hasMany(Driver::className(), ['id' => 'driverId'])
             ->via('shiftHasDrivers');
     }
 
@@ -390,7 +388,7 @@ class Shift extends BaseModel
     public function getDriverAccepted()
     {
         return $this
-            ->hasOne($this->getClassName('Driver'), ['id' => 'driverId'])
+            ->hasOne(Driver::className(), ['id' => 'driverId'])
             ->via('shiftHasAccepted');
     }
 

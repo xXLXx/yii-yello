@@ -4,6 +4,7 @@ namespace common\services;
 
 use common\models\Shift;
 use common\models\ShiftCopyLog;
+use common\models\ShiftHasDriver;
 use common\models\ShiftState;
 
 /**
@@ -29,7 +30,7 @@ class ShiftCopyService extends BaseService
         $hash = md5(implode('/', $hashParams));
         $shifts = Shift::find()
             ->andWhere(['>=', 'start', $params['start']])
-            ->andWhere(['<=', 'end', $params['end']])
+            ->andWhere(['<', 'end', $params['end']])
             ->andWhere(['storeId' => $params['storeId']])
                 ->all();
         $logShiftIds = ShiftCopyLog::find()
@@ -63,6 +64,15 @@ class ShiftCopyService extends BaseService
             $end->add(new \DateInterval($params['period']));
             $shiftCopy->end = $end->format('Y-m-d H:i:s');
             $shiftCopy->save();
+
+            // Assign to the same drivers
+            if ($params['assign'] && $shift->driverAccepted) {
+                $shiftHasDriver = new ShiftHasDriver([
+                    'shiftId' => $shiftCopy->id,
+                    'driverId' => $shift->driverAccepted->id
+                ]);
+                $shiftHasDriver->save();
+            }
             
             if (in_array($shiftCopy->id, $logShiftIds)) {
                 continue;

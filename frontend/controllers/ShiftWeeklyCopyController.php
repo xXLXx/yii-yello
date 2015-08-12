@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\services\ShiftCopyService;
 
+use yii\web\Response;
+
 /**
  * ShiftWeeklyCopyController
  *
@@ -11,19 +13,23 @@ use common\services\ShiftCopyService;
  */
 class ShiftWeeklyCopyController extends BaseController
 {
-    /**
-     * Copy weekly sheet
-     */
-    public function actionCopy()
+    public function actionIndex()
     {
-        $post = \Yii::$app->request->post();
-        $user = \Yii::$app->user->identity;
-        $storeId = $user->storeCurrent->id;
-        ShiftCopyService::copy([
-            'storeId' => $storeId,
-            'start'   => $post['start'],
-            'end'     => $post['end'],
-            'period'  => 'P7D'
-        ]);
+        $request = \Yii::$app->getRequest();
+        if ($request->getIsPost()) {
+            ShiftCopyService::copy([
+                'storeId' => $request->post('storeId'),
+                'start'   => $request->post('start'),
+                'end'     => $request->post('end'),
+                'period'  => 'P7D',
+                'assign'  => $request->post('assign') == 'yes',
+            ]);
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'status' => 'ok'
+            ];
+        }
+
+        return $this->renderPartial('index');
     }
 }

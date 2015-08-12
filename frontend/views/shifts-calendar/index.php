@@ -60,7 +60,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
                     'id' => 'shift-add-bth'
                 ])
             ?>
-            <span class="js-copy-weekly-sheet btn small"><?= \Yii::t('app', 'Copy weekly sheet'); ?></span>
+            <a class="j_colorbox btn small" href="<?= Url::to(['/shift-weekly-copy']); ?>"><?= \Yii::t('app', 'Copy roster'); ?></a>
         </h1>
         <?= ShiftStatesCountWidget::widget([]); ?>
 
