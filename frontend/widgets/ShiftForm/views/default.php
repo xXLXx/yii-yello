@@ -144,9 +144,8 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
         </div>
     <?php ActiveForm::end(); ?>
 </div>
-
 <?php
     $this->registerJs('ShiftFormWidget.init();');
 ?>
-
 <?php Pjax::end(); ?>
+
