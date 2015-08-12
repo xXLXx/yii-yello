@@ -32,4 +32,24 @@ class ShiftCopyLogQuery extends \common\models\query\BaseQuery
     {
         return parent::one($db);
     }
+
+    /**
+     * Filter by params
+     *
+     * @param array $params should be ['start', 'end', 'storeId', 'period']
+     *
+     * @return self
+     */
+    public function byParams($params = [])
+    {
+        $hashParams = [
+            $params['start'],
+            $params['end'],
+            $params['storeId'],
+            $params['period']
+        ];
+        $hash = md5(implode('/', $hashParams));
+
+        return $this->andWhere(['hash' => $hash]);
+    }
 }

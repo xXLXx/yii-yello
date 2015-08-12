@@ -11,6 +11,7 @@ use Yii;
  * @property integer $shiftId
  * @property integer $shiftCopyId
  * @property string $hash
+ * @property integer $confirmedAt when that copy is confirmed
  *
  * @property Shift $shift
  */
@@ -60,6 +61,7 @@ class ShiftCopyLog extends \common\models\BaseModel
 
     /**
      * @inheritdoc
+     *
      * @return ShiftCopyLogQuery the active query used by this AR class.
      */
     public static function find()

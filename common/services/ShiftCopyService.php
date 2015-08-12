@@ -37,12 +37,9 @@ class ShiftCopyService extends BaseService
             ->select('shiftId')
             ->andWhere(['hash' => $hash])
                 ->column();
-        $shiftExistIds = Shift::find()
-            ->select('id')
-            ->andWhere(['id' => $logShiftIds])
-                ->column();
+
         foreach ($shifts as $shift) {
-            if (in_array($shift->id, $shiftExistIds)) {
+            if (in_array($shift->id, $logShiftIds)) {
                 continue;
             }
             
@@ -72,10 +69,6 @@ class ShiftCopyService extends BaseService
                     'driverId' => $shift->driverAccepted->id
                 ]);
                 $shiftHasDriver->save();
-            }
-            
-            if (in_array($shiftCopy->id, $logShiftIds)) {
-                continue;
             }
             
             $shiftCopyLog = new ShiftCopyLog();
