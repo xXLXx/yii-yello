@@ -133,11 +133,13 @@ class DriverSearch extends Driver
             $query->andFilterWhere(
                 [
                     'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
-                    'DriverHasStore.isAcceptedByDriver' => 1
+                    'DriverHasStore.isAcceptedByDriver' => 1,
+                    'DriverHasStore.isArchived' => 0
                 ]
             );            
             $query->orWhere([
-                  'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id
+                'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id,
+                'DriverHasStore.isArchived' => 0
             ]);
         }
 

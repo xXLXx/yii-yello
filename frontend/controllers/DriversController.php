@@ -4,10 +4,13 @@ namespace frontend\controllers;
 
 use common\models\Driver;
 use common\models\DriverHasStore;
+use common\models\Note;
 use common\models\search\DriverSearch;
 use common\models\ShiftReviews;
 use common\models\ShiftState;
 use common\models\Shift;
+use common\models\User;
+use frontend\models\NoteForm;
 use frontend\models\StoreInviteDriverForm;
 use yii\helpers\Json;
 
@@ -162,10 +165,12 @@ class DriversController extends BaseController
 
     public function actionProfile($id)
     {
+
         $driver = Driver::findOne($id);
         if (!$driver->userDriver) {
             return false;
         }
+
 
         $connected = DriverHasStore::isConnected($id);
         $invited = DriverHasStore::isInvited($id);
@@ -186,6 +191,11 @@ class DriversController extends BaseController
             ->where(['driverId' => $id])
             ->all();
 
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+
+        $note = Note::findOne(['driverId' => $id, 'storeId' => $storeId]);
+
         $review_sum = 0;
         foreach($reviews as $review){
             $review_sum += $review['stars'];
@@ -202,8 +212,69 @@ class DriversController extends BaseController
             'reviews' => $reviews,
             'review_avg' => $review_avg,
             'connected' => $connected,
-            'invited' => $invited
+            'invited' => $invited,
+            'note' => $note
         ]);
 
     }
+
+    /**
+     * Form for add Note
+     */
+    public function actionNote($driverId = "")
+    {
+        $this->layout = 'empty';
+        $noteForm = new NoteForm();
+        $errors = array();
+
+        $noteForm->note = $noteForm->currentNote;
+
+
+        $params = \Yii::$app->request->post();
+        if ($noteForm->load($params)) {
+            if ($noteForm->validate()) {
+                $noteForm->save();
+                $message = '<div>
+                success
+                <div class="success_message">'.$noteForm->note.'</div>
+                </div>';
+                return $message;
+            }else{
+                $driverId = $params['NoteForm']['driverId'];
+                $errors = $noteForm->getErrors();
+            }
+        }
+
+        return $this->render('addNoteForm', [
+            'model' => $noteForm,
+            'driverId' => $driverId,
+            'errors' => $errors
+        ]);
+    }
+
+    /**
+     * Delete driver note
+     *
+     * @return string
+     */
+    public function actionRemoveNote()
+    {
+        $driverId = 9;
+
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+
+        $driverNote = Note::findOne(
+            [
+                'storeId' => $storeId,
+                'driverId' => $driverId
+            ]
+        );
+        $driverNote->delete();
+
+        return Json::encode([
+            'success' => true
+        ]);
+    }
+
 }

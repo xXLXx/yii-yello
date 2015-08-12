@@ -272,4 +272,49 @@ class Driver extends User
         return $this->hasMany(Store::className(), ['id' => 'storeId'])
             ->via('driverHasStore');
     }
+
+    /**
+     * Get company
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['userfk' => 'id'])
+            ->where(['isPrimary' => 1]);
+    }
+
+    /**
+     * Get Company Address
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompanyAddress()
+    {
+        return $this->hasOne(CompanyAddress::className(), ['companyfk' => 'id'])
+            ->via('company');
+    }
+
+    /**
+     * Get Address
+     *
+     * @return \yii\db\ActiveRecord
+     */
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
+            ->via('companyAddress');
+    }
+
+    /**
+     * Handy getter of address1.
+     * @return string
+     */
+    public function getAddress1()
+    {
+
+        if($this->address){
+            return $this->address->block_or_unit . ' ' . $this->address->street_number . ' ' . $this->address->route;
+        }
+    }
 }
