@@ -147,11 +147,11 @@ class ShiftForm extends Model
         if (!$this->isMyDrivers) {
             return true;
         }
-        if (!$this->driverId) {
-            $this->addError(
-                'isMyDrivers', \Yii::t('app', 'The driver is not selected')
-            );
-        }
+//        if (!$this->driverId) {
+//            $this->addError(
+//                'isMyDrivers', \Yii::t('app', 'The driver is not selected')
+//            );
+//        }
     }
     
     /**
