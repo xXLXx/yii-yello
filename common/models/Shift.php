@@ -57,6 +57,8 @@ use common\helpers\ArrayHelper;
  * @property ShiftRequestReview[] $shiftRequestReviewDesc shift request review desc created at
  * @property ShiftRequestReview $lastUserShiftRequestReview last shift request review of the current user
  *
+ * @method static ShiftQuery find()
+ *
  */
 class Shift extends BaseModel
 {
@@ -202,6 +204,16 @@ class Shift extends BaseModel
             'approvedApplicationId' => Yii::t('app', 'Approved Application ID'),
         ];
         return array_merge(parent::attributeLabels(), $labels);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return ShiftQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ShiftQuery(get_called_class());
     }
 
     /**
@@ -390,6 +402,16 @@ class Shift extends BaseModel
         return $this
             ->hasOne(Driver::className(), ['id' => 'driverId'])
             ->via('shiftHasAccepted');
+    }
+
+    /**
+     * ShiftCopyLog
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShiftCopyLog()
+    {
+        return $this->hasOne(ShiftCopyLog::className(), ['shiftCopyId' => 'id']);
     }
 
     public static function getActiveFor($driverId)
