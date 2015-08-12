@@ -14,6 +14,10 @@ var DriverSearchWidget = {
         this.data = data;
         var waitHelper = new WaitHelper();
         $('.js-driver-search-widget-search').on('keyup', function() {
+                $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                        $("label[for='" + this.id + "']").removeClass('active').addClass('disabled');
+                        $(this).prop("checked",true);
+                });            
             var searchText = $(this).val();
             waitHelper.wait(500, function() {
                 self.loadDrivers(searchText, function(result) {
