@@ -8,7 +8,7 @@ var ShiftFormWidget = {
         this.driverSearchShow($('.js-driver-group-radio:checked'));
         $('.js-driver-visible-group-container input[type=checkbox]').on('change',  
             function() {
-                self.driverSearchShow($('.js-driver-group-radio:checked'),this);
+//                self.driverSearchShow($('.js-driver-group-radio:checked'),this);
             }
         );
     },
