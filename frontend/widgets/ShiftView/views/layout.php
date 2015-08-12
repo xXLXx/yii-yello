@@ -12,7 +12,7 @@ ShiftViewAsset::register($this);
         'id' => "shift-form-widget-pjax",
         'enablePushState' => true,
         'linkSelector'    => '.js-pjax',
-        'timeout'         => 30000
+//        'timeout'         => 30000
     ]);
 ?>
 

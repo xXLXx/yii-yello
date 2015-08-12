@@ -9,7 +9,7 @@ var calendarObject;
 var calendarInterval;
 var begindate=0;
 var currentselected=0;
-var pjaxTimeout = 30000;
+var pjaxTimeout = 0;
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -123,7 +123,7 @@ var ShiftsCalendarController = {
             $('.sidebar-container').removeClass('without-col-left');
         });
 
-        $('#shift-add-bth').on('click', function() {
+        $('#shift-add-bth').on('click touchend', function() {
             $.pjax({
                 url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax',

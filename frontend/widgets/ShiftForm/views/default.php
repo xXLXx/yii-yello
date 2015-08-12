@@ -99,7 +99,7 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
             </div>
         </div>
         <div class="inline-input-block">
-            <label class="bold-text"><?= \Yii::t('app', 'Driver') ?></label>
+            <label class="bold-text"><?= \Yii::t('app', 'Choose a Driver group') ?></label>
             <div class="j_checkbox_container js-driver-visible-group-container">
                 <div class="checkbox-input">
                     <input class="js-driver-group-radio"
@@ -121,8 +121,9 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
                 </div>
             </div>
         </div>
-
-        <div class="js-driver-search-container hide">
+    <div class="inline-input-block">
+        <div class="js-driver-search-container">
+            <label class="bold-text"><?= \Yii::t('app', 'Or select a Driver') ?></label>
             <?=
                 DriverSearchWidget::widget([
                     'model' => $model
@@ -142,11 +143,13 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
                 ]);
             ?>
         </div>
+        
+        
+    </div>
     <?php ActiveForm::end(); ?>
 </div>
-
 <?php
     $this->registerJs('ShiftFormWidget.init();');
 ?>
-
 <?php Pjax::end(); ?>
+

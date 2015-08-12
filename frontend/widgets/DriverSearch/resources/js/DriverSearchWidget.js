@@ -6,6 +6,13 @@ var DriverSearchWidget = {
         return $('.js-driver-search-widget-results');
     },
     
+    removedriver: function(){
+                var $searchSelectDrivers = $(
+                    '.j_search_select_drivers'
+                );
+                $searchSelectDrivers.html('');
+    },
+    
     /**
      * Init
      */
@@ -14,6 +21,20 @@ var DriverSearchWidget = {
         this.data = data;
         var waitHelper = new WaitHelper();
         $('.js-driver-search-widget-search').on('keyup', function() {
+                if($(this).val()+""==""){
+                    $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                            $("label[for='" + this.id + "']").removeClass('disabled');
+                    });            
+                }else{
+                    $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                            $("label[for='" + this.id + "']").removeClass('active').addClass('disabled');
+                            $(this).prop("checked",false);
+                            if(this.id=='driver-3'){
+                                $(this).prop("checked",true);
+                                $("label[for='" + this.id + "']").addClass('active').addClass('disabled');
+                            }
+                    });                    
+                }
             var searchText = $(this).val();
             waitHelper.wait(500, function() {
                 self.loadDrivers(searchText, function(result) {
@@ -29,6 +50,9 @@ var DriverSearchWidget = {
         
         this.getContainer().on('click', '.js-search-select-item', function() {
             $('.j_search_select', self.getContainer()).hide();
+                $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                        $("label[for='" + this.id + "']").removeClass('active').addClass('disabled');
+                });
             var driverId = $(this).data('driver-id');
             $('.js-driver-input', self.getContainer()).val(driverId);
             self.loadDriverSelected(driverId, function(result) {
@@ -41,6 +65,9 @@ var DriverSearchWidget = {
                 );
                 $searchSelectDrivers.html(result);
                 $searchSelectDrivers.show();
+                $("a .red-text .link-icon").on('click touchend', function(){
+                    $searchSelectDrivers.html('');
+                });
                 $('.assigned-shifts-filter').addClass('allocate');
             });
 //            $('.j_post_btn').hide();
