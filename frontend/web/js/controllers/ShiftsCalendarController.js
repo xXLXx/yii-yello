@@ -144,7 +144,6 @@ var ShiftsCalendarController = {
         });
         this.copyWeeklySheetInit();
         calendarObject = calendar;
-        calendarInterval = setInterval(popCal,2000);
 
         $(document).on('submit', '#js_frm-copy-weekly-sheet', function(e){
             e.preventDefault();
@@ -212,3 +211,7 @@ var ShiftsCalendarController = {
         });
     }
 };
+
+window.onload=function(){
+        setTimeout(function(){            calendarInterval = setInterval(popCal,2000);});
+}

@@ -828,12 +828,13 @@ a.blue-text {text-decoration:none;}
 
 
 /* Calendar page */
-.calendar-table {width:100%;}
+.calendar-table {width:100%;height:100%;border-right:1px solid #d8d8d8;}
     .calendar-table thead th {border:none; border-bottom:3px solid #d8d8d8; padding:10px 10px 15px 0; width:10%;}
         .calendar-table thead th div.wi {position:relative;}
             .calendar-table thead th div.wi span {font-family:'Open Sans', sans-serif; color:#000; line-height:30px; font-weight:400; font-size:17px; border-radius:13px; display:inline-block; vertical-align:top;}
             .calendar-table thead th div.wi.active span {background:#ff3d3d; color:#fff; padding:0 9px;}
             .calendar-table thead th div.wi:before {position:absolute; top:9px; left:100%; color:#3bafda; font-size:16px; margin:0 0 0 12px;}
+    .calendar-table tbody {height:100%;}
     .calendar-table tbody tr td {border-left:1px solid #d8d8d8; padding:2px 3px 0 0; text-align:center; height:62px; vertical-align:middle;}
     .calendar-table tbody tr td:first-child {border-left:none;}
     .calendar-table .toggle-popup {text-align:left;}

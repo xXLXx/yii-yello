@@ -98,6 +98,6 @@ class ShiftStoreOwnerController extends BaseController
         if($money<60){
             $money=60;
         }
-        $shift->setStateCompleted($count,$money);
+        $shift->setStateCompleted($count,$money); 
     }
 }

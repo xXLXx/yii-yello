@@ -28,6 +28,8 @@ Calendar.prototype.refresh = function() {
     this._data.days = this.getDays();
     this._data.eventGroups = this.eventGroups();
     this._data.shiftId = get_shift_id_url();
+   // calendarInterval = setTimeout(popCal,2000);
+
 };
 
 function get_shift_id_url() {
@@ -173,7 +175,7 @@ Calendar.prototype.render = function() {
                                                 '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
                                             '<% } %>' +
                                             '<% if (eventGroups.groups[j][i].driverDeliveryCount) { %>' +
-                                                '<span class="cell-count"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
+                                                '<span class="cell-count deliveries"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
                                             '<% } %>' +
                                         '</a>' +
                                     '</div>' +
@@ -190,7 +192,7 @@ Calendar.prototype.render = function() {
                                                 '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
                                             '<% } %>' +
                                             '<% if (eventGroups.groups[j][i].driverDeliveryCount) { %>' +
-                                                '<span class="cell-count"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
+                                                '<span class="cell-count deliveries"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
                                             '<% } %>' +
                                         '</a>' +
                                     '</div>' +
@@ -256,7 +258,7 @@ Calendar.prototype.onEventClick = function(callback) {
 Calendar.prototype.eventClickInit = function() {
     var self = this;
     $('.js-event', this.getContainer()).on('click', function() {
-
+        // remove active cell
         $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
         $(this).find('.calendar-table-item').addClass('active');
         var eventId = $(this).data('event-id');
