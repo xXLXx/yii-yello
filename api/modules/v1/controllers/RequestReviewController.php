@@ -41,7 +41,7 @@ class RequestReviewController extends \api\common\controllers\RequestReviewContr
     public function actionResubmitDeliveries()
     {
         $request = Yii::$app->request;
-
+        
         $deliveryCount = (int)$request->post('deliveryCount', 0);
         $shiftId = (int)$request->post('shiftId', 0);
         $comment = $request->post('comment','no comment');
@@ -54,6 +54,7 @@ class RequestReviewController extends \api\common\controllers\RequestReviewContr
             $requestReview->title = 'Driver Response';
             $requestReview->text = $comment;
             $requestReview->save();
+            // also need to change the driver's delivery sumission amount
 
             return Shift::findOne($shiftId);
         }

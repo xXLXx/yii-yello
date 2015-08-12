@@ -88,6 +88,16 @@ class ShiftStoreOwnerController extends BaseController
         if (!$shift) {
             throw new NotFoundHttpException('Shift not found');
         }
-        $shift->setStateCompleted(1, 0);
+        // find the latest number
+        $count = $shift->deliveryCount;
+        $drivercount = $shift->LastDriverShiftRequestReview;
+        if($drivercount){
+            $count = $drivercount->deliveryCount;
+        }
+        $money = $count*5;
+        if($money<60){
+            $money=60;
+        }
+        $shift->setStateCompleted($count,$money);
     }
 }

@@ -56,6 +56,7 @@ use common\helpers\ArrayHelper;
  * @property ShiftRequestReview[] $shiftRequestReview shift request review
  * @property ShiftRequestReview[] $shiftRequestReviewDesc shift request review desc created at
  * @property ShiftRequestReview $lastUserShiftRequestReview last shift request review of the current user
+ * @property ShiftRequestReview $lastDriverShiftRequestReview last shift request review of the current user
  *
  */
 class Shift extends BaseModel
@@ -631,6 +632,19 @@ class Shift extends BaseModel
     /**
      * @return ShiftRequestReview|null
      */
+    public function getLastShiftDeliveryCount($id)
+    {
+        $last =  $this->getShiftRequestReview()
+            ->where(['shiftId' => $id])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }    
+    
+
+    /**
+     * @return ShiftRequestReview|null
+     */
     public function getLastUserShiftRequestReview()
     {
         $userId = Yii::$app->user->identity->id;
@@ -641,6 +655,24 @@ class Shift extends BaseModel
             ->limit(1)
             ->one();
     }
+
+    
+    /**
+     * @return ShiftRequestReview|null
+     */
+    public function getLastDriverShiftRequestReview()
+    {
+        $userId = Yii::$app->user->identity->id;
+
+        return $this->getShiftRequestReview()
+            ->where(['shiftId'=>$this->id])
+            ->andWhere(['NOT',['userId' =>  $userId]])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }
+        
+    
     
     /**
      * Create activity deliveryCount

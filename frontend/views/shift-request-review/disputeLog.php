@@ -36,6 +36,9 @@ use common\models\Role;
                             <div class="middle-gray-text">
                                 <?= (new \DateTime($requestReview->createdAtAsDatetime))->format('j F Y, g:i A'); ?>
                             </div>
+                            <div>
+                                <?= $requestReview->text; ?>
+                            </div>
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>

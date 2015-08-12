@@ -36,12 +36,13 @@ class ShiftRequestReviewController extends BaseController
         $reviewForm->shiftId = $shiftId;
         if ( $reviewForm->load($post) && $reviewForm->validate() ) {
             $reviewForm->save();
-            return 'success';
+            return false;
+            
         } else {
             $shiftRequestReviewId = Yii::$app->request->post('id');
             $reviewForm->setData($shiftRequestReviewId);
         }
-
+        
         return $this->render('index', [
             'shift'      => $shift,
             'reviewForm' => $reviewForm

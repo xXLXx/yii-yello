@@ -4,8 +4,48 @@
  */
 use yii\helpers\Url;
 use frontend\widgets\ShiftViewActiveDriver\ShiftViewActiveDriverWidget;
-
+// original submission
+$deliverycount = $shift->deliveryCount;
+$lastrequest = null;
+$deliveryamount = $shift->payment;
 $shiftRequestReviews = $shift->shiftRequestReview;
+$lastdriverrequest = $shift->LastDriverShiftRequestReview;
+$driverreview=null;
+$userreview = null;
+$latest='';
+$userId = Yii::$app->user->identity->id;
+$msg='';
+
+if($shiftRequestReviews){
+// get the most recent 2 arguments
+    foreach ($shiftRequestReviews as $review){
+            if($review->userId==$userId){
+                    $userreview=$review;
+                    $latest='user';
+                }else{
+                $driverreview=$review;
+                $deliverycount=$review->deliveryCount;
+                $latest='driver';
+            }
+    }
+    if($lastdriverrequest){
+        $deliverycount = $lastdriverrequest->deliveryCount;
+    }
+    
+    // figure out the most recent argument
+    if($latest=='user'){
+        $msg = "You've requested review of $deliverycount to <span id='last-delivery-count'>$userreview->deliveryCount</span>.";
+    }else{
+        $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
+    }
+    
+    
+}
+
+  $deliveryamount = $deliverycount*5;
+  if($deliveryamount<60){
+      $deliveryamount=60;
+  }
 ?>
 
 <h4><?= Yii::t('app', 'Driver'); ?></h4>
@@ -17,9 +57,8 @@ $shiftRequestReviews = $shift->shiftRequestReview;
     ?>
 <?php endif; ?>
 <div class="border-top-block">
-
-    <div class="bold-text">No. Of completed deliveries: <span class="red-text"><?= $shift->deliveryCount ?></span></div>
-    <div class="bold-text">Total payment: $<?= $shift->payment ?></div>
+    <div class="bold-text">No. Of completed deliveries: <span class="red-text"><?= $deliverycount  ?></span></div>
+    <div class="bold-text">Total payment: $<?= $deliveryamount ?></div>
 
     <?php if(!$shiftRequestReviews): ?>
 
@@ -40,8 +79,7 @@ $shiftRequestReviews = $shift->shiftRequestReview;
     <div class="border-top-block small-margin j_request_review">
         <div class="border-top-block-inner">
             <div class="text-icon big-padding-2 red-text icon-red-2 font-exclamation-circle">
-                You've requested review of deliveries <?= $shift->deliveryCount; ?> to
-                    <span id="last-delivery-count"><?= $shift->lastUserShiftRequestReview->deliveryCount; ?></span>.
+                <?=$msg?>
             </div>
             <div class="text-icon big-padding-2">
                 <a href="<?= Url::to(['shift-request-review/dispute-log', 'shiftId' => $shift->id]); ?>" class="blue-text j_colorbox">
