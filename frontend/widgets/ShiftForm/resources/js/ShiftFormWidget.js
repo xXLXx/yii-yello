@@ -10,7 +10,18 @@ var ShiftFormWidget = {
             function() {
 //                self.driverSearchShow($('.js-driver-group-radio:checked'),this);
             }
-        );
+           );
+
+            var searchresults=$('.j_search_select_drivers').html();
+        if(searchresults.trim()+""!="")
+                {
+                $('.js-driver-search-widget-search').addClass('hide');
+                $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                        $("label[for='" + this.id + "']").removeClass('active').addClass('disabled');
+                });
+            console.log(searchresults);
+            }
+
     },
     
     driverSearchShow: function($container,obj)

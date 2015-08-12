@@ -7,11 +7,13 @@ var DriverSearchWidget = {
     },
     
     removedriver: function(){
-                var $searchSelectDrivers = $(
-                    '.j_search_select_drivers'
-                );
-                $searchSelectDrivers.html('');
-    },
+            $('.js-driver-search-widget-results').html('');
+               $('.js-driver-search-widget-search').removeClass('hide');
+                $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                        $("label[for='" + this.id + "']").removeClass('disabled');
+                        $(this).removeClass('disabled');
+                });
+            },
     
     /**
      * Init
@@ -65,9 +67,7 @@ var DriverSearchWidget = {
                 );
                 $searchSelectDrivers.html(result);
                 $searchSelectDrivers.show();
-                $("a .red-text .link-icon").on('click touchend', function(){
-                    $searchSelectDrivers.html('');
-                });
+                $('.js-driver-search-widget-search').addClass('hide');
                 $('.assigned-shifts-filter').addClass('allocate');
             });
 //            $('.j_post_btn').hide();
