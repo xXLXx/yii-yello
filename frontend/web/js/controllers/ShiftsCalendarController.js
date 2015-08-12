@@ -146,6 +146,23 @@ var ShiftsCalendarController = {
         calendarObject = calendar;
         calendarInterval = setInterval(popCal,2000);
 
+        $(document).on('submit', '#js_frm-copy-weekly-sheet', function(e){
+            e.preventDefault();
+            var data = {
+                storeId: self.data.storeId,
+                start: self.current.beginDate.format('YYYY-MM-DD'),
+                end: self.current.endDate.format('YYYY-MM-DD')
+            };
+            // merge data from the form itself
+            data = $(this).serialize() + '&' + $.param(data);
+
+            $.post($(this).attr('action'), data, function(response){
+                // close this form
+                $.colorbox.close();
+                $('.js_roster_next').click();
+            })
+        });
+
     },
 
 

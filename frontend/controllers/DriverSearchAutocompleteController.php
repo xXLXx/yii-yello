@@ -23,7 +23,8 @@ class DriverSearchAutocompleteController extends BaseController
         if (isset($params['driverGroup'])) {
             static $assoc = [
                 'isMyDrivers'    => 'my', 
-                'isFavourites'   => 'favourites'
+                'isFavourites'   => 'favourites',
+                'isYelloDrivers' => 'all',
             ];
             $params['category'] = $assoc[$params['driverGroup']];
         }
