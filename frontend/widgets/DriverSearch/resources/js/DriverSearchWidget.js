@@ -29,6 +29,9 @@ var DriverSearchWidget = {
         
         this.getContainer().on('click', '.js-search-select-item', function() {
             $('.j_search_select', self.getContainer()).hide();
+                $('.js-driver-visible-group-container input[type=checkbox]').each(function(){
+                        $("label[for='" + this.id + "']").removeClass('active').addClass('disabled');
+                });
             var driverId = $(this).data('driver-id');
             $('.js-driver-input', self.getContainer()).val(driverId);
             self.loadDriverSelected(driverId, function(result) {
