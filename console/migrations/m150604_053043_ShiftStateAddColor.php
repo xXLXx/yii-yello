@@ -9,14 +9,14 @@ class m150604_053043_ShiftStateAddColor extends Migration
     {
         $this->addColumn('ShiftState', 'color', Schema::TYPE_STRING);
         $items = [
-            'allocated' => '',
+            'allocated' => 'orange',
             'yelloAllocated' => 'yellow',
             'pending'   => 'red',
             'completed' => 'green',
-            'active' => 'blue',
+            'active' => 'lime',
             'approval' => 'violet',
-            'disputed' => '',
-            'pendingPayment' => ''
+            'disputed' => 'aqua',
+            'pendingPayment' => 'blue'
         ];
         foreach ($items as $key => $item) {
             $this->update('ShiftState', 
