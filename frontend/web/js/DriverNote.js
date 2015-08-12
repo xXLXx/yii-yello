@@ -9,11 +9,10 @@ var DriverNote = {
      * Options
      */
     options: {
-        inviteButtonSelector: '.j_invite-driver',
-        removeButtonSelector: '.j_remove-favourite-driver',
-        favouriteStar: '.j_favourite-star',
-        inviteUrl: '/drivers/invite',
-        removeUrl: '/drivers/remove-favourite'
+        addNoteButtonSelector: '.j_add-note',
+        deleteNoteSelector: '.j_note_delete',
+        noteUrl: '/drivers/note',
+        deleteNoteUrl: '/drivers/remove-note',
     },
 
     /**
@@ -30,52 +29,47 @@ var DriverNote = {
      * Events initialization
      */
     initEvents: function () {
-        var self = this,
-            addButton = this.options.addButtonSelector,
-            removeButton = this.options.removeButtonSelector,
-            star = this.options.favouriteStar;
+        var self = this;
 
-        $(document).on('click', this.options.inviteButtonSelector, function (e) {
+        $(document).on('click', this.options.addNoteButtonSelector, function (e) {
             e.preventDefault();
-            driverId = $(this).data('driverid');
             $row = $('.info-popup');
             $.ajax({
                 type: 'POST',
-                url: self.options.inviteUrl,
-                data: {
-                    driverId: driverId
-                },
-                success: function (result) {
-                    if (result.success) {
-                        $row.find(star).removeClass('hidden');
-                        $row.find(addButton).addClass('hidden');
-                        $row.find(removeButton).removeClass('hidden');
+                url: self.options.noteUrl,
+                data: $('form').serialize(),
+                success: function (data) {
+
+                    if (data.search('success') != -1) {
+                        var html = $('.success_message', data).html();
+                        $('.j_add_note_link .note-item').html(html);
+                        $(".j_colorbox").colorbox.close();
+                        $(".j_add_note_link").removeClass('hidden');
+                        return;
                     }
-                },
-                dataType: 'json'
+
+                    var html = $('#contact-form', $(data)).html();
+                    $('#contact-form').html(html);
+                    $(".j_colorbox").colorbox.resize();
+
+                }
+                //dataType: 'json'
             });
         });
 
-        $(document).on('click', this.options.removeButtonSelector, function (e) {
+        $(document).on('click', this.options.deleteNoteSelector, function (e) {
             e.preventDefault();
-            driverId = $(this).data('driverid');
-            if(!driverId) {
-                var $row = $(this).closest('tr'),
-                    driverId = $row.data('key');
-            } else {
-                $row = $('.info-popup');
-            }
+            $row = $('.info-popup');
             $.ajax({
                 type: 'POST',
-                url: self.options.removeUrl,
-                data: {
-                    driverId: driverId
-                },
-                success: function (result) {
-                    if (result.success) {
-                        $row.find(star).addClass('hidden');
-                        $row.find(addButton).removeClass('hidden');
-                        $row.find(removeButton).addClass('hidden');
+                url: self.options.deleteNoteUrl,
+                data: $('form').serialize(),
+                success: function (data) {
+
+                    if (data.success) {
+                        $('.j_add_note_link .note-item').html('');
+                        $(".j_add_note_link").addClass('hidden');
+                        return;
                     }
                 },
                 dataType: 'json'

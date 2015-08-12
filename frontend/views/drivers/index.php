@@ -98,6 +98,7 @@ $this->registerJs('$(function(){DriversFilter.init(); AddFavouriteDriver.init();
                                              </div>
                                         </div>
                                         <br/>
+                                        <?php /*
                                         <label><?= \Yii::t('app', 'Availability') ?></label>
                                         <div>
                                             <div class="checkbox-input">
@@ -132,6 +133,7 @@ $this->registerJs('$(function(){DriversFilter.init(); AddFavouriteDriver.init();
                                                 </label>
                                             </div>
                                         </div>
+                                        <?php */ ?>
                                     </td>
                                     <td>
                                         <label><?= \Yii::t('app', 'Rating') ?></label>

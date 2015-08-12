@@ -671,6 +671,10 @@ a.blue-text {text-decoration:none;}
     .star-block {color:#fad00a; font-size:12px;}
         .star-block span {margin:0 -4px 0 0; display:inline;}
     .star-block.big {font-size:14px; margin:0 0 2px;}
+    .rating-container.star-block{
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
+        color: #fff;
+    }
     .border-table .company-logo {margin:5px 0 6px;}
         .border-table .company-logo-container {width:58px; height:58px;}
         .border-table .company-logo-container.no-photo {line-height:58px; font-size:25px;}

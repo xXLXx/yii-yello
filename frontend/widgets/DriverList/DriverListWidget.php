@@ -54,14 +54,14 @@ class DriverListWidget extends BaseGridView
                 },
                 'headerOptions' => ['style'=>'font-weight: 600']
             ],
-            [
+            /*[
                 'label' => \Yii::t('app', 'Availability'),
                 'format' => 'html',
                 'value' => function ($driver) {
                     return $driver->userDriver ? $driver->userDriver->availability : '';
                 },
                 'headerOptions' => ['style'=>'font-weight: 600']
-            ],
+            ],*/
             [
                 'label' => \Yii::t('app', 'Achievements'),
                 'format' => 'html',
@@ -72,7 +72,7 @@ class DriverListWidget extends BaseGridView
                 },
                 'headerOptions' => ['style'=>'font-weight: 600']
             ],
-            [
+            /*[
                 'label' => \Yii::t('app', 'Locations'),
                 'format' => 'html',
                 'value' => function ($driver) {
@@ -81,7 +81,7 @@ class DriverListWidget extends BaseGridView
                     ]);
                 },
                 'headerOptions' => ['style'=>'font-weight: 600']
-            ],
+            ],*/
             [
                 'format' => 'html',
                 'value' => function ($driver) {

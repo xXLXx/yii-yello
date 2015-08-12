@@ -11,8 +11,9 @@ $driverId = $driver->id;
             <div class="info-panel blue f-right">
                 <span class="info-link" title="Info"></span>
                 <div class="info-popup">
-                    <a class="info-item font-letter-mail"href="mailto:lalit.jhandai@gmail.com">Email</a>
-                    <div class="info-item font-edit-write">Add Note</div>
+                    <a class="info-item font-letter-mail" href="mailto:<?= $driver->email; ?>">Email</a>
+                    <div><a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="info-item font-edit-write j_colorbox"><?= \Yii::t('app', 'Add Note') ?></a></div>
+
 
                     <div class="info-item font-link j_invite-driver <?php if($invited){ ?> hidden <?php } ?>" data-driverid="<?= $driverId; ?>">Invite to store</div>
 
@@ -46,13 +47,13 @@ $driverId = $driver->id;
 
 
                                 <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg]); ?>
-                                <span class="star-block">
+                                <!--<span class="star-block">
                                     <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
                                     <span class="font-star"></span>
                                     <span class="font-star"></span>
-                                </span>
+                                </span>-->
                                 <div class="border-side-list j_invited_message <?php if(!$invited || $connected){ ?> hidden <?php } ?>"><span>Invited to your store</span><span class="red-text"><a class="red-text j_disconnect-driver" href="#" data-driverid="<?= $driverId; ?>">Cancel</a></span></div>
                                 <div class="border-side-list j_confirm_message <?php if(!$connected){ ?> hidden <?php } ?>"><span class="green-text">Connected to your store</span><span><a class="red-text link-icon font-link-broken j_disconnect-driver" href="#" data-driverid="<?= $driverId; ?>">Disconnect</a></span></div>
                             </div>
@@ -114,7 +115,7 @@ $driverId = $driver->id;
                 </tr>
                 <tr>
                     <td class="gray-text">Address</td>
-                    <td><?php //$driver->userDriver->address ?></td>
+                    <td><?php $driver->address1; ?></td>
                 </tr>
                 <tr class="tr-gray">
                     <td class="gray-text">Phone</td>
@@ -159,12 +160,12 @@ $driverId = $driver->id;
                     </div>
                 </div>
                 <div class="border-top-item">
-                    <div class="j_add_note_link" style="display:none;">
+                    <div class="j_add_note_link <?php if(!$note['note']){ ?> hidden <?php } ?>">
                         <div class="note-block">
-                            <div class="note-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet ultrices leo. Duis in orci porta, imperdiet diam at, euismod sapien.</div>
+                            <div class="note-item"><?= $note['note']; ?></div>
                             <div class="note-button">
-                                <span><a href="#" class="brown-text link-icon font-pencil">Edit Note</a></span>
-                                <span><a href="#" class="brown-text link-icon font-delete-garbage-streamline">Delete</a></span>
+                                <span><a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="brown-text link-icon font-pencil j_colorbox">Edit Note</a></span>
+                                <span><a href="#" class="brown-text link-icon font-delete-garbage-streamline j_note_delete">Delete</a></span>
                             </div>
 
                         </div>
