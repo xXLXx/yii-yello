@@ -105,6 +105,7 @@ class TopNavigation extends Widget
             ['label' => '', 'url' => ['/shifts-calendar/index'], 'class' => 'item icon-calendar-2'],
             //['label' => '', 'url' => ['/store'], 'class' => 'item icon-shop'],
             ['label' => '', 'url' => ['/drivers/index'], 'class' => 'item icon-contacts-2'],
+            ['label' => '', 'url' => ['/tracking/index'], 'class' => 'item icon-delivery'],
             ['label' => '', 'url' => ['/shift-list/index'], 'class' => 'item icon-check-1'],
             ['label' => '', 'url' => ['/settings/index'], 'class' => 'item icon-setting-gears-2'],
         ];

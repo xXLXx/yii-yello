@@ -434,6 +434,15 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * Get driverHasStores
+     * @return ActiveQuery
+     */
+    public function getDriverHasStores()
+    {
+        return $this->hasMany(DriverHasStore::className(), ['driverId' => 'id']);
+    }
+
+    /**
      * Get company
      *
      * @return \yii\db\ActiveQuery
@@ -544,9 +553,9 @@ class User extends BaseModel implements IdentityInterface
                     }
                     array_push($ca,['store-signup','index',false]);
                     // make sure the user has a storeowner
-                
-                
-                
+
+
+
                 return false;
 //                if(!$this->getUserHasStores()){
 //                   array_push($ca,['store-add','index'],true);
