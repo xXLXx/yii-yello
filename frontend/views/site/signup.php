@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="text-right clearfix">
                     <?=
                         Html::submitButton(\Yii::t('app', 'Submit'), [
-                            'class' => 'btn blue uppercase f-right', 
+                            'class' => 'btn blue uppercase f-right disableme', 
                             'name' => 'login-button'
                         ]); 
                     ?>

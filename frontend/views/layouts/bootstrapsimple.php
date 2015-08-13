@@ -19,7 +19,7 @@ AppAsset::register($this);
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
-<link rel="shortcut icon" href=“/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png" />
 <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
@@ -36,7 +36,7 @@ AppAsset::register($this);
 <meta name="msapplication-tiny70x70logo" content="/img/msapplication-tiny.png" />
 <meta name="msapplication-square150x150logo" content="/img/msapplication-square.png" />
 <meta name="msapplication-large310x310logo" content="/img/msapplication-large.png" />    
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

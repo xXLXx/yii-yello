@@ -66,10 +66,10 @@ class SignupForm extends Model
             ],
             ['confirm', 'compare', 
                 'compareAttribute' => 'password', 
-                'message' => \Yii::t('app', 'Passwords doesn\'t match.')
+                'message' => \Yii::t('app', 'Passwords do not match.')
             ],
             ['isAccepted', 'required', 
-                'message' => \Yii::t('app', 'Is didn\'t Accept the Terms & Conditions')
+                'message' => \Yii::t('app', 'Please accept the Terms & Conditions')
             ]
         ];
     }
