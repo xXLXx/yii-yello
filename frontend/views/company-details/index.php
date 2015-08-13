@@ -48,8 +48,9 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
                     'postal_code' => 'short_name'
                 ]]); ?>
             </div>
-            <?php echo $form->field($model, 'street_number',['options'=>['class'=>'form-group col-sm-3']]); ?>
-            <?php echo $form->field($model, 'route',['options'=>['class'=>'form-group col-sm-9']]); ?>
+            <?php echo $form->field($model, 'block_or_unit',['options'=>['class'=>'form-group col-sm-2']])->label(false); ?>
+            <?php echo $form->field($model, 'street_number',['options'=>['class'=>'form-group col-sm-3']])->label(false); ?>
+            <?php echo $form->field($model, 'route',['options'=>['class'=>'form-group col-sm-7']])->label(false); ?>
             <?php echo $form->field($model, 'locality',['options'=>['class'=>'form-group col-sm-8']]); ?>
             <?php echo $form->field($model, 'administrative_area_level_1',['options'=>['class'=>'form-group col-sm-4']]); ?>
             <?php echo $form->field($model, 'postal_code',['options'=>['class'=>'form-group col-sm-4']]); ?>
@@ -57,6 +58,8 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
 
             <?= Html::activeHiddenInput($model, 'latitude'); ?>
             <?= Html::activeHiddenInput($model, 'longitude'); ?>
+            <?= Html::activeHiddenInput($model, 'googleplaceid'); ?>
+            <?= Html::activeHiddenInput($model, 'googleobj'); ?>
         </fieldset>
 
         <div class="border-top-block col col-lg-10">

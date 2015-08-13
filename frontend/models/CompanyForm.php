@@ -41,6 +41,8 @@ class CompanyForm extends Model
     public $formatted_address;
     public $latitude;
     public $longitude;
+    public $googleplaceid;
+    public $googleobj;
 
     /**
      * @inheritdoc
@@ -52,7 +54,7 @@ class CompanyForm extends Model
             [['contact_email'], 'email'],
             [['accountName', 'companyName', 'ABN', 'block_or_unit', 'street_number', 'route', 'locality',
                 'administrative_area_level_1','postal_code','country', 'formatted_address', 'contact_name',
-                'contact_phone', 'contact_email', 'website', 'latitude', 'longitude'], 'string'],
+                'contact_phone', 'contact_email', 'website', 'latitude', 'longitude','googleplaceid','googleobj'], 'string'],
         ];
     }
 
