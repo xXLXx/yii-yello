@@ -185,11 +185,11 @@ var ShiftsCalendarController = {
         confirm = confirm || false;
 
         if (confirm) {
-            $('.js_copy_roster').show();
-            $('.js_confirm_roster').hide();
+            $('.js_copy_roster').removeClass('hidden');
+            $('.js_confirm_roster').addClass('hidden');
         } else {
-            $('.js_copy_roster').hide();
-            $('.js_confirm_roster').show();
+            $('.js_copy_roster').addClass('hidden');
+            $('.js_confirm_roster').removeClass('hidden');
         }
     },
 

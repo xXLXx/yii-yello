@@ -20,6 +20,7 @@ $this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add N
                 <fieldset>
                     <div class="form-group">
                         <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'storeform', 'fieldsMapping' => [
+                            'subpremise' => 'long_name',
                             'street_number' => 'short_name',
                             'route' => 'long_name',
                             'locality' => 'long_name',
@@ -27,6 +28,7 @@ $this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add N
                             'country' => 'long_name',
                             'postal_code' => 'short_name'
                         ]]); ?>
+                        <?php echo Html::activeHiddenInput($model, 'formatted_address'); ?>
                         <?php echo Html::activeHiddenInput($model, 'latitude'); ?>
                         <?php echo Html::activeHiddenInput($model, 'longitude'); ?>
                         <?php echo Html::activeHiddenInput($model, 'googleplaceid'); ?>
