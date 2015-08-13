@@ -843,15 +843,20 @@ a.blue-text {text-decoration:none;}
                 .calendar-table-cell .bold-text {word-break:break-all; display:block;}
 
 
+                
+
+                
+                
+                
         .calendar-table-item.red {background:#ffdada;}
             .red .calendar-table-cell {border-color:#ff7d6a; color:#ff0000;}
 
-        .calendar-table-item.orange {background:#fff7d3;}
-            .orange .calendar-table-cell {border-color:#f5a623; color:#f5a623;}
+        .calendar-table-item.orange {background:#ffeada;}
+            .orange .calendar-table-cell {border-color:#ff8217; color:#ff8217;}
 
 
-            .calendar-table-item.yellow {background:#fff0ab;}
-            .yellow .calendar-table-cell {border-color:#f8da4e; color:#80808d;}
+            .calendar-table-item.yellow {background:#fff7d3;}
+            .yellow .calendar-table-cell {border-color:#f6ae36; color:#f6ae36;}
 
 
             .calendar-table-item.lime {background:#edffdc;}
@@ -862,18 +867,18 @@ a.blue-text {text-decoration:none;}
             .green .calendar-table-cell {border-color:#59a600; color:#59a600;}
 
 
-            .calendar-table-item.aqua {background:#daffed;}
-            .aqua .calendar-table-cell {border-color:#17fffb; color:#333333;}
+            .calendar-table-item.aqua {background:#dafffe;}
+            .aqua .calendar-table-cell {border-color:#17fffb; color:#17fffb;}
 
 
             .calendar-table-item.blue {background:#d2e7ff;}
-            .blue .calendar-table-cell {border-color:#30639f; color:#30639f;}
+            .blue .calendar-table-cell {border-color:#4271a8; color:#4271a8;}
 
             .calendar-table-item.violet {background:#edd8ff;}
             .violet .calendar-table-cell {border-color:#b378e5; color:#b277eb;}
 
             .calendar-table-item.pink {background:#ffdaf3;}
-            .pink .calendar-table-cell {border-color:#f0f; color:#800;}
+            .pink .calendar-table-cell {border-color:#ff17b1; color:#ff17b1;}
 
 
             .cell-count {position:absolute; top:6px; left:-9px; color:#fff; font-size:10px; line-height:18px; padding:0 6px; border-radius:8px; background:#ff3d3d;}
@@ -888,20 +893,20 @@ a.blue-text {text-decoration:none;}
         .calendar-table-item.active.red {background:#ff7d6a;}
             .active.red .calendar-table-cell {border-color:#ff7d6a;}
 
-        .calendar-table-item.active.orange {background:#ff8013;}
-            .active.orange .calendar-table-cell {border-color:#17fffb;}
+        .calendar-table-item.active.orange {background:#ff8217;}
+            .active.orange .calendar-table-cell {border-color:#ff8217;}
 
-            .calendar-table-item.active.yellow {background:#fbcb09;}
-            .active.yellow .calendar-table-cell {border-color:#ff8217;}
+            .calendar-table-item.active.yellow {background:#f6ae36;}
+            .active.yellow .calendar-table-cell {border-color:#f6ae36;}
 
-        .calendar-table-item.active.lime {background:#2fef09;}
-            .active.lime .calendar-table-cell {color:#000;border-color:#6cff17;}
+        .calendar-table-item.active.lime {background:#0bae8d;}
+            .active.lime .calendar-table-cell {color:#000;border-color:#0bae8d;}
 
         .calendar-table-item.active.green {background:#59a600;}
             .active.green .calendar-table-cell {border-color:#59a600;}
 
         .calendar-table-item.active.aqua {background:#17fffb;}
-            .active.aqua .calendar-table-cell {border-color:#3bafda;}
+            .active.aqua .calendar-table-cell {border-color:#17fffb;}
 
             .calendar-table-item.active.blue {background:#003eff;}
             .active.blue .calendar-table-cell {border-color:#003eff;}
@@ -910,8 +915,8 @@ a.blue-text {text-decoration:none;}
             .calendar-table-item.active.violet {background:#b277e5;}
             .active.violet .calendar-table-cell {border-color:#b277e5;}
 
-            .calendar-table-item.active.pink {background:#ef09e2;}
-            .active.pink .calendar-table-cell {border-color:#ff3853;}
+            .calendar-table-item.active.pink {background:#ff17b1;}
+            .active.pink .calendar-table-cell {border-color:#ff17b1;}
 
 
 
