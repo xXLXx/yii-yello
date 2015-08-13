@@ -57,9 +57,7 @@ use common\helpers\ArrayHelper;
  * @property ShiftRequestReview[] $shiftRequestReviewDesc shift request review desc created at
  * @property ShiftRequestReview $lastUserShiftRequestReview last shift request review of the current user
  * @property ShiftRequestReview $lastDriverShiftRequestReview last shift request review of the current user
- *
- * @method static ShiftQuery find()
- *
+ * @property ShiftCopyLog $shiftCopyLog
  */
 class Shift extends BaseModel
 {

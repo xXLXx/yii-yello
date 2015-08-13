@@ -109,6 +109,8 @@ var ShiftsCalendarController = {
                     self.renderStateCounts(result.events);
                     provide(result.events);
                     $("#tableitem-"+result.shiftid).addClass('active');
+
+                    self.toggleCopyButtons(result.unconfirmedShifts.length === 0);
                 },
                 dataType: 'json'
             });
@@ -145,6 +147,20 @@ var ShiftsCalendarController = {
         this.copyWeeklySheetInit();
         calendarObject = calendar;
 
+        $('.js_confirm_roster').on('click', function(e){
+            e.preventDefault();
+            var that = $(this);
+            if (confirm('Are you sure?')) {
+                $.post($(this).attr('href'), {
+                    storeId: self.data.storeId,
+                    start: self.current.beginDate.format('YYYY-MM-DD'),
+                    end: self.current.endDate.format('YYYY-MM-DD')
+                }, function(response){
+                    self.toggleCopyButtons(true);
+                })
+            }
+        });
+
         $(document).on('submit', '#js_frm-copy-weekly-sheet', function(e){
             e.preventDefault();
             var data = {
@@ -162,6 +178,19 @@ var ShiftsCalendarController = {
             })
         });
 
+    },
+
+    // Toggle display the two buttons -- copy roster and confirm roster
+    toggleCopyButtons: function(confirm){
+        confirm = confirm || false;
+
+        if (confirm) {
+            $('.js_copy_roster').show();
+            $('.js_confirm_roster').hide();
+        } else {
+            $('.js_copy_roster').hide();
+            $('.js_confirm_roster').show();
+        }
     },
 
 
