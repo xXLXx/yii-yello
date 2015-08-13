@@ -42,6 +42,7 @@ class CompanyAddress extends BaseModel
         return [
             [['companyfk', 'addressfk'], 'required'],
             [['companyfk', 'addressfk', 'addresstype', 'createdUTC', 'updatedUTC', 'isarchived'], 'integer'],
+            ['addresstitle', 'default', 'value' => 'Default'],
             [['addresstitle', 'contact_name'], 'string', 'max' => 200],
             [['contact_phone'], 'string', 'max' => 24],
             [['contact_email'], 'string', 'max' => 400]
