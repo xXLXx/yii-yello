@@ -23,23 +23,33 @@ StoreInviteDriverSelectedAsset::register($this);
 <br>
 <table class="js-driver-info-table-replace strip-table">
     <col width="45%" />
-    <tr class="tr-gray">
-        <td class="gray-text">Availability</td>
-        <td>Shift, Roamer</td>
-    </tr>
     <tr>
         <td class="gray-text">Vehicle</td>
-        <td>Car (Audi Q7)</td>
+        <td><?php if ($driver->vehicle):?>
+                <?= $driver->vehicle->vehicleType->title ?>
+                (<?= $driver->vehicle->model ?>, <?= $driver->vehicle->year ?>)
+            <?php else: ?>
+                Not Found
+            <?php endif; ?>
+        </td>
     </tr>
     <tr class="tr-gray">
         <td class="gray-text">Driver License</td>
         <td>
-            <span class="link-icon"><span class="round-btn red font-x"></span>Not submited</span>
+            <?php if($driver->userDriver && $driver->userDriver->driverLicenseNumber): ?>
+                <span class="link-icon"><span class="round-btn green font-check"></span>Submited</span>
+            <?php else: ?>
+                <span class="link-icon"><span class="round-btn red font-x"></span>Not submited</span>
+            <?php endif; ?>
         </td>
     </tr>
     <tr>
         <td class="gray-text">Work in AU</td>
-        <td><span class="link-icon"><span class="round-btn green font-check"></span>Legally allowed</span></td>
+        <td><?php if ($driver->userDriver && $driver->userDriver->isAllowedToWorkInAustralia): ?>
+                <span class="link-icon"><span class="round-btn green font-check"></span>Legally allowed</span>
+            <?php else: ?>
+                <span class="link-icon"><span class="round-btn red font-x"></span>Not allowed</span>
+            <?php endif; ?></td>
     </tr>
     <tr class="tr-gray j_add_note_link" style="display:none;">
         <td class="gray-text"><?= \Yii::t('app', 'Payment method') ?></td>

@@ -97,7 +97,7 @@ $driverId = $driver->id;
                 <tr>
                     <td class="gray-text">Work in AU</td>
                     <td>
-                        <?php if ($driver->userDriver->driverLicenseNumber): ?>
+                        <?php if ($driver->userDriver->isAllowedToWorkInAustralia): ?>
                             <span class="link-icon"><span class="round-btn green font-check"></span>Legally allowed to work in Australia</span>
                         <?php else: ?>
                             <span class="link-icon"><span class="round-btn red font-x"></span></span>
