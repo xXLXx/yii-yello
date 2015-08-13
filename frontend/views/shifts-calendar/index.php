@@ -61,7 +61,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
                 ])
             ?>
             <a class="j_colorbox js_copy_roster btn small" href="<?= Url::to(['/shift-weekly-copy']); ?>"><?= \Yii::t('app', 'Copy roster'); ?></a>
-            <a class="js_confirm_roster btn small green" href="<?= Url::to(['/shift-weekly-copy/confirm']); ?>"><?= \Yii::t('app', 'Confirm roster'); ?></a>
+            <a class="js_confirm_roster btn small green hidden" href="<?= Url::to(['/shift-weekly-copy/confirm']); ?>"><?= \Yii::t('app', 'Confirm roster'); ?></a>
         </h1>
         <?= ShiftStatesCountWidget::widget([]); ?>
 
