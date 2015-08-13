@@ -174,9 +174,6 @@ Calendar.prototype.render = function() {
                                             '<% if (eventGroups.groups[j][i].applicantsCount) { %>' +
                                                 '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
                                             '<% } %>' +
-                                            '<% if (eventGroups.groups[j][i].driverDeliveryCount) { %>' +
-                                                '<span class="cell-count deliveries"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
-                                            '<% } %>' +
                                         '</a>' +
                                     '</div>' +
                                 '</td>' +
@@ -190,9 +187,6 @@ Calendar.prototype.render = function() {
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
                                             '<% if (eventGroups.groups[j][i].applicantsCount) { %>' +
                                                 '<span class="cell-count"><%= eventGroups.groups[j][i].applicantsCount %></span>' +
-                                            '<% } %>' +
-                                            '<% if (eventGroups.groups[j][i].driverDeliveryCount) { %>' +
-                                                '<span class="cell-count deliveries"><%= eventGroups.groups[j][i].driverDeliveryCount %></span>' +
                                             '<% } %>' +
                                         '</a>' +
                                     '</div>' +
