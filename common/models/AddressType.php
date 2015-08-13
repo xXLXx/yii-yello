@@ -10,7 +10,7 @@ use Yii;
  * @property integer $idaddresstypes
  * @property string $addresstype
  *
- * @property Companyaddress[] $companyaddresses
+ * @property CompanyAddress[] $companyaddresses
  */
 class AddressType extends \yii\db\ActiveRecord
 {
@@ -62,6 +62,6 @@ class AddressType extends \yii\db\ActiveRecord
      */
     public function getCompanyaddresses()
     {
-        return $this->hasMany(Companyaddress::className(), ['addresstype' => 'idaddresstypes']);
+        return $this->hasMany(CompanyAddress::className(), ['addresstype' => 'idaddresstypes']);
     }
 }

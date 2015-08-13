@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use common\models\Address;
 use common\models\AddressType;
-use common\models\Companyaddress;
+use common\models\CompanyAddress;
 use yii\base\Model;
 use common\models\TimeZone;
 use common\models\Currency;
