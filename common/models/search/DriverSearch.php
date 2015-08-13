@@ -2,10 +2,12 @@
 
 namespace common\models\search;
 
+use common\models\Role;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Driver;
+
 
 /**
  * DriverSearch represents the model behind the search form about `common\models\Driver`.
@@ -59,6 +61,12 @@ class DriverSearch extends Driver
         $this->load($params);
         $query = static::find();
         $query->with(['image']);
+
+        $query->joinWith('role');
+        $query->andWhere(
+            ['Role.name' => Role::ROLE_DRIVER]
+        );
+
         if (isset($params['searchText']) && $params['searchText']) {
             $query->andWhere([
                 'OR',
@@ -174,8 +182,9 @@ class DriverSearch extends Driver
             $query->andWhere([
                 '!=', 'DriverHasStore.storeId', $storeOwner->id,
             ]);*/
-        }        
-        
+        }
+
+
         return $query;
     }
     

@@ -80,6 +80,8 @@ $driverId = $driver->id;
                             <?php if($connected){ ?>
                             <a href="<?= $driver->vehicle->image->originalUrl ?>" class="j_colorbox_photo">View</a>
                             <?php } ?>
+                        <?php else: ?>
+                            Not Found
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -100,7 +102,7 @@ $driverId = $driver->id;
                         <?php if ($driver->userDriver->isAllowedToWorkInAustralia): ?>
                             <span class="link-icon"><span class="round-btn green font-check"></span>Legally allowed to work in Australia</span>
                         <?php else: ?>
-                            <span class="link-icon"><span class="round-btn red font-x"></span></span>
+                            <span class="link-icon"><span class="round-btn red font-x"></span>Not allowed</span>
                         <?php endif; ?>
                     </td>
                 </tr>
