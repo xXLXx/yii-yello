@@ -43,7 +43,13 @@ class ShiftCalendarService extends BaseService
             if ($shift->shiftStateId == $pendingState->id) {
                 $applicantsCount = count($shift->applicants);
             }
-
+            // delivery count
+            $driverdeliverycount = $shift->deliveryCount;
+            $lastdriverrequest = $shift->LastDriverShiftRequestReview;
+            if($lastdriverrequest){
+                $driverdeliverycount=$lastdriverrequest->deliveryCount;
+            }
+            
 
             $active = "";
             //$active = ($shift->id == $shiftId) ? " active" : "";
@@ -51,6 +57,7 @@ class ShiftCalendarService extends BaseService
 
             $now=  new \DateTime;
             if($startDateTime<$now && $shift->shiftStateId == $pendingState->id ){
+                // ignore unused shifts
             }else{
 
             $result[] = [
@@ -67,7 +74,8 @@ class ShiftCalendarService extends BaseService
                     'shiftStateId' => $shift->shiftStateId,
                     'color' => $shift->shiftState->color . $active
                 ],
-                'applicantsCount' => $applicantsCount
+                'applicantsCount' => $applicantsCount,
+                'driverDeliveryCount'=>$driverdeliverycount,
             ];
             }
         }

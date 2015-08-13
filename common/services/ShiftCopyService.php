@@ -37,12 +37,9 @@ class ShiftCopyService extends BaseService
             ->select('shiftId')
             ->andWhere(['hash' => $hash])
                 ->column();
-        $shiftExistIds = Shift::find()
-            ->select('id')
-            ->andWhere(['id' => $logShiftIds])
-                ->column();
+
         foreach ($shifts as $shift) {
-            if (in_array($shift->id, $shiftExistIds)) {
+            if (in_array($shift->id, $logShiftIds)) {
                 continue;
             }
             
@@ -74,15 +71,45 @@ class ShiftCopyService extends BaseService
                 $shiftHasDriver->save();
             }
             
-            if (in_array($shiftCopy->id, $logShiftIds)) {
-                continue;
-            }
-            
             $shiftCopyLog = new ShiftCopyLog();
             $shiftCopyLog->shiftId = $shift->id;
             $shiftCopyLog->shiftCopyId = $shiftCopy->id;
             $shiftCopyLog->hash = $hash;
             $shiftCopyLog->save();
         }
+    }
+
+    /**
+     * Confirms a roster.
+     * Mark ShiftCopyLog.confirmedAt with current timestamp
+     * and ShiftHadDriver.acceptedByStoreOwner as true.
+     *
+     * @param array $params
+     *
+     * @return int number of confirmed drivers
+     */
+    public static function confirm($params)
+    {
+        $shifts = Shift::find()
+            ->andWhere(['>=', 'start', $params['start']])
+            ->andWhere(['<', 'end', $params['end']])
+            ->andWhere(['storeId' => $params['storeId']])
+            ->joinWith('shiftCopyLog', true, 'RIGHT JOIN') // so we dont waste getting other records
+            ->joinWith('shiftHasDrivers', true, 'RIGHT JOIN') // and with assigned driver
+            ->all();
+
+        $confirmedDrivers = 0;
+        foreach ($shifts as $shift) {
+            $shift->shiftCopyLog->confirmedAt = time();
+            $shift->shiftCopyLog->save(false);
+
+            foreach ($shift->shiftHasDrivers as $shiftDriver) {
+                $shiftDriver->acceptedByStoreOwner = 1;
+                $shiftDriver->save(false);
+                $confirmedDrivers++;
+            }
+        }
+
+        return $confirmedDrivers;
     }
 }

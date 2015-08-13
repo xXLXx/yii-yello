@@ -17,6 +17,7 @@ class ShiftsCalendarAsset extends AssetBundle
     ];
     public $depends = [
         'yii\jui\JuiAsset',
+        'yii\widgets\PjaxAsset',
         'frontend\widgets\Timepicker\assets\TimepickerAsset',
         'frontend\widgets\DriverSearch\assets\DriverSearchAsset',
         'yii\widgets\ActiveFormAsset',

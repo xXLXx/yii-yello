@@ -56,7 +56,8 @@ use common\helpers\ArrayHelper;
  * @property ShiftRequestReview[] $shiftRequestReview shift request review
  * @property ShiftRequestReview[] $shiftRequestReviewDesc shift request review desc created at
  * @property ShiftRequestReview $lastUserShiftRequestReview last shift request review of the current user
- *
+ * @property ShiftRequestReview $lastDriverShiftRequestReview last shift request review of the current user
+ * @property ShiftCopyLog $shiftCopyLog
  */
 class Shift extends BaseModel
 {
@@ -202,6 +203,16 @@ class Shift extends BaseModel
             'approvedApplicationId' => Yii::t('app', 'Approved Application ID'),
         ];
         return array_merge(parent::attributeLabels(), $labels);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return ShiftQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ShiftQuery(get_called_class());
     }
 
     /**
@@ -390,6 +401,16 @@ class Shift extends BaseModel
         return $this
             ->hasOne(Driver::className(), ['id' => 'driverId'])
             ->via('shiftHasAccepted');
+    }
+
+    /**
+     * ShiftCopyLog
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShiftCopyLog()
+    {
+        return $this->hasOne(ShiftCopyLog::className(), ['shiftCopyId' => 'id']);
     }
 
     public static function getActiveFor($driverId)
@@ -631,6 +652,19 @@ class Shift extends BaseModel
     /**
      * @return ShiftRequestReview|null
      */
+    public function getLastShiftDeliveryCount($id)
+    {
+        $last =  $this->getShiftRequestReview()
+            ->where(['shiftId' => $id])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }    
+    
+
+    /**
+     * @return ShiftRequestReview|null
+     */
     public function getLastUserShiftRequestReview()
     {
         $userId = Yii::$app->user->identity->id;
@@ -641,6 +675,24 @@ class Shift extends BaseModel
             ->limit(1)
             ->one();
     }
+
+    
+    /**
+     * @return ShiftRequestReview|null
+     */
+    public function getLastDriverShiftRequestReview()
+    {
+        $userId = Yii::$app->user->identity->id;
+
+        return $this->getShiftRequestReview()
+            ->where(['shiftId'=>$this->id])
+            ->andWhere(['NOT',['userId' =>  $userId]])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }
+        
+    
     
     /**
      * Create activity deliveryCount

@@ -32,4 +32,23 @@ class ShiftWeeklyCopyController extends BaseController
 
         return $this->renderPartial('index');
     }
+
+    /**
+     * Confirms a copied roster.
+     *
+     * @return array
+     */
+    public function actionConfirm()
+    {
+        $request = \Yii::$app->getRequest();
+        $result = ShiftCopyService::confirm([
+            'storeId' => $request->post('storeId'),
+            'start'   => $request->post('start'),
+            'end'     => $request->post('end'),
+        ]);
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'result' => $result
+        ];
+    }
 }

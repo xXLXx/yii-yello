@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ShiftCopyLog;
 use Yii;
 use yii\helpers\Json;
 use common\models\Shift;
@@ -75,15 +76,14 @@ class ShiftsCalendarController extends BaseController
      */
     public function actionGetEvents()
     {
-        $post = Yii::$app->request->post();
-        $events = ShiftCalendarService::getEvents([
-            'start'     => $post['start'],
-            'end'       => $post['end'],
-            'storeId'   => $post['storeId']
-        ]);
-        return Json::encode([
-            'events' => $events,
-            'shiftid' => $post['shiftid']
-        ]);
+        $request = \Yii::$app->getRequest();
+        $start = $request->post('start');
+        $end = $request->post('end');
+        $storeId = $request->post('storeId');
+        $shiftId = $request->post('shiftId');
+        $events = ShiftCalendarService::getEvents(compact('start', 'end', 'storeId'));
+        $unconfirmedShifts = Shift::find()->unconfirmed()->within($start, $end)->all();
+
+        return Json::encode(compact('events', 'shiftId', 'unconfirmedShifts'));
     }
 }
