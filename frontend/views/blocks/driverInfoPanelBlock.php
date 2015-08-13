@@ -9,7 +9,7 @@
 </div>
 <div class="user-photo-container f-left">
   
-<!--    <img src="<?//= $driver->image ? $driver->image->thumblUrl : '/img/temp/01.jpg' ?>"  -->
-    <img src="<?= $driver->imageId  ? '/upload/images/'.$driver->imageId.'-thumb.jpg'   : '/img/temp/01.jpg' ?>"
+<!--    <img src="<?//= $driver->image ? $driver->image->thumblUrl : '/img/driver_head.svg' ?>"  -->
+    <img src="<?= $driver->imageId  ? '/upload/images/'.$driver->imageId.'-thumb.jpg'   : '/img/driver_head.svg' ?>"
         alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
 </div>

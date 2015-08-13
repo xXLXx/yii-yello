@@ -35,7 +35,7 @@ $driverId = $driver->id;
                 <div class="user-photo-container f-left">
                     <a href="driver-profile-store-owner.html">
                         <img
-                            src="<?= $driver->image ? $driver->image->thumbUrl : '/img/temp/02.jpg' ?>"
+                            src="<?= $driver->image ? $driver->image->thumbUrl : '/img/driver_head.svg' ?>"
                             alt="<?= $driver->image ? $driver->image->alt : '' ?>"/>
                     </a>
                 </div>

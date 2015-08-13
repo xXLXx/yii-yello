@@ -5,7 +5,7 @@
 ?>
 <div class="shift-item <?= $model->shiftState->color; ?>" data-id="<?= $model->id; ?>">
     <h5 class="driver-name">
-        <?= $model->driverAccepted->username; ?>
+   
     </h5>
     <div class="state <?= $model->shiftState->color; ?>">
         <?= $model->shiftState->name; ?>

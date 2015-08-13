@@ -145,7 +145,7 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
                                 <?php echo $form->field($model, 'businessHours')->textarea(); ?>
                                 <?php echo $form->field($model, 'storeProfile')->textarea(); ?>
                             <div class="user-photo-container">
-                                <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/temp/07.png' ?>"/>
+                                <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/store_image.svg' ?>"/>
                             </div>
                             <div class="upload-file">
                                 <div class="blue-text">Upload logo</div>

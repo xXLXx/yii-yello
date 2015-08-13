@@ -4,7 +4,7 @@ use yii\helpers\Html;
 <div class="driver-info">
     <div class="user-photo-container f-left">
         <a href="/drivers/profile?id=<?=$driver->id?>"><img
-                src="<?= $driver->image ? $driver->image->thumbUrl : '/img/temp/02.jpg' ?>"
+                src="<?= $driver->image ? $driver->image->thumbUrl : '/img/driver_head.svg' ?>"
                 alt="<?= $driver->image ? $driver->image->alt : '' ?>"/>
         </a>
     </div>
