@@ -115,7 +115,7 @@ $driverId = $driver->id;
                 </tr>
                 <tr>
                     <td class="gray-text">Address</td>
-                    <td><?php $driver->address1; ?></td>
+                    <td><?= $driver->fulladdress; ?></td>
                 </tr>
                 <tr class="tr-gray">
                     <td class="gray-text">Phone</td>

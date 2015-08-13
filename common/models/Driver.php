@@ -317,4 +317,25 @@ class Driver extends User
             return $this->address->block_or_unit . ' ' . $this->address->street_number . ' ' . $this->address->route;
         }
     }
+
+    /**
+     * Handy getter of full address.
+     * @return string
+     */
+    public function getFullAddress()
+    {
+
+        if($this->address){
+            $address_data = array_filter([
+                $this->address->block_or_unit,
+                $this->address->street_number,
+                $this->address->route,
+                $this->address->locality,
+                $this->address->administrative_area_level_1,
+                $this->address->postal_code,
+                $this->address->country,
+            ]);
+            return implode(" ", $address_data);
+        }
+    }
 }
