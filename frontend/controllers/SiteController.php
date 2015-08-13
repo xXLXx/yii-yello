@@ -251,6 +251,10 @@ class SiteController extends BaseController
 
     public function actionResetPassword($token)
     {
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+        }
+
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
