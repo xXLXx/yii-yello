@@ -218,11 +218,12 @@ class StoreForm extends Model
                     throw new \yii\db\Exception(current($error));
                 }
             } else {
-                $storeaddress = StoreAddress::findOne(['storefk' => $store->id,'addresstitle'=>'Default']);
+                $storeaddress = StoreAddress::findOne(['storefk' => $store->id]);
                 if(!$storeaddress){
                     $storeaddress = new StoreAddress();
                     $storeaddress ->storefk=$store->id;
                     $storeaddress->addressfk=0;
+                    $storeaddress->addresstitle='Default';
                 }
                 $storeaddress->setAttributes($this->getAttributes());
                 if (!$storeaddress->save()) {
