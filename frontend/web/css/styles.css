@@ -1199,8 +1199,13 @@ a.blue-text {text-decoration:none;}
 /*Tracking page */
 
 #map-canvas {
-  height: 100vh;
+  /* windowH - topnavH - topmenuiconH - menuiconPadding */
+  height: calc(100vh - 60px - 28px - 20px);
   margin-top: 52px;
+}
+.j_fix_header.fixed #map-canvas {
+  /* windowH - topmenuiconH - menuiconPadding */
+  height: calc(100vh - 28px - 20px);
 }
 .top-menu {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

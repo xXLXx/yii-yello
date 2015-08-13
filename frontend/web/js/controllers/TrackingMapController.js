@@ -51,13 +51,19 @@ var TrackingMapController = {
             // Add store marker
             new google.maps.Marker({
                 position: storeLocation,
-                map: context.map
+                map: context.map,
+                strokeOpacity: 0,
+                icon: {
+                    url: document.location.protocol + '//' + document.location.hostname + '/img/marker-store.png',
+                    scaledSize: new google.maps.Size(40, 40)
+                }
             });
         });
 
         context.pubnub = PUBNUB({
             publish_key   : 'pub-c-811c6537-1862-4b4c-9dac-13220db0928d',
-            subscribe_key : 'sub-c-ac40e412-23b2-11e5-8ae2-0619f8945a4f'
+            subscribe_key : 'sub-c-ac40e412-23b2-11e5-8ae2-0619f8945a4f',
+            ssl: ((document.location.protocol == 'https:') ? true : false)
         });
     },
 
@@ -76,7 +82,7 @@ var TrackingMapController = {
         var context = this;
         $.each(context.mapDrivers, function (key, value) {
             var now = new Date();
-            if (now - value.lastUpdate > context.data.inactiveDriverTimeout) {
+            if (value.marker && now - value.lastUpdate > context.data.inactiveDriverTimeout) {
                 value.state = null;
                 value.marker.setMap(null);
                 value.marker = null;
@@ -147,7 +153,8 @@ var TrackingMapController = {
                     } else {
                         context.mapDrivers[mapDriversCurrentIdx].marker = new google.maps.Marker({
                             position: position,
-                            map: context.map
+                            map: context.map,
+                            icon: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id
                         });
                     }
 
