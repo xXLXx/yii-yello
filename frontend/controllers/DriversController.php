@@ -257,17 +257,15 @@ class DriversController extends BaseController
      *
      * @return string
      */
-    public function actionRemoveNote()
+    public function actionRemoveNote($id)
     {
-        $driverId = 9;
-
         $user = \Yii::$app->user->identity;
         $storeId = $user->storeOwner->storeCurrent->id;
 
         $driverNote = Note::findOne(
             [
                 'storeId' => $storeId,
-                'driverId' => $driverId
+                'driverId' => $id
             ]
         );
         $driverNote->delete();

@@ -59,11 +59,13 @@ var DriverNote = {
 
         $(document).on('click', this.options.deleteNoteSelector, function (e) {
             e.preventDefault();
-            $row = $('.info-popup');
+
+            driverId = $(this).data('driverid');
+
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: self.options.deleteNoteUrl,
-                data: $('form').serialize(),
+                data: {id: driverId},
                 success: function (data) {
 
                     if (data.success) {

@@ -165,7 +165,7 @@ $driverId = $driver->id;
                             <div class="note-item"><?= $note['note']; ?></div>
                             <div class="note-button">
                                 <span><a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="brown-text link-icon font-pencil j_colorbox">Edit Note</a></span>
-                                <span><a href="#" class="brown-text link-icon font-delete-garbage-streamline j_note_delete">Delete</a></span>
+                                <span><a href="#" class="brown-text link-icon font-delete-garbage-streamline j_note_delete" data-driverid="<?= $driverId; ?>">Delete</a></span>
                             </div>
 
                         </div>
