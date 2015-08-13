@@ -20,7 +20,6 @@ use yii\helpers\Html;
     <div class="user-photo-info">
         <div class="user-photo-info-inner">
             <div class="name"><a href="/drivers/profile?id=<?=$driver->id?>"><?= $driver->username ?></a></div>
-            <div class="state green">Available</div>
             <div>
                 <span class="star-block">
                     <span class="font-star-two"></span>

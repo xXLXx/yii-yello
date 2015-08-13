@@ -59,7 +59,7 @@ class DriverSearch extends Driver
         $this->load($params);
         $query = static::find();
         $query->with(['image']);
-        if (isset($params['searchText'])) {
+        if (isset($params['searchText']) && $params['searchText']) {
             $query->andWhere([
                 'OR',
                 ['like', 'username', $params['searchText']],
@@ -130,17 +130,17 @@ class DriverSearch extends Driver
             $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
                 'StoreOwnerFavouriteDrivers.driverId =user.Id');     
             
-            $query->andFilterWhere(
+            $query->andFilterWhere(['or',
                 [
                     'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
                     'DriverHasStore.isAcceptedByDriver' => 1,
                     'DriverHasStore.isArchived' => 0
-                ]
+                ],
+                [
+                    'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id,
+                    'DriverHasStore.isArchived' => 0
+                ]]
             );            
-            $query->orWhere([
-                'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id,
-                'DriverHasStore.isArchived' => 0
-            ]);
         }
 
         if (!empty($params['category']) && $params['category'] == 'my') {
