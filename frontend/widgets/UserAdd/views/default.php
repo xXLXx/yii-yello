@@ -68,6 +68,7 @@ UserAddAsset::register($this);
                 <tr>
                     <td>
                         <label for="stores"><?= \Yii::t('app', 'Stores'); ?></label>
+                        <?= Html::error($model, 'storeslist', ['class' => 'error-message']) ?>
                         <?php if ($model->getStoresArrayMap()): ?>
                             <div class="table-block">
                                 <?php $counter = 0; ?>

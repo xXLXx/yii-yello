@@ -53,7 +53,7 @@ class UserAddForm extends AbstractForm
             ['email', 'validateUniqueEmail'],
             [['imageFile', 'image'], 'safe'],
             [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, png, gif'],
-            ['storeslist', 'safe']
+            ['storeslist', 'required']
         ];
     }
 
