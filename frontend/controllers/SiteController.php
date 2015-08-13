@@ -188,6 +188,12 @@ class SiteController extends BaseController
 
     public function actionConfirm($id, $key)
     {
+        // sign the user out first
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+        }
+        
+        
         $user = User::find()->where([
             'id' => $id,
             'authKey' => $key,
