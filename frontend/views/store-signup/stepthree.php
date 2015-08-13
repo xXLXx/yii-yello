@@ -92,6 +92,8 @@ $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
                             'postal_code' => 'short_name'
                         ]]); ?>
                     </div>
+                    <?php echo Html::activeHiddenInput($model, 'latitude'); ?>
+                    <?php echo Html::activeHiddenInput($model, 'longitude'); ?>
                     <?php echo Html::activeHiddenInput($model, 'googleplaceid'); ?>
                     <?php echo Html::activeHiddenInput($model, 'googleobj'); ?>
                     <?php echo $form->field($model, 'block_or_unit',['inputOptions'=>['class'=>'form-control','placeholder'=>'Unit','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']]); ?>

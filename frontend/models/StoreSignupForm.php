@@ -41,6 +41,8 @@ class StoreSignupForm extends Model
     public $formatted_address;
     public $googleplaceid;
     public $googleobj;
+    public $latitude;
+    public $longitude;
     
     /**
      * @inheritdoc
@@ -66,6 +68,7 @@ class StoreSignupForm extends Model
                     'contact_email', 'contact_phone', 'contact_name',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1',
                     'postal_code', 'country', 'formatted_address', 'googleplaceid', 'googleobj', 'addressfk',
+                    'latitude', 'longitude',
                 ],
                 'safe'
             ],
