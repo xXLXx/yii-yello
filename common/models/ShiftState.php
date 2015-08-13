@@ -30,10 +30,16 @@ class ShiftState extends BaseModel
     const STATE_UNDER_REVIEW = 'underReview';
     const STATE_PENDING_PAYMENT = 'pendingPayment';
 
+    // no idea why this is mapped but I'm sure we'll find out
+//    private static $siteStateMapping = [
+//        self::STATE_DISPUTED => self::STATE_APPROVAL,
+//        self::STATE_UNDER_REVIEW => self::STATE_APPROVAL,
+//        self::STATE_PENDING_PAYMENT => self::STATE_COMPLETED,
+//    ];
     private static $siteStateMapping = [
-        self::STATE_DISPUTED => self::STATE_APPROVAL,
-        self::STATE_UNDER_REVIEW => self::STATE_APPROVAL,
-        self::STATE_PENDING_PAYMENT => self::STATE_COMPLETED,
+        self::STATE_DISPUTED => self::STATE_DISPUTED,
+        self::STATE_UNDER_REVIEW => self::STATE_UNDER_REVIEW,
+        self::STATE_PENDING_PAYMENT => self::STATE_PENDING_PAYMENT,
     ];
 
     public $shiftCount;

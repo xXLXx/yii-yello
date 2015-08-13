@@ -106,7 +106,7 @@
             <!--
             <a href="calendar-store-owner-request-review.html" class="btn j_colorbox">Request Review</a>
             -->
-            <?php if( $shiftState->name === $shiftState::STATE_APPROVAL ): ?>
+            <?php if( $shiftState->name === $shiftState::STATE_APPROVAL || $shiftState->name === $shiftState::STATE_DISPUTED || $shiftState->name === $shiftState::STATE_UNDER_REVIEW): ?>
                 <a href="#" id="link-approve-shift" class="btn blue" rel="nofollow" data-shift-id="<?= $shift->id; ?>">Approve</a>
             <?php endif; ?>
         </div>
