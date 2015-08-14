@@ -31,15 +31,18 @@ class DriverSignupStep1 extends Model
     public $administrative_area_level_1;
     public $postal_code;
     public $country;
-    public $formatted_address;
     public $imageFile;
+    public $formatted_address;
+    public $latitude;
+    public $longitude;
+    public $googleplaceid;
+    public $googleobj;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        //TODO:jovani all fields are required.
         return [
             [
                 [
@@ -55,7 +58,7 @@ class DriverSignupStep1 extends Model
                     'id', 
                     'emergencyContactName', 'emergencyContactPhone', 'personalProfile',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
-                    'formatted_address'
+                    'formatted_address', 'latitude', 'longitude','googleplaceid','googleobj'
                 ],
                 'safe'
             ]

@@ -1,7 +1,7 @@
 
 var jsAddressWidget = {
 
-    componentForm: AddressWidget.fieldsMapping,
+    fieldFormatMapping: AddressWidget.fieldFormatMapping,
     autocomplete: null,
 
     /**
@@ -25,19 +25,20 @@ var jsAddressWidget = {
     fillInAddress: function () {
         // Get the place details from the autocomplete object.
         var place = this.autocomplete.getPlace();
-        var formname = AddressWidget.formName;
-        formname = formname+'-';
+        var formName = AddressWidget.formName;
+        formName = formName+'-';
         console.log(place);
 
-        for (var component in this.componentForm) {
-            console.log(component);
+        // Clear all fields
+        for (var component in this.fieldFormatMapping) {
+            // console.log(component);
             if(component=='subpremise'){
-                document.getElementById(formname+'block_or_unit').value = '';
-                document.getElementById(formname+'block_or_unit').disabled = false;
+                document.getElementById(formName+'block_or_unit').value = '';
+                // document.getElementById(formName+'block_or_unit').disabled = false;
                 
             }else{
-                document.getElementById(formname+component).value = '';
-                document.getElementById(formname+component).disabled = false;
+                document.getElementById(formName+component).value = '';
+                // document.getElementById(formName+component).disabled = false;
                 
             }
         }
@@ -46,30 +47,34 @@ var jsAddressWidget = {
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
-            if (this.componentForm[addressType]) {
-                var val = place.address_components[i][this.componentForm[addressType]];
+            if (this.fieldFormatMapping[addressType]) {
+                var val = place.address_components[i][this.fieldFormatMapping[addressType]];
                 if(addressType=='subpremise'){
-                    document.getElementById(formname+'block_or_unit').value = val;
+                    document.getElementById(formName+'block_or_unit').value = val;
             }else{
-                    document.getElementById(formname+addressType).value = val;
+                    document.getElementById(formName+addressType).value = val;
                 }
             }
         }
 
-        if (document.getElementById(formname+'latitude')) {
-            document.getElementById(formname+'latitude').value = place.geometry.location.lat();
+        if (document.getElementById(formName+'formatted_address')) {
+            document.getElementById(formName+'formatted_address').value = place.formatted_address;
         }
 
-        if (document.getElementById(formname+'longitude')) {
-            document.getElementById(formname+'longitude').value = place.geometry.location.lng();
+        if (document.getElementById(formName+'latitude')) {
+            document.getElementById(formName+'latitude').value = place.geometry.location.lat();
         }
 
-        if (document.getElementById(formname+'googleplaceid')) {
-            document.getElementById(formname+'googleplaceid').value = place.place_id;
+        if (document.getElementById(formName+'longitude')) {
+            document.getElementById(formName+'longitude').value = place.geometry.location.lng();
         }
 
-        if (document.getElementById(formname+'googleobj')) {
-            document.getElementById(formname+'googleobj').value = JSON.stringify(place);
+        if (document.getElementById(formName+'googleplaceid')) {
+            document.getElementById(formName+'googleplaceid').value = place.place_id;
+        }
+
+        if (document.getElementById(formName+'googleobj')) {
+            document.getElementById(formName+'googleobj').value = JSON.stringify(place);
         }
     },
     // [END region_fillform]

@@ -67,30 +67,7 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
-                                <div class="form-group">
-                                    <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'storesignupform', 'fieldsMapping' => [
-                                        'subpremise'=>'long_name',
-                                        'street_number' => 'short_name',
-                                        'route' => 'long_name',
-                                        'locality' => 'long_name',
-                                        'administrative_area_level_1' => 'short_name',
-                                        'country' => 'long_name',
-                                        'postal_code' => 'short_name'
-                                    ]]); ?>
-                                </div>
-
-                                    <?php echo Html::activeHiddenInput($model, 'latitude'); ?>
-                                    <?php echo Html::activeHiddenInput($model, 'longitude'); ?>
-                                    <?php echo Html::activeHiddenInput($model, 'googleplaceid'); ?>
-                                    <?php echo Html::activeHiddenInput($model, 'googleobj'); ?>
-                                    <?php echo $form->field($model, 'block_or_unit',['inputOptions'=>['class'=>'form-control','placeholder'=>'Unit','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']]); ?>
-                                    <?php echo $form->field($model, 'street_number',['inputOptions'=>['class'=>'form-control','placeholder'=>'St #','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-2 col-lg-2','style'=>'padding-left:0;padding-right:0;']  ]); ?>
-                                    <?php echo $form->field($model, 'route',['inputOptions'=>['class'=>'form-control','placeholder'=>'Street name','disabled'=>'true'],'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'locality',['inputOptions'=>['class'=>'form-control','disabled'=>'true'] ,'options'=>['class'=>'col col-sm-12 col-md-8 col-lg-8','style'=>'padding-left:0;padding-right:5px;'] ]); ?>
-                                    <?php echo $form->field($model, 'administrative_area_level_1',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-4 ','style'=>'padding-left:0;padding-right:0px;']]); ?>
-                                    <?php echo $form->field($model, 'postal_code',['inputOptions'=>['class'=>'form-control stripeform','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-4 col-lg-3 ','style'=>'padding-left:0;padding-right:5px;']]); ?>
-                                    <?php echo $form->field($model, 'country',['inputOptions'=>['class'=>'form-control','disabled'=>'true'],'options'=>['class'=>'col col-sm-6 col-md-8 col-lg-9 ','style'=>'padding-left:0;padding-right:0px;']]); ?>     
+                                <?= \frontend\widgets\Address\AddressWidget::widget(['model' => $model, 'form' => $form]); ?>
                             </div>
                         </div>
                     </div>

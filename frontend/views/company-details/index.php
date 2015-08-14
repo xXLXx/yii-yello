@@ -23,44 +23,19 @@ $wholerow = ['options'=>['class'=>'col col-sm-11 col-md-10 col-lg-10']];
         <h2><?= $this->title ?></h2>
         <?php $form = ActiveForm::begin(); ?>
         <?= Html::activeHiddenInput($model, 'id'); ?>
-        <fieldset>
+        <div class="row">
             <?php echo $form->field($model, 'accountName', $options); ?>
             <?php echo $form->field($model, 'companyName', $options); ?>
             <?php echo $form->field($model, 'ABN', $options); ?>
-        </fieldset>
+        </div>
 
-        <fieldset>
+        <div class="row">
             <?php echo $form->field($model, 'contact_name', $options); ?>
             <?php echo $form->field($model, 'contact_phone', $options); ?>
             <?php echo $form->field($model, 'contact_email', $options); ?>
-        </fieldset>
+        </div>
 
-        <fieldset>
-            <div class="form-group col-md-12">
-                                <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
-                <?= \frontend\widgets\Address\AddressWidget::widget(['name' => 'test', 'formName' => 'companyform', 'fieldsMapping' => [
-                    'subpremise' => 'long_name',
-                    'street_number' => 'short_name',
-                    'route' => 'long_name',
-                    'locality' => 'long_name',
-                    'administrative_area_level_1' => 'short_name',
-                    'country' => 'long_name',
-                    'postal_code' => 'short_name'
-                ]]); ?>
-            </div>
-            <?php echo $form->field($model, 'block_or_unit',['options'=>['class'=>'form-group col-sm-2']])->label(false); ?>
-            <?php echo $form->field($model, 'street_number',['options'=>['class'=>'form-group col-sm-3']])->label(false); ?>
-            <?php echo $form->field($model, 'route',['options'=>['class'=>'form-group col-sm-7']])->label(false); ?>
-            <?php echo $form->field($model, 'locality',['options'=>['class'=>'form-group col-sm-8']]); ?>
-            <?php echo $form->field($model, 'administrative_area_level_1',['options'=>['class'=>'form-group col-sm-4']]); ?>
-            <?php echo $form->field($model, 'postal_code',['options'=>['class'=>'form-group col-sm-4']]); ?>
-            <?php echo $form->field($model, 'country',['options'=>['class'=>'form-group col-sm-8']]); ?>
-
-            <?= Html::activeHiddenInput($model, 'latitude'); ?>
-            <?= Html::activeHiddenInput($model, 'longitude'); ?>
-            <?= Html::activeHiddenInput($model, 'googleplaceid'); ?>
-            <?= Html::activeHiddenInput($model, 'googleobj'); ?>
-        </fieldset>
+        <?= \frontend\widgets\Address\AddressWidget::widget(['model' => $model, 'form' => $form]); ?>
 
         <div class="border-top-block col col-lg-10">
             <?= Html::submitButton(\Yii::t('app', 'Save Settings'), ['class' => 'btn blue']); ?>

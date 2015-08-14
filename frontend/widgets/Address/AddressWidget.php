@@ -10,13 +10,26 @@ use yii\web\View;
 class AddressWidget extends \yii\base\Widget
 {
     public $name = 'address-widget';
-    public $formName;
+    /**
+     * @var \yii\base\Model
+     */
+    public $model;
+    public $form;
+
     public $options = [
         'placeholder' => 'Enter your address',
         'class' => 'form-control',
     ];
 
-    public $fieldsMapping = [];
+    public $fieldFormatMapping = [
+        'subpremise' => 'long_name',
+        'street_number' => 'short_name',
+        'route' => 'long_name',
+        'locality' => 'long_name',
+        'administrative_area_level_1' => 'short_name',
+        'country' => 'long_name',
+        'postal_code' => 'short_name'
+    ];
 
     /**
      * @inheritdoc
@@ -27,12 +40,12 @@ class AddressWidget extends \yii\base\Widget
 
         $this->view->registerJs('var AddressWidget = ' .json_encode([
             'id' => $this->id,
-            'fieldsMapping' => $this->fieldsMapping,
-            'formName' => $this->formName
+            'fieldFormatMapping' => $this->fieldFormatMapping,
+            'formName' => strtolower($this->model->formName()),
         ]), View::POS_HEAD);
 
         AddressAsset::register($this->view);
 
-        return $this->render('index', array('name' => $this->name, 'options' => $this->options));
+        return $this->render('index', array('name' => $this->name, 'options' => $this->options, 'model' => $this->model, 'form' => $this->form));
     }
 }
