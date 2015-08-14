@@ -505,7 +505,7 @@ class Shift extends BaseModel
         $searchModel = new ShiftSearch();
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
-       $searchModel->startsAfterNow = true;
+        $searchModel->startsAfterNow = true;
         $searchModel->driverId = $driverId;
         $searchModel->appliedByDriver = false;
         $searchModel->declinedByStoreOwner = false;

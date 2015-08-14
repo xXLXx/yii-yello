@@ -155,7 +155,8 @@ class ShiftSearch extends Shift
             // $query->where('0=1');
             // return $dataProvider;
         }
-
+        
+        // omit failed applications
         if (isset($this->declinedByStoreOwner) && !is_null($this->declinedByStoreOwner)) {
             $shiftIds = ShiftHasDriver::find()
                 ->andWhere([
@@ -199,6 +200,9 @@ class ShiftSearch extends Shift
             }
         }
 
+
+
+
         if (isset($this->startsAfterNow)) {
            $date = new \DateTime();
              $startDate = $date->format('Y-m-d H:i:s');
@@ -206,8 +210,9 @@ class ShiftSearch extends Shift
                 '>','start',$startDate
             ]);
        }
-
-        
+       
+       
+       
         if ($this->shiftStateId) {
             $query->andWhere([
                 'shiftStateId' => $this->shiftStateId,
