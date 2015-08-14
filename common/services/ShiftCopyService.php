@@ -2,6 +2,7 @@
 
 namespace common\services;
 
+use common\models\DriverHasStore;
 use common\models\Shift;
 use common\models\ShiftCopyLog;
 use common\models\ShiftHasDriver;
@@ -38,6 +39,12 @@ class ShiftCopyService extends BaseService
             ->andWhere(['hash' => $hash])
                 ->column();
 
+        $myDriverIds = DriverHasStore::find()
+            ->select('driverId')
+            ->accepted()
+            ->andWhere(['storeId' => $params['storeId']])
+            ->column();
+
         foreach ($shifts as $shift) {
             if (in_array($shift->id, $logShiftIds)) {
                 continue;
@@ -62,8 +69,8 @@ class ShiftCopyService extends BaseService
             $shiftCopy->end = $end->format('Y-m-d H:i:s');
             $shiftCopy->save();
 
-            // Assign to the same drivers
-            if ($params['assign'] && $shift->driverAccepted) {
+            // Assign to the same but my-drivers
+            if ($params['assign'] && $shift->driverAccepted && in_array($shift->driverAccepted->id, $myDriverIds)) {
                 $shiftHasDriver = new ShiftHasDriver([
                     'shiftId' => $shiftCopy->id,
                     'driverId' => $shift->driverAccepted->id

@@ -26,4 +26,14 @@ class DriverHasStoreQuery extends BaseQuery
     {
         return parent::one($db);
     }
+
+    /**
+     * Only those accepted by driver.
+     * 
+     * @return static
+     */
+    public function accepted()
+    {
+        return $this->andWhere(['isAcceptedByDriver' => '1']);
+    }
 }
