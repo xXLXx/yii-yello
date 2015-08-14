@@ -16,10 +16,21 @@
                 <div class="info-panel inline-block">
                     <span class="info-link" title="Info"></span>
                     <div class="info-popup">
-                        <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                        <a href="/drivers/profile?id=<?=$driver->id?>" class="info-item font-user">View Profile</a>
                         <div class="info-item font-letter-mail">Email</div>
                         <div class="info-item font-edit-write">Add Note</div>
-                        <div class="info-item font-star-two">Add to Favourites</div>
+                        <div class="info-item font-star-two j_add-favourite-driver
+                        <?php if ($driver->favouriteForCurrentStore() || $current_page == "my"): ?>
+                            hidden
+                        <?php endif; ?>">
+                            Add to Favourites
+                        </div>
+                        <div class="info-item font-star-two j_remove-favourite-driver
+                        <?php if (!$driver->favouriteForCurrentStore() || $current_page == "my"): ?>
+                            hidden
+                        <?php endif; ?>">
+                            Remove from Favourites
+                        </div>
                     </div>
                 </div>
                 <div class="gray-text">Yello ID: #<?= $driver->id; ?></div>
