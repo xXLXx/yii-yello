@@ -51,4 +51,23 @@ class ShiftWeeklyCopyController extends BaseController
             'result' => $result
         ];
     }
+
+    /**
+     * Cancels confirmation.
+     *
+     * @return array
+     */
+    public function actionCancelConfirm()
+    {
+        $request = \Yii::$app->getRequest();
+        $result = ShiftCopyService::cancel([
+            'storeId' => $request->post('storeId'),
+            'start'   => $request->post('start'),
+            'end'     => $request->post('end'),
+        ]);
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'result' => $result
+        ];
+    }
 }

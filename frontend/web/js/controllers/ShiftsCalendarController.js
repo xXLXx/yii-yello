@@ -161,6 +161,20 @@ var ShiftsCalendarController = {
             }
         });
 
+        $('.js_cancel_confirmation').on('click', function(e){
+            e.preventDefault();
+            var that = $(this);
+            if (confirm('Are you sure?')) {
+                $.post($(this).attr('href'), {
+                    storeId: self.data.storeId,
+                    start: self.current.beginDate.format('YYYY-MM-DD'),
+                    end: self.current.endDate.format('YYYY-MM-DD')
+                }, function(response){
+                    self.toggleCopyButtons(true);
+                })
+            }
+        });
+
         $(document).on('submit', '#js_frm-copy-weekly-sheet', function(e){
             e.preventDefault();
             var data = {
@@ -187,9 +201,11 @@ var ShiftsCalendarController = {
         if (confirm) {
             $('.js_copy_roster').removeClass('hidden');
             $('.js_confirm_roster').addClass('hidden');
+            $('.js_cancel_confirmation').addClass('hidden');
         } else {
             $('.js_copy_roster').addClass('hidden');
             $('.js_confirm_roster').removeClass('hidden');
+            $('.js_cancel_confirmation').removeClass('hidden');
         }
     },
 

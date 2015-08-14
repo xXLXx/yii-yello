@@ -29,7 +29,7 @@ class DriverHasStoreQuery extends BaseQuery
 
     /**
      * Only those accepted by driver.
-     * 
+     *
      * @return static
      */
     public function accepted()
