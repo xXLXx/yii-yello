@@ -5,6 +5,7 @@
 use yii\helpers\Url;
 use frontend\widgets\ShiftViewActiveDriver\ShiftViewActiveDriverWidget;
 // original submission
+// Shift recociliation
 $deliverycount = $shift->deliveryCount;
 $lastrequest = null;
 $deliveryamount = $shift->payment;

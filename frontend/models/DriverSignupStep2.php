@@ -104,7 +104,10 @@ class DriverSignupStep2 extends Model
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
             $userDriver->driverLicenseNumber = $this->licenseNumber;
 
-            $imageVehicle = Image::findOneOrCreate(['id' => $vehicle->imageId]);
+            $imageVehicle = Image::findOne(['id' => $vehicle->imageId]);
+            if($imageVehicle){
+                $imageVehicle=new Image();
+            }
             $imageVehicle->imageFile = UploadedFile::getInstance($this, 'vehiclePhotoFile');
             if ($imageVehicle->imageFile) {
                 if (!$imageVehicle->saveFiles()) {
@@ -112,6 +115,7 @@ class DriverSignupStep2 extends Model
                     $this->addError(key($error), current($error));
                     throw new \yii\db\Exception(current($error));
                 }
+                $imageVehicle->save();
                 $vehicle->imageId = $imageVehicle->id;
             }
 

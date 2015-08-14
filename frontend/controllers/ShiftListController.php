@@ -80,7 +80,7 @@ class ShiftListController extends BaseController
         $request = \Yii::$app->request;
 
         if ( $request->isAjax ) {
-
+            
             $response = \Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
             $response->data = [];
@@ -89,10 +89,52 @@ class ShiftListController extends BaseController
             $isApproved = (bool)$request->get('approved');
             $shift = Shift::findOne(['id' => $shiftId]);
             if ( $shift ) {
+                    $deliverycount = $shift->deliveryCount;
+                    $lastrequest = null;
+                    $deliveryamount = $shift->payment;
+                    $shiftRequestReviews = $shift->shiftRequestReview;
+                    $lastdriverrequest = $shift->LastDriverShiftRequestReview;
+                    $driverreview=null;
+                    $userreview = null;
+                    $latest='';
+                    $userId = Yii::$app->user->identity->id;
+                    $msg='';
+
+                if($shiftRequestReviews){
+                    // get the most recent 2 arguments
+                    foreach ($shiftRequestReviews as $review){
+                    if($review->userId==$userId){ // ascertain the argument
+                            $userreview=$review;
+                            $latest='user';
+                        }else{
+                            $driverreview=$review;
+                            $deliverycount=$review->deliveryCount;
+                            $latest='driver';
+                        }
+                    }
+                    if($lastdriverrequest){
+                        $deliverycount = $lastdriverrequest->deliveryCount;
+                    }
+
+                    // figure out the most recent argument
+                    if($latest=='user'){
+                        $msg = "You've requested review of $deliverycount to <span id='last-delivery-count'>$userreview->deliveryCount</span>.";
+                    }else{
+                        $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
+                    }
+                    $shift->deliveryCount=$deliverycount;
+
+            }
+
+                    $deliveryamount = $deliverycount*5;
+                    if($deliveryamount<60){
+                        $deliveryamount=60;
+                    }
+            
 
                 if ( $isApproved ) {
 
-                    $shift->setStateCompleted(1, 0);
+                    $shift->setStateCompleted($deliverycount, $deliveryamount);
                     $shift = Shift::findOne(['id' => $shiftId]);
 
                     $response->data['itemHtml'] = $this->renderPartialShifts([$shift]);

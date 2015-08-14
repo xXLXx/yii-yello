@@ -40,9 +40,7 @@
                 dateWidget.getShiftsForDate(date);
             },
             getShiftsForDate: function ( date ) {
-                alert('ba');
                 searchWidget.$input.val('');
-
                 $.ajax('/shift-list/list', {
                     data: { date: date },
                     dataType: 'json',

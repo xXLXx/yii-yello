@@ -62,7 +62,7 @@
         <div class="table-cell-item">
             <?php if ( $shift->deliveryCount ): ?>
                 <h4>Completed deliveries</h4>
-                <h3><?= $shift->deliveryCount; ?></h3>
+                <h3 id="shiftdeliverycount"><?= $shift->deliveryCount; ?></h3>
             <?php endif; ?>
         </div>
         <div class="table-cell-item"></div>
