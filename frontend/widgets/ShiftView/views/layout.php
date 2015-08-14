@@ -17,10 +17,16 @@ ShiftViewAsset::register($this);
 ?>
 
     <?php if ($shift->isEditable()): ?>
-    <a class="btn blue small f-right top-right-button js-pjax"
-       href="<?= Url::to(['shifts-calendar/shift-edit', 'shiftId' => $shift->id]); ?>">
-        <span class="font-pencil"></span>
-    </a>
+        <div class="f-right top-right-button">
+            <a id="js-delete-shift" class="btn small"
+               href="<?= Url::to(['shifts-calendar/shift-delete', 'shiftId' => $shift->id]); ?>">
+                <span class="font-delete-garbage-streamline"></span>
+            </a>
+            <a class="btn blue small js-pjax"
+               href="<?= Url::to(['shifts-calendar/shift-edit', 'shiftId' => $shift->id]); ?>">
+                <span class="font-pencil"></span>
+            </a>
+        </div>
     <?php endif; ?>
     <h2 class="with-button">
         <?= \Yii::t('app', 'Shift'); ?>

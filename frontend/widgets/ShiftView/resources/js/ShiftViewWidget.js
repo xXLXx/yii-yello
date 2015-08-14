@@ -11,5 +11,15 @@ var ShiftViewWidget = {
             e.stopPropagation();
             return false;
         });
+
+        $('#js-delete-shift').on('click', function(e){
+            e.preventDefault();
+
+            if (confirm('Are you sure?')){
+                $.post($(this).attr('href'), function(response){
+                    window.location.href = '/shifts-calendar';
+                })
+            }
+        });
     }
 };

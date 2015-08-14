@@ -154,7 +154,10 @@ var TrackingMapController = {
                         context.mapDrivers[mapDriversCurrentIdx].marker = new google.maps.Marker({
                             position: position,
                             map: context.map,
-                            icon: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id
+                            icon: {
+                                url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id,
+                                scaledSize: new google.maps.Size(45, 50)
+                            }
                         });
                     }
 

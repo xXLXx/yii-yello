@@ -17,8 +17,8 @@ class TrackingController extends BaseController
      */
     public function actionIndex()
     {
-        $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
-        $currentStore = $storeOwner->getStoreCurrent();
+        $storeOwner = \Yii::$app->user->identity->storeOwner;
+        $currentStore = $storeOwner->storeCurrent;
         $store = [
             'id' => $currentStore->id,
             'position' => [$currentStore->address->latitude, $currentStore->address->longitude]
@@ -27,7 +27,7 @@ class TrackingController extends BaseController
         $drivers = User::find()
             ->joinWith(['driverHasStores'])
             ->andFilterWhere([
-                'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
+                'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
                 'DriverHasStore.isAcceptedByDriver' => 1
             ])
             ->all();
@@ -117,7 +117,7 @@ class TrackingController extends BaseController
         // Resize merged images to marker size
         $h = imagesy($marker);
         $w = imagesx($marker);
-        $newW = 45;
+        $newW = 90;
         $newH = (int) round(($h / $w) * $newW);
         // $marker = imagescale($marker, $newW, $newH);
         // Resample image to anitalias
