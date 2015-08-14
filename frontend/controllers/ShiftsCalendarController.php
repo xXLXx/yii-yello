@@ -64,6 +64,9 @@ class ShiftsCalendarController extends BaseController
         ]);
     }
 
+    
+    
+    
     /**
      * Shift edit
      */

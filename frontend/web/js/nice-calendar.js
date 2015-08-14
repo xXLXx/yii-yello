@@ -32,9 +32,11 @@ Calendar.prototype.refresh = function() {
 
 };
 
+// returns current shift id if there is one.
 function get_shift_id_url() {
     var data = window.location.href.match(/shiftId=([^&]+)/);
     if (data) {
+        console.log(data[1]);
         return data[1];
     }
     return 0;
@@ -107,6 +109,7 @@ Calendar.prototype.source = function(callback) {
     this.sourceCallbacksCall();
 };
 
+// populate the day?
 Calendar.prototype.sourceCallbacksCall = function() {
     var self = this;
     var endDate = this._data.beginDate.clone();
@@ -119,8 +122,9 @@ Calendar.prototype.sourceCallbacksCall = function() {
                     var event = new Calendar.Event(eventsRaw[i]);
                     self._events.push(event);
                 }
-                self.refresh();
-                self.render();
+                // temporarily omitted as suspected not necessary
+//                self.refresh();
+//                self.render();
             }
         );
     }
@@ -131,6 +135,7 @@ Calendar.prototype.getContainer = function() {
     return $(this._container);
 };
 
+// a single event
 Calendar.Event = function(data) {
     this.date = moment(data.date, 'YYYY-MM-DD');
     this.begin = data.begin;
@@ -146,6 +151,7 @@ Calendar.View = function() {
     
 };
 
+// cell render
 Calendar.prototype.render = function() {
     var compiled = _.template(
         '<table class="calendar-table">' +
@@ -214,6 +220,8 @@ Calendar.prototype.setDateInterval = function(interval) {
     this._data.interval = interval;
 }
 
+
+// navigate between weeks
 Calendar.prototype.next = function() {
     begindate=begindate+7;
     this._data.beginDate.add(7, 'd');
@@ -230,13 +238,6 @@ Calendar.prototype.prev = function() {
     this.render();
 };
 
-Calendar.prototype.again = function(){
-    this.sourceCallbacksCall();
-    this.refresh();
-    this.render();
-}
-
-
 Calendar.prototype.today = function(){
     this._data.beginDate.subtract(begindate, 'd');
     begindate=0;
@@ -245,7 +246,16 @@ Calendar.prototype.today = function(){
     this.render();
 }
 
+
+Calendar.prototype.again = function(){
+    this.sourceCallbacksCall();
+    this.refresh();
+    this.render();
+}
+
+
 Calendar.prototype.onEventClick = function(callback) {
+    console.log(new Date);
     this._clickCallbacks.push = callback;
 };
 
@@ -254,9 +264,9 @@ Calendar.prototype.eventClickInit = function() {
     $('.js-event', this.getContainer()).on('click', function() {
         // remove active cell
         $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
-        $(this).find('.calendar-table-item').addClass('active');
+        $(this).find('.calendar-table-item').addClass('active'); // set active
         var eventId = $(this).data('event-id');
-        currentselected=eventId;
+        currentselected=eventId; // update the currently selected event
         var event = self.getEventById(eventId);
         for (var i in self._clickCallbacks) {
             self._clickCallbacks[i].call(self, event);
