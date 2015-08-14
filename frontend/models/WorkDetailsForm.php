@@ -48,5 +48,8 @@ class WorkDetailsForm extends Model
         $company->registeredForGST=$this->registeredForGst;
         $company->companyName=$this->companyName;
         $company->save();
+        $user->signup_step_completed = 3;
+        $user->save();
+
     }
 }
