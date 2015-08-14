@@ -2,11 +2,14 @@
 
 namespace frontend\controllers;
 
+use common\models\Role;
 use common\models\ShiftCopyLog;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 use common\models\Shift;
 use common\services\ShiftCalendarService;
+use yii\web\Response;
 
 /**
  * Shifts calendar controller
@@ -15,6 +18,24 @@ use common\services\ShiftCalendarService;
  */
 class ShiftsCalendarController extends BaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['shiftAdd', 'shiftEdit', 'shiftDelete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => [Role::ROLE_STORE_OWNER]
+                    ],
+                ],
+            ],
+        ]);
+    }
     /**
      * Index page
      */
@@ -55,6 +76,26 @@ class ShiftsCalendarController extends BaseController
             'shiftId'   => $shiftId,
             'store'     => $storeOwner->storeCurrent
         ]);
+    }
+
+    /**
+     * Shift delete
+     *
+     * @param int $shiftId
+     *
+     * @return \yii\web\Response
+     */
+    public function actionShiftDelete($shiftId)
+    {
+        $shift = Shift::findOne($shiftId);
+        if ($shift) {
+            $shift->delete();
+        }
+
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'status' => 'ok'
+        ];
     }
 
     /**
