@@ -38,7 +38,7 @@ class UserAddForm extends AbstractForm
     {
         return [
             [['firstName', 'lastName'], 'filter', 'filter' => 'trim'],
-            [['email', 'password'], 'required',
+            [['email'], 'required',
                 'message' => \Yii::t('app', 'Please enter your email address.')
             ],
             ['firstName', 'required',
@@ -47,6 +47,7 @@ class UserAddForm extends AbstractForm
             ['lastName', 'required',
                 'message' => \Yii::t('app', 'Please enter your Last Name.')
             ],
+            ['password', 'required'],
             ['password', 'string', 'min' => 6],
             [['id', 'roleId'], 'integer'],
             [['isAdmin'], 'boolean'],
