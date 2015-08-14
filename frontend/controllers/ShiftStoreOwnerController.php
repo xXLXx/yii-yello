@@ -36,16 +36,17 @@ class ShiftStoreOwnerController extends BaseController
             if($isFavourite){
                 // according to spec, when allocating a shift to a favourite driver, the driver becomes a mydriver
                 // add to DriverHasStore
-                $dhs = new \common\models\DriverHasStore();
-                $dhs ->driverId = $driverId;
-                $dhs ->storeId = $shift->storeId;
-                $dhs ->isAcceptedByDriver=1;
-                $dhs ->isInvitedByStoreOwner=1;
-                $dhs->save();
-            
-                // now that the driver is a favourite, remove from store
-                $isFavourite->isArchived=1;
-                $isFavourite->save();
+                // omitted for the time being
+//                $dhs = new \common\models\DriverHasStore();
+//                $dhs ->driverId = $driverId;
+//                $dhs ->storeId = $shift->storeId;
+//                $dhs ->isAcceptedByDriver=1;
+//                $dhs ->isInvitedByStoreOwner=1;
+//                $dhs->save();
+//            
+//                // now that the driver is a favourite, remove from store
+//                $isFavourite->isArchived=1;
+//                $isFavourite->save();
             }
             $shift->setStateYelloAllocated($driverId);
         }
