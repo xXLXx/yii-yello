@@ -79,6 +79,7 @@ class DriverController extends \api\common\controllers\DriverController
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', 'Vehicle model didnt validate' . PHP_EOL, FILE_APPEND);
             }
         }
+
         return $model;
 //        return $model->getErrors() ? $model->getErrors() : $model;
     }

@@ -72,8 +72,8 @@ class VehicleForm extends Model
             if ($image->imageFile) {
                 $image->saveFiles();
                 $image->save();
-            }
                 $vehicle->imageId = $image->id;
+            }
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
 //        }
             $userDriver->driverLicenseNumber = $this->licenseNumber;
@@ -83,9 +83,9 @@ class VehicleForm extends Model
             if ($image->imageFile) {
                 $image->saveFiles();
                 $image->save();
-            }
                 $vehicle->licensePhotoId = $image->id;
                 $userDriver->driverLicensePhoto = $image->id;
+            }
 //                file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
         
         $vehicle->save();
