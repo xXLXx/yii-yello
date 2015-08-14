@@ -7,7 +7,7 @@ StoreInviteDriverSelectedAsset::register($this);
 ?>
 <div class="driver-info clearfix">
     <div class="user-photo-container f-left">
-        <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/driver_head.svg' ?>"
+        <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>"
              alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
     </div>
     <div class="user-photo-info">

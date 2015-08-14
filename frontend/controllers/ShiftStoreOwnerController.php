@@ -28,7 +28,12 @@ class ShiftStoreOwnerController extends BaseController
         if (!$shift) {
             throw new NotFoundHttpException('Shift not found');
         }
-        $shift->setStateYelloAllocated($driverId);
+        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1]]);
+        if($isMine){
+            $shift->setStateAllocated($driverId);
+        }else{
+            $shift->setStateYelloAllocated($driverId);
+        }
     }
     
     /**

@@ -32,7 +32,7 @@ $this->title = \Yii::t('app', 'Manage Users');
                 <?php foreach ($group['users'] as $user): ?>
                     <div class="users-list-item">
                         <div class="user-photo-container">
-                            <img src="<?= $user->image? $user->image->thumbUrl : '/img/driver_head.svg' ?>" alt="<?= $user->firstName ?>" />
+                            <img src="<?= $user->image? $user->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>" alt="<?= $user->firstName ?>" />
                         </div>
                         <?php if ($user->role->name == Role::ROLE_FRANCHISER_MANAGER_EXTENDED): ?>
                             <div class="user-role"><span><?= \Yii::t('app', 'Admin') ?></span></div>

@@ -7,7 +7,7 @@
 <div class="border-top-item">
     <div class="user-shifts">
         <div class="user-photo-container">
-            <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/driver_head.svg' ?>"
+            <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>"
                  alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
         </div>
         <div class="user-photo-info">

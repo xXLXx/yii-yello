@@ -24,7 +24,7 @@ use yii\helpers\Url;
                 
                     <div class="users-list-item">
                         <div class="user-photo-container">
-                            <img src="<?= $owner->image? $owner->image->thumbUrl : '/img/driver_head.svg' ?>" alt="<?= $owner->firstName ?>" />
+                            <img src="<?= $owner->image? $owner->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>" alt="<?= $owner->firstName ?>" />
                         </div>
                             <div class="user-role"><span><?= \Yii::t('app', 'Owner') ?></span></div>
                         <div class="user-title"><?= $owner->username ?></div>
@@ -36,7 +36,7 @@ use yii\helpers\Url;
                 <?php foreach ($group['users'] as $user): ?>
                     <div class="users-list-item">
                         <div class="user-photo-container">
-                            <img src="<?= $user->image? $user->image->thumbUrl : '/img/driver_head.svg' ?>" alt="<?= $user->firstName ?>" />
+                            <img src="<?= $user->image? $user->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>" alt="<?= $user->firstName ?>" />
                         </div>
                         <?php if ($user->role->name == 'yelloAdmin'): ?>
                             <div class="user-role"><span><?= \Yii::t('app', 'Admin') ?></span></div>
