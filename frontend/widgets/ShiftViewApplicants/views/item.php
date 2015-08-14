@@ -8,7 +8,7 @@ use yii\helpers\Url;
     <?= $this->render('//blocks//driverInfoPanelBlock', ['driver' => $driver]); ?>
     <div class="user-panel-button">
         <span class="font-star-two
-        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+        <?php if (!$driver->favouriteForCurrentStore()): ?>
             hidden
         <?php endif; ?>
             "></span>

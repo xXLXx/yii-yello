@@ -54,9 +54,9 @@ class DriversController extends BaseController
     {
         $post = \Yii::$app->request->post();
         $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
-        $storeOwnerId = $storeOwner->id;
+
         $driver = Driver::findOne($post['driverId']);
-        if (!$driver || $driver->favouriteForStoreOwner($storeOwnerId)) {
+        if (!$driver || $driver->favouriteForCurrentStore()) {
             return Json::encode([
                 'success' => false
             ]);
@@ -150,9 +150,8 @@ class DriversController extends BaseController
     {
         $post = \Yii::$app->request->post();
         $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
-        $storeOwnerId = $storeOwner->id;
         $driver = Driver::findOne($post['driverId']);
-        if (!$driver || !$driver->favouriteForStoreOwner($storeOwnerId)) {
+        if (!$driver || !$driver->favouriteForCurrentStore()) {
             return Json::encode([
                 'success' => false
             ]);

@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use common\models\StoreOwner;
 use common\models\StoreOwnerFavouriteDrivers;
 use frontend\models\SignupInvitationsForm;
 use Yii;
@@ -46,13 +47,9 @@ class StoreInviteDriverController extends BaseController
                 $storeInviteDriverForm->save();
                 $driver_data = Driver::findOne($driver_id);
 
-                //Add driver to favourite
-                $user = \Yii::$app->user->identity;
-                $storeOwnerId = $user->storeOwner->id;
-                $fav = new StoreOwnerFavouriteDrivers();
-                $fav->driverId = $driver_id;
-                $fav->storeOwnerId = $storeOwnerId;
-                $fav->save();
+                //Add driver as favourite
+                $storeOwner = new StoreOwner();
+                $storeOwner->addFavouriteDriver($driver_id);
 
 
                 return $this->render('success', [

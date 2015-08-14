@@ -222,18 +222,18 @@ class Driver extends User
     }
 
     /**
-     * Is driver favourite for store owner
+     * Is driver favourite for store
      *
-     * @param integer $storeOwnerId Store Owner Id
+     * @param integer $storeId Store Id
      *
      * @return null|static
      */
-    public function favouriteForStoreOwner($storeOwnerId)
+    public function favouriteForStore($storeId)
     {
         $favouriteForStoreOwner = StoreOwnerFavouriteDrivers::findOne(
             [
                 'driverId' => $this->id,
-                'storeOwnerId' => $storeOwnerId
+                'storefk' => $storeId
             ]
         );
         return $favouriteForStoreOwner;
@@ -244,10 +244,10 @@ class Driver extends User
      *
      * @return Driver|null|static
      */
-    public function favouriteForCurrentStoreOwner()
+    public function favouriteForCurrentStore()
     {
-        $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
-        return $this->favouriteForStoreOwner($storeOwner->id);
+        $store = \Yii::$app->user->getIdentity()->storeOwner->storeCurrent;
+        return $this->favouriteForStore($store->id);
     }
 
     /**

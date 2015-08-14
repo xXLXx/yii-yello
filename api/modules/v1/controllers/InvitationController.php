@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\DriverHasStore;
 use api\modules\v1\models\search\DriverHasStoreSearch;
+use common\models\StoreOwnerFavouriteDrivers;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -44,6 +45,13 @@ class InvitationController extends \api\common\controllers\InvitationController
     public function actionAccept($id)
     {
         $model = $this->findModel($id);
+
+        //Remove driver from favourite as he is now accepted
+        $fav = StoreOwnerFavouriteDrivers::findOne(['driverId' => $model->driverId, 'storefk' => $model->storeId]);
+        if($fav){
+            $fav->delete();
+        }
+
         return $model->accept();
     }
 

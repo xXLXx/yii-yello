@@ -6,13 +6,13 @@
         <div class="info-item font-letter-mail">Email</div>
         <a href="driver-profile-store-owner-add-note.html" class="info-item font-edit-write">Add Note</a>
         <div class="info-item font-star-two j_add-favourite-driver
-        <?php if ($driver->favouriteForCurrentStoreOwner() || $current_page == "my"): ?>
+        <?php if ($driver->favouriteForCurrentStore() || $current_page == "my"): ?>
             hidden
         <?php endif; ?>">
             Add to Favourites
         </div>
         <div class="info-item font-star-two j_remove-favourite-driver
-        <?php if (!$driver->favouriteForCurrentStoreOwner() || $current_page == "my"): ?>
+        <?php if (!$driver->favouriteForCurrentStore() || $current_page == "my"): ?>
             hidden
         <?php endif; ?>">
             Remove from Favourites

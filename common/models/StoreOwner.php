@@ -129,9 +129,15 @@ class StoreOwner extends \common\models\BaseModel
      */
     public function addFavouriteDriver($driverId)
     {
-        $favouriteDriver = new StoreOwnerFavouriteDrivers;
-        $favouriteDriver->storeOwnerId = $this->id;
+
+        $storeId = \Yii::$app->user->getIdentity()->storeOwner->storeCurrent->id;
+
+        $favouriteDriver = StoreOwnerFavouriteDrivers::findOneOrCreate(
+            ['driverId' => $driverId, 'storefk' => $storeId, 'isArchived' => [0, 1]]
+        );
+        $favouriteDriver->storefk = $storeId;
         $favouriteDriver->driverId = $driverId;
+        $favouriteDriver->isArchived = 0;
         $favouriteDriver->save();
     }
 
@@ -142,9 +148,11 @@ class StoreOwner extends \common\models\BaseModel
      */
     public function removeFavouriteDriver($driverId)
     {
+        $storeId = \Yii::$app->user->getIdentity()->storeOwner->storeCurrent->id;
+
         $favouriteDriver = StoreOwnerFavouriteDrivers::findOne(
             [
-                'storeOwnerId' => $this->id,
+                'storefk' => $storeId,
                 'driverId' => $driverId
             ]
         );

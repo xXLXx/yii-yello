@@ -18,13 +18,13 @@ $driverId = $driver->id;
                     <div class="info-item font-link j_invite-driver <?php if($invited){ ?> hidden <?php } ?>" data-driverid="<?= $driverId; ?>">Invite to store</div>
 
                     <div class="info-item font-star-two j_add-favourite-driver
-                        <?php if ($driver->favouriteForCurrentStoreOwner()): ?>
+                        <?php if ($driver->favouriteForCurrentStore()): ?>
                          hidden
                         <?php endif; ?>" data-driverid="<?= $driverId; ?>">
                         Add to Favourites
                     </div>
                     <div class="info-item red-text font-star-two j_remove-favourite-driver
-                        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+                        <?php if (!$driver->favouriteForCurrentStore()): ?>
                             hidden
                         <?php endif; ?>" data-driverid="<?= $driverId; ?>">
                         Remove from Favourites

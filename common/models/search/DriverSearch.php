@@ -126,7 +126,7 @@ class DriverSearch extends Driver
             $query->joinWith('storeOwnerFavouriteDrivers');
             $query->andFilterWhere(
                 [
-                    'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id
+                    'StoreOwnerFavouriteDrivers.storefk' => $storeOwner->getStoreCurrent()->id
                 ]
             );
         }
@@ -140,12 +140,12 @@ class DriverSearch extends Driver
             
             $query->andFilterWhere(['or',
                 [
-                    'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
+                    'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
                     'DriverHasStore.isAcceptedByDriver' => 1,
                     'DriverHasStore.isArchived' => 0
                 ],
                 [
-                    'StoreOwnerFavouriteDrivers.storeOwnerId' => $storeOwner->id,
+                    'StoreOwnerFavouriteDrivers.storefk' => $storeOwner->storeCurrent->id,
                     'DriverHasStore.isArchived' => 0
                 ]]
             );            
@@ -156,7 +156,7 @@ class DriverSearch extends Driver
             $query->joinWith('driverHasStore');
             $query->andFilterWhere(
                 [
-                    'DriverHasStore.storeId' => $storeOwner->getStoreCurrent()->id,
+                    'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
                     'DriverHasStore.isAcceptedByDriver' => 1
                 ]
             );

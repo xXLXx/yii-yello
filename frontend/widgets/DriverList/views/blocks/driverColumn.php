@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <div class="user-panel-button">
 
         <span class="font-star-two j_favourite-star
-        <?php if (!$driver->favouriteForCurrentStoreOwner()): ?>
+        <?php if (!$driver->favouriteForCurrentStore()): ?>
             hidden
         <?php endif; ?>
             "></span>
