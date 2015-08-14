@@ -21,7 +21,7 @@ class ShiftsCalendarController extends BaseController
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->storeOwner;
+        $storeOwner = $user->myStoreOwner;
         return $this->render('index', [
             'mode'      => null,
             'shiftId'   => 0,
@@ -35,7 +35,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftAdd()
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->storeOwner;
+        $storeOwner = $user->myStoreOwner;
         return $this->render('index', [
             'mode'      => 'shiftForm',
             'shiftId'   => 0,
@@ -49,7 +49,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftEdit($shiftId)
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->storeOwner;
+        $storeOwner = $user->myStoreOwner;
         return $this->render('index', [
             'mode'      => 'shiftForm',
             'shiftId'   => $shiftId,
@@ -63,7 +63,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftView($shiftId)
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->storeOwner;
+        $storeOwner = $user->myStoreOwner;
         return $this->render('index', [
             'mode'      => 'shiftView',
             'shiftId'   => $shiftId,

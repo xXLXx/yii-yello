@@ -119,4 +119,38 @@ class ShiftCopyService extends BaseService
 
         return $confirmedDrivers;
     }
+
+    /**
+     * Cancels temporary driver assignment to copied roster.
+     * 1. Retrieve corresponding shifts and copylogs.
+     * 2. Drop all shifthasdriver.
+     * 3. Mark ShiftCopyLog.confirmedAt with current timestamp
+     * as confirmed cancelled.
+     *
+     * @param array $params
+     *
+     * @return int number of dropped drivers
+     */
+    public static function cancel($params)
+    {
+        $shifts = Shift::find()
+            ->andWhere(['>=', 'start', $params['start']])
+            ->andWhere(['<', 'end', $params['end']])
+            ->andWhere(['storeId' => $params['storeId']])
+            ->joinWith('shiftCopyLog', true, 'RIGHT JOIN') // so we dont waste getting other records
+            ->all();
+
+        $droppedDrivers = 0;
+        foreach ($shifts as $shift) {
+            $shift->shiftCopyLog->confirmedAt = time();
+            $shift->shiftCopyLog->save(false);
+
+            foreach ($shift->shiftHasDrivers as $shiftDriver) {
+                $shiftDriver->delete();
+                $droppedDrivers++;
+            }
+        }
+
+        return $droppedDrivers;
+    }
 }

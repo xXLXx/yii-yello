@@ -29,6 +29,7 @@ use common\models\query\UserQuery;
  * @property User $parentUser parent user
  *
  * @property StoreOwner $storeOwner store Owner
+ * @property StoreOwner $parentStoreOwner
  * @property Company $company company
  * @property Franchiser $franchiser franchiser
  * @property MenuAggregator $menuAggregator Menu aggregator
@@ -398,11 +399,32 @@ class User extends BaseModel implements IdentityInterface
     /**
      * Get storeOwner
      *
-     * @return \yii\db\ActiveRecord
+     * @return \yii\db\ActiveQuery
      */
     public function getStoreOwner()
     {
         return $this->hasOne(StoreOwner::className(), ['userId' => 'id']);
+    }
+
+    /**
+     * Get the parent user storeOwner
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParentStoreOwner()
+    {
+        return $this->hasOne(StoreOwner::className(), ['userId' => 'parentId']);
+    }
+
+    /**
+     * Get the storeowner record of this user.
+     * Or parent if not available.
+     *
+     * @return \common\models\StoreOwner
+     */
+    public function getMyStoreOwner()
+    {
+        return $this->storeOwner ?: $this->parentStoreOwner;
     }
 
     /**
