@@ -83,7 +83,7 @@ use yii\helpers\Html;
     </table>
     <div class="profile-user-photo">
         <div class="user-photo-container">
-            <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png'?>" alt="John" />
+            <img class="j_image-file-destination" src="<?= $model->image ? $model->image->thumbUrl : '/img/shop_white_front.png'?>" alt="<?=$model->firstName?>" />
         </div>
         <div class="upload-file">
             <div class="icon-link font-picture-streamline blue-text">Upload new photo</div>

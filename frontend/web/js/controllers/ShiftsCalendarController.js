@@ -10,6 +10,7 @@ var calendarInterval;
 var begindate=0;
 var currentselected=0;
 var pjaxTimeout = 0;
+var stringify=false;
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -93,17 +94,24 @@ var ShiftsCalendarController = {
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
-            if(begindate==null){
+            if(begindate==null||begindate==0){
                 begindate=beginDate;
             }
-            $.ajax({
-                type: "POST",
-                url: self.data.sourceUrl,
-                data: {
+            console.log("Begin date: "+begindate);
+            console.log("selfcurrent: "+beginDate);
+            var datum = {
                     start: beginDate.format('YYYY-MM-DD'),
                     end: endDate.format('YYYY-MM-DD'),
                     storeId: self.data.storeId,
                     shiftid: currentselected
+                };
+            $.ajax({
+                type: "POST",
+                url: self.data.sourceUrl,
+                data: datum,
+                //contentType:'application/json; charset=utf-8',
+                error: function(result){
+                    console.log(result.responseText);
                 },
                 success: function(result) {
                     self.renderStateCounts(result.events);
@@ -126,6 +134,7 @@ var ShiftsCalendarController = {
         });
 
         $('#shift-add-bth').on('click touchend', function() {
+            alert($(this).attr('href'));
             $.pjax({
                 url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax',
@@ -258,5 +267,5 @@ var ShiftsCalendarController = {
 };
 
 window.onload=function(){
-        setTimeout(function(){            calendarInterval = setInterval(popCal,2000);});
+        setTimeout(function(){            calendarInterval = setInterval(popCal,5000);});
 }

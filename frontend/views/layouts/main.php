@@ -14,6 +14,7 @@ AppAsset::register($this);
 <!--[if IE 8]><html class="ie8"><![endif]-->
 <!--[if gt IE 9]><!--><html><!--<![endif]-->
 <head>
+    <?= Html::csrfMetaTags() ?>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
