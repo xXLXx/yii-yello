@@ -117,7 +117,7 @@ class TrackingController extends BaseController
         // Resize merged images to marker size
         $h = imagesy($marker);
         $w = imagesx($marker);
-        $newW = 90;
+        $newW = 135;
         $newH = (int) round(($h / $w) * $newW);
         // $marker = imagescale($marker, $newW, $newH);
         // Resample image to anitalias

@@ -56,7 +56,8 @@ var TrackingMapController = {
                 icon: {
                     url: document.location.protocol + '//' + document.location.hostname + '/img/marker-store.png',
                     scaledSize: new google.maps.Size(40, 40)
-                }
+                },
+                optimized: false
             });
         });
 
@@ -157,7 +158,8 @@ var TrackingMapController = {
                             icon: {
                                 url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id,
                                 scaledSize: new google.maps.Size(45, 50)
-                            }
+                            },
+                            optimized: false
                         });
                     }
 
