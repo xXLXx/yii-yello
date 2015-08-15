@@ -57,6 +57,7 @@ $this->registerJs('ImageUploadPreview.init({
                                 </div>
                             </div>
                             <div class="col col-md-6">
+                                <?= Html::activeHiddenInput($model, 'driverId'); ?>
                                 <?php echo $form->field($model, 'vehicleTypeId')->radioList(['1' => 'Car', '2' => 'Bike'],['class' => 'form-inline form-group'])->label(false); ?>
                                <?php echo $form->field($model, 'make') ?>
                                 <?php echo $form->field($model, 'model') ?>
@@ -116,6 +117,7 @@ $this->registerJs('ImageUploadPreview.init({
                                         </div>
                                         <div class="company-info">
                                             <h5>Photo</h5>
+                                            <?= Html::error($model, 'licensePhotoFile', ['class' => 'error-message']); ?>
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
                                                 <div class="link-icon font-picture-streamline blue-text">Upload Photo</div>

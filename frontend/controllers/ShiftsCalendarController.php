@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ArrayHelper;
 use common\models\Role;
-use common\models\ShiftCopyLog;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
@@ -23,12 +23,12 @@ class ShiftsCalendarController extends BaseController
      */
     public function behaviors()
     {
-        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['shiftAdd', 'shiftEdit', 'shiftDelete'],
                 'rules' => [
                     [
+                        'actions' => ['shiftAdd', 'shiftEdit', 'shiftDelete'],
                         'allow' => true,
                         'roles' => [Role::ROLE_STORE_OWNER]
                     ],

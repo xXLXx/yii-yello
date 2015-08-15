@@ -25,6 +25,7 @@ class DriverSignupStep2 extends Model
     public $model;
     public $year;
     public $imageId;
+    public $driverId;
     
     public $licenseNumber;
     public $licensePhotoId;
@@ -47,7 +48,11 @@ class DriverSignupStep2 extends Model
             ['year', 'integer', 'min' => 2000],
             [
                 'vehicleTypeId', 'required', 'message' => \Yii::t('app', 'Please select Vehicle Type.')
-            ]
+            ],
+            [['vehiclePhotoFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, gif'],
+            [['licensePhotoFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, gif',
+                'uploadRequired' => \Yii::t('app', 'Please upload a photo of your license.')],
+            ['vehiclePhotoFile', 'safe'],
         ];
     }
 
@@ -72,6 +77,8 @@ class DriverSignupStep2 extends Model
         if ($user->vehicle) {
             $this->setAttributes($user->vehicle->getAttributes());
         }
+
+        $this->driverId = $user->id;
     }
 
     /**
@@ -104,24 +111,20 @@ class DriverSignupStep2 extends Model
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
             $userDriver->driverLicenseNumber = $this->licenseNumber;
 
-            $imageVehicle = Image::findOne(['id' => $vehicle->imageId]);
-            if($imageVehicle){
-                $imageVehicle=new Image();
-            }
-            $imageVehicle->imageFile = UploadedFile::getInstance($this, 'vehiclePhotoFile');
-            if ($imageVehicle->imageFile) {
+            if ($this->vehiclePhotoFile) {
+                $imageVehicle = Image::findOneOrCreate(['id' => $vehicle->imageId]);
+                $imageVehicle->imageFile = $this->vehiclePhotoFile;
                 if (!$imageVehicle->saveFiles()) {
                     $error = $imageVehicle->getFirstError();
                     $this->addError(key($error), current($error));
                     throw new \yii\db\Exception(current($error));
                 }
-                $imageVehicle->save();
                 $vehicle->imageId = $imageVehicle->id;
             }
 
-            $imageLicense = Image::findOneOrCreate(['id' => $vehicle->licensePhotoId]);
-            $imageLicense->imageFile = UploadedFile::getInstance($this, 'licensePhotoFile');
-            if ($imageLicense->imageFile) {
+            if ($this->licensePhotoFile) {
+                $imageLicense = Image::findOneOrCreate(['id' => $vehicle->licensePhotoId]);
+                $imageLicense->imageFile = $this->licensePhotoFile;
                 if (!$imageLicense->saveFiles()) {
                     $error = $imageLicense->getFirstError();
                     $this->addError(key($error), current($error));

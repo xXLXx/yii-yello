@@ -94,8 +94,13 @@ class DriverSignupController extends BaseController
         $model = new \frontend\models\DriverSignupStep2();
         $model->setData($user);
 
-        if ($model->load($post) && $model->save($user)) {
-            return $this->redirect(['work-info']);
+        if (\Yii::$app->getRequest()->getIsPost()) {
+            $model->load($post);
+            $model->licensePhotoFile = UploadedFile::getInstance($model, 'licensePhotoFile');
+            $model->vehiclePhotoFile = UploadedFile::getInstance($model, 'vehiclePhotoFile');
+            if ($model->save($user)) {
+                return $this->redirect(['work-info']);
+            }
         }
 
         return $this->render('step2_vehicleinfo', compact('model'));
