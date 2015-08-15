@@ -49,6 +49,7 @@ class LoginForm extends \common\models\LoginForm
             $user = $this->getUser();
                 if($user->roleId!=3){
                   \Yii::$app->user->logout();
+                    throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
                     return false;
                 }
             if (empty($user->accessToken)) {
