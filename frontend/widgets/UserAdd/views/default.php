@@ -140,7 +140,7 @@ UserAddAsset::register($this);
 
 
 <div class="border-top-block">
-        <?= Html::resetButton(\Yii::t('app', 'Cancel'), ['class' => 'btn']); ?>
+        <a href="<?= \yii\helpers\Url::to(['settings/users']); ?>" class="btn">Cancel</a>
         <?= Html::submitButton(\Yii::t('app', 'Add user'), ['class' => 'btn blue']); ?>
     </div>
 <?php ActiveForm::end(); ?>
