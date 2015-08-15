@@ -47,7 +47,7 @@ class LoginForm extends \common\models\LoginForm
     {
         if ($this->validate()) {
             $user = $this->getUser();
-                if($user->roleId==3){
+                if($user->roleId!=3){
                   \Yii::$app->user->logout();
                     return false;
                 }
