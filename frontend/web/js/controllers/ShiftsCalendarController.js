@@ -134,7 +134,6 @@ var ShiftsCalendarController = {
         });
 
         $('#shift-add-bth').on('click touchend', function() {
-            alert($(this).attr('href'));
             $.pjax({
                 url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax',
