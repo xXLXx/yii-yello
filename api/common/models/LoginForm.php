@@ -49,7 +49,7 @@ class LoginForm extends \common\models\LoginForm
             $user = $this->getUser();
                 if($user->roleId==3){
                   \Yii::$app->user->logout();
-                    return null;
+                    return false;
                 }
             if (empty($user->accessToken)) {
                 $user->generateAccessToken();
