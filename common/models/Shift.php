@@ -609,6 +609,15 @@ class Shift extends BaseModel
         return !in_array($this->shiftStateId, $shiftStateIds);
     }
 
+    /**
+     * Check if we can delete this shift.
+     * Should be when `start` is future and `actualSart` is null.
+     */
+    public function getIsDeletable()
+    {
+        return (strtotime($this->start) > time() && empty($this->actualStart));
+    }
+
     public function init()
     {
         $this->on(static::EVENT_BEFORE_UPDATE, [$this, 'processShiftState']);

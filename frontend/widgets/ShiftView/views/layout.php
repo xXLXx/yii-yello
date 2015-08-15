@@ -18,10 +18,12 @@ ShiftViewAsset::register($this);
 
     <?php if ($shift->isEditable()): ?>
         <div class="f-right top-right-button">
+            <?php if (\Yii::$app->user->can('CancelShift') && $shift->isDeletable) : ?>
             <a id="js-delete-shift" class="btn small"
                href="<?= Url::to(['shifts-calendar/shift-delete', 'shiftId' => $shift->id]); ?>">
                 <span class="font-delete-garbage-streamline"></span>
             </a>
+            <?php endif; ?>
             <a class="btn blue small js-pjax"
                href="<?= Url::to(['shifts-calendar/shift-edit', 'shiftId' => $shift->id]); ?>">
                 <span class="font-pencil"></span>

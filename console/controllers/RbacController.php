@@ -229,9 +229,9 @@ class RbacController extends Controller
         $auth->addChild($manager, $employee);
         $auth->addChild($storeOwner, $manager);
 
-        // What those managers and owners have, the yellowadmin will have it, and so the superadmin
+        // What those owners have, the yellowadmin will have it, and so the superadmin
         $auth->addChild($yelloAdmin, $storeOwner);
-        $auth->addChild($yelloAdmin, $franchiseManager);
+        $auth->addChild($yelloAdmin, $franchiser);
         $auth->addChild($superadmin, $yelloAdmin);
 
         /*** Assignments ***/
