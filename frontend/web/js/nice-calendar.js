@@ -123,8 +123,8 @@ Calendar.prototype.sourceCallbacksCall = function() {
                     self._events.push(event);
                 }
                 // temporarily omitted as suspected not necessary
-//                self.refresh();
-//                self.render();
+                self.refresh();
+                self.render();
             }
         );
     }
