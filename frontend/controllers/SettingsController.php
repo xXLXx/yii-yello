@@ -19,7 +19,7 @@ class SettingsController extends BaseController
      */
     public function behaviors()
     {
-        return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['index', 'users', 'invoices', 'bank', 'schedules', 'yello'],
