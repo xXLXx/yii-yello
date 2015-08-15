@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Driver Signup / Yello';
+
+$this->registerJsFile('/js/ImageUploadPreview.js');
+$this->registerJs('ImageUploadPreview.init({hideDestination: true});');
 ?>
 
 
@@ -90,7 +93,9 @@ $this->title = 'Driver Signup / Yello';
 
                                 <div class="input-block">
                                     <div class="company-logo">
-                                        <div class="company-logo-container no-photo f-left"></div>
+                                        <div class="company-logo-container no-photo f-left">
+                                            <img class="j_image-file-destination" src="" />
+                                        </div>
                                         <div class="company-info">
                                             <h5>Photo</h5>
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
@@ -103,7 +108,9 @@ $this->title = 'Driver Signup / Yello';
                                                     'id'    => 'image'
                                                 ]);*/
                                                 ?>
-                                                <?= $form->field($model, 'imageFile')->fileInput() ?>
+                                                <?= $form->field($model, 'imageFile')->fileInput([
+                                                    'class' => 'j_image-file-input'
+                                                ]) ?>
                                             </div>
                                         </div>
                                     </div>

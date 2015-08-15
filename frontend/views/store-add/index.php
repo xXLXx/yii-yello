@@ -4,6 +4,9 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = $model->id ? \Yii::t('app', 'Edit Store') : \Yii::t('app', 'Add New Store');
+
+$this->registerJsFile('/js/ImageUploadPreview.js');
+$this->registerJs('ImageUploadPreview.init();');
 ?>
 
 <div class="sidebar-container">

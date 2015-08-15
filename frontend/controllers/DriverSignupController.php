@@ -13,6 +13,7 @@ use common\models\Company;
 use common\models\CompanyAddress;
 use common\models\Address;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 /**
  * Driver list controller

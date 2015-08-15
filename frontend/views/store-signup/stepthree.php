@@ -9,6 +9,9 @@ use yii\bootstrap\ActiveForm;
  */
 $this->title = \Yii::t('app', 'Step 3 - Store Owner Signup');
 
+$this->registerJsFile('/js/ImageUploadPreview.js');
+$this->registerJs('ImageUploadPreview.init();');
+
 ?>
 
 
