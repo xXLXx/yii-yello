@@ -42,7 +42,7 @@ class ShiftsCalendarController extends BaseController
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->myStoreOwner;
+        $storeOwner = $user->storeOwner;
         return $this->render('index', [
             'mode'      => null,
             'shiftId'   => 0,

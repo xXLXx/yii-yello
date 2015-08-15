@@ -29,6 +29,7 @@ use common\models\query\UserQuery;
  * @property User $parentUser parent user
  *
  * @property StoreOwner $storeOwner store Owner
+ * @property StoreOwner $myStoreOwner store Owner
  * @property StoreOwner $parentStoreOwner
  * @property Company $company company
  * @property Franchiser $franchiser franchiser
@@ -395,15 +396,15 @@ class User extends BaseModel implements IdentityInterface
     {
         \Yii::$app->session->set('currentStoreId', $storeId);
     }
-
     /**
-     * Get storeOwner
+     * Get the storeowner record of this user.
+     * Or parent if not available.
      *
-     * @return \yii\db\ActiveQuery
+     * @return \common\models\StoreOwner
      */
     public function getStoreOwner()
     {
-        return $this->hasOne(StoreOwner::className(), ['userId' => 'id']);
+        return $this->myStoreOwner ?: $this->parentStoreOwner;
     }
 
     /**
@@ -417,14 +418,13 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
-     * Get the storeowner record of this user.
-     * Or parent if not available.
+     * Get storeOwner
      *
-     * @return \common\models\StoreOwner
+     * @return \yii\db\ActiveQuery
      */
     public function getMyStoreOwner()
     {
-        return $this->storeOwner ?: $this->parentStoreOwner;
+        return $this->hasOne(StoreOwner::className(), ['userId' => 'id']);
     }
 
     /**
