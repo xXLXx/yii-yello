@@ -102,7 +102,6 @@ class ShiftCopyService extends BaseService
             ->andWhere(['<', 'end', $params['end']])
             ->andWhere(['storeId' => $params['storeId']])
             ->joinWith('shiftCopyLog', true, 'RIGHT JOIN') // so we dont waste getting other records
-            ->joinWith('shiftHasDrivers', true, 'RIGHT JOIN') // and with assigned driver
             ->all();
 
         $confirmedDrivers = 0;
@@ -111,8 +110,7 @@ class ShiftCopyService extends BaseService
             $shift->shiftCopyLog->save(false);
 
             foreach ($shift->shiftHasDrivers as $shiftDriver) {
-                $shiftDriver->acceptedByStoreOwner = 1;
-                $shiftDriver->save(false);
+                $shift->setStateAllocated($shiftDriver->driverId);
                 $confirmedDrivers++;
             }
         }
