@@ -4,6 +4,7 @@
  */
 
 namespace api\common\models;
+use yii\web\UnauthorizedHttpException;
 
 use \Yii;
 
