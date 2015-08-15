@@ -68,7 +68,7 @@ class SignupStoreFirstStore extends Model
         return [
             [
                 [
-                    'businessTypeId',
+                    'businessTypeId', 'website',
                     'businessHours', 'storeProfile', 'image', 'imageFile'
                 ],
                 'safe'
