@@ -32,10 +32,7 @@ class Auth extends AuthMethod implements AuthInterface
             $user = $userClass::findIdentityByAccessToken($token);
             if (!empty($user)) {
                 \Yii::$app->user->login($user);
-                if($user->role->id==3){
-                    \Yii::$app->user->logout();
-                    return null;
-                }
+
                 return $user;
             }
         }
