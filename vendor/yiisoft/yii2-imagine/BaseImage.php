@@ -172,7 +172,7 @@ class BaseImage
             $startY = ceil($height - $size->getHeight()) / 2;
         }
 
-        $thumb->paste($img, new Point($startX, $startY));
+        $thumb->paste($img, new Point(0, 0));
 
         return $thumb;
     }

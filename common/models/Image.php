@@ -96,6 +96,7 @@ class Image extends \common\models\BaseModel
         $thumbUrl = '/upload/images/' . $this->id . '-thumb.'.$ext;        
         $thumbOutput = $webPath . $thumbUrl;
         $this->imageFile->saveAs($originalOutput);
+        
         \yii\imagine\Image::thumbnail($originalOutput, 144, 144)->save($thumbOutput);
         $this->originalUrl = $originalUrl;
         $this->thumbUrl = $thumbUrl;

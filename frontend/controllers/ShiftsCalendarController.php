@@ -61,11 +61,11 @@ class ShiftsCalendarController extends BaseController
             'mode'      => 'shiftForm',
             'shiftId'   => 0,
             'store'   => $storeOwner->storeCurrent
+            
         ]);
     }
 
-    
-    
+
     
     /**
      * Shift edit
