@@ -31,6 +31,7 @@ var ShiftsCalendarController = {
      * Init
      */
     init: function(data) {
+        console.log(data);
         var shid = getParameterByName('shiftId');
         if(shid!==null){
             currentselected = shid;
@@ -94,9 +95,9 @@ var ShiftsCalendarController = {
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
-            if(begindate==null){
-                begindate=beginDate;
-            }
+//            if(begindate==null){
+//                begindate=beginDate;
+//            }
             console.log("Begin date: "+begindate);
             console.log("selfcurrent: "+beginDate);
             var datum = {
