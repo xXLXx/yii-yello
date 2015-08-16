@@ -94,7 +94,7 @@ var ShiftsCalendarController = {
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
-            if(begindate==null||begindate==0){
+            if(begindate==null){
                 begindate=beginDate;
             }
             console.log("Begin date: "+begindate);
