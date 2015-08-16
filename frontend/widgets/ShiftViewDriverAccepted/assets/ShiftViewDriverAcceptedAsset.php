@@ -14,6 +14,6 @@ class ShiftViewDriverAcceptedAsset extends AssetBundle
         'js/ShiftViewDriverAcceptedWidget.js'
     ];
     public $depends = [
-
+        
     ];
 }

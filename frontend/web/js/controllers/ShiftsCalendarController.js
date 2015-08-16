@@ -95,17 +95,21 @@ var ShiftsCalendarController = {
         calendar.source(function(beginDate, endDate, provide) {
             self.current.beginDate = beginDate;
             self.current.endDate = endDate;
-//            if(begindate==null){
-//                begindate=beginDate;
-//            }
-            console.log("Begin date: "+begindate);
-            console.log("selfcurrent: "+beginDate);
+            if(begindate==null){
+                begindate=moment();
+            }
             var datum = {
                     start: beginDate.format('YYYY-MM-DD'),
                     end: endDate.format('YYYY-MM-DD'),
                     storeId: self.data.storeId,
                     shiftid: currentselected
                 };
+                
+            console.log("#################################\n");
+            console.log("url : "+self.data.sourceUrl);
+            console.log("datum");
+            console.log(datum);
+            console.log("=================================\n");
             $.ajax({
                 type: "POST",
                 url: self.data.sourceUrl,
@@ -113,6 +117,7 @@ var ShiftsCalendarController = {
                 //contentType:'application/json; charset=utf-8',
                 error: function(result){
                     console.log(result.responseText);
+                    return;
                 },
                 success: function(result) {
                     self.renderStateCounts(result.events);
@@ -267,5 +272,27 @@ var ShiftsCalendarController = {
 };
 
 window.onload=function(){
-        setTimeout(function(){            calendarInterval = setInterval(popCal,5000);});
+        setTimeout(function(){            calendarInterval = setTimeout(popCal,5000);});
+}
+
+function driverunassign(hr){
+
+            $.ajax({
+                type: "GET",
+                url: hr,
+                success: function(result) {
+                    loadSelectedShift();
+                },
+                dataType: 'json'
+            });
+}
+
+function loadSelectedShift(){
+    var cs = $(".js-event");
+    $(cs).each(function(){
+        if($(this).data('event-id')==currentselected){
+            $(this).trigger('click');
+        }
+    });
+    
 }

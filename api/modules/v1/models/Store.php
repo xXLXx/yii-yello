@@ -11,7 +11,7 @@ use yii\helpers\Url;
 use yii\web\Link;
 use yii\web\Linkable;
 
-class Store extends \api\common\models\Store implements Linkable
+class Store extends \api\common\models\ViewStores implements Linkable
 {
     /**
      * @inheritdoc

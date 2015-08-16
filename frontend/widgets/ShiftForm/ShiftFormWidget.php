@@ -60,6 +60,8 @@ class ShiftFormWidget extends \yii\base\Widget
                 }
                 $shiftForm->setData($shift);
             }
+        }else{
+            
         }
         return $this->render('default', [
             'model' => $shiftForm

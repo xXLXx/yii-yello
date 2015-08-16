@@ -81,18 +81,24 @@ class ShiftStoreOwnerController extends BaseController
     {
         $shift = Shift::findOne($shiftId);
         if (!$shift) {
-            throw new NotFoundHttpException('Shift not found');
+        return Json::encode([
+                       'result' => 'notfound'
+                   ]);
+
+//            throw new NotFoundHttpException('Shift not found');
         }
-        if (!$shift->isMyDrivers) {
+        // todo: current user can manage current store
+
+        if (1==1) {
             $shift->unassignDriver($driverId);
+                    return Json::encode([
+                       'result' => 'success'
+                   ]);
         } else {
-            return Json::encode([
-                'redirectUrl' => Url::to([
-                    'shifts-calendar/shift-edit', 
-                    'shiftId'               => $shift->id,
-                    'ShiftForm[driverId]'   => 0
-                ])
-            ]);
+                    return Json::encode([
+                       'result' => 'notauthorised'
+                   ]);
+
         }
     }
     

@@ -11,6 +11,10 @@ use common\models\search\ShiftSearch;
 use common\models\search\ShiftStateSearch;
 use common\models\ShiftHasDriver;
 use common\models\ShiftState;
+use common\models\Shiftsavailable;
+use common\models\Yelloshiftsavailable;
+use common\models\Myshiftsavailable;
+use common\models\Yelloshiftsavailable;
 use yii\data\ActiveDataProvider;
 
 /**

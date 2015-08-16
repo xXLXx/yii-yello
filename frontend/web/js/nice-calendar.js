@@ -8,7 +8,7 @@ function Calendar(container) {
     this._container = container;
     this._data = {};
     this._events = [];
-    this._data.beginDate = moment().day("Monday");
+    this._data.beginDate = moment().startOf("isoweek");
     this._data.currentDate = moment();
     this._data.selectedId = "";
     this.refresh();

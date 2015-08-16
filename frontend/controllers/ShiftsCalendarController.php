@@ -57,12 +57,26 @@ class ShiftsCalendarController extends BaseController
     {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
-        return $this->render('index', [
-            'mode'      => 'shiftForm',
-            'shiftId'   => 0,
-            'store'   => $storeOwner->storeCurrent
-            
-        ]);
+        
+        
+            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
+            {
+                return $this->renderAjax('index', [
+                'mode'      => 'shiftForm',
+                'shiftId'   => 0,
+                'store'     => $storeOwner->storeCurrent
+                ]);
+            }
+            else
+            {
+                return $this->render('index', [
+                    'mode'      => 'shiftForm',
+                    'shiftId'   => 0,
+                    'store'     => $storeOwner->storeCurrent
+                ]);
+        
+        
+            }     
     }
 
 
@@ -74,11 +88,25 @@ class ShiftsCalendarController extends BaseController
     {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
-        return $this->render('index', [
-            'mode'      => 'shiftForm',
-            'shiftId'   => $shiftId,
-            'store'     => $storeOwner->storeCurrent
-        ]);
+            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
+            {
+                return $this->renderAjax('index', [
+                'mode'      => 'shiftForm',
+                'shiftId'   => $shiftId,
+                'store'     => $storeOwner->storeCurrent
+                ]);
+            }
+            else
+            {
+                return $this->render('index', [
+                    'mode'      => 'shiftForm',
+                    'shiftId'   => $shiftId,
+                    'store'     => $storeOwner->storeCurrent
+                ]);
+        
+        
+            }     
+
     }
 
     /**
@@ -108,11 +136,27 @@ class ShiftsCalendarController extends BaseController
     {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
-        return $this->render('index', [
-            'mode'      => 'shiftView',
-            'shiftId'   => $shiftId,
-            'store'     => $storeOwner->storeCurrent
-        ]);
+
+            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
+            {
+                return $this->renderAjax('index', [
+                'mode'      => 'shiftView',
+                'shiftId'   => $shiftId,
+                'store'     => $storeOwner->storeCurrent
+                ]);
+            }
+            else
+            {
+                return $this->render('index', [
+                    'mode'      => 'shiftView',
+                    'shiftId'   => $shiftId,
+                    'store'     => $storeOwner->storeCurrent
+                ]);
+        
+        
+            }        
+        
+
     }
 
     /**

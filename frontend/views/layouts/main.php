@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use frontend\assets\AppAsset;
 use frontend\widgets\TopNavigation;
+use yii\widgets\Pjax;
 
 
 /* @var $this \yii\web\View */

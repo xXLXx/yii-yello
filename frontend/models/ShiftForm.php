@@ -74,7 +74,7 @@ class ShiftForm extends Model
         $diff = $endMinutes - $startMinutes;
 
         if($diff < 0){ //check for next day
-            $diff = 1440 + $diff;
+            $diff = $endMinutes+(1440-$startMinutes);
             $this->end_date = date('Y-m-d', strtotime($this->date) + 24*3600);
         } else {
             $this->end_date = date('Y-m-d', strtotime($this->date));

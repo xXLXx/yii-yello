@@ -24,10 +24,13 @@ ShiftViewAsset::register($this);
                 <span class="font-delete-garbage-streamline"></span>
             </a>
             <?php endif; ?>
+            <?php if($shift->isEditable){?>
+            
             <a class="btn blue small js-pjax"
                href="<?= Url::to(['shifts-calendar/shift-edit', 'shiftId' => $shift->id]); ?>">
                 <span class="font-pencil"></span>
             </a>
+            <?php }?>
         </div>
     <?php endif; ?>
     <h2 class="with-button">
@@ -41,6 +44,6 @@ ShiftViewAsset::register($this);
         ]); ?>
     </div>
 
-<?= $this->registerJs('ShiftViewWidget.init();'); ?>
 
 <?php Pjax::end(); ?>
+<?= $this->registerJs('ShiftViewWidget.init();'); ?>

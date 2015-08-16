@@ -11,5 +11,5 @@ class StoreController extends BaseActiveController
     /**
      * @inheritdoc
      */
-    public $modelClass = '@api\common\models\Store';
+    public $modelClass = '@api\common\models\view_stores';
 }

@@ -606,8 +606,28 @@ class Shift extends BaseModel
         ];
         $shiftStates = ShiftState::findAll(['name' => $shiftStateNamesDisabled]);
         $shiftStateIds = ArrayHelper::getColumn($shiftStates, 'id');
-        return !in_array($this->shiftStateId, $shiftStateIds);
+        $is=!in_array($this->shiftStateId, $shiftStateIds);
+        if($is&&$this->actualStart.''==''){
+            return true;
+        }
+        return false;
     }
+    
+    public function getIsEditable(){
+        static $shiftStateNamesDisabled = [
+            ShiftState::STATE_APPROVAL,
+            ShiftState::STATE_COMPLETED,
+            ShiftState::STATE_ACTIVE
+        ];
+        $shiftStates = ShiftState::findAll(['name' => $shiftStateNamesDisabled]);
+        $shiftStateIds = ArrayHelper::getColumn($shiftStates, 'id');
+        $is=!in_array($this->shiftStateId, $shiftStateIds);
+        if($is&&$this->actualStart.''==''){
+            return true;
+        }
+        return false;        
+    }
+    
 
     /**
      * Check if we can delete this shift.
