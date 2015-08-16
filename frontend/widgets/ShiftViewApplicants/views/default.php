@@ -17,4 +17,4 @@ ShiftViewApplicantsAsset::register($this);
         ?>
     <?php endforeach; ?>
 </div>
-<?= $this->registerJs('ShiftViewApplicantsWidget.init();'); ?>
+<?php // $this->registerJs('ShiftViewApplicantsWidget.init();'); ?>

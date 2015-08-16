@@ -272,20 +272,35 @@ var ShiftsCalendarController = {
 };
 
 window.onload=function(){
-        setTimeout(function(){            calendarInterval = setTimeout(popCal,5000);});
+        setTimeout(function(){            calendarInterval = setInterval(popCal,2000);});
 }
 
-function driverunassign(hr){
 
+// the replacement functions
+function driverunassign(hr){
+            defaultact(hr);
+}
+
+function declineapp(hr){
+            defaultact(hr);
+}
+
+function acceptapp(hr){
+            defaultact(hr);
+}
+
+function defaultact(hr){
             $.ajax({
                 type: "GET",
                 url: hr,
                 success: function(result) {
                     loadSelectedShift();
+                    return result;
                 },
                 dataType: 'json'
-            });
+            });    
 }
+
 
 function loadSelectedShift(){
     var cs = $(".js-event");
