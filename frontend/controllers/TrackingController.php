@@ -25,10 +25,10 @@ class TrackingController extends BaseController
         ];
 
         $drivers = User::find()
-            ->joinWith(['driverHasStores'])
-            ->andFilterWhere([
-                'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
-                'DriverHasStore.isAcceptedByDriver' => 1
+            ->innerJoinWith(['acceptedShifts'])
+            ->andWhere([
+                'storeId'   => $currentStore->id,
+                'actualEnd' => null
             ])
             ->all();
         $drivers = ArrayHelper::toArray($drivers);

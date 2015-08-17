@@ -456,6 +456,38 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * Get Driver Shifts that are accepted by store
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAcceptedShifts()
+    {
+        return $this->hasMany(Shift::className(), ['id' => 'shiftId'])
+            ->via('acceptedShiftHasDriver');
+    }
+
+    /**
+     * Get shiftHasDriver
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShiftHasDriver()
+    {
+        return $this->hasMany(ShiftHasDriver::className(), ['driverId' => 'id']);
+    }
+
+    /**
+     * Get accepted shiftHasDriver
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAcceptedShiftHasDriver()
+    {
+        return $this->getShiftHasDriver()
+            ->where(['acceptedByStoreOwner' => 1]);
+    }
+
+    /**
      * Get driverHasStores
      * @return ActiveQuery
      */
