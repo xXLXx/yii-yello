@@ -57,3 +57,6 @@
 }*/
 
 .hidden{display:none !important;}
+.star-rating.rating-xs.rating-disabled{
+    cursor: default;
+}
