@@ -151,8 +151,6 @@ var ShiftsCalendarController = {
 
 
         $('#shift-add-bth').on('click touchend', function() {
-            $("#shift-form-widget-pjax")
-            
             $.pjax({
                 url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax',
