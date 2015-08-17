@@ -143,8 +143,8 @@ class Shiftsavailable extends \yii\db\ActiveRecord
 
         $query = static::find();
         $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
-        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.05'));
-        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.05'));
+        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
+        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
 
         return new ActiveDataProvider([
             'query' => $query,
