@@ -2,8 +2,10 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ArrayHelper;
 use common\models\Driver;
 use common\models\search\DriverSearch;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 
 /**
@@ -13,13 +15,29 @@ use yii\helpers\Json;
  */
 class DriverController extends BaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?']
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     public function actionIndex(){
         $this->layout='simple';
         return $this->render('index');
     }
-
-
-
 
     /**
      * Form for invitation driver to the store
