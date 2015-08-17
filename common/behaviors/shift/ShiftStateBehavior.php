@@ -9,6 +9,7 @@ use common\behaviors\BaseBehavior;
 use common\models\Shift;
 use common\models\ShiftState;
 use common\models\ShiftStateLog;
+use common\models\DriverHasStore;
 
 /**
  * Class ShiftStateBehavior
@@ -88,10 +89,17 @@ class ShiftStateBehavior extends BaseBehavior
      */
     public function setStateAllocated($driverId)
     {
+        $state = ShiftState::STATE_YELLO_ALLOCATED;
+        $storeid = $this->owner->storeId;
+        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid]);
+        if($my){
+            $state = ShiftState::STATE_ALLOCATED;
+        }
+        
         $shiftHasDriver = $this->owner->addDriver($driverId);
         $shiftHasDriver->acceptedByStoreOwner = true;
         $shiftHasDriver->update();
-        $this->setStateByName(ShiftState::STATE_ALLOCATED);
+        $this->setStateByName($state);
         $this->owner->update();
     }
     
@@ -102,10 +110,17 @@ class ShiftStateBehavior extends BaseBehavior
      */
     public function setStateYelloAllocated($driverId)
     {
+        $state = ShiftState::STATE_YELLO_ALLOCATED;
+        $storeid = $this->owner->storeId;
+        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid]);
+        if($my){
+            $state = ShiftState::STATE_ALLOCATED;
+        }
+        
         $shiftHasDriver = $this->owner->addDriver($driverId);
         $shiftHasDriver->acceptedByStoreOwner = true;
         $shiftHasDriver->update();
-        $this->setStateByName(ShiftState::STATE_YELLO_ALLOCATED);
+        $this->setStateByName($state);
         $this->owner->update();
     }
     
