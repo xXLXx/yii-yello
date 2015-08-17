@@ -26,7 +26,10 @@ use yii\helpers\Url;
                         <div class="user-photo-container">
                             <img src="<?= $owner->image? $owner->image->thumbUrl : '/img/shop_white_front.png' ?>" alt="<?= $owner->firstName ?>" />
                         </div>
-                            <div class="user-role"><span><?= \Yii::t('app', 'Owner') ?></span></div>
+                        <div class="user-role"><span><?= \Yii::t('app', 'Owner') ?></span></div>
+                        <div class="user-panel-button">
+                            <?= Html::a('', ['settings/index'], ['class' => 'font-pencil', 'title' => \Yii::t('app', 'Edit user')]) ?>
+                        </div>
                         <div class="user-title"><?= $owner->username ?></div>
                     </div>                
                     <?php }

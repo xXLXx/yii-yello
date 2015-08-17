@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\ArrayHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
@@ -35,6 +36,9 @@ use yii\db\Expression;
  * @property string $postal_code
  * @property double $latitude
  * @property double $longitude
+ *
+ * @property Store $store
+ * @property Image $image
  */
 class Shiftsavailable extends \yii\db\ActiveRecord
 {
@@ -99,6 +103,32 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+           'start' =>  function ($model, $attribute) {
+               return strtotime($model->$attribute);
+           },
+            'end' =>  function ($model, $attribute) {
+                return strtotime($model->$attribute);
+            }
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return [
+            'image',
+            'store',
+        ];
+    }
+
+    /**
      * Filter shifts by driver and within a proximity.
      *
      * @param array $params
@@ -118,5 +148,21 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        return $this->hasOne(\api\modules\v1\models\Store::className(), ['id' => 'storeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->store->getImage();
     }
 }
