@@ -173,7 +173,7 @@ class StoreForm extends Model
             $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather than current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
-            $store->storeOwnerId = $userStoreOwner->id;
+            $store->storeOwnerId = $userStoreOwner->userId;
             $store->paymentScheduleId = 1;
             $store->setAttributes($this->getAttributes());
 
