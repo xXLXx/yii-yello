@@ -26,6 +26,7 @@
         "yiisoft/yii2-jui": "~2.0.0",
         "bower-asset/BootstrapDialog":"*",
         "kartik-v/yii2-widgets": "dev-master",
+        "kartik-v/yii2-widget-rating": "*",
         "stripe/stripe-php": "2.*"
     },
     "require-dev": {
