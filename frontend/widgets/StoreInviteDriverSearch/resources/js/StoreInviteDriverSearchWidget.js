@@ -1,7 +1,8 @@
+console.log(123);
 var StoreInviteDriverSearchWidget = {
     
     data: {},
-    
+
     getContainerName: function() {
         return '.js-driver-search-widget-results';
     },
@@ -21,6 +22,9 @@ var StoreInviteDriverSearchWidget = {
                     $('#store-invite-driver-form .js-driver-info-table, #store-invite-driver-form .driver-info').text(''); //blank the already selected driver
                     $('.js-driver-input').val(''); //blank the already selected driver hidden value
 
+
+                    jQuery('#w0.grid-view').attr('id', ''); //#w0 is added by rating plugin and causing problem.
+                    
                     var $searchSelect = $(
                         self.getContainerName() + ' .j_search_select'
                     );
@@ -39,13 +43,17 @@ var StoreInviteDriverSearchWidget = {
                     $(self.getContainerName() + ' .j_scrollpane').jScrollPane();
                     $(".j_colorbox").colorbox.resize();
 
-                    jQuery(".rating-loading").rating('refresh', {
+
+                    $(".rating-loading").rating('refresh', {
                         showClear: false,
                         size: 'xs',
                         showCaption: false,
                         glyphicon: false,
-                        ratingClass: 'star-block big'}
-                    );
+                        ratingClass: 'star-block big'
+                    });
+
+
+
                 });
             });
         });
@@ -58,6 +66,9 @@ var StoreInviteDriverSearchWidget = {
                 var driverId = $(this).data('driver-id');
                 $(self.getContainerName() + ' .js-driver-input').val(driverId);
                 self.loadDriverSelected(driverId, function(result) {
+
+                    console.log('debug here');
+
                     if (!result || !result.length) {
                         return false;
                     }
@@ -71,8 +82,8 @@ var StoreInviteDriverSearchWidget = {
                     jQuery(".rating-loading").rating('refresh', {
                             showClear: false,
                             size: 'xs',
+                           glyphicon: false,
                             showCaption: false,
-                            glyphicon: false,
                             ratingClass: 'star-block big'
                         }
                     );

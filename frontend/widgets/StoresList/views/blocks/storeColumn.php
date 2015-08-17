@@ -20,7 +20,7 @@ $image = $store->image;
         </div>
     </a>
     <div class="company-info">
-        <h5><a href="#"><?= $store->title ?></a>456</h5>
+        <h5><a href="#"><?= $store->title ?></a></h5>
 
         <div class="star-block">
             <span class="font-star-two"></span>

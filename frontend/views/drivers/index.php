@@ -14,7 +14,6 @@ $this->registerJs('$(function(){DriversFilter.init(); AddFavouriteDriver.init();
         <div class="header-panel">
             <div class="inline-header-block align-top">
                 <h2><?= $this->title ?></h2>
-                <?php //echo \kartik\rating\StarRating::widget(['value' => 3]); ?>
             </div>
             <div class="inline-header-block align-top j_driver_search">
                 <div class="filter-btn">
