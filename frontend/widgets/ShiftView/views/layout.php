@@ -44,6 +44,6 @@ ShiftViewAsset::register($this);
         ]); ?>
     </div>
 
+<?= $this->registerJs('ShiftViewWidget.init();'); ?>
 
 <?php Pjax::end(); ?>
-<?= $this->registerJs('ShiftViewWidget.init();'); ?>
