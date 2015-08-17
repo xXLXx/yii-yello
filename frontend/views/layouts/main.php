@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use frontend\assets\AppAsset;
 use frontend\widgets\TopNavigation;
 use yii\widgets\Pjax;
-
+use kartik\rating\StarRating;
 
 /* @var $this \yii\web\View */
 /* @var $content string */

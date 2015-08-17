@@ -22,7 +22,8 @@ class AppAsset extends AssetBundle
         'css/styles.css',
         'css/colorbox.css',
         'css/main.css',
-        'css/vanilla.css'
+        'css/vanilla.css',
+        'css/star-rating.css'
 //        'css/datepicker.css'
     ];
     public $js = [
@@ -32,6 +33,7 @@ class AppAsset extends AssetBundle
 //        'js/vow.min.js',
 //        'js/nm.js',
 //        'js/nmConfig.js',
+        'js/star-rating.js',
         'js/underscore-min.js',
         'js/moment.min.js',
         'js/jquery.jscrollpane.min.js',

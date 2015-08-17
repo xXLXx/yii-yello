@@ -60,3 +60,5 @@
 .star-rating.rating-xs.rating-disabled{
     cursor: default;
 }
+
+a .icon-pie-chart-1{display:none;}
