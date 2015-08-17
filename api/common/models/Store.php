@@ -6,7 +6,7 @@
 namespace api\common\models;
 
 
-class Store extends \common\models\ViewStores
+class Store extends \common\models\Store
 {
 
 }
