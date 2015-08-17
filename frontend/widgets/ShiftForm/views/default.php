@@ -1,11 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use yii\bootstrap\ActiveForm;
 use yii\jui\DatePicker;
 use frontend\widgets\DriverSearch\DriverSearchWidget;
 use frontend\widgets\Timepicker\TimepickerWidget;
-use yii\widgets\Pjax;
 use frontend\widgets\ShiftForm\assets\ShiftFormAsset;
 
 ShiftFormAsset::register($this);
@@ -36,7 +36,7 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
                 ]
             ],
             'options' => [
-                'enctype'   => 'multipart/form-data',
+                //'enctype'   => 'multipart/form-data',
                 'data-pjax' => 1
             ]
         ]);
@@ -132,14 +132,18 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
         </div>
 
         <div class="border-top-block">
+
+            
             <?=
                 Html::submitButton(\Yii::t('app', 'Post Shift'), [
-                    'class' => 'btn blue post-submit'
+                    'class' => 'btn blue post-submit ',
+                    'id'=>'shiftposter'
                 ]);
             ?>
             <?=
                 Html::submitButton(\Yii::t('app', 'Allocate Shift'), [
-                    'class' => 'btn blue allocate-submit'
+                    'class' => 'btn blue allocate-submit ',
+                    'id'=>'shiftallocater'
                 ]);
             ?>
         </div>

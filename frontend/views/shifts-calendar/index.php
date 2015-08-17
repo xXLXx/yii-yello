@@ -18,7 +18,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 ?>
 <div class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
     <div class="col-left">
-        <?php Pjax::begin()?>
+
         
         <?php if (!$mode || $mode == 'shiftForm'): ?>
             <?= ShiftFormWidget::widget([
@@ -31,7 +31,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
                 'shiftId' => $shiftId
             ]); ?>
         <?php endif; ?>
-        <?php Pjax::end()?>
+
     </div>
     <div class="col-right">
         <div class="f-right top-right-container">
@@ -58,12 +58,10 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
         </div>
         <h1 class="with-button">
             <span class="js-month-title"></span>
-            <?=
-                Html::a(\Yii::t('app', 'Add Shift'), ['shifts-calendar/shift-add'], [
-                    'class' => 'btn blue small',
-                    'id' => 'shift-add-bth'
-                ])
-            ?>
+            
+                <a href="#" class="btn blue small" id="shift-add-bth" >Add Shift</a>
+
+                        
             <a class="j_colorbox js_copy_roster btn small" href="<?= Url::to(['/shift-weekly-copy']); ?>"><?= \Yii::t('app', 'Copy roster'); ?></a>
             <a class="js_confirm_roster btn small green hidden" href="<?= Url::to(['/shift-weekly-copy/confirm']); ?>"><?= \Yii::t('app', 'Confirm roster'); ?></a>
             <a class="js_cancel_confirmation btn small red hidden" href="<?= Url::to(['/shift-weekly-copy/cancel-confirm']); ?>"><?= \Yii::t('app', 'Cancel'); ?></a>

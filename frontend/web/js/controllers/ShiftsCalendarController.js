@@ -139,7 +139,20 @@ var ShiftsCalendarController = {
             $('.sidebar-container').removeClass('without-col-left');
         });
 
+//        $('#shift-add-bth').on('click touchend', function() {
+//            $.pjax({
+//                url: $(this).attr('href'),
+//                container: '#shift-form-widget-pjax',
+//                timeout: pjaxTimeout
+//            });
+//            $('.sidebar-container').removeClass('without-col-left');
+//            return false;
+//        });
+
+
         $('#shift-add-bth').on('click touchend', function() {
+            $("#shift-form-widget-pjax")
+            
             $.pjax({
                 url: $(this).attr('href'),
                 container: '#shift-form-widget-pjax',
@@ -148,6 +161,7 @@ var ShiftsCalendarController = {
             $('.sidebar-container').removeClass('without-col-left');
             return false;
         });
+
 
         $('#shift-form-widget-pjax').on('pjax:beforeSend', function () {
             $(this).addClass('loading');
@@ -273,6 +287,22 @@ var ShiftsCalendarController = {
 
 window.onload=function(){
         setTimeout(function(){            calendarInterval = setInterval(popCal,2000);});
+}
+
+
+function summitshift(){
+    
+    var sf = $("#shift-form");
+    var data = $(sf).serialize();
+    
+    
+}
+
+
+function allocateshift(){
+    var sf = $("#shift-form");
+    
+    
 }
 
 

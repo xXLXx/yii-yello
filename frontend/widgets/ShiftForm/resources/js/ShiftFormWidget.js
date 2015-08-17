@@ -22,6 +22,18 @@ var ShiftFormWidget = {
             console.log(searchresults);
             }
 
+
+        $('#shiftposter').on('click touchend', function(e){
+            e.preventDefault();
+            summitshift();
+        });
+
+        $('#shiftallocator').on('click touchend', function(e){
+            e.preventDefault();
+            allocateshift();
+        });
+
+
     },
     
     driverSearchShow: function($container,obj)

@@ -167,9 +167,9 @@ Calendar.prototype.render = function() {
                 '</tr>' +
             '</thead>' +
             '<tbody>' +
-                '<% for (var i = 0; i < eventGroups.maxLength; i++) { %>' +
+                '<% for (var i = 0; i < eventGroups.maxLength+1; i++) { %>' +
                     '<tr>' +
-                        '<% for (var j = 0; j < eventGroups.groups.length; j++) { %>' +
+                        '<% for (var j = 0; j < 7; j++) { %>' +
                             '<% if (eventGroups.groups[j] && eventGroups.groups[j][i] && eventGroups.groups[j][i].id==currentselected )  {%>'+
                                 
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
@@ -198,7 +198,7 @@ Calendar.prototype.render = function() {
                                     '</div>' +
                                 '</td>' +
                             '<% } else { %>' +
-                                '<td></td>' +
+                                '<td style="" valign="bottom" class="emptyrosterspace" data-day="<%= j %>"></td>' +
                             '<% } %>' +
                             '<% } %>' +
                         '<% } %>' +
@@ -261,6 +261,11 @@ Calendar.prototype.onEventClick = function(callback) {
 
 Calendar.prototype.eventClickInit = function() {
     var self = this;
+    
+    $(".emptyrosterspace").on('click, touchend', function(){
+        
+    });
+    
     $('.js-event', this.getContainer()).on('click', function() {
         // remove active cell
         $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');

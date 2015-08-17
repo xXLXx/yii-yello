@@ -43,7 +43,7 @@ class ShiftFormWidget extends \yii\base\Widget
                 $url = Url::to([
                     'shifts-calendar/shift-view', 'shiftId' => $shift->id
                 ]);
-                \Yii::$app->response->getHeaders()->set('X-Pjax-Url', $url);
+                \Yii::$app->response->getHeaders()->set('X-PJAX', $url);
                 return ShiftViewWidget::widget([
                     'shiftId' => $shift->id
                 ]);
