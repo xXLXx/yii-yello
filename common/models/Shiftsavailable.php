@@ -108,6 +108,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     {
         return [
             'image',
+            'store',
         ];
     }
 
