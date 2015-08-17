@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\ArrayHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
@@ -104,6 +105,21 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+           'start' =>  function ($model, $attribute) {
+               return strtotime($model->$attribute);
+           },
+            'end' =>  function ($model, $attribute) {
+                return strtotime($model->$attribute);
+            }
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function extraFields()
     {
         return [
@@ -139,7 +155,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
      */
     public function getStore()
     {
-        return $this->hasOne(Store::className(), ['id' => 'storeId']);
+        return $this->hasOne(\api\modules\v1\models\Store::className(), ['id' => 'storeId']);
     }
 
     /**
