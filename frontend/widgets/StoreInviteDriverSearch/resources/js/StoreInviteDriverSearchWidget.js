@@ -38,6 +38,14 @@ var StoreInviteDriverSearchWidget = {
                     $searchSelect.show();
                     $(self.getContainerName() + ' .j_scrollpane').jScrollPane();
                     $(".j_colorbox").colorbox.resize();
+
+                    jQuery(".rating-loading").rating('refresh', {
+                        showClear: false,
+                        size: 'xs',
+                        showCaption: false,
+                        glyphicon: false,
+                        ratingClass: 'star-block big'}
+                    );
                 });
             });
         });
@@ -59,6 +67,15 @@ var StoreInviteDriverSearchWidget = {
                     $searchSelectDrivers.html(result);
                     $searchSelectDrivers.show();
                     $(".j_colorbox").colorbox.resize();
+
+                    jQuery(".rating-loading").rating('refresh', {
+                            showClear: false,
+                            size: 'xs',
+                            showCaption: false,
+                            glyphicon: false,
+                            ratingClass: 'star-block big'
+                        }
+                    );
                 });
             }
         );

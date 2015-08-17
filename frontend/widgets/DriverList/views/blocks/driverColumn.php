@@ -21,13 +21,10 @@ use yii\helpers\Html;
         <div class="user-photo-info-inner">
             <div class="name"><a href="/drivers/profile?id=<?=$driver->id?>"><?= $driver->username ?></a></div>
             <div>
-                <span class="star-block">
-                    <span class="font-star-two"></span>
-                    <span class="font-star-two"></span>
-                    <span class="font-star-two"></span>
-                    <span class="font-star-half"></span>
-                    <span class="font-star"></span>
-                </span>
+                <div>
+                    <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
+
+                </div>
                 <span class="gray-text">ID #<?= $driver->id ?></span>
             </div>
         </div>

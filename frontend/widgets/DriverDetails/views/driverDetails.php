@@ -34,13 +34,7 @@
                     </div>
                 </div>
                 <div class="gray-text">Yello ID: #<?= $driver->id; ?></div>
-                <div class="star-block big inline-block">
-                    <span class="font-star-two"></span>
-                    <span class="font-star-two"></span>
-                    <span class="font-star-two"></span>
-                    <span class="font-star-half"></span>
-                    <span class="font-star"></span>
-                </div>
+                <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
             </div>
         </div>
     </div>

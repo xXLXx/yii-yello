@@ -137,6 +137,15 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * Get shiftReviews
+     * @return ActiveQuery
+     */
+    public function getShiftReviews()
+    {
+        return $this->hasMany(ShiftReviews::className(), ['driverId' => 'id']);
+    }
+
+    /**
      * Get stores
      * @return static
      */
@@ -618,5 +627,22 @@ class User extends BaseModel implements IdentityInterface
         }
     }
 
-
+    /**
+     * Get average ratings of a driver based upon the shift ratings.
+     *
+     * @return string
+     */
+    public function getRatings(){
+        if($this->shiftReviews){
+            $review_sum = $count = 0;
+            foreach($this->shiftReviews as $review){
+                $review_sum += $review->stars;
+                $count++;
+            }
+            return $review_sum/$count;
+        } else {
+            return 0;
+        }
     }
+
+}

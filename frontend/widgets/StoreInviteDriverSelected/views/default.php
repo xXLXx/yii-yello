@@ -15,7 +15,7 @@ StoreInviteDriverSelectedAsset::register($this);
             <h3><?= $driver->username ?></h3>
             <div class="middle-gray-text text-small-11"><?= \Yii::t('app', 'Yello ID') ?>: #<?= $driver->id ?></div>
             <div>
-                <?= $this->render('//blocks//userRatingBlock') ?>
+                <?= \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
             </div>
         </div>
     </div>

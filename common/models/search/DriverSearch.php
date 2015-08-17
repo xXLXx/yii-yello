@@ -60,7 +60,8 @@ class DriverSearch extends Driver
     {
         $this->load($params);
         $query = static::find();
-        $query->with(['image']);
+        $query->with(['image','shiftReviews']);
+        $query->distinct(true);
 
         $query->joinWith('role');
         $query->andWhere(

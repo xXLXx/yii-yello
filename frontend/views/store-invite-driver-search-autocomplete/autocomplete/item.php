@@ -6,7 +6,9 @@
     <div class="user-photo-info">
         <div><?= $driver->username ?>, <span class="middle-gray-text">ID <?= $driver->id ?></span></div>
         <div>
-            <?= $this->render('//blocks//userRatingBlock') ?>
+            <?php
+            echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]);
+            ?>
         </div>
     </div>
 </div>

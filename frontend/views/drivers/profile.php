@@ -178,7 +178,7 @@ $driverId = $driver->id;
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
                                     <h5><?= $review->store->title; ?></h5>
-                                    <?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?>
+                                    <div><?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?></div>
                                     <div><?= $review->text; ?></div>
                                     <div class="gray-text">
                                         <?php

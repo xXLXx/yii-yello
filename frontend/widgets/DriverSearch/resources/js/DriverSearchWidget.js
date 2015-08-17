@@ -69,6 +69,8 @@ var DriverSearchWidget = {
                 $searchSelectDrivers.show();
                 $('.js-driver-search-widget-search').addClass('hide');
                 $('.assigned-shifts-filter').addClass('allocate');
+
+
             });
 //            $('.j_post_btn').hide();
 //            $('.j_allocate_btn').show();

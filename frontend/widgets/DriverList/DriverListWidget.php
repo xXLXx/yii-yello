@@ -32,7 +32,7 @@ class DriverListWidget extends BaseGridView
         return [
             [
                 'label' => \Yii::t('app', 'Driver'),
-                'format' => 'html',
+                'format' => 'raw',
                 'value' => function ($driver) {
                   return $this->render('blocks/driverColumn', [
                         'driver' => $driver
