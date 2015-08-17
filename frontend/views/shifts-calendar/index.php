@@ -18,8 +18,6 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 ?>
 <div class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
     <div class="col-left">
-        <?php Pjax::begin()?>
-        
         <?php if (!$mode || $mode == 'shiftForm'): ?>
             <?= ShiftFormWidget::widget([
                 'shiftId' => $shiftId,
@@ -31,7 +29,6 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
                 'shiftId' => $shiftId
             ]); ?>
         <?php endif; ?>
-        <?php Pjax::end()?>
     </div>
     <div class="col-right">
         <div class="f-right top-right-container">
