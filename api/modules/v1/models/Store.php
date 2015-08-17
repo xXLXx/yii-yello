@@ -11,7 +11,7 @@ use yii\helpers\Url;
 use yii\web\Link;
 use yii\web\Linkable;
 
-class Store extends \api\common\models\ViewStores implements Linkable
+class Store extends \api\common\models\Store implements Linkable
 {
     /**
      * @inheritdoc
@@ -61,6 +61,12 @@ class Store extends \api\common\models\ViewStores implements Linkable
             },
             'phone' => function ($model) {
                 return $model->storeAddress ? $model->storeAddress->contact_phone : '';
+            },
+            'latitude' => function ($model) {
+                return $model->address ? $model->address->latitude : null;
+            },
+            'longitude' => function ($model) {
+                return $model->address ? $model->address->longitude : null;
             },
             'createdAt',
             'createdAtAsDatetime' => function ($model) {
