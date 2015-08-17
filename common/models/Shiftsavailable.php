@@ -35,6 +35,9 @@ use yii\db\Expression;
  * @property string $postal_code
  * @property double $latitude
  * @property double $longitude
+ *
+ * @property Store $store
+ * @property Image $image
  */
 class Shiftsavailable extends \yii\db\ActiveRecord
 {
@@ -99,6 +102,16 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return [
+            'image',
+        ];
+    }
+
+    /**
      * Filter shifts by driver and within a proximity.
      *
      * @param array $params
@@ -118,5 +131,21 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        return $this->hasOne(Store::className(), ['id' => 'storeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->store->getImage();
     }
 }
