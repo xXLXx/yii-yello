@@ -198,7 +198,11 @@ Calendar.prototype.render = function() {
                                     '</div>' +
                                 '</td>' +
                             '<% } else { %>' +
-                                '<td style="" valign="bottom" class="emptyrosterspace" data-day="<%= j %>"></td>' +
+                                '<td style="" valign="bottom" class="emptyrosterspace" data-day="<%= j %>">'+
+                                     '<% if (i==eventGroups.maxLength) {%>'+
+                                     ''+
+                                     '<% } %>' +
+                                '</td>' +
                             '<% } %>' +
                             '<% } %>' +
                         '<% } %>' +
