@@ -9,6 +9,7 @@ use api\modules\v1\filters\Auth;
 use api\modules\v1\models\Shift;
 use common\models\search\ShiftSearch;
 use common\models\ShiftHasDriver;
+use common\models\Shiftsavailable;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -92,7 +93,11 @@ class ShiftController extends \api\common\controllers\ShiftController
     public function actionAvailable()
     {
         $driverId = $this->getDriverId();
-        return Shift::getAvailableToApplyBy($driverId);
+        $latitude = \Yii::$app->request->get('latitude');
+        $longitude = \Yii::$app->request->get('longitude');
+        $model = new Shiftsavailable();
+
+        return $model->search(compact('driverId', 'latitude', 'longitude'));
     }
 
     /**

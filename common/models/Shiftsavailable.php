@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "shiftsavailable".
@@ -94,5 +96,27 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             'latitude' => Yii::t('app', 'Latitude'),
             'longitude' => Yii::t('app', 'Longitude'),
         ];
+    }
+
+    /**
+     * Filter shifts by driver and within a proximity.
+     *
+     * @param array $params
+     *
+     * @return \yii\data\ActiveDataProvider
+     */
+    public function search($params = [])
+    {
+        if (empty($params['driverId']) || empty($params['latitude']) || empty('longitude')) {
+            return false;
+        }
+
+        $query = static::find();
+        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
+        $query->andWhere(new Expression('(latitude-'.$params['latitude'].'+longitude-'.$params['longitude'].' < 0.2)'));
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
     }
 }
