@@ -83,7 +83,7 @@ class TopNavigation extends Widget
     private function getFranchiserMenuItems()
     {
         return [
-            ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
+          //  ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
             ['label' => '', 'url' => ['/stores-franchiser/index'], 'class' => 'item icon-shop'],
             ['label' => '', 'url' => ['/settings/index'], 'class' => 'item icon-setting-gears-2'],
         ];
@@ -92,7 +92,7 @@ class TopNavigation extends Widget
     private function getMenuAggregatorMenuItems()
     {
         return [
-            ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
+         //   ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
             ['label' => '', 'url' => ['/store-menu-aggregator/index'], 'class' => 'item icon-shop'],
             ['label' => '', 'url' => ['/settings/index'], 'class' => 'item icon-setting-gears-2'],
         ];
@@ -101,7 +101,7 @@ class TopNavigation extends Widget
     private function getDefaultMenuItems()
     {
         return [
-            ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
+         //   ['label' => '', 'url' => ['/dashboard/index'], 'class' => 'item icon-pie-chart-1'],
             ['label' => '', 'url' => ['/shifts-calendar/index'], 'class' => 'item icon-calendar-2'],
             //['label' => '', 'url' => ['/store'], 'class' => 'item icon-shop'],
             ['label' => '', 'url' => ['/drivers/index'], 'class' => 'item icon-contacts-2'],
