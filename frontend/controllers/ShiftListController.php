@@ -1,10 +1,12 @@
 <?php
 
 namespace frontend\controllers;
-
+use common\helpers\ArrayHelper;
 use \yii\web\Response;
 use \yii\helpers\Url;
 use \common\models\Shift;
+use yii\helpers\Json;
+use common\models\Shiftsavailable;
 /**
  * Shifts list for store owner
  *
@@ -70,6 +72,13 @@ class ShiftListController extends BaseController
         }
     }
 
+    
+    
+
+
+    
+    
+    
     /**
      * ajax action; html response with shift details
      *

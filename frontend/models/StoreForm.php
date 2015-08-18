@@ -188,7 +188,7 @@ class StoreForm extends Model
             }
 
             
-            $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->id]);
+            $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->userId]);
             if (!$userHasStore->save()) {
                 $error = $userHasStore->getFirstError();
                 $this->addError(key($error), current($error));

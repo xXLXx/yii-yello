@@ -15,9 +15,13 @@ var StoreInviteDriverController = {
                 url: $form.attr('action'),
                 type: 'post',
                 data: $form.serializeArray(),
+                
+                error: function(xhr){
+                    console.log(xhr.responseText);
+                },
                 success: function(data) {
 
-                    if (data.search('success') != -1) {
+                    if (data.search&&data.search('success') != -1) {
                         var html = $('.success_message', data).html();
                         $('#store-invite-driver-form .popup-body-inner').html(html);
                         $('.popup.store-invite').removeClass('with-error').removeClass('height-active');
