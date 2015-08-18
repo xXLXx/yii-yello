@@ -15,3 +15,12 @@ nbproject/project.properties
 environments/
 frontend/web/assets/
 web.config
+frontend/web/img/favicon-196x196.png
+frontend/web/favicon.ico
+frontend/web/img/apple-touch-icon-120x120.png
+frontend/web/img/favicon.ico
+frontend/web/img/msapplication-large.png
+frontend/web/img/msapplication-square.png
+frontend/web/img/msapplication-tiny.png
+frontend/web/img/apple-touch*
+frontend/web/img/favicon*
