@@ -59,7 +59,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
         <h1 class="with-button">
             <span class="js-month-title"></span>
             
-                <a href="#" class="btn blue small" id="shift-add-bth" >Add Shift</a>
+                <a href="<?= Url::to(['index']); ?>" class="btn blue small" id="js-shift-add-bth" >Add Shift</a>
 
                         
             <a class="j_colorbox js_copy_roster btn small" href="<?= Url::to(['/shift-weekly-copy']); ?>"><?= \Yii::t('app', 'Copy roster'); ?></a>
