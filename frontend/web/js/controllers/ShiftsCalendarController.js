@@ -150,14 +150,14 @@ var ShiftsCalendarController = {
 //        });
 
 
-        $('#shift-add-bth').on('click touchend', function() {
+        $('#js-shift-add-bth').on('click touchend', function(e) {
+            e.preventDefault();
             $.pjax({
                 url: '/shifts-calendar/shift-add',
                 container: '#shift-form-widget-pjax',
                 timeout: pjaxTimeout
             });
             $('.sidebar-container').removeClass('without-col-left');
-            return false;
         });
 
 
