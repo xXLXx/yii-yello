@@ -37,6 +37,9 @@ class DriverSignupStep1 extends Model
     public $longitude;
     public $googleplaceid;
     public $googleobj;
+    public $utcOffset;
+    public $timezone;
+
 
     /**
      * @inheritdoc
@@ -58,7 +61,7 @@ class DriverSignupStep1 extends Model
                     'id', 
                     'emergencyContactName', 'emergencyContactPhone', 'personalProfile',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
-                    'formatted_address', 'latitude', 'longitude','googleplaceid','googleobj'
+                    'formatted_address', 'latitude', 'longitude','googleplaceid','googleobj', 'utcOffset', 'timezone'
                 ],
                 'safe'
             ]

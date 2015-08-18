@@ -18,9 +18,9 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
     /**
      * Autocomplete
      */
-    public function actionAutocompleteOld()
+    public function actionAutocomplete()
     {
-        $searchText = \Yii::$app->request->get('searchText');
+        $searchText = \Yii::$app->request->post('searchText');
         $user = \Yii::$app->user->identity;
 		//TODO: Jovani, Lalit store owner central validation in basecontroller at frontend and user model.
         if(!isset($user->storeOwner->storeCurrent->id)){
@@ -57,7 +57,7 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
     
     
     
-    public function actionAutocomplete()
+    public function actionAutocompleteOld()
     {
         $user = \Yii::$app->user->identity;
         $params = \Yii::$app->request->post();
