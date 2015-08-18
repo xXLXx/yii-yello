@@ -56,7 +56,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftAdd()
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->myStoreOwner;
+        $storeOwner = $user->storeOwner;
         
         
             if(Yii::$app->request->getHeaders()->has('X-PJAX'))
@@ -87,7 +87,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftEdit($shiftId)
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->myStoreOwner;
+        $storeOwner = $user->storeOwner;
             if(Yii::$app->request->getHeaders()->has('X-PJAX'))
             {
                 return $this->renderAjax('index', [
@@ -135,7 +135,7 @@ class ShiftsCalendarController extends BaseController
     public function actionShiftView($shiftId)
     {
         $user = Yii::$app->user->identity;
-        $storeOwner = $user->myStoreOwner;
+        $storeOwner = $user->storeOwner;
 
             if(Yii::$app->request->getHeaders()->has('X-PJAX'))
             {
@@ -152,11 +152,7 @@ class ShiftsCalendarController extends BaseController
                     'shiftId'   => $shiftId,
                     'store'     => $storeOwner->storeCurrent
                 ]);
-        
-        
-            }        
-        
-
+            }
     }
 
     /**
