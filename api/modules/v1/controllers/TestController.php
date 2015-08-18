@@ -41,7 +41,7 @@ class TestController extends \api\common\controllers\ShiftController
         // get the driver exclusions
         $fav = StoreOwnerFavouriteDrivers::find(['driverId'=>$driverId])->asArray();
         $my = DriverHasStore::find(['AND',['driverId'=>$driverId],['isAcceptedByDriver'=>1]])->asArray();
-        
+        $omits = [];
 
         $model = new Shiftsavailable();
         $myavailable =  $model->search(compact('driverId', 'latitude', 'longitude'));
