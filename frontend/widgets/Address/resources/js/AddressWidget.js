@@ -76,6 +76,15 @@ var jsAddressWidget = {
         if (document.getElementById(formName+'googleobj')) {
             document.getElementById(formName+'googleobj').value = JSON.stringify(place);
         }
+
+        // get timezone
+        $.get('https://maps.googleapis.com/maps/api/timezone/json', {
+            location: place.geometry.location.lat()+','+place.geometry.location.lng(),
+            timestamp: Math.floor((new Date()).getTime() / 1000)
+        }, function(response){
+            document.getElementById(formName+'utcoffset').value = response.rawOffset / 3600;
+            document.getElementById(formName+'timezone').value = response.timeZoneId;
+        })
     },
     // [END region_fillform]
 

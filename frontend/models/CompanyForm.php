@@ -43,6 +43,8 @@ class CompanyForm extends Model
     public $longitude;
     public $googleplaceid;
     public $googleobj;
+    public $utcOffset;
+    public $timezone;
 
     /**
      * @inheritdoc
@@ -54,7 +56,8 @@ class CompanyForm extends Model
             [['contact_email'], 'email'],
             [['accountName', 'companyName', 'ABN', 'block_or_unit', 'street_number', 'route', 'locality',
                 'administrative_area_level_1','postal_code','country', 'formatted_address', 'contact_name',
-                'contact_phone', 'contact_email', 'website', 'latitude', 'longitude','googleplaceid','googleobj'], 'string'],
+                'contact_phone', 'contact_email', 'website', 'latitude', 'longitude','googleplaceid','googleobj',
+                'utcOffset', 'timezone'], 'string'],
         ];
     }
 
@@ -80,8 +83,8 @@ class CompanyForm extends Model
      */
     public function setData($user)
     {
-        $owner = $user->storeOwner;
-        $company=$owner->company;
+        $storeOwner = $user->storeOwner;
+        $company = $storeOwner->company;
         if (!$company) {
             $company = new Company();
             $company->save();
@@ -102,9 +105,13 @@ class CompanyForm extends Model
      */
     public function save() 
     {
+        if (!$this->validate()) {
+            return false;
+        }
+
         $transaction = \Yii::$app->db->beginTransaction();
 
-//        try {
+        try {
             $company = Company::findOneOrCreate($this->id);
             $company->ABN = $this->ABN;
             $company->accountName = $this->accountName;
@@ -128,17 +135,7 @@ class CompanyForm extends Model
             $address = Address::findOneOrCreate(array(
                 'idaddress' => $companyAddress->addressfk,
             ));
-            $address->block_or_unit = $this->block_or_unit;
-            $address->street_number = $this->street_number;
-            $address->route = $this->route;
-            $address->locality = $this->locality;
-            $address->administrative_area_level_1 = $this->administrative_area_level_1;
-            $address->postal_code = $this->postal_code;
-            $address->country = $this->country;
-            $address->formatted_address = $this->formatted_address;
-            $address->latitude = $this->latitude;
-            $address->longitude = $this->longitude;
-
+            $address->setAttributes($this->getAttributes());
             if (!$address->save()) {
                 $error = $address->getFirstError();
                 $this->addError(key($error), current($error));
@@ -152,7 +149,6 @@ class CompanyForm extends Model
             $companyAddress->contact_phone = $this->contact_phone;
             $companyAddress->contact_email = $this->contact_email;
             $companyAddress->addresstype = AddressType::find()->byType(AddressType::TYPE_POSTAL)->one()->idaddresstypes;
-
             if (!$companyAddress->save()) {
                 $error = $companyAddress->getFirstError();
                 $this->addError(key($error), current($error));
@@ -160,14 +156,12 @@ class CompanyForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
-
-
             $transaction->commit();
             return true;
-//        } catch (\Exception $e) {
-//            \Yii::error($e->getMessage());
-//            $transaction->rollBack();
-//        }
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
 
         return false;
     }

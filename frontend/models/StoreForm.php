@@ -44,6 +44,8 @@ class StoreForm extends Model
     public $longitude;
     public $googleplaceid;
     public $googleobj;
+    public $utcOffset;
+    public $timezone;
     
     public $contact_name;
     public $contact_phone;
@@ -61,7 +63,7 @@ class StoreForm extends Model
                     'id', 'title', 'businessTypeId','companyId',
                     'paymentScheduleId', 'website', 'businessHours',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
-                    'formatted_address','latitude','longitude','googleplaceid','googleobj',
+                    'formatted_address','latitude','longitude','googleplaceid','googleobj', 'utcOffset', 'timezone',
                     'contact_name','contact_phone','contact_email',
                      'storeProfile', 'image', 'imageFile'
                 ],

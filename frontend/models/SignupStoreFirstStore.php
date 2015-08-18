@@ -46,6 +46,8 @@ class SignupStoreFirstStore extends Model
     public $googleobj;
     public $latitude;
     public $longitude;
+    public $utcOffset;
+    public $timezone;
 
 
     // company address
@@ -78,7 +80,7 @@ class SignupStoreFirstStore extends Model
                 [
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1',
                     'postal_code', 'country', 'formatted_address', 'googleplaceid', 'googleobj',
-                    'latitude', 'longitude',
+                    'latitude', 'longitude', 'utcOffset', 'timezone'
                 ],
                 'safe'
             ],
