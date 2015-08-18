@@ -25,7 +25,7 @@ class ShiftCalendarService extends BaseService
         $shifts = Shift::find()
             ->with('applicants')
             ->andWhere(['>=', 'start', $data['start']])
-            ->andWhere(['<=', 'end', $data['end']])
+            ->andWhere(['<=', 'start', $data['end']])
             ->andWhere(['storeId' => $data['storeId']])
             ->orderBy(['start' => 'asc'])
             ->all();
