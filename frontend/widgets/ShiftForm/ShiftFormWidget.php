@@ -50,7 +50,7 @@ class ShiftFormWidget extends \yii\base\Widget
             } 
         } else {
             $shiftForm->storeId = $this->storeId;
-            $shiftForm->isYelloDrivers = true;
+            $shiftForm->isMyDrivers = true;
         }
         if ($this->shiftId) {
             $shift = Shift::findOne($this->shiftId);

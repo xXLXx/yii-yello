@@ -26,6 +26,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $updatedUTC
  * @property integer $geolocated
  * @property integer $isarchived
+ * @property string $utcOffset
+ * @property string $timezone
  *
  * @property CompanyAddress[] $companyAddresses
  */
@@ -54,7 +56,8 @@ class Address extends BaseModel
             [['country'], 'string', 'max' => 150],
             [['formatted_address'], 'string', 'max' => 1500],
             [['googleplaceid'], 'string', 'max' => 150],
-            [['googleobj'], 'string', 'max' => 4000]
+            [['googleobj'], 'string', 'max' => 4000],
+            [['utcOffset', 'timezone'], 'safe'],
         ];
     }
 

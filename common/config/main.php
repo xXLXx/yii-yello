@@ -84,19 +84,23 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
-            'useFileTransport' => false,
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com',
-                'username' => 'yelloyellodev@gmail.com',
-                'password' => 'yello1234567',
-                'port' => '587',
-                'encryption' => 'tls',
-            ],
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+        'transport' => [
+             'class' => 'Swift_SmtpTransport',
+             'host' => 'smtp.sendgrid.net',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+             'username' => 'azure_ac60fd423f8c76c7b32e4177c2991045@azure.com',
+             'password' => '7t8g2KZ9yjlUaa5',
+             'port' => '587', // Port 25 is a very common port too
+             'encryption' => 'tls', // It is often used, check your provider or mail server specs
+             ]            
+            ,
         ],
+
         'formatter' => [
             'class' => 'common\components\Formatter',
-            'timeZone' => 'Australia/Sydney'
+            'timeZone' => 'UTC'
         ],
         'activity' => [
             'class' => 'common\components\Activity'

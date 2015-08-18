@@ -16,97 +16,83 @@ use yii\web\Response;
  *
  * @author markov
  */
-class ShiftsCalendarController extends BaseController
-{
+class ShiftsCalendarController extends BaseController {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return ArrayHelper::merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['shiftAdd', 'shiftEdit', 'shiftDelete'],
-                        'allow' => true,
-                        'roles' => [Role::ROLE_STORE_OWNER]
+                    'access' => [
+                        'class' => AccessControl::className(),
+                        'rules' => [
+                            [
+                                'actions' => ['shiftAdd', 'shiftEdit', 'shiftDelete'],
+                                'allow' => true,
+                                'roles' => [Role::ROLE_STORE_OWNER]
+                            ],
+                        ],
                     ],
-                ],
-            ],
         ]);
     }
+
     /**
      * Index page
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        
         $user = Yii::$app->user->identity;
         $storeOwner = $user->storeOwner;
         return $this->render('index', [
-            'mode'      => null,
-            'shiftId'   => 0,
-            'store'     => $storeOwner->storeCurrent
+                    'mode' => null,
+                    'shiftId' => 0,
+                    'store' => $user->storeCurrent
         ]);
     }
 
     /**
      * Shift add
      */
-    public function actionShiftAdd()
-    {
+    public function actionShiftAdd() {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
-        
-        
-            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
-            {
-                return $this->renderAjax('index', [
-                'mode'      => 'shiftForm',
-                'shiftId'   => 0,
-                'store'     => $storeOwner->storeCurrent
-                ]);
-            }
-            else
-            {
-                return $this->render('index', [
-                    'mode'      => 'shiftForm',
-                    'shiftId'   => 0,
-                    'store'     => $storeOwner->storeCurrent
-                ]);
-        
-        
-            }     
+
+
+        if (Yii::$app->request->getHeaders()->has('X-PJAX')) {
+            return $this->renderAjax('index', [
+                        'mode' => 'shiftForm',
+                        'shiftId' => 0,                       
+                'store' => $user->storeCurrent
+
+            ]);
+        } else {
+            return $this->render('index', [
+                        'mode' => 'shiftForm',
+                        'shiftId' => 0,
+                        'store' => $user->storeCurrent
+            ]);
+        }
     }
 
-
-    
     /**
      * Shift edit
      */
-    public function actionShiftEdit($shiftId)
-    {
+    public function actionShiftEdit($shiftId) {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
-            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
-            {
-                return $this->renderAjax('index', [
-                'mode'      => 'shiftForm',
-                'shiftId'   => $shiftId,
-                'store'     => $storeOwner->storeCurrent
-                ]);
-            }
-            else
-            {
-                return $this->render('index', [
-                    'mode'      => 'shiftForm',
-                    'shiftId'   => $shiftId,
-                    'store'     => $storeOwner->storeCurrent
-                ]);
-        
-        
-            }     
-
+        if (Yii::$app->request->getHeaders()->has('X-PJAX')) {
+            return $this->renderAjax('index', [
+                        'mode' => 'shiftForm',
+                        'shiftId' => $shiftId,
+                        'store' => $user->storeCurrent
+            ]);
+        } else {
+            return $this->render('index', [
+                        'mode' => 'shiftForm',
+                        'shiftId' => $shiftId,
+                        'store' => $user->storeCurrent
+            ]);
+        }
     }
 
     /**
@@ -116,8 +102,7 @@ class ShiftsCalendarController extends BaseController
      *
      * @return \yii\web\Response
      */
-    public function actionShiftDelete($shiftId)
-    {
+    public function actionShiftDelete($shiftId) {
         $shift = Shift::findOne($shiftId);
         if ($shift) {
             $shift->delete();
@@ -132,38 +117,29 @@ class ShiftsCalendarController extends BaseController
     /**
      * Shift view
      */
-    public function actionShiftView($shiftId)
-    {
+    public function actionShiftView($shiftId) {
         $user = Yii::$app->user->identity;
         $storeOwner = $user->myStoreOwner;
 
-            if(Yii::$app->request->getHeaders()->has('X-PJAX'))
-            {
-                return $this->renderAjax('index', [
-                'mode'      => 'shiftView',
-                'shiftId'   => $shiftId,
-                'store'     => $storeOwner->storeCurrent
-                ]);
-            }
-            else
-            {
-                return $this->render('index', [
-                    'mode'      => 'shiftView',
-                    'shiftId'   => $shiftId,
-                    'store'     => $storeOwner->storeCurrent
-                ]);
-        
-        
-            }        
-        
-
+        if (Yii::$app->request->getHeaders()->has('X-PJAX')) {
+            return $this->renderAjax('index', [
+                        'mode' => 'shiftView',
+                        'shiftId' => $shiftId,
+                        'store' => $user->storeCurrent
+            ]);
+        } else {
+            return $this->render('index', [
+                        'mode' => 'shiftView',
+                        'shiftId' => $shiftId,
+                        'store' => $user->storeCurrent
+            ]);
+        }
     }
 
     /**
      * Events
      */
-    public function actionGetEvents()
-    {
+    public function actionGetEvents() {
         $request = \Yii::$app->getRequest();
         $start = $request->post('start');
         $end = $request->post('end');
@@ -174,4 +150,5 @@ class ShiftsCalendarController extends BaseController
 
         return Json::encode(compact('events', 'shiftId', 'unconfirmedShifts'));
     }
+
 }

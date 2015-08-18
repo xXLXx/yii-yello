@@ -1,4 +1,4 @@
-console.log(123);
+
 var StoreInviteDriverSearchWidget = {
     
     data: {},

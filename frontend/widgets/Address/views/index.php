@@ -20,4 +20,6 @@
     <?= Html::activeHiddenInput($model, 'longitude'); ?>
     <?= Html::activeHiddenInput($model, 'googleplaceid'); ?>
     <?= Html::activeHiddenInput($model, 'googleobj'); ?>
+    <?= Html::activeHiddenInput($model, 'utcOffset'); ?>
+    <?= Html::activeHiddenInput($model, 'timezone'); ?>
 </div>

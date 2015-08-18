@@ -88,6 +88,10 @@ class BaseController extends Controller
                     [
                         'allow' => false,
                         'matchCallback' => function ($rule, $action) {
+                            if (\Yii::$app->user->isGuest) {
+                                return false;
+                            }
+
                             $user = \Yii::$app->user->identity;
                             $role = $user->role;
 
@@ -106,6 +110,11 @@ class BaseController extends Controller
                                 return true;
                             }
 
+                            // Completed driver signup will be denied access
+                            if ($role->name == Role::ROLE_DRIVER && $user->signup_step_completed == \Yii::$app->params['driver.signup_completion_step']) {
+                                return true;
+                            }
+
                             return false;
                         }
                     ],
@@ -115,9 +124,15 @@ class BaseController extends Controller
                     ],
                 ],
 
+                // Guest are not redirected here, we let each controller handle that.
                 'denyCallback' => function ($rule, $action) {
+                    $user = \Yii::$app->user->identity;
                     if (\Yii::$app->user->isGuest) {
                         \Yii::$app->user->loginRequired();
+                    } elseif ($user->role->name == Role::ROLE_DRIVER
+                        && $user->signup_step_completed == \Yii::$app->params['driver.signup_completion_step']) {
+                        \Yii::$app->user->logout();
+                        \Yii::$app->getResponse()->redirect(['/driver/index']);
                     } else {
                         $user = \Yii::$app->user->identity;
                         $role = $user->role;

@@ -18,17 +18,11 @@ class CompanyDetailsController extends BaseController
     {
         $post = \Yii::$app->request->post();
         $companyForm = new CompanyForm();
-        if ($companyForm->load($post)) {
-            if ($companyForm->validate()) {
-                $companyForm->save();
-            }
-        } else {
-            // TODO: change code to get info rom new tables:
-            // 
-            
+        if (!$companyForm->load($post) || !$companyForm->save()) {
             $user = \Yii::$app->user->identity;
             $companyForm->setData($user);
         }
+
         return $this->render('index', [
             'model'     => $companyForm
         ]);

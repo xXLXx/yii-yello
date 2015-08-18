@@ -59,6 +59,9 @@ class ShiftForm extends Model
      */
     public function validateDateRange()
     {
+        if(!$this->date){
+            return false;
+        }
 
         $startDateTime = \DateTime::createFromFormat('d-m-Y H:i', $this->date." ".$this->start);
         $startDateTimestamp = $startDateTime->getTimestamp();

@@ -137,23 +137,89 @@ class Shiftsavailable extends \yii\db\ActiveRecord
      */
     public function search($params = [])
     {
-        if (empty($params['driverId']) || empty($params['latitude']) || empty('longitude')) {
+        if (empty($params['driverId']) || empty($params['latitude']) || empty($params['longitude'])) {
             return false;
         }
 
         $query = static::find();
         $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
-        $query->andWhere(new Expression('(latitude-'.$params['latitude'].'+longitude-'.$params['longitude'].' < 0.2)'));
-
+        $query->andWhere(['OR',
+            ['isYelloDrivers' => 1],
+            ['isMyDrivers' => 1, 'storeId' => $params['my']],
+            ['isFavourites' => 1, 'storeId' => $params['fav']]
+        ]);
+        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
+        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
+        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
         return new ActiveDataProvider([
             'query' => $query,
         ]);
     }
+    
+    /**
+     * Filter shifts by driver and within a proximity.
+     *
+     * @param array $params
+     *
+     * @return \yii\data\ActiveDataProvider
+     */
+    public function searchyello($params = [])
+    {
+        if (empty($params['driverId']) || empty($params['latitude']) || empty('longitude')) {
+            return false;
+        }
+
+        $query = static::find();
+        $query->andWhere(['AND',['thedriverid' => 0],['isYelloDrivers'=>1]]);
+        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
+        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }    
+    
+    
+    /**
+     * Filter shifts by driver and within a proximity.
+     *
+     * @param array $params
+     *
+     * @return \yii\data\ActiveDataProvider
+     */
+    public function searchmine($params = [])
+    {
+        if (empty($params['driverId']) || empty($params['latitude']) || empty('longitude')) {
+            return false;
+        }
+
+        $query = static::find();
+        $query->andWhere(['thedriverid' => $params['driverId']]);
+        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
+        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }    
+    
+    
+        
+    
 
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getStore()
+    {
+        return $this->hasOne(\api\modules\v1\models\Store::className(), ['id' => 'storeId']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDriverHasStore()
     {
         return $this->hasOne(\api\modules\v1\models\Store::className(), ['id' => 'storeId']);
     }
