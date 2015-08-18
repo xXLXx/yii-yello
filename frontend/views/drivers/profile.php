@@ -7,7 +7,7 @@ $driverId = $driver->id;
 ?>
  <div class="two-column">
         <div class="col-left f-left">
-            <h2><a class="gray-text" href="drivers.html">Drivers /</a> Driver profile</h2>
+            <h2><a class="gray-text" href="/drivers">Drivers /</a> Driver profile</h2>
             <div class="info-panel blue f-right">
                 <span class="info-link" title="Info"></span>
                 <div class="info-popup">
@@ -77,7 +77,7 @@ $driverId = $driver->id;
                         <?php if ($driver->vehicle):?>
                             <?= $driver->vehicle->vehicleType->title ?>
                             (<?= $driver->vehicle->model ?>, <?= $driver->vehicle->year ?>, <?= $driver->vehicle->registration; ?>)
-                            <?php if($connected){ ?>
+                            <?php if($connected && $driver->vehicle->image){ ?>
                             <a href="<?= $driver->vehicle->image->originalUrl ?>" class="j_colorbox_photo">View</a>
                             <?php } ?>
                         <?php else: ?>

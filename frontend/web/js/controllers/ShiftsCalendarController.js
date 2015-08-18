@@ -150,7 +150,7 @@ var ShiftsCalendarController = {
 //        });
 
 
-        $('#js-shift-add-bth').on('click touchend', function(e) {
+        $('#shift-add-bth').on('click touchend', function(e) {
             e.preventDefault();
             $.pjax({
                 url: '/shifts-calendar/shift-add',

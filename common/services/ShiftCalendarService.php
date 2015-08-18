@@ -22,6 +22,9 @@ class ShiftCalendarService extends BaseService
     public static function getEvents($data)
     {
         $result = [];
+        
+//           $date = new \DateTime();
+        
         $shifts = Shift::find()
             ->with('applicants')
             ->andWhere(['>=', 'start', $data['start']])
@@ -55,8 +58,14 @@ class ShiftCalendarService extends BaseService
             //$active = ($shift->id == $shiftId) ? " active" : "";
 
 
-            $now=  new \DateTime;
-            if($startDateTime<$now && $shift->shiftStateId == $pendingState->id ){
+
+
+            $now = date("Y-m-d H:i:s");
+            $time = strtotime($now);
+            $time = $time - (30 * 60);
+            $startDate = date("Y-m-d H:i:s", $time);                 
+            
+            if($startDateTime<$startDate && $shift->shiftStateId == $pendingState->id ){
                 // ignore unused shifts
             }else{
 

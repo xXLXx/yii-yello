@@ -204,8 +204,12 @@ class ShiftSearch extends Shift
 
 
         if (isset($this->startsAfterNow)) {
-           $date = new \DateTime();
-             $startDate = $date->format('Y-m-d H:i:s');
+//           $date = new \DateTime();
+
+            $date = date("Y-m-d H:i:s");
+            $time = strtotime($date);
+            $time = $time - (30 * 60);
+            $startDate = date("Y-m-d H:i:s", $time);           
             $query->andWhere([
                 '>','start',$startDate
             ]);
