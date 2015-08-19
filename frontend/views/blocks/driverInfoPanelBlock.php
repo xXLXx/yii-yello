@@ -9,6 +9,6 @@
 </div>
 <div class="user-photo-container f-left">
   
-    <img src="<?= $driver->imageId  ? '/upload/images/'.$driver->imageId.'-thumb.jpg'   : '/img/Driver_Pic_bgrey_black.png' ?>"
+    <img src="<?= $driver->imageId  ? $driver->image->thumbUrl   : '/img/Driver_Pic_bgrey_black.png' ?>"
         alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
 </div>
