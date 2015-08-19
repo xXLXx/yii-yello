@@ -44,9 +44,10 @@ var TrackingMapController = {
             // }, 30000);
             context.initActiveDrivers();
 
-            setInterval(function () {
-                context.clearInactiveDrivers();
-            }, context.data.inactiveDriverTimeout);
+            // Dont call this for now. We'll be listening to 'stillClockedOn' (string) field sent by app
+            // setInterval(function () {
+            //     context.clearInactiveDrivers();
+            // }, context.data.inactiveDriverTimeout);
 
             // Add store marker
             new google.maps.Marker({
@@ -149,18 +150,26 @@ var TrackingMapController = {
                     context.mapDrivers[mapDriversCurrentIdx].state = m;
                     context.mapDrivers[mapDriversCurrentIdx].lastUpdate = new Date();
                     var position = new google.maps.LatLng(m.lat, m.lng);
-                    if (context.mapDrivers[mapDriversCurrentIdx].marker) {
-                        context.mapDrivers[mapDriversCurrentIdx].marker.setPosition(position);
+                    // Check if marker is on shift on current store
+                    if (Number(m.store_id) == context.data.store.id) {
+                        if (context.mapDrivers[mapDriversCurrentIdx].marker) {
+                            context.mapDrivers[mapDriversCurrentIdx].marker.setPosition(position);
+                        } else {
+                            context.mapDrivers[mapDriversCurrentIdx].marker = new google.maps.Marker({
+                                position: position,
+                                map: context.map,
+                                icon: {
+                                    url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id,
+                                    scaledSize: new google.maps.Size(45, 50)
+                                },
+                                optimized: false
+                            });
+                        }
                     } else {
-                        context.mapDrivers[mapDriversCurrentIdx].marker = new google.maps.Marker({
-                            position: position,
-                            map: context.map,
-                            icon: {
-                                url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id,
-                                scaledSize: new google.maps.Size(45, 50)
-                            },
-                            optimized: false
-                        });
+                        if (context.mapDrivers[mapDriversCurrentIdx].marker) {
+                            context.mapDrivers[mapDriversCurrentIdx].marker.setMap(null);
+                            context.mapDrivers[mapDriversCurrentIdx].marker.marker = null;
+                        }
                     }
 
                     console.log('driver_' + context.mapDrivers[mapDriversCurrentIdx].driver.id);
