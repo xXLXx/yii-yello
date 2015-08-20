@@ -40,7 +40,10 @@ class UserController extends \api\common\controllers\UserController
                 'accessToken' => \Yii::$app->user->identity->accessToken,
             ];
         } else {
-            return $model->getErrors();
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
+            $response->data['message'] = $model->getErrors();
+            return $response;
         }
     }
 
@@ -91,7 +94,7 @@ class UserController extends \api\common\controllers\UserController
                 ];
             } else {
                     $response = Yii::$app->getResponse();
-                   $response->setStatusCode(400);                
+                    $response->setStatusCode(400);
                     $response->data['message'] = $model->getErrors();
                     return $response;
                 }
@@ -115,7 +118,7 @@ class UserController extends \api\common\controllers\UserController
             $response->setStatusCode(204);
         } else {
             $response->setStatusCode(400);
-            $response->data['message'] = $model->getErrors('email');
+            $response->data['message'] = $model->getErrors();
         }
         return $response;
     }
