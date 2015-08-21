@@ -13,6 +13,7 @@ var DriverNote = {
         deleteNoteSelector: '.j_note_delete',
         noteUrl: '/drivers/note',
         deleteNoteUrl: '/drivers/remove-note',
+        rotatePhotoUrl: '/drivers/rotate-photo'
     },
 
     /**
@@ -73,6 +74,39 @@ var DriverNote = {
                         $(".j_add_note_link").addClass('hidden');
                         return;
                     }
+                },
+                dataType: 'json'
+            });
+        });
+
+
+
+        $(document).on('click', '.j_photo_rotate', function (e) {
+            e.preventDefault();
+            driverId = $(this).data('driverid');
+            $this = $(this);
+            $.ajax({
+                type: 'GET',
+                url: self.options.rotatePhotoUrl,
+                data: {id: driverId},
+                success: function (data) {
+                    if(data.success){
+                        alert('Image Rotated');
+                    } else {
+                        alert('Image rotation failed!');
+                    }
+                   /* if (data.search('success') != -1) {
+                        var html = $('.success_message', data).html();
+                        $('.j_add_note_link .note-item').html(html);
+                        $(".j_colorbox").colorbox.close();
+                        $(".j_add_note_link").removeClass('hidden');
+                        return;
+                    }
+
+                    var html = $('#contact-form', $(data)).html();
+                    $('#contact-form').html(html);
+                    $(".j_colorbox").colorbox.resize();*/
+
                 },
                 dataType: 'json'
             });
