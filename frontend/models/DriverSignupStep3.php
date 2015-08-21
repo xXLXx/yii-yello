@@ -39,7 +39,7 @@ class DriverSignupStep3 extends Model
         return [
             [
                 [
-                    'isAvailableToWork', 'companyName', 'registeredForGST', 'ABN', 'bankName', 'bsb', 'accountNumber', 'agreedDriverTandC'
+                    'isAvailableToWork', 'bankName', 'bsb', 'accountNumber', 'agreedDriverTandC'
                 ],
                 'required'
             ],

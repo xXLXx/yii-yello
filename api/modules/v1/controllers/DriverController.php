@@ -36,12 +36,12 @@ class DriverController extends \api\common\controllers\DriverController
     {
         $model = new DriverForm();
         $post = \Yii::$app->request->post();
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'HERE IS THE PERSONAL INFO CONTROLLER' . PHP_EOL, FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('postPersonal' . PHP_EOL, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('Files' . PHP_EOL, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export($_FILES, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('Info' . PHP_EOL, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'now the post...' . PHP_EOL, FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'HERE IS THE PERSONAL INFO CONTROLLER' . PHP_EOL, FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('postPersonal' . PHP_EOL, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('Files' . PHP_EOL, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export($_FILES, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export('Info' . PHP_EOL, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'now the post...' . PHP_EOL, FILE_APPEND);
         
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.var_export($post, true), FILE_APPEND);
         if ($model->load($post)) {
@@ -68,9 +68,9 @@ class DriverController extends \api\common\controllers\DriverController
     {
         $model = new VehicleForm();
         $post = \Yii::$app->request->post();
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL. 'Here is the vehicle info controller' . PHP_EOL, FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt',  PHP_EOL.var_export($_FILES, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt',  PHP_EOL.var_export($post, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL. 'Here is the vehicle info controller' . PHP_EOL, FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt',  PHP_EOL.var_export($_FILES, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt',  PHP_EOL.var_export($post, true), FILE_APPEND);
         if ($model->load($post)) {
             if ($model->validate()) {
                 file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', 'Save Successful' . PHP_EOL, FILE_APPEND);
@@ -88,9 +88,9 @@ class DriverController extends \api\common\controllers\DriverController
     {
         $model = new WorkDetailsForm();
         $post = \Yii::$app->request->post();
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', 'Here is the work detail controller' . PHP_EOL, FILE_APPEND);
-       // file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($_FILES, true), FILE_APPEND);
-        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($post, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', 'Here is the work detail controller' . PHP_EOL, FILE_APPEND);
+//       // file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($_FILES, true), FILE_APPEND);
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($post, true), FILE_APPEND);
         if ($model->load($post)) {
             if ($model->validate()) {
                 $model->save();
