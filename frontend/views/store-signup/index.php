@@ -13,11 +13,13 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
 
        
 
-<h2 class="center">Few steps to start using Yello</h2>
+<h2 class="center">Welcome</h2>
 
-<div class="gray-text center">Lorem ipsum dolor sit amet, consectetur adipscing elit.<br>Maecenas ut tellus est. Donec ut eros magna.
-        </div>
 <center>
+    <div class="gray-text center" style="max-width:700px;">
+        To get you and your stores set up on Yello we need to get some info first. First step is to set up the primary company account.
+        Once logged in you will be able to add more companies if you have more than one company that owns several stores.
+    </div>
                 <div style="max-width:700px;border:1px solid #bcc0c1; border-radius:6px;position:relative;margin-top:30px;text-align: left;">
 
                     <div class="create-header" style="background:#f6f6f6;">
@@ -42,7 +44,7 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                             <div class="col col-md-6 col-lg-6">
                                 <div class="col col-md-10">
                                 <h3>Contact Details</h3>
-                                <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                                <div class="gray-text"><p>Please enter the contact details of primary company used in the account. That is the details of the company being invoiced. You will be able set up store details later in the process</p></div>
                                 </div>
                             </div>
                             <div class="col col-md-6 col-lg-6">
@@ -62,7 +64,7 @@ $this->title = \Yii::t('app', 'Store Owner Signup');
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
                                 <h3>Address</h3>
-                                <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                                <div class="gray-text"><p>Please enter the primary company address</p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>

@@ -19,11 +19,12 @@ $wholerow = ['options' => ['class' => '']];
 
 
 
-<h2 class="center">Few steps to start using Yello</h2>
-
-<div class="gray-text center">Lorem ipsum dolor sit amet, consectetur adipscing elit.<br>Maecenas ut tellus est. Donec ut eros magna.
-</div>
+<h2 class="center">How will you be paying for your Yello account</h2>
 <center>
+<div class="gray-text center" style="max-width:700px;">Please provide your primary credit card details associated to your primary account. You will be able to add additional credit cards once you are set up to assign to different stores if you have multiple stores.
+
+</div>
+
     <div style="max-width:700px;border:1px solid #bcc0c1; border-radius:6px;position:relative;margin-top:30px;text-align: left;">
 
         <div class="create-header">
@@ -56,7 +57,7 @@ $wholerow = ['options' => ['class' => '']];
                 <div class="col col-md-6 col-lg-6">
                     <div class="col col-md-10">
                         <h3>Card Details</h3>
-                        <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                        <div class="gray-text"><p>Please proved the credit details associated to your primary company account.</p></div>
                         <div class="help-block help-block-error error-message payment-errors"></div>
                     </div>
                 </div>
@@ -98,7 +99,7 @@ $wholerow = ['options' => ['class' => '']];
                             <div class="col col-md-6 col-lg-6">
                                 <div class="col col-md-10">
                                 <h3>Billing Address</h3>
-                                <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                                <div class="gray-text"><p>Please provide details of the address associated to credit card above.</p></div>
                                 <div class="help-block help-block-error error-message" id="address-errors"></div>
                                 </div>
                             </div>

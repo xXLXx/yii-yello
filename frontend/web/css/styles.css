@@ -549,6 +549,7 @@ a.blue-text {text-decoration:none;}
             .user-menu .item h4 {font-size:11px; margin:3px 0 1px;}
             .user-menu .item .store-select {margin:0 0 0 -6px;}
             .user-photo-container {border-radius:4px; overflow:hidden; width:40px; height:40px;}
+            .user-photo-container.big {border-radius:4px; overflow:hidden; width:120px; height:120px;}
             .user-photo-container .blocked {position: absolute; left: 0px; top: 0px; width: 80px; height: 80px; border-radius: 80px; background:url('../img/photo-lock.png');}
             .user-photo-container .blocked[class*='font-'] {line-height:100px; color:#d4d4d4;}
                 .user-photo-container .blocked[class*='font-']:before {font-size:30px;}
@@ -559,7 +560,7 @@ a.blue-text {text-decoration:none;}
                 .user-photo-info span {display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis;}
                 .user-photo-info .gray-text {font-weight:400; font-size:13px;}
                     .user-photo-info .gray-text a {color:#979797; text-decoration:none;}
-
+            .field-driversignupstep1-personalprofile label{display: none}
 
 /* Sidebar menu */
 .sidebar-menu {margin:0 0 8px; padding:7px 0 0;}
