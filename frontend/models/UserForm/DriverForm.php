@@ -35,9 +35,7 @@ class DriverForm extends UserForm
             ['lastName', 'required',
                 'message' => \Yii::t('app', 'Please enter your Last Name.')
             ],
-            ['personalProfile', 'required',
-                'message' => \Yii::t('app', 'Please enter your Personal Profile.')
-            ],
+
             [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
 //            [['formatted_address'],'string','max'=>1500],
 //            [['googleobj'],'string','max'=>4000],
