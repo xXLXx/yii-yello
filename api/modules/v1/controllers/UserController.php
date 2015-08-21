@@ -40,7 +40,10 @@ class UserController extends \api\common\controllers\UserController
                 'accessToken' => \Yii::$app->user->identity->accessToken,
             ];
         } else {
-            return $model->getErrors();
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(400);
+            $response->data['message'] = $model->getErrors();
+            return $response;
         }
     }
 

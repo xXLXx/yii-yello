@@ -54,12 +54,24 @@ class RequestReviewController extends \api\common\controllers\RequestReviewContr
             $requestReview->title = 'Driver Response';
             $requestReview->text = $comment;
             $requestReview->save();
-            // also need to change the driver's delivery sumission amount
+            // also need to change the driver's delivery submission amount
 
             return Shift::findOne($shiftId);
         }
 
-        throw new BadRequestHttpException();
+        //throw new BadRequestHttpException();
+        $response = Yii::$app->getResponse();
+        $response->setStatusCode(400);
+        if(!$shiftId){
+            $message['shiftId'][] = "ShiftId is required.";
+        }
+        if(!$deliveryCount){
+            $message['deliveryCount'][] = "deliveryCount is required.";
+        }
+
+
+        return compact('message');
+
     }
 
 }
