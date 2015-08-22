@@ -145,7 +145,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
-        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
+        $query->orderBy(['start'=>SORT_ASC]);
         return new ActiveDataProvider([
             'query' => $query,
         ]);
