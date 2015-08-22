@@ -231,7 +231,9 @@ class SignupStoreFirstStore extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
-            $user->signup_step_completed = 3;
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
             $user->save(false);
             if($updateimageid){
                 $store->imageId=$image->id;

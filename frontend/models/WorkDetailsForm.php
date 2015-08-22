@@ -50,7 +50,9 @@ class WorkDetailsForm extends Model
         if($this->companyName==null){
         }
         $company->save();
-        $user->signup_step_completed = 3;
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
         $user->save();
 
     }
