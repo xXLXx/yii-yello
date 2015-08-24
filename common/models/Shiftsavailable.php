@@ -146,6 +146,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->orderBy(['start'=>SORT_ASC]);
+//        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
         return new ActiveDataProvider([
             'query' => $query,
         ]);

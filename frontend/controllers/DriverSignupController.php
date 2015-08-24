@@ -53,7 +53,9 @@ class DriverSignupController extends BaseController
                         $user->imageId = $this->saveImage($driversignupform, 'imageFile');
                     }
                     // save address
-                    $user->signup_step_completed = 1;
+                    if($user->signup_step_completed<1){
+                        $user->signup_step_completed = 1;
+                    }
                     $user->save();
                     return \Yii::$app->getResponse()->redirect(['/driver-signup/vehicle-info']);
 //                } else {

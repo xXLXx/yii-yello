@@ -1,6 +1,7 @@
 <?php
 namespace frontend\widgets;
 
+use common\models\Store;
 use yii\base\Widget;
 use common\models\User;
 use common\models\Role;
@@ -19,15 +20,14 @@ class TopNavigation extends Widget
      */
     public function run()
     {
-        $now = new \DateTime();
-        $time = \Yii::$app->formatter->asDate($now, 'php:g:i A');
-        $date = \Yii::$app->formatter->asDate($now);
         $user = \Yii::$app->user->identity;
+        $store = $user->StoreCurrent;
+        $timezone = $store->timezone;
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
         $menuItems = $this->getMenuItems($user);
 
         return $this->render('topNavigation', [
             'date' => $date,
-            'time' => $time,
             'user' => $user,
             'menuItems' => $menuItems,
             'context' => $this,

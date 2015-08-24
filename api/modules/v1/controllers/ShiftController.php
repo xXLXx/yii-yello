@@ -11,6 +11,7 @@ use common\models\search\ShiftSearch;
 use common\models\ShiftHasDriver;
 use common\models\Shiftsavailable;
 use yii\data\ActiveDataProvider;
+use yii\web\BadRequestHttpException;
 
 /**
  * Class ShiftController
@@ -95,6 +96,11 @@ class ShiftController extends \api\common\controllers\ShiftController
         $driverId = $this->getDriverId();
         $latitude = \Yii::$app->request->get('latitude');
         $longitude = \Yii::$app->request->get('longitude');
+
+        if (empty($latitude) || empty($longitude)) {
+            throw new BadRequestHttpException('Latitude and longitude are required.');
+        }
+
         $model = new Shiftsavailable();
 
         return $model->search(compact('driverId', 'latitude', 'longitude'));

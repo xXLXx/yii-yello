@@ -29,6 +29,9 @@ use yii\data\ActiveDataProvider;
  * @property Image $image
  * @property Storeowner $storeOwner
  * @property Userhasstore[] $userhasstores
+ * @property Address $address
+ * @property StoreAddress $storeAddress
+ * @property string $timezone
  */
 class Store extends BaseModel
 {
@@ -144,6 +147,16 @@ class Store extends BaseModel
     public function getStoreAddress()
     {
         return $this->hasOne(StoreAddress::className(), ['storefk' => 'id']);
+    }
+
+    /**
+     * Retrieve timezone from its address.
+     *
+     * @return string timezone
+     */
+    public function getTimezone()
+    {
+        return $this->address->timezone;
     }
 
     /**

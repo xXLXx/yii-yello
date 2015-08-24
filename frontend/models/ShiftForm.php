@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use common\helpers\TimezoneHelper;
+use common\models\Store;
 use yii\base\Model;
 use common\models\Shift;
 
@@ -165,17 +167,14 @@ class ShiftForm extends Model
     public function setData($shift)
     {
         $this->setAttributes($shift->getAttributes());
+        $timezone = $shift->store->timezone;
         if ($shift->start) {
-            $start = \DateTime::createFromFormat(
-                'Y-m-d H:i:s', $shift->start
-            );
+            $start = TimezoneHelper::convertFromUTC($timezone, $shift->start);
             $this->date = $start->format('d-m-Y');
             $this->start = $start->format('H:i');
         }
         if ($shift->end) {
-            $end = \DateTime::createFromFormat(
-                'Y-m-d H:i:s', $shift->end
-            );
+            $end = TimezoneHelper::convertFromUTC($timezone, $shift->end);
             $this->end = $end->format('H:i');
         }
         $this->driverId = $shift->drivers ? $shift->drivers[0]['id'] : 0;
@@ -215,11 +214,12 @@ class ShiftForm extends Model
                 return $shift;
             }
         }
+        $timezone = Store::findOne($this->storeId)->timezone;
         $shift->setAttributes($this->getAttributes());
-        $date = \DateTime::createFromFormat('d-m-Y', $this->date);
-        $dateFormated = $date->format('Y-m-d');
-        $shift->start = $dateFormated . ' ' . $this->start;
-        $shift->end = $this->end_date . ' ' . $this->end;
+        $dateStart = \DateTime::createFromFormat('d-m-Y H:i', $this->date.' '.$this->start, new \DateTimeZone($timezone));
+        $dateEnd = \DateTime::createFromFormat('d-m-Y H:i', $this->date.' '.$this->end, new \DateTimeZone($timezone));
+        $shift->start = TimezoneHelper::convertToUTC($timezone, $dateStart)->format('Y-m-d H:i:s');
+        $shift->end = TimezoneHelper::convertToUTC($timezone, $dateEnd)->format('Y-m-d H:i:s');
         $shift->save();
         if ($this->driverId) {
             $shift->setStateAllocated($this->driverId);

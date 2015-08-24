@@ -39,7 +39,7 @@ class DriverSignupStep3 extends Model
         return [
             [
                 [
-                    'isAvailableToWork', 'companyName', 'registeredForGST', 'ABN', 'bankName', 'bsb', 'accountNumber', 'agreedDriverTandC'
+                    'isAvailableToWork', 'bankName', 'bsb', 'accountNumber', 'agreedDriverTandC'
                 ],
                 'required'
             ],
@@ -115,8 +115,10 @@ class DriverSignupStep3 extends Model
                 $this->addError(key($error), current($error));
                 throw new \yii\db\Exception(current($error));
             }
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
 
-            $user->signup_step_completed = 3;
             $user->save(false);
 
             $transaction->commit();
