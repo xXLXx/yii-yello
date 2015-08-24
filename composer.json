@@ -18,8 +18,6 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "bower-asset/jquery": "2.*",
-        "bower-asset/jquery-micrate": "1.2.*",
         "bower-asset/yii2-pjax":"2.*",
         "yiisoft/yii2-imagine": "~2.0.0",
         "yiisoft/yii2-apidoc": "~2.0.0",
@@ -27,7 +25,8 @@
         "bower-asset/BootstrapDialog":"*",
         "kartik-v/yii2-widgets": "dev-master",
         "kartik-v/yii2-widget-rating": "*",
-        "stripe/stripe-php": "2.*"
+        "stripe/stripe-php": "2.*",
+        "jovanialferez/yii2-s3": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

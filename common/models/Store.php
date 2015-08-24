@@ -156,7 +156,7 @@ class Store extends BaseModel
      */
     public function getTimezone()
     {
-        return $this->address->timezone;
+        return !empty($this->address->timezone) ? $this->address->timezone : 'Australia/Sydney';
     }
 
     /**

@@ -530,6 +530,7 @@ class Shift extends BaseModel
                     ShiftState::STATE_DISPUTED,
                     ShiftState::STATE_COMPLETED,
                     ShiftState::STATE_PENDING_PAYMENT,
+                    ShiftState::STATE_UNDER_REVIEW,
                 ]
             ])
             ->select('id')
