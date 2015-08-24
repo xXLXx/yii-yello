@@ -49,7 +49,7 @@ class DriverSignupStep1 extends Model
         return [
             [
                 [
-                    'emergencyContactName', 'emergencyContactPhone', 'personalProfile'
+                    'emergencyContactName', 'emergencyContactPhone'
                 ],
                 'required'
             ],

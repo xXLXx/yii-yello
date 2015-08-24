@@ -158,7 +158,9 @@ class StoreSignupForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
-            $user->signup_step_completed = 1;
+                    if($user->signup_step_completed<1){
+                        $user->signup_step_completed = 1;
+                    }
             $user->save(false);
 
             $transaction->commit();

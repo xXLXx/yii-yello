@@ -78,7 +78,9 @@ class SignupStorePaymentDetails extends Model
         $company = Company::findOne(['id' => $this->companyId]);
         $company->stripeid = $this->stripeId;
 
-        $user->signup_step_completed = 3;
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
         $user->save(false);
 
         return $company->save(false);

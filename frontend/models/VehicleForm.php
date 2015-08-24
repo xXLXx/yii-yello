@@ -92,7 +92,9 @@ class VehicleForm extends Model
         $this->licensePhoto = $vehicle->licensePhoto;
         $this->vehiclePhoto = $vehicle->image;
         $userDriver->save();
-        $user->signup_step_completed = 1;
+                    if($user->signup_step_completed<2){
+                        $user->signup_step_completed = 2;
+                    }
         $user->save();
 //        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->toArray(), true), FILE_APPEND);
 //        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($vehicle->getErrors(), true), FILE_APPEND);

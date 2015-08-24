@@ -115,8 +115,10 @@ class DriverSignupStep3 extends Model
                 $this->addError(key($error), current($error));
                 throw new \yii\db\Exception(current($error));
             }
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
 
-            $user->signup_step_completed = 3;
             $user->save(false);
 
             $transaction->commit();

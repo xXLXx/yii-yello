@@ -47,8 +47,12 @@ class WorkDetailsForm extends Model
         $company->ABN=$this->abn;
         $company->registeredForGST=$this->registeredForGst;
         $company->companyName=$this->companyName;
+        if($this->companyName==null){
+        }
         $company->save();
-        $user->signup_step_completed = 3;
+                    if($user->signup_step_completed<3){
+                        $user->signup_step_completed = 3;
+                    }
         $user->save();
 
     }
