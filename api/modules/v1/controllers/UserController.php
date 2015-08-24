@@ -36,6 +36,16 @@ class UserController extends \api\common\controllers\UserController
     {
         $model = new LoginForm();
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
+//                       $user = \Yii::$app->user->identity;
+//                       $role = $user->role;
+//                            if ($role->name != Role::ROLE_DRIVER) {
+//                            $response = Yii::$app->getResponse();
+//                            $response->setStatusCode(400);
+//                            $response->data['message'] = 'User is not a driver';
+//                            return $response;
+//                                
+//                            }
+//            
             return [
                 'accessToken' => \Yii::$app->user->identity->accessToken,
             ];

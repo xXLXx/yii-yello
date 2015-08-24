@@ -15,7 +15,7 @@ use frontend\widgets\UserMenu\UserMenuWidget;
         <div class="logo-container">
             <?= Html::a(Yii::t('app', 'Yello'), ['/'], ['class' => 'logo']); ?>
         </div>
-        <div class="date-info"><span class="gray-text" id="todaysdate"><?= $date ?> </span><span id="todaystime"><?= $time ?></span></div>
+        <div class="date-info"><span class="gray-text" id="todaysdate"><?= $date->format('M d, Y'); ?> </span><span id="todaystime"><?= $date->format('h:i A'); ?></span></div>
         <div class="main-menu">
             <?php foreach( $menuItems as $item ): ?>
 
