@@ -20,7 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php endif; ?>
             <br/>
-            <?= Html::a(\Yii::t('app', 'Ok'), ['/site/login'], ['class' => 'btn blue']); ?>
+            <?= Html::a(\Yii::t('app', 'Go to Login'), ['/site/login'], ['class' => 'btn blue']); ?>
+
+            <div class="center">
+                <br/>
+                <?=
+                Html::a(\Yii::t('app', 'Resend verification link'), ['site/resend-verification-link/', 'user_email' => 'lalit.jhandai@gmail.com'], [
+                    'class' => 'gray-text'
+                ]);
+                ?>
+            </div>
         </div>
+    </div>
+    <div class="sign-up-info">
+        <?= \Yii::t('app', 'Don\'t have an account?'); ?>
+        <?= Html::a(\Yii::t('app', 'Sign Up'), ['site/signup']); ?>
     </div>
 </div>

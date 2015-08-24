@@ -560,7 +560,7 @@ a.blue-text {text-decoration:none;}
                 .user-photo-info span {display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis;}
                 .user-photo-info .gray-text {font-weight:400; font-size:13px;}
                     .user-photo-info .gray-text a {color:#979797; text-decoration:none;}
-
+            .field-driversignupstep1-personalprofile label{display: none}
 
 /* Sidebar menu */
 .sidebar-menu {margin:0 0 8px; padding:7px 0 0;}

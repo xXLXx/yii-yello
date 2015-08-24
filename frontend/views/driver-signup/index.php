@@ -12,7 +12,7 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
 
 
 <h2 class="center">Welcome!</h2>
-<div class="gray-text center">To get started on Yello you must first complete the following steps:
+<div class="gray-text center">To get started on Yello you must first provide some information so we can set up your driver account.
 
 </div>
 
@@ -46,7 +46,7 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
                                 <h3>Address</h3>
-                                <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                                <div class="gray-text"><p>Start entering your home address in the top field and let Google help you find your address.</p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                         <div class="row">
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
-                                <h3>Emergency Contact Person</h3>
-                                <div class="gray-text"><p>Please add an emergency contact person.</p></div>
+                                <h3>Emergency</h3>
+                                <div class="gray-text"><p>Please provide a name and phone number of someone we should contact in case of an emergency.</p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>
@@ -84,12 +84,12 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
                                 <h3>Personal Profile</h3>
-                                <div class="gray-text"><p>Please tell us about yourself as a driver.</p></div>
+                                <div class="gray-text"><p>Please upload a profile pic that is recognisable as this will appear on your public profile and appear on store maps when you are completing deliveries. Good photos increase your chances of getting work.</p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'personalProfile')->textarea(); ?>
+
 
                                 <div class="input-block">
                                     <div class="company-logo">
@@ -97,7 +97,7 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                                             <img class="j_image-file-destination" src="" />
                                         </div>
                                         <div class="company-info">
-                                            <h5>Photo</h5>
+                                            <h5>Profile pic</h5>
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
                                                 <div class="link-icon font-picture-streamline blue-text">Upload Photo</div>
@@ -115,9 +115,25 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="width:90%;margin:30px;">
 
 
-
+                    <div class="create-body">
+                        <div class="row">
+                            <div class="col col-md-12">
+                                <div class="col col-md-10">
+                                    <h3>Personal Profile</h3>
+                                    <div class="gray-text"><p>Tell us a little bit about yourself and why you like being a delivery driver</p></div>
+                                    <div class="error-summary"></div>
+                                </div>
+                            </div>
+                            <div class="col col-md-12">
+                                <div class="col col-md-12">
+                                    <?php echo $form->field($model, 'personalProfile')->textarea(); ?>
+                                </div>
                             </div>
                         </div>
                     </div>

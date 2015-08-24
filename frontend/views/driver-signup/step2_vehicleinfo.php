@@ -16,10 +16,8 @@ $this->registerJs('ImageUploadPreview.init({
 
 
 
-<h2 class="center">Welcome!</h2>
-<div class="gray-text center">To get started on Yello you must first complete the following steps:
-
-</div>
+<h2 class="center">Tell us about your ride</h2>
+<div class="gray-text center">Now tell us a little bit about what you ride and drive.</div>
 
 <center>
                 <div style="max-width:700px;border:1px solid #bcc0c1; border-radius:6px;position:relative;margin-top:30px;text-align: left;">
@@ -52,7 +50,8 @@ $this->registerJs('ImageUploadPreview.init({
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
                                 <h3>Your Vehicle</h3>
-                                <div class="gray-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut tellus est. Donec ut eros magna.</p></div>
+                                <div class="gray-text"><p>Do you deliver using a motor cycle or a car. Its important that its road worthy. Please provide some details about your ride and a pic of your vehicle ( if you don’t have a car pic available you can add one later in the app)
+                                    </p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>
@@ -102,7 +101,8 @@ $this->registerJs('ImageUploadPreview.init({
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
                                 <h3>Driver's License</h3>
-                                <div class="gray-text"><p>Please provide a scan of  your drivers license.</p></div>
+                                <div class="gray-text"><p>To be a Yello driver you have to have held your full license for at least 12 months (Green p’s). Please provide details and a pic of your driver’s license
+                                    </p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>

@@ -181,6 +181,48 @@ class SiteController extends BaseController
         return $this->render('verification');
     }
 
+    public function actionResendVerificationLink($user_email){
+
+        $loginForm = new LoginForm();
+        $loginForm->email = $user_email;
+
+        $user = $loginForm->getInActiveUser();
+        if(!$user){
+            return Yii::$app->getResponse()->redirect(
+                ['site/login']
+            );
+        }
+
+        $email = Yii::$app->mailer->compose()
+            ->setTo($user->email)
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setSubject('Signup Confirmation')
+            ->setHtmlBody(
+                "Click this link " . Html::a(
+                    'Confirm',
+                    Yii::$app->urlManager->createAbsoluteUrl(
+                        [
+                            'site/confirm',
+                            'id'  => $user->id,
+                            'key' => $user->authKey
+                        ]
+                    ),
+                    ['target' => '_blank']
+                )
+            )
+            ->send();
+        if ($email) {
+            Yii::$app->getSession()->setFlash('success','Please verify your email address. Email with instructions to activate your account was sent, check your email.');
+        }
+        else {
+            Yii::$app->getSession()->setFlash('success','Failed, contact admin.');
+        }
+        return Yii::$app->getResponse()->redirect(
+            ['site/verification']
+        );
+
+    }
+
     public function actionActivation()
     {
         return $this->render('activation');

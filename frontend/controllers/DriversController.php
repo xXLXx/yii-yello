@@ -4,12 +4,14 @@ namespace frontend\controllers;
 
 use common\models\Driver;
 use common\models\DriverHasStore;
+use common\models\Image;
 use common\models\Note;
 use common\models\search\DriverSearch;
 use common\models\ShiftReviews;
 use common\models\ShiftState;
 use common\models\Shift;
 use common\models\User;
+use common\models\UserDriver;
 use frontend\models\NoteForm;
 use frontend\models\StoreInviteDriverForm;
 use yii\helpers\Json;
@@ -274,4 +276,59 @@ class DriversController extends BaseController
         ]);
     }
 
+    /**
+     * Rotate Photo By 90deg clockwise.
+     *
+     * @return string
+     */
+    public function actionRotatePhoto()
+    {
+        $user = \Yii::$app->user->identity;
+
+        $driver = Driver::findOne(43);
+
+        $url = $driver->vehicle->licensePhoto->originalUrl;
+
+        if($url){
+            $path = \Yii::$app->basePath;
+            $this->rotate_photo($path.'\web'.$url, 90);
+
+            return Json::encode([
+                'success' => true
+            ]);
+        } else {
+            return Json::encode([
+                'success' => false
+            ]);
+        }
+    }
+
+    public function rotate_photo($rotateFilename, $degrees){
+
+        $fileType = strtolower(substr($rotateFilename, strrpos($rotateFilename, '.') + 1));
+
+        if($fileType == 'png' || $fileType == 'PNG'){
+            header('Content-type: image/png');
+            $source = imagecreatefrompng($rotateFilename);
+            $bgColor = imagecolorallocatealpha($source, 255, 255, 255, 127);
+            // Rotate
+            $rotate = imagerotate($source, $degrees, $bgColor);
+            imagesavealpha($rotate, true);
+            imagepng($rotate,$rotateFilename);
+
+        }
+
+        if($fileType == 'jpg' || $fileType == 'jpeg'){
+            header('Content-type: image/jpeg');
+            $source = imagecreatefromjpeg($rotateFilename);
+            // Rotate
+            $rotate = imagerotate($source, $degrees, 0);
+            imagejpeg($rotate,$rotateFilename);
+        }
+
+        // Free the memory
+        imagedestroy($source);
+        imagedestroy($rotate);
+
+    }
 }

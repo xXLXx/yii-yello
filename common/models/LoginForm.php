@@ -50,6 +50,17 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
+            if(!$user){
+                $inActiveUser = $this->getInActiveUser();
+                if($inActiveUser){
+                    //return $this->addError('login', '');
+                    Yii::$app->getSession()->setFlash('success','You can\'t progress further till you validate your email address.');
+                    return Yii::$app->getResponse()->redirect(
+                        ['site/verification']
+                    );
+
+                }
+            }
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError('login', 'Incorrect username or password.');
             }
@@ -90,5 +101,22 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Finds inactive user by [[username]]
+     *
+     * @return User|null
+     */
+    public function getInActiveUser()
+    {
+        if ($this->_inactiveUser === false) {
+            $this->_inactiveUser = User::find()
+                ->andWhere(['active' => 0])
+                ->andWhere(['email'  => $this->email])
+                ->one();
+        }
+
+        return $this->_inactiveUser;
     }
 }
