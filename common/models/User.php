@@ -95,6 +95,7 @@ class User extends BaseModel implements IdentityInterface
             'firstName',
             'lastName',
             'imageId',
+            'signup_step_completed',
         ];
     }
 

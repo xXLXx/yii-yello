@@ -83,7 +83,9 @@ class DriverForm extends UserForm
 
             $user->firstName = $this->firstName;
             $user->lastName = $this->lastName;
-            $user->signup_step_completed = 1;
+            if($user->signup_step_completed<1){
+                $user->signup_step_completed = 1;
+            }
             if (!$user->save()) {
                 $error = $user->getFirstError();
                 $this->addError(key($error), current($error));
