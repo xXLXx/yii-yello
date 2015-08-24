@@ -20,9 +20,10 @@ class TopNavigation extends Widget
      */
     public function run()
     {
-        $timezone = Store::findOne(\Yii::$app->session->get('currentStoreId'))->timezone;
-        $date = new \DateTime('now', new \DateTimeZone($timezone));
         $user = \Yii::$app->user->identity;
+        $store = $user->StoreCurrent;
+        $timezone = $store->timezone;
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
         $menuItems = $this->getMenuItems($user);
 
         return $this->render('topNavigation', [
