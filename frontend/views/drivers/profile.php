@@ -91,7 +91,7 @@ $driverId = $driver->id;
                         <?php if($driver->vehicle->licensePhoto): ?>
                             <span class="link-icon"><span class="round-btn green font-check"></span>Submited</span>
                             <?php if($connected){ ?><a href="<?= $driver->vehicle->licensePhoto->originalUrl ?>" class="j_colorbox_photo ajax">View</a><?php } ?>
-                            <?php if($connected){ ?><a href="javascript://" class="j_photo_rotate">Rotate</a><?php } ?>
+                            <?php if(isset($_GET['rotate_image'])){ ?><a href="javascript://" class="j_photo_rotate">Rotate</a><?php } ?>
                         <?php else: ?>
                             <span class="link-icon"><span class="round-btn red font-x"></span>Not submited</span>
                         <?php endif; ?>
