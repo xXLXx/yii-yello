@@ -623,7 +623,7 @@ class Shift extends BaseModel
         $shiftStates = ShiftState::findAll(['name' => $shiftStateNamesDisabled]);
         $shiftStateIds = ArrayHelper::getColumn($shiftStates, 'id');
         $is=!in_array($this->shiftStateId, $shiftStateIds);
-        if($is&&$this->actualStart.''==''){
+        if($is&&empty($this->actualStart)&&strtotime($this->start) > time()){
             return true;
         }
         return false;        
