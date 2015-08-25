@@ -16,7 +16,12 @@ var TrackingMapController = {
             position: [0, 0]
         },
         drivers: [],
-        inactiveDriverTimeout: 30000
+        inactiveDriverTimeout: 30000,
+        markerAnimation: {
+            speed: 50,
+            delay: 50,
+            enabled: true
+        }
     },
 
     map: null,
@@ -25,6 +30,14 @@ var TrackingMapController = {
 
     // drivers that are currently on the map
     mapDrivers: [],
+
+    driverChannelPrefix: 'driver_',
+
+    driverCount: 0,
+
+    mapBoundsChanged: false,
+
+    markerClusterer: null,
 
     /**
      * Init
@@ -36,6 +49,16 @@ var TrackingMapController = {
         google.maps.event.addDomListener(window, 'load', function () {
             var storeLocation = new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]);
             context.map = new google.maps.Map($(context.data.selector)[0], $.extend({center: storeLocation}, context.data.mapOptions));
+
+            context.markerClusterer = new MarkerClusterer(context.map, []);
+
+            context.map.addListener('mouseover', function () {
+                context.map.addListener('bounds_changed', function () {
+                    context.mapBoundsChanged = true;
+                    google.maps.event.clearListeners(context.map, 'bounds_changed');
+                });
+                google.maps.event.clearListeners(context.map, 'mouseover');
+            });
 
             // Never mind presence for now, will be used in the future
             //
@@ -58,6 +81,7 @@ var TrackingMapController = {
                     url: document.location.protocol + '//' + document.location.hostname + '/img/marker-store.png',
                     scaledSize: new google.maps.Size(40, 40)
                 },
+                zIndex: Number.MAX_SAFE_INTEGER,
                 optimized: false
             });
         });
@@ -88,6 +112,8 @@ var TrackingMapController = {
                 value.state = null;
                 value.marker.setMap(null);
                 value.marker = null;
+                context.updateDriverCount(-1);
+                context.markerClusterer.removeMarker(value.marker);
             }
         });
     },
@@ -153,33 +179,153 @@ var TrackingMapController = {
                     // Check if marker is on shift on current store
                     if (Number(m.store_id) == context.data.store.id) {
                         if (context.mapDrivers[mapDriversCurrentIdx].marker) {
-                            context.mapDrivers[mapDriversCurrentIdx].marker.setPosition(position);
+                            context.animateMarker(context.mapDrivers[mapDriversCurrentIdx].marker, [[m.lat, m.lng]]);
                         } else {
-                            context.mapDrivers[mapDriversCurrentIdx].marker = new google.maps.Marker({
-                                position: position,
-                                map: context.map,
-                                icon: {
-                                    url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + value.id,
-                                    scaledSize: new google.maps.Size(45, 50)
-                                },
-                                optimized: false
-                            });
+                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, value.id);
                         }
                     } else {
                         if (context.mapDrivers[mapDriversCurrentIdx].marker) {
                             context.mapDrivers[mapDriversCurrentIdx].marker.setMap(null);
-                            context.mapDrivers[mapDriversCurrentIdx].marker.marker = null;
+                            context.mapDrivers[mapDriversCurrentIdx].marker = null;
+                            context.updateDriverCount(-1);
+                            context.markerClusterer.removeMarker(context.mapDrivers[mapDriversCurrentIdx].marker);
                         }
                     }
 
-                    console.log('driver_' + context.mapDrivers[mapDriversCurrentIdx].driver.id);
+                    console.log(context.driverChannelPrefix + context.mapDrivers[mapDriversCurrentIdx].driver.id);
                     console.log(m);
+                },
+                historyCallback: function (m) {
+                    console.log(m);
+                    if (!context.mapDrivers[mapDriversCurrentIdx].marker) {
+                        if (m[0].length) {
+                            // if last store_id is not equal to current store id, it means he ended shift or shifted for other companies
+                            if (Number(m[0][0].store_id) == context.data.store.id) {
+                                var position = new google.maps.LatLng(m[0][0].lat, m[0][0].lng);
+                                context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, value.id);
+                                context.zoomFitMapMarkers();
+                            }
+                        } else {
+                            // Place marker on store's location (default) this means channel has no history
+                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
+                                new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
+                                value.id
+                            );
+                            context.zoomFitMapMarkers();
+                        }
+                    }
                 }
             });
             context.pubnub.subscribe({
-                channel : 'driver_' + value.id,
+                channel : context.driverChannelPrefix + value.id,
                 message : context.mapDrivers[mapDriversCurrentIdx].pubnubCallback,
             });
+            context.pubnub.history({
+                channel: context.driverChannelPrefix + value.id,
+                callback: context.mapDrivers[mapDriversCurrentIdx].historyCallback,
+                count: 1,
+            });
         });
+    },
+
+    /**
+     * Creates a driver marker instance from position and driverId
+     *
+     * @return google.maps.Marker marker
+     */
+    createDriverMarker: function (position, driverId) {
+        var context = this;
+        context.updateDriverCount(1);
+        var marker = new google.maps.Marker({
+            position: position,
+            map: context.map,
+            icon: {
+                url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + driverId,
+                scaledSize: new google.maps.Size(45, 50)
+            },
+            optimized: false
+        });
+
+        context.markerClusterer.addMarker(marker);
+
+        return marker;
+    },
+
+    /**
+     * Updates #drivers-count from this.driverCount by value
+     *
+     * @params value the number to add
+     */
+    updateDriverCount: function (value) {
+        this.driverCount += value;
+        $('.drivers-count').html(this.driverCount);
+    },
+
+    /**
+     * Animates a marker
+     */
+    animateMarker: function (marker, coords) {
+        var context = this;
+        var target = 0;
+
+        if (!context.data.markerAnimation.enabled) {
+            marker.setPosition(new google.maps.LatLng(coords[target][0], coords[target][1]));
+            return;
+        }
+
+        var km_h = context.data.markerAnimation.speed;
+        var delay = context.data.markerAnimation.delay;
+        
+        function goToPoint() {
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+
+            var step = (km_h * 1000 * delay) / 3600000; // in meters
+            
+            var dest = new google.maps.LatLng(coords[target][0], coords[target][1]);
+            
+            var distance =  google.maps.geometry.spherical.computeDistanceBetween(dest, marker.position); // in meters
+            
+            var numStep = distance / step;
+            var i = 0;
+            var deltaLat = (coords[target][0] - lat) / numStep;
+            var deltaLng = (coords[target][1] - lng) / numStep;
+            
+            function moveMarker() {
+                lat += deltaLat;
+                lng += deltaLng;
+                i += step;
+                
+                if (i < distance) {
+                    marker.setPosition(new google.maps.LatLng(lat, lng));
+                    setTimeout(moveMarker, delay);
+                }
+                else {
+                    marker.setPosition(dest);
+                    target++;
+                    if (target == coords.length){ return; }
+                    
+                    setTimeout(goToPoint, delay);
+                }
+            }
+            moveMarker();
+        }
+        goToPoint();
+    },
+
+    /**
+     * Zoom map to fit all markers
+     */
+    zoomFitMapMarkers: function () {
+        if (!this.mapBoundsChanged) {
+            var bounds = new google.maps.LatLngBounds();
+            $.each(this.mapDrivers, function (key, value) {
+                if (value.marker) {
+                    bounds.extend(value.marker.getPosition());
+                }
+            });
+            this.map.fitBounds(bounds);
+            console.log('Changed map bounds');
+        }
     }
 };
