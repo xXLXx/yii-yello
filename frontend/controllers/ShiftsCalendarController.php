@@ -36,6 +36,12 @@ class ShiftsCalendarController extends BaseController {
         ]);
     }
 
+    
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }    
+    
     /**
      * Index page
      */
@@ -140,6 +146,7 @@ class ShiftsCalendarController extends BaseController {
      * Events
      */
     public function actionGetEvents() {
+
         $request = \Yii::$app->getRequest();
         $start = $request->post('start');
         $end = $request->post('end');

@@ -91,7 +91,7 @@ class ShiftStateBehavior extends BaseBehavior
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
         $storeid = $this->owner->storeId;
-        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid]);
+        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid,'isArchived'=>0]);
         if($my){
             $state = ShiftState::STATE_ALLOCATED;
         }
