@@ -1200,13 +1200,13 @@ a.blue-text {text-decoration:none;}
 /*Tracking page */
 
 #map-canvas {
-  /* windowH - topnavH - topmenuiconH - menuiconPadding */
-  height: calc(100vh - 60px - 28px - 20px);
+  /* windowH - topnavH - topmenuiconH - menuiconPadding - trackingStatusHeight */
+  height: calc(100vh - 60px - 28px - 20px - 110px);
   margin-top: 52px;
 }
 .j_fix_header.fixed #map-canvas {
-  /* windowH - topmenuiconH - menuiconPadding */
-  height: calc(100vh - 28px - 20px);
+  /* windowH - topmenuiconH - menuiconPadding - trackingStatusHeight */
+  height: calc(100vh - 28px - 20px - 110px);
 }
 .top-menu {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -1223,4 +1223,25 @@ a.blue-text {text-decoration:none;}
   }
   .top-menu > *:last-child:not(:first-child) {
     border-right: none;
+  }
+.tracking-status {
+  height: 110px;
+  width: 100%;
+  border-top: 1px solid #B2B2B2;
+  table-layout: fixed;
+  position: fixed;
+}
+  .tracking-status td, .tracking-status th {
+    text-align: center;
+  }
+  .tracking-status td {
+    font-size: 35px;
+  }
+  .tracking-status th {
+    vertical-align: middle;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #B2B2B2;
   }
