@@ -2,7 +2,9 @@
 
 namespace common\services;
 
+use common\helpers\TimezoneHelper;
 use common\models\Shift;
+use common\models\Store;
 use yii\helpers\Url;
 use common\models\ShiftState;
 
@@ -22,13 +24,19 @@ class ShiftCalendarService extends BaseService
     public static function getEvents($data)
     {
         $result = [];
-        
-//           $date = new \DateTime();
+
+        // start/end are expected to be in local timezone
+        // and should be from midnight tomidnight end date
+        $timezone = Store::findOne($data['storeId'])->timezone;
+        $start = new \DateTime($data['start'], new \DateTimeZone($timezone));
+        $start = TimezoneHelper::convertToUTC($timezone, $start);
+        $end = new \DateTime($data['end'], new \DateTimeZone($timezone));
+        $end = TimezoneHelper::convertToUTC($timezone, $end);
         
         $shifts = Shift::find()
             ->with('applicants')
-            ->andWhere(['>=', 'start', $data['start']])
-            ->andWhere(['<=', 'start', $data['end']])
+            ->andWhere(['>=', 'start', $start->format('Y-m-d H:i:s')])
+            ->andWhere(['<', 'start', $end->format('Y-m-d H:i:s')])
             ->andWhere(['storeId' => $data['storeId']])
             ->orderBy(['start' => 'asc'])
             ->all();
@@ -38,10 +46,12 @@ class ShiftCalendarService extends BaseService
         //$shiftId = \Yii::$app->request->get('shiftId');
 
         foreach ($shifts as $shift) {
-            $startDateTime = 
-                \DateTime::createFromFormat('Y-m-d H:i:s', $shift->start);
-            $endDateTime = 
-                \DateTime::createFromFormat('Y-m-d H:i:s', $shift->end);
+            // Convert to store local timezone
+            $startDateTime = new \DateTime($shift->start);
+            $startDateTime = TimezoneHelper::convertFromUTC($timezone, $startDateTime);
+            $endDateTime = new \DateTime($shift->end);
+            $endDateTime = TimezoneHelper::convertFromUTC($timezone, $endDateTime);
+
             $applicantsCount = 0;
             if ($shift->shiftStateId == $pendingState->id) {
                 $applicantsCount = count($shift->applicants);
@@ -57,17 +67,14 @@ class ShiftCalendarService extends BaseService
             $active = "";
             //$active = ($shift->id == $shiftId) ? " active" : "";
 
-
-
-
-            $now = date("Y-m-d H:i:s");
-            $time = strtotime($now);
-            $time = $time - (30 * 60);
-            $startDate = date("Y-m-d H:i:s", $time);                 
-            
-            if($startDateTime<$startDate && $shift->shiftStateId == $pendingState->id ){
-                // ignore unused shifts
-            }else{
+//            $now = date("Y-m-d H:i:s");
+//            $time = strtotime($now);
+//            $time = $time - (30 * 60);
+//            $startDate = date("Y-m-d H:i:s", $time);
+//
+//            if($startDateTime<$startDate && $shift->shiftStateId == $pendingState->id ){
+//                // ignore unused shifts
+//            }else{
 
             $result[] = [
                 'date'  => $startDateTime->format('Y-m-d'),
@@ -86,7 +93,7 @@ class ShiftCalendarService extends BaseService
                 'applicantsCount' => $applicantsCount,
                 'driverDeliveryCount'=>$driverdeliverycount,
             ];
-            }
+//            }
         }
         return $result;
     }

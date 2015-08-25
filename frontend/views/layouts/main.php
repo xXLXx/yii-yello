@@ -81,26 +81,26 @@ AppAsset::register($this);
 
 <script language="javascript" type="text/javascript">
 
-    function popdatetime() {
-        var d = new Date(),
-            minutes = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes(),
-            hours = d.getHours().toString().length == 1 ? '' + d.getHours() : d.getHours(),
-            ampm = d.getHours() >= 12 ? 'PM' : 'AM',
-            seconds = d.getSeconds(),
-            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        var datedisp = months[d.getMonth()] + ' ' + d.getDate() + ' ' + d.getFullYear();
-        var timedisp = hours + ' ' + minutes + ' ' + ampm;
-        console.log(timedisp);
-        $("#todaysdate").html(datedisp);
-        $("#todaystime").html(timedisp);
-    }
-
-    jQuery(document).ready(function(){
-        
-        setInterval(popdatetime,15000);
-        
-    });
+//    function popdatetime() {
+//        var d = new Date(),
+//            minutes = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes(),
+//            hours = d.getHours().toString().length == 1 ? '' + d.getHours() : d.getHours(),
+//            ampm = d.getHours() >= 12 ? 'PM' : 'AM',
+//            seconds = d.getSeconds(),
+//            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+//            days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+//        var datedisp = months[d.getMonth()] + ' ' + d.getDate() + ' ' + d.getFullYear();
+//        var timedisp = hours + ' ' + minutes + ' ' + ampm;
+//        console.log(timedisp);
+//        $("#todaysdate").html(datedisp);
+//        $("#todaystime").html(timedisp);
+//    }
+//
+//    jQuery(document).ready(function(){
+//
+//        setInterval(popdatetime,15000);
+//
+//    });
 
 
 </script>

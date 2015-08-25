@@ -23,6 +23,9 @@ class TopNavigation extends Widget
         $user = \Yii::$app->user->identity;
         $store = $user->StoreCurrent;
         $timezone = $store->timezone;
+        if(empty($timezone)){
+            $timezone='Australia/Sydney';
+        }
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         $menuItems = $this->getMenuItems($user);
 
