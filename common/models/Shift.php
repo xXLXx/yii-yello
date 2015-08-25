@@ -636,7 +636,11 @@ class Shift extends BaseModel
      */
     public function getIsDeletable()
     {
-        return (strtotime($this->start) > time() && empty($this->actualStart));
+        $is=false;
+//        $is = (strtotime($this->start) > time() && empty($this->actualStart));
+        // a store owner should be able to delete allocated or pending shifts that have expired
+        $is = (empty($this->actualStart));
+        return $is;
     }
 
     public function init()
