@@ -13,6 +13,20 @@ $this->title = \Yii::t('app', 'Tracking');
         <button class="btn-image" onclick="TrackingMapController.panToStoreLocation()"><?= Html::img('@web/img/stroke.svg') ?></button>
     </div>
     <div id="map-canvas"></div>
+    <table class="tracking-status">
+    	<tr>
+    		<th>Drivers OTR</th>
+    		<th></th>
+    		<th></th>
+    		<th></th>
+    	</tr>
+    	<tr>
+    		<td class="drivers-count">0</td>
+    		<td></td>
+    		<td></td>
+    		<td></td>
+    	</tr>
+    </table>
 </div>
 
 <?php
