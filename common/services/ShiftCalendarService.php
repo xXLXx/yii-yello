@@ -24,7 +24,7 @@ class ShiftCalendarService extends BaseService
     public static function getEvents($data)
     {
         $result = [];
-
+            
         // start/end are expected to be in local timezone
         // and should be from midnight tomidnight end date
         $timezone = Store::findOne($data['storeId'])->timezone;
@@ -44,9 +44,9 @@ class ShiftCalendarService extends BaseService
             'name' => ShiftState::STATE_PENDING
         ]);
         //$shiftId = \Yii::$app->request->get('shiftId');
-
+        
         foreach ($shifts as $shift) {
-            // Convert to store local timezone
+           // Convert to store local timezone
             $startDateTime = new \DateTime($shift->start);
             $startDateTime = TimezoneHelper::convertFromUTC($timezone, $startDateTime);
             $endDateTime = new \DateTime($shift->end);
