@@ -106,7 +106,7 @@ $this->title = 'Driver Signup / Yello';
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'agreedDriverTandC')->checkbox() ?>
+                                <?php echo $form->field($model, 'agreedDriverTandC')->checkbox(['label' => 'I agree to the <a class="j_colorbox" href="'. \yii\helpers\Url::to(['site/terms-conditions']).'">terms and conditions</a>']) ?>
                             </div>
                         </div>
                     </div>

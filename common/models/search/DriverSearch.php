@@ -63,6 +63,8 @@ class DriverSearch extends Driver
         $query->with(['image','shiftReviews']);
         $query->distinct(true);
 
+        //$role = Role::findOne(['name' => Role::ROLE_DRIVER]);
+
         $query->joinWith('role');
         $query->andWhere(
             ['Role.name' => Role::ROLE_DRIVER]
@@ -147,7 +149,7 @@ class DriverSearch extends Driver
                 ],
                 [
                     'StoreOwnerFavouriteDrivers.storefk' => $storeOwner->storeCurrent->id,
-                    'DriverHasStore.isArchived' => 0
+                    'StoreOwnerFavouriteDrivers.isArchived' => 0
                 ]]
             );            
         }

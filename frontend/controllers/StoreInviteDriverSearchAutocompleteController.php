@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Driver;
-use yii\rbac\Role;
+use common\models\Role;
 use yii\web\NotFoundHttpException;
 use api\common\models\DriverHasStore;
 use common\models\search\DriverSearch;
@@ -33,8 +33,13 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
             ->select('driverId')
             ->andWhere(['storeId' => $storeId])
             ->column();
+
+
         $drivers = Driver::find()
-            ->with(['image'])
+            ->joinWith(['role'])
+            ->andWhere(
+                ['Role.name' => Role::ROLE_DRIVER]
+            )
             //->andWhere(['like', 'email', $searchText])
             ->andWhere(['or', ['like', 'username', $searchText], ['like', 'email', $searchText]])
             ->andWhere(['not in', 'User.id', $ids])

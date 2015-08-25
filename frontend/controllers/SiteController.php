@@ -313,4 +313,13 @@ class SiteController extends BaseController
             'model' => $model,
         ]);
     }
+
+    public function actionTermsConditions(){
+
+        if(Yii::$app->request->isAjax){
+            $this->layout = false;
+        }
+
+        return $this->render('terms-conditions');
+    }
 }

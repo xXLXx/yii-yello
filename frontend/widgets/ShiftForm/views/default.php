@@ -43,7 +43,7 @@ $title = $model->id ? 'Edit shifts' : 'Add Shifts';
     ?>
         <?= Html::activeHiddenInput($model, 'id'); ?>
         <?= Html::activeHiddenInput($model, 'storeId'); ?>
-        <?= Html::errorSummary($model); ?>
+        <?= Html::errorSummary($model, ['class' => 'red-error-text']); ?>
         <div class="input-wrapp date">
             <div class="text-block"><?= \Yii::t('app', 'Date') ?></div>
             <?=
