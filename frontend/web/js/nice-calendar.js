@@ -159,7 +159,7 @@ Calendar.prototype.render = function() {
                 '<tr>' +
                     '<% _.each(days, function(item) { %>' +
                     '<th>' +
-                        '<div class="wi wi-day-cloudy <% if (item.day.format() == currentDate.format()) { %> active<% } %>">' +
+                        '<div class="wi wi-day-cloudy <% if (item.day.format(\'YYYY-MM-DD\') == currentDate.format(\'YYYY-MM-DD\')) { %> active<% } %>">' +
                             '<span><%= item.title %>, <%= item.day.format(\'DD\') %></span>' +
                         '</div>' +
                     '</th>' +
