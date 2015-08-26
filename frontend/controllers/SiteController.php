@@ -69,7 +69,7 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
-            return \Yii::$app->getResponse()->redirect(['settings/index']);
+            return \Yii::$app->getResponse()->redirect(['shifts-calendar/index']);
         }else{
             return \Yii::$app->getResponse()->redirect(['site/login']);
         }
@@ -86,7 +86,55 @@ class SiteController extends BaseController
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            
+
+                // restrict driver access to driver domain names and store access to store domain names
+                $request = Yii::$app->request->hostInfo;
+                $roleid=\Yii::$app->user->identity->roleId;
+                // add driverdev.localhost to your hosts file for development
+                $drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+                if(in_array($request, $drivers)){
+                       if($roleid!=3){
+                           // log out user and redirect to store
+                            Yii::$app->user->logout();
+                            $redir='https://store.yello.delivery/site/login/?msg=fromdriver';
+                            switch ($request){
+                                case 'https://transit.driveyello.com':
+                                $redir='https://transitstore.driveyello.com/site/login/?msg=fromdriver';
+                                    break;
+                                case 'https://driverdev.yello.delivery':
+                                    $redir='https://storedev.yello.delivery/site/login/?msg=fromdriver';
+                                    break;
+                                case 'http://driverdev.localhost':
+                                    $redir='http://storedev.localhost/site/login/?msg=fromdriver';
+                                    break;
+                            }
+                           return \Yii::$app->getResponse()->redirect($redir);
+                       }
+                    return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
+                }else{
+                    if($roleid==3){
+                            Yii::$app->user->logout();
+                            $redir='https://driver.yello.delivery/site/login/?msg=fromstore';
+                            switch ($request){
+                                case 'https://transitstore.driveyello.com':
+                                $redir='https://transit.driveyello.com/site/login/?msg=fromdriver';
+                                    break;
+                                case 'https://storedev.yello.delivery':
+                                    $redir='https://driverdev.yello.delivery/site/login/?msg=fromdriver';
+                                    break;
+                                case 'http://storedev.localhost':
+                                    $redir='http://driverdev.localhost/site/login/?msg=fromdriver';
+                                    break;
+                            }
+                           return \Yii::$app->getResponse()->redirect($redir);
+                    }
+                    return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
+                }
+            
             return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
+            
+            
         }
         return $this->render('login', [
             'model' => $model,
