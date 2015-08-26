@@ -5,12 +5,16 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
+
+
+// restrict driver access to driver domain names and store access to store domain names
 $request = Yii::$app->request->hostInfo;
 $signuprole=6; //store by default
 $signuptitle = "Store";
-$stores = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery');
-if(in_array($request, $stores)){
-    $signuprole=3; // store owner
+// add driverdev.localhost to your hosts file for development
+$drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+if(in_array($request, $drivers)){
+    $signuprole=3; // driver
     $signuptitle="Driver";
 }
 
