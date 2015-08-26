@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
+use yii\db\Query;
 
 /**
  * This is the model class for table "shiftsavailable".
@@ -130,6 +131,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
 
     /**
      * Filter shifts by driver and within a proximity.
+     * But exclude those the driver had applied already.
      *
      * @param array $params
      *
@@ -147,6 +149,8 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->orderBy(['start'=>SORT_ASC]);
 //        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
+        $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
+
         return new ActiveDataProvider([
             'query' => $query,
         ]);
