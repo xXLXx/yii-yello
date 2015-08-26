@@ -38,7 +38,11 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
             $form->save();
             return Driver::getCurrent();
         }
-        return $form;
+
+        $response = \Yii::$app->getResponse();
+        $response->setStatusCode(400);
+        $response->data['message'] = $form->getErrors();
+        return $response;
     }
 
     /**
