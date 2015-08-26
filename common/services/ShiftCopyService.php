@@ -2,11 +2,13 @@
 
 namespace common\services;
 
+use common\helpers\TimezoneHelper;
 use common\models\DriverHasStore;
 use common\models\Shift;
 use common\models\ShiftCopyLog;
 use common\models\ShiftHasDriver;
 use common\models\ShiftState;
+use common\models\Store;
 
 /**
  * Shift copy service
@@ -29,11 +31,21 @@ class ShiftCopyService extends BaseService
             $params['period']
         ];
         $hash = md5(implode('/', $hashParams));
+
+        // start/end are expected to be in local timezone
+        // and should be from midnight to midnight end date
+        $timezone = Store::findOne($params['storeId'])->timezone;
+        $start = new \DateTime($params['start'], new \DateTimeZone($timezone));
+        $start = TimezoneHelper::convertToUTC($timezone, $start);
+        $end = new \DateTime($params['end'], new \DateTimeZone($timezone));
+        $end = TimezoneHelper::convertToUTC($timezone, $end);
+
         $shifts = Shift::find()
-            ->andWhere(['>=', 'start', $params['start']])
-            ->andWhere(['<', 'end', $params['end']])
+            ->andWhere(['>=', 'start', $start->format('Y-m-d H:i:s')])
+            ->andWhere(['<', 'start', $end->format('Y-m-d H:i:s')])
             ->andWhere(['storeId' => $params['storeId']])
-                ->all();
+            ->all();
+
         $logShiftIds = ShiftCopyLog::find()
             ->select('shiftId')
             ->andWhere(['hash' => $hash])
@@ -97,9 +109,17 @@ class ShiftCopyService extends BaseService
      */
     public static function confirm($params)
     {
+        // start/end are expected to be in local timezone
+        // and should be from midnight to midnight end date
+        $timezone = Store::findOne($params['storeId'])->timezone;
+        $start = new \DateTime($params['start'], new \DateTimeZone($timezone));
+        $start = TimezoneHelper::convertToUTC($timezone, $start);
+        $end = new \DateTime($params['end'], new \DateTimeZone($timezone));
+        $end = TimezoneHelper::convertToUTC($timezone, $end);
+
         $shifts = Shift::find()
-            ->andWhere(['>=', 'start', $params['start']])
-            ->andWhere(['<', 'end', $params['end']])
+            ->andWhere(['>=', 'start', $start->format('Y-m-d H:i:s')])
+            ->andWhere(['<', 'start', $end->format('Y-m-d H:i:s')])
             ->andWhere(['storeId' => $params['storeId']])
             ->joinWith('shiftCopyLog', true, 'RIGHT JOIN') // so we dont waste getting other records
             ->all();
@@ -131,9 +151,17 @@ class ShiftCopyService extends BaseService
      */
     public static function cancel($params)
     {
+        // start/end are expected to be in local timezone
+        // and should be from midnight to midnight end date
+        $timezone = Store::findOne($params['storeId'])->timezone;
+        $start = new \DateTime($params['start'], new \DateTimeZone($timezone));
+        $start = TimezoneHelper::convertToUTC($timezone, $start);
+        $end = new \DateTime($params['end'], new \DateTimeZone($timezone));
+        $end = TimezoneHelper::convertToUTC($timezone, $end);
+
         $shifts = Shift::find()
-            ->andWhere(['>=', 'start', $params['start']])
-            ->andWhere(['<', 'end', $params['end']])
+            ->andWhere(['>=', 'start', $start->format('Y-m-d H:i:s')])
+            ->andWhere(['<', 'start', $end->format('Y-m-d H:i:s')])
             ->andWhere(['storeId' => $params['storeId']])
             ->joinWith('shiftCopyLog', true, 'RIGHT JOIN') // so we dont waste getting other records
             ->all();

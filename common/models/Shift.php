@@ -623,7 +623,7 @@ class Shift extends BaseModel
         $shiftStates = ShiftState::findAll(['name' => $shiftStateNamesDisabled]);
         $shiftStateIds = ArrayHelper::getColumn($shiftStates, 'id');
         $is=!in_array($this->shiftStateId, $shiftStateIds);
-        if($is&&$this->actualStart.''==''){
+        if($is&&empty($this->actualStart)&&strtotime($this->start) > time()){
             return true;
         }
         return false;        
@@ -636,7 +636,11 @@ class Shift extends BaseModel
      */
     public function getIsDeletable()
     {
-        return (strtotime($this->start) > time() && empty($this->actualStart));
+        $is=false;
+//        $is = (strtotime($this->start) > time() && empty($this->actualStart));
+        // a store owner should be able to delete allocated or pending shifts that have expired
+        $is = (empty($this->actualStart));
+        return $is;
     }
 
     public function init()

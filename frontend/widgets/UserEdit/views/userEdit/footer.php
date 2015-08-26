@@ -9,7 +9,7 @@
 <//?php endif; ?>-->
 <div class="checkbox-input">
     <input id="blockUser" type="checkbox" <?php if ($model->isBlocked): ?>checked="checked"<?php endif ?> value="1" id="blocking" name="<?= $model->formName() ?>[isBlocked]">
-    <label for="blockUser" class="j_checkbox <?php if ($model->isBlocked): ?>active<?php endif ?>">Temporary block User</label>
+    <label for="blockUser" class="j_checkbox <?php if ($model->isBlocked): ?>active<?php endif ?>">Temporarily block User</label>
 </div>
 <div class="border-top-block">
     <?= Html::resetButton(\Yii::t('app', 'Cancel'), ['class' => 'btn']); ?>
