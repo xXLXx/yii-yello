@@ -178,10 +178,15 @@ class SiteController extends BaseController
 
     public function actionVerification()
     {
-        return $this->render('verification');
+        $user_email = Yii::$app->request->get('user_email');
+        return $this->render('verification',
+            [
+                'user_email' => $user_email
+            ]
+        );
     }
 
-    public function actionResendVerificationLink($user_email){
+    public function actionResendVerification($user_email){
 
         $loginForm = new LoginForm();
         $loginForm->email = $user_email;
