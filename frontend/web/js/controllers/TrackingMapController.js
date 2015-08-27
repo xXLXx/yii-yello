@@ -210,11 +210,11 @@ var TrackingMapController = {
                             }
                         } else {
                             // Place marker on store's location (default) this means channel has no history
-                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
-                                new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
-                                value.id
-                            );
-                            context.zoomFitMapMarkers();
+                            // context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
+                            //     new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
+                            //     value.id
+                            // );
+                            // context.zoomFitMapMarkers();
                         }
                     }
                 }
