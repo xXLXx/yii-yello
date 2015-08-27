@@ -8,7 +8,8 @@ var TrackingMapController = {
 
     data: {
         mapOptions: {
-            zoom: 12
+            zoom: 12,
+            streetViewControl: false
         },
         selector: '#map-canvas',
         store: {
@@ -50,7 +51,9 @@ var TrackingMapController = {
             var storeLocation = new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]);
             context.map = new google.maps.Map($(context.data.selector)[0], $.extend({center: storeLocation}, context.data.mapOptions));
 
-            context.markerClusterer = new MarkerClusterer(context.map, []);
+            context.markerClusterer = new MarkerClusterer(context.map, [], {
+                'imagePath': document.location.protocol + '//' + document.location.hostname + '/img/cluster_marker',
+            });
 
             context.map.addListener('mouseover', function () {
                 context.map.addListener('bounds_changed', function () {
@@ -207,11 +210,11 @@ var TrackingMapController = {
                             }
                         } else {
                             // Place marker on store's location (default) this means channel has no history
-                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
-                                new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
-                                value.id
-                            );
-                            context.zoomFitMapMarkers();
+                            // context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
+                            //     new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
+                            //     value.id
+                            // );
+                            // context.zoomFitMapMarkers();
                         }
                     }
                 }

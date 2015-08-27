@@ -41,7 +41,7 @@ class StoreInviteDriverSearchAutocompleteController extends BaseController
                 ['Role.name' => Role::ROLE_DRIVER]
             )
             //->andWhere(['like', 'email', $searchText])
-            ->andWhere(['or', ['like', 'username', $searchText], ['like', 'email', $searchText]])
+            ->andWhere(['or', ['like', 'username', $searchText], ['like', 'email', $searchText], ['=', 'User.id', $searchText]])
             ->andWhere(['not in', 'User.id', $ids])
             ->all();
 

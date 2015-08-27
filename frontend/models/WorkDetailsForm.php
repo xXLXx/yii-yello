@@ -26,6 +26,7 @@ class WorkDetailsForm extends Model
     public function rules()
     {
         return [
+            [['abn', 'accountNumber', 'bankName', 'bsb', 'companyName', 'isAllowedToWorkInAustralia', 'registeredForGst', 'availability'], 'required'],
             [['isAllowedToWorkInAustralia', 'registeredForGst'], 'boolean'],
             [['accountNumber', 'availability', 'abn', 'bankName', 'bsb', 'companyName'], 'string', 'max' => 255]
         ];
@@ -38,7 +39,7 @@ class WorkDetailsForm extends Model
     {
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('saveWorkDetails' . PHP_EOL, true), FILE_APPEND);
         $user = \Yii::$app->user->identity;
-        $userDriver = UserDriver::findOne(['userId' => $user->id]);
+        $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
         $userDriver->setAttributes($this->getAttributes());
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($userDriver->toArray(), true), FILE_APPEND);
         $userDriver->save();

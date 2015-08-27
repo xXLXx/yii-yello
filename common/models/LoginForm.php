@@ -56,7 +56,7 @@ class LoginForm extends Model
                     //return $this->addError('login', '');
                     Yii::$app->getSession()->setFlash('success','You can\'t progress further till you validate your email address.');
                     return Yii::$app->getResponse()->redirect(
-                        ['site/verification']
+                        ['site/verification', 'user_email' => $inActiveUser->email]
                     );
 
                 }

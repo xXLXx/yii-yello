@@ -24,10 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="center">
                 <br/>
-                <?=
-                Html::a(\Yii::t('app', 'Resend verification link'), ['site/resend-verification-link/', 'user_email' => 'lalit.jhandai@gmail.com'], [
-                    'class' => 'gray-text'
-                ]);
+                <?php if($user_email){
+                    echo Html::a(\Yii::t('app', 'Resend Verification'), ['site/resend-verification/', 'user_email' => $user_email], [
+                        'class' => 'gray-text'
+                    ]);
+                }
                 ?>
             </div>
         </div>
