@@ -166,13 +166,15 @@ class SiteController extends BaseController
             )
             ->send();
         if ($email) {
-            Yii::$app->getSession()->setFlash('success','Please verify your email address. Email with instructions to activate your account was sent, check your email.');
+            Yii::$app->getSession()->setFlash('success',
+                'An email with an activation link has been sent to your email. Please check your email and click on the link to activate your account. Check your spam if not received and be sure to add @driveyello.com to your safe email list.<br><br>Click "Resend Verification" to resend activation email.'
+            );
         }
         else {
             Yii::$app->getSession()->setFlash('success','Failed, contact admin.');
         }
         return Yii::$app->getResponse()->redirect(
-            ['site/verification']
+            ['site/verification', 'user_email' => $user->email]
         );
     }
 
@@ -217,13 +219,15 @@ class SiteController extends BaseController
             )
             ->send();
         if ($email) {
-            Yii::$app->getSession()->setFlash('success','Please verify your email address. Email with instructions to activate your account was sent, check your email.');
+            Yii::$app->getSession()->setFlash('success',
+                'An email with an activation link has been sent to your email. Please check your email and click on the link to activate your account. Check your spam if not received and be sure to add @driveyello.com to your safe email list.<br><br>Click "Resend Verification" to resend activation email.'
+            );
         }
         else {
             Yii::$app->getSession()->setFlash('success','Failed, contact admin.');
         }
         return Yii::$app->getResponse()->redirect(
-            ['site/verification']
+            ['site/verification', 'user_email' => $user->email]
         );
 
     }
