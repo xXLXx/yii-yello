@@ -97,37 +97,21 @@ class SiteController extends BaseController
                        if($roleid!=3){
                            // log out user and redirect to store
                             Yii::$app->user->logout();
-                            $redir='https://store.yello.delivery/site/login/?msg=fromdriver';
-                            switch ($request){
-                                case 'https://transit.driveyello.com':
-                                $redir='https://transitstore.driveyello.com/site/login/?msg=fromdriver';
-                                    break;
-                                case 'https://driverdev.yello.delivery':
-                                    $redir='https://storedev.yello.delivery/site/login/?msg=fromdriver';
-                                    break;
-                                case 'http://driverdev.localhost':
-                                    $redir='http://storedev.localhost/site/login/?msg=fromdriver';
-                                    break;
+                                $model->addError('You have attempted to login at the driver site. Please visit the store site');
+                                return $this->render('login', [
+                                    'model' => $model,
+                                ]);
                             }
-                           return \Yii::$app->getResponse()->redirect($redir);
-                       }
                     return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
                 }else{
                     if($roleid==3){
                             Yii::$app->user->logout();
-                            $redir='https://driver.yello.delivery/site/login/?msg=fromstore';
-                            switch ($request){
-                                case 'https://transitstore.driveyello.com':
-                                $redir='https://transit.driveyello.com/site/login/?msg=fromdriver';
-                                    break;
-                                case 'https://storedev.yello.delivery':
-                                    $redir='https://driverdev.yello.delivery/site/login/?msg=fromdriver';
-                                    break;
-                                case 'http://storedev.localhost':
-                                    $redir='http://driverdev.localhost/site/login/?msg=fromdriver';
-                                    break;
-                            }
-                           return \Yii::$app->getResponse()->redirect($redir);
+                            Yii::$app->user->logout();
+                                $model->addError('You have attempted to login at the store site. Please visit the driver site');
+                                return $this->render('login', [
+                                    'model' => $model,
+                                ]);
+
                     }
                     return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
                 }
