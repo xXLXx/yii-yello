@@ -80,7 +80,8 @@ class User extends BaseModel implements IdentityInterface
             'image',
             'userDriver',
             'address',
-            'company'
+            'company',
+            'companyaddress'
         ];
     }
 

@@ -49,6 +49,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php endif; ?>
 
+            <?php if( count($model->getErrors('wrongsite')) > 0 ): ?>
+                <div class="red-error-text center">
+                    <span class="text-icon icon-red font-exclamation-triangle">
+                        <?= \Yii::t('app', 'Invalid login for this site.'); ?>
+                    </span>
+                </div>
+            <?php endif; ?>
+
             <?=
             $form->field($model, 'email')->textInput([
                 'class' => 'text-input placeholder',

@@ -97,7 +97,7 @@ class SiteController extends BaseController
                        if($roleid!=3){
                            // log out user and redirect to store
                             Yii::$app->user->logout();
-                                $model->addError('You have attempted to login at the driver site. Please visit the store site');
+                                $model->addError('wrongsite',$error='You have attempted to login at the driver site. Please visit the store site');
                                 return $this->render('login', [
                                     'model' => $model,
                                 ]);
@@ -106,8 +106,7 @@ class SiteController extends BaseController
                 }else{
                     if($roleid==3){
                             Yii::$app->user->logout();
-                            Yii::$app->user->logout();
-                                $model->addError('You have attempted to login at the store site. Please visit the driver site');
+                                $model->addError('wrongsite',$error='You have attempted to login at the store site. Please visit the driver site');
                                 return $this->render('login', [
                                     'model' => $model,
                                 ]);
