@@ -113,14 +113,6 @@ class UserAddForm extends AbstractForm
             $user->generateAuthKey();
             $this->password = null;
         }
-        $image = new Image();
-        $image->save();
-        $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
-        if ($image->imageFile) {
-            $image->saveFiles();
-            $image->save();
-            $user->imageId = $image->id;
-        }
 
         $user->generateAccessToken();
         $user->active = true;
@@ -128,6 +120,17 @@ class UserAddForm extends AbstractForm
         $this->image = $user->image;
         $this->stores = $this->storeslist;
         $this->saveUserStoreRelations($user);
+
+        $this->id = $user->id;
+
+        $imageFile = UploadedFile::getInstance($this, 'imageFile');
+        if (!empty($imageFile)) {
+            $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $this->id, $user->getProfilePhotoPathPattern()));
+
+            if (empty($url)) {
+                throw new \Exception('Upload failed.');
+            }
+        }
     }
 
     /**

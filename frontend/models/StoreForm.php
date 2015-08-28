@@ -50,6 +50,8 @@ class StoreForm extends Model
     public $contact_name;
     public $contact_phone;
     public $contact_email;
+
+    public $logoUrl;
     
 
     /**
@@ -114,7 +116,7 @@ class StoreForm extends Model
     {
         $store = StoresView::findOne(['id' => $storeId]);
         $this->setAttributes($store->getAttributes());
-        $this->image = Image::findOne($store->imageId);
+        $this->logoUrl = Store::findOne($storeId)->getLogoUrl();
     }
 //
 
@@ -156,32 +158,14 @@ class StoreForm extends Model
             return false;
         }
 
-        
         $transaction = \Yii::$app->db->beginTransaction();
-       // try {
-            $updateimageid=false;
-            $image = new Image();
-            $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
-            if ($image->imageFile) {
-                if (!$image->saveFiles()) {
-                    $error = $image->getFirstError();
-                    $this->addError(key($error), current($error));
-
-                    throw new \yii\db\Exception(current($error));
-                }
-                $image->save();
-                $updateimageid=true;
-            }
+        try {
             $store = Store::findOneOrCreate(['id' => $this->id]);
             // get the store owner rather than current user in case current user is manager
             $userStoreOwner = $this->getUserStoreOwner($user);
             $store->storeOwnerId = $userStoreOwner->id;
             $store->paymentScheduleId = 1;
             $store->setAttributes($this->getAttributes());
-
-            if($updateimageid){
-                $store->imageId = $image->id;
-            }
             if (!$store->save()) {
                 $error = $store->getFirstError();
                 $this->addError(key($error), current($error));
@@ -189,7 +173,17 @@ class StoreForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
-            
+            $this->id = $store->id;
+
+            $imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if (!empty($imageFile)) {
+                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $this->id, $store->getLogoPathPattern()));
+
+                if (empty($url)) {
+                    throw new \Exception('Upload failed.');
+                }
+            }
+
             $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->userId]);
             if (!$userHasStore->save()) {
                 $error = $userHasStore->getFirstError();
@@ -262,10 +256,10 @@ class StoreForm extends Model
             $transaction->commit();
 
             return true;
-//        } catch (\Exception $e) {
-//            \Yii::error($e->getMessage());
-//            $transaction->rollBack();
-//        }
+        } catch (\Exception $e) {
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
 
         return false;
     }

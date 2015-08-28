@@ -41,6 +41,10 @@ class Local extends \yii\base\Component implements StorageInterface
     public function init()
     {
         parent::init();
+
+        if (empty($this->baseUrl)) {
+            $this->baseUrl = $_SERVER['HTTP_HOST'];
+        }
     }
 
     /**
@@ -54,9 +58,9 @@ class Local extends \yii\base\Component implements StorageInterface
     {
         try {
             // ensure directory
-            $destinationFullPath = $this->basePath . DIRECTORY_SEPARATOR . $destinationFilename;
+            $destinationFullPath = \Yii::getAlias($this->basePath) . DIRECTORY_SEPARATOR . $destinationFilename;
             $destinationFolder = dirname($destinationFullPath);
-            if (!is_dir(dirname($destinationFolder))) {
+            if (!is_dir($destinationFolder)) {
                 mkdir($destinationFolder, 0755, true);
             }
 

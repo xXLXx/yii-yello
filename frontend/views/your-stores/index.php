@@ -19,7 +19,7 @@ $this->title = \Yii::t('app', 'Your Stores');
             <div class="store-list-item">
                 <div class="company-logo-container f-left">
                     <a href="<?= \yii\helpers\Url::to(['store-edit/index', 'storeId' => $store->id]) ?>">
-                        <img src="<?= $store->image ? $store->image->thumbUrl : '/img/store_image.svg' ?>">
+                        <img src="<?= $store->logoUrl; ?>">
                     </a>
                 </div>
                 <div class="company-info">

@@ -153,20 +153,6 @@ class SignupStoreFirstStore extends Model
 
         try {
             
-            $updateimageid=false;
-            $image = new Image();
-            $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
-            if ($image->imageFile) {
-                if (!$image->saveFiles()) {
-                    $error = $image->getFirstError();
-                    $this->addError(key($error), current($error));
-
-                    throw new \yii\db\Exception(current($error));
-                }
-                $image->save();
-                $updateimageid=true;
-            }
-            
             $storeOwner = $user->storeOwner;
             if(!$storeOwner){
             $storeOwner = new StoreOwner([
@@ -204,6 +190,15 @@ class SignupStoreFirstStore extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
+            $imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if (!empty($imageFile)) {
+                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $store->id, $store->getLogoPathPattern()));
+
+                if (empty($url)) {
+                    throw new \Exception('Upload failed.');
+                }
+            }
+
             $storeAddress = new StoreAddress([
                 'storefk' => $store->id,
                 'addressfk' => $address->idaddress,
@@ -235,9 +230,6 @@ class SignupStoreFirstStore extends Model
                         $user->signup_step_completed = 3;
                     }
             $user->save(false);
-            if($updateimageid){
-                $store->imageId=$image->id;
-            }
             $store->save();
             \Yii::$app->session->set('currentStoreId', $store->id);
 
