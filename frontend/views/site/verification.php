@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'gray-text'
                     ]);
                 }
+                if(isset($sent_status) && $sent_status){
+                    echo '<div class="red-error-text">Verification email resent.</div>';
+                }
                 ?>
             </div>
         </div>

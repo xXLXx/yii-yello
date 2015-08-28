@@ -181,9 +181,11 @@ class SiteController extends BaseController
     public function actionVerification()
     {
         $user_email = Yii::$app->request->get('user_email');
+        $sent_status = Yii::$app->request->get('sent');
         return $this->render('verification',
             [
-                'user_email' => $user_email
+                'user_email' => $user_email,
+                'sent_status' => $sent_status
             ]
         );
     }
@@ -227,7 +229,7 @@ class SiteController extends BaseController
             Yii::$app->getSession()->setFlash('success','Failed, contact admin.');
         }
         return Yii::$app->getResponse()->redirect(
-            ['site/verification', 'user_email' => $user->email]
+            ['site/verification', 'user_email' => $user->email, 'sent' => 1]
         );
 
     }
