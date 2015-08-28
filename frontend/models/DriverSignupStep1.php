@@ -170,9 +170,15 @@ class DriverSignupStep1 extends Model
             }
 
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt','---------------------------------------'.PHP_EOL.'    Here\'s the UserDriver    '.PHP_EOL , FILE_APPEND);
-            
+           
+           $imageFile = UploadedFile::getInstance($this, 'imageFile');
+           if (!empty($imageFile)) {
+               $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $user->id, $user->getProfilePhotoPathPattern()));
 
-
+               if (empty($url)) {
+                   throw new \Exception('Upload failed.');
+               }
+           }
 
             $transaction->commit();
 

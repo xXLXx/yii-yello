@@ -680,13 +680,23 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
-     * The path pattern.
+     * The profile photo path pattern.
      *
      * @return string
      */
     public function getProfilePhotoPathPattern()
     {
         return '/user/{id}/profile.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
+    public function getLicensePathPattern()
+    {
+        return '/user/{id}/license.png';
     }
 
     /**
@@ -697,6 +707,16 @@ class User extends BaseModel implements IdentityInterface
     public function getProfilePhotoUrl()
     {
         return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+    }
+
+    /**
+     * The license photo url.
+     *
+     * @return string
+     */
+    public function getLicensePhotoUrl()
+    {
+        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLicensePathPattern());
     }
 
 }
