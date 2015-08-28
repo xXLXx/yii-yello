@@ -40,8 +40,11 @@ return array(
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),
     'kartik\\alert\\' => array($vendorDir . '/kartik-v/yii2-widget-alert'),
     'kartik\\affix\\' => array($vendorDir . '/kartik-v/yii2-widget-affix'),
+    'jovanialferez\\yii2s3\\' => array($vendorDir . '/jovanialferez/yii2-s3'),
     'cebe\\markdown\\latex\\' => array($vendorDir . '/cebe/markdown-latex'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'cebe\\jssearch\\' => array($vendorDir . '/cebe/js-search/lib'),
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
+    'Stripe\\' => array($vendorDir . '/stripe/stripe-php/lib'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
 );

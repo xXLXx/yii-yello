@@ -160,6 +160,16 @@ class Store extends BaseModel
     }
 
     /**
+     * The store logo url.
+     *
+     * @return string
+     */
+    public function getLogoUrl()
+    {
+        return \Yii::$app->params['uploadPath'].'/store/'.$this->id.'/logo.png';
+    }
+
+    /**
      * @param \DateTime $date
      *
      * @return \yii\data\ActiveDataProvider

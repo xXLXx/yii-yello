@@ -113,6 +113,12 @@ return [
             'class' => 'yii\web\AssetManager',
             'forceCopy' => YII_DEBUG,
         ],
+        'storage' => [
+            'class' => '\jovanialferez\yii2s3\AmazonS3',
+            'key' => 'AKIAID3OZY6UNFSSIWJA',
+            'secret' => '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',
+            'bucket' => 'media.driveyello.com',
+        ],
     ],
     'controllerMap' => [
         'fixture' => [
