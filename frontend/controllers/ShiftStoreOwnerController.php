@@ -28,11 +28,11 @@ class ShiftStoreOwnerController extends BaseController
         if (!$shift) {
             throw new NotFoundHttpException('Shift not found');
         }
-        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1]]);
+        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
         if($isMine){
             $shift->setStateAllocated($driverId);
         }else{
-            $isFavourite = \common\models\StoreOwnerFavouriteDrivers::findOne(['AND', ['driverId'=>$driverId,   'storefk'=>$shift->storeId,'isAcceptedByDriver'=>1]]);
+            $isFavourite = \common\models\StoreOwnerFavouriteDrivers::findOne(['AND', ['driverId'=>$driverId,   'storefk'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
             if($isFavourite){
                 // according to spec, when allocating a shift to a favourite driver, the driver becomes a mydriver
                 // add to DriverHasStore

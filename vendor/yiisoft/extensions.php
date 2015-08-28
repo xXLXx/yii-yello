@@ -264,4 +264,13 @@ return array (
       '@kartik/widgets' => $vendorDir . '/kartik-v/yii2-widgets',
     ),
   ),
+  'nickcv/yii2-mandrill' => 
+  array (
+    'name' => 'nickcv/yii2-mandrill',
+    'version' => '1.6.0.0',
+    'alias' => 
+    array (
+      '@nickcv/mandrill' => $vendorDir . '/nickcv/yii2-mandrill',
+    ),
+  ),
 );
