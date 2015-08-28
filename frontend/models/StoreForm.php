@@ -177,7 +177,7 @@ class StoreForm extends Model
 
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
             if (!empty($imageFile)) {
-                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, 'store/'.$this->id.'/logo.png');
+                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, '/store/'.$this->id.'/logo.png');
 
                 if (empty($url)) {
                     throw new \Exception('Upload failed.');
