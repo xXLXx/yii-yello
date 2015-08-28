@@ -37,6 +37,8 @@ class UserForm extends AbstractForm
     public $lat;
     public $lng;
     public $placeid;
+
+    public $profilePhotoUrl;
     
     /**
      * @inheritdoc
@@ -73,7 +75,7 @@ class UserForm extends AbstractForm
     public function setData($user)
     {
         $this->setAttributes($user->getAttributes());
-        $this->image = $user->image;
+        $this->profilePhotoUrl = $user->getProfilePhotoUrl();
     }
     
     /**
@@ -92,17 +94,18 @@ class UserForm extends AbstractForm
             $this->password = null;
             $this->confirm = null;
         }
-        $image = new Image();
-        $image->save();
-        $image->imageFile = UploadedFile::getInstance($this, 'imageFile');
-        if ($image->imageFile) {
-            $image->saveFiles();
-            $image->save();
-            $user->imageId = $image->id;
-        }
-        $user->isBlocked = $this->isBlocked;
+
         $user->save();
-        $this->image = $user->image;
+        $this->id = $user->id;
+
+        $imageFile = UploadedFile::getInstance($this, 'imageFile');
+        if (!empty($imageFile)) {
+            $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $this->id, $user->getProfilePhotoPathPattern()));
+
+            if (empty($url)) {
+                throw new \Exception('Upload failed.');
+            }
+        }
     }
     
     /**

@@ -679,4 +679,24 @@ class User extends BaseModel implements IdentityInterface
         }
     }
 
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getProfilePhotoPathPattern()
+    {
+        return '/user/{id}/profile.png';
+    }
+
+    /**
+     * The profile photo url.
+     *
+     * @return string
+     */
+    public function getProfilePhotoUrl()
+    {
+        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+    }
+
 }
