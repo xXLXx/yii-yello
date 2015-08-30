@@ -158,7 +158,8 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
-
+//        $query->orderBy(['start'=>SORT_ASC, Expression('ABS(latitude-'.$params['latitude'].')+ABS(longitude-'.$params['longitude'].')')]);
+        // todo:jovani this needs to also be sorted by proximity. See commented line above ^ (which won't work). query needs to return this expression so that it can be used in sort.
         return new ActiveDataProvider([
             'query' => $query,
         ]);
