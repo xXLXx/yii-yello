@@ -80,7 +80,8 @@ class User extends BaseModel implements IdentityInterface
             'image',
             'userDriver',
             'address',
-            'company'
+            'company',
+            'companyaddress'
         ];
     }
 
@@ -97,6 +98,8 @@ class User extends BaseModel implements IdentityInterface
             'lastName',
             'imageId',
             'signup_step_completed',
+            'phone',
+            'phonetype'
         ];
     }
 

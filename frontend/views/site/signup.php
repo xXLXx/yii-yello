@@ -6,8 +6,21 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
-$this->title = 'Signup';
+
+// restrict driver access to driver domain names and store access to store domain names
+$request = Yii::$app->request->hostInfo;
+$signuprole=6; //store by default
+$signuptitle = "Store";
+// add driverdev.localhost to your hosts file for development
+$drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+if(in_array($request, $drivers)){
+    $signuprole=3; // driver
+    $signuptitle="Driver";
+}
+
+$this->title = $signuptitle. ' Signup';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="login-container-inner">
@@ -25,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); 
             ?>
-                <h2 class="center"><?= \Yii::t('app', 'Sign Up'); ?></h2>
+                <h2 class="center"><?= $signuptitle.' '. \Yii::t('app', 'Sign Up'); ?></h2>
                 <table>
                     <colgroup><col width="96">
                     </colgroup>
@@ -85,17 +98,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ?>
                             </td>
                         </tr>
-                        <tr>
-                            <th><label for="userRole"><?= \Yii::t('app', 'Register as'); ?></label></th>
-                            <td>
-                                <?= $form->field($model, 'roleId')
-                                    ->dropDownList($model->getRoleArrayMap(), [
-                                        'id' => 'userRole',
-                                        'class' => 'j_select select-220'
-                                    ]);
-                                ?>
-                            </td>
-                        </tr>
+                    <input type="hidden" name="SignupForm[roleId]" value="<?= $signuprole ?>" />
+                      
                         <tr>
                             <th></th>
                             <td>

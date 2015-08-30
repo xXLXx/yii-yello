@@ -91,10 +91,18 @@ class ShiftStateBehavior extends BaseBehavior
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
         $storeid = $this->owner->storeId;
-        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid,'isArchived'=>0]);
+        $my = DriverHasStore::find()->where([
+            'driverId' => $driverId,
+            'storeId' => $storeid,
+            'isAcceptedByDriver' => '1',
+            'isArchived' => '0'
+             ])->exists();
+//            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'driver= '.$driverId.', store='.$storeid.', found='.$my. PHP_EOL, FILE_APPEND);
+        
         if($my){
             $state = ShiftState::STATE_ALLOCATED;
         }
+        
         
         $shiftHasDriver = $this->owner->addDriver($driverId);
         $shiftHasDriver->acceptedByStoreOwner = true;
@@ -112,7 +120,12 @@ class ShiftStateBehavior extends BaseBehavior
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
         $storeid = $this->owner->storeId;
-        $my = DriverHasStore::find([['AND'],'driverId'=>$driverId,'storeId'=>$storeid]);
+        $my = DriverHasStore::find()->where([
+            'driverId' => $driverId,
+            'storeId' => $storeid,
+            'isAcceptedByDriver' => '1',
+            'isArchived' => '0'
+        ])->exists();
         if($my){
             $state = ShiftState::STATE_ALLOCATED;
         }

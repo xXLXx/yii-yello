@@ -17,6 +17,7 @@ return array(
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap'),
     'yii\\apidoc\\' => array($vendorDir . '/yiisoft/yii2-apidoc'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'nickcv\\mandrill\\' => array($vendorDir . '/nickcv/yii2-mandrill'),
     'kartik\\widgets\\' => array($vendorDir . '/kartik-v/yii2-widgets'),
     'kartik\\typeahead\\' => array($vendorDir . '/kartik-v/yii2-widget-typeahead'),
     'kartik\\touchspin\\' => array($vendorDir . '/kartik-v/yii2-widget-touchspin'),

@@ -10,6 +10,7 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PHPParser' => array($vendorDir . '/nikic/php-parser/lib'),
     'MikeVanRiel' => array($vendorDir . '/mikevanriel/text-to-latex/src', $vendorDir . '/mikevanriel/text-to-latex/tests/unit'),
+    'Mandrill' => array($vendorDir . '/mandrill/mandrill/src'),
     'Imagine' => array($vendorDir . '/imagine/imagine/lib'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
