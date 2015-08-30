@@ -12,7 +12,7 @@ $request = Yii::$app->request->hostInfo;
 $signuprole=6; //store by default
 $signuptitle = "Store";
 // add driverdev.localhost to your hosts file for development
-$drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+$drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost','https://devops.yello.delivery');
 if(in_array($request, $drivers)){
     $signuprole=3; // driver
     $signuptitle="Driver";

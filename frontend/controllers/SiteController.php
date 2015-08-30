@@ -92,7 +92,7 @@ class SiteController extends BaseController
                 $request = Yii::$app->request->hostInfo;
                 $roleid=\Yii::$app->user->identity->roleId;
                 // add driverdev.localhost to your hosts file for development
-                $drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+                $drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost','https://devops.yello.delivery');
                 if(in_array($request, $drivers)){
                        if($roleid!=3){
                            // log out user and redirect to store
