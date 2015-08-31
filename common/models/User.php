@@ -43,6 +43,7 @@ use common\models\query\UserQuery;
 
  * @property UserHasStore[] $userHasStores userHasStores
  * @property view_stores[] $stores stores
+ * @property Message[] $message
  * @property Store $storeCurrent the current selected store
  * @property Vehicle $vehicle
  */
@@ -81,7 +82,8 @@ class User extends BaseModel implements IdentityInterface
             'userDriver',
             'address',
             'company',
-            'companyaddress'
+            'companyaddress',
+            'message'
         ];
     }
 
@@ -129,7 +131,19 @@ class User extends BaseModel implements IdentityInterface
     }
 
 
-
+    /**
+     * Get Messages for user that have not yet been sent
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMessage()
+    {
+        $time=time();
+//         return $this->hasMany(Message::className(), ['idrecipuser' => 'id','sentvia'=>null,'received'=>null,'expires'=>['>'.time()]]);
+        $msgs = $this->hasMany(Message::className(), ['idrecipuser' => 'id'])->where(['sentvia'=>null,'received'=>null,["expiresUTC","<$time"]]);
+        return $msgs;
+        
+    }
 
 
     /**
