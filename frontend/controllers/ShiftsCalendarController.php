@@ -153,7 +153,7 @@ class ShiftsCalendarController extends BaseController {
         $storeId = $request->post('storeId');
         $shiftId = $request->post('shiftId');
         $events = ShiftCalendarService::getEvents(compact('start', 'end', 'storeId'));
-        $unconfirmedShifts = Shift::find()->unconfirmed()->within($start, $end)->all();
+        $unconfirmedShifts = Shift::find()->byStore($storeId)->unconfirmed()->within($start, $end)->all();
 
         return Json::encode(compact('events', 'shiftId', 'unconfirmedShifts'));
     }
