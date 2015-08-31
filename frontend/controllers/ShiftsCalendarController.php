@@ -3,7 +3,9 @@
 namespace frontend\controllers;
 
 use common\helpers\ArrayHelper;
+use common\helpers\TimezoneHelper;
 use common\models\Role;
+use common\models\Store;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
@@ -152,8 +154,16 @@ class ShiftsCalendarController extends BaseController {
         $end = $request->post('end');
         $storeId = $request->post('storeId');
         $shiftId = $request->post('shiftId');
-        $events = ShiftCalendarService::getEvents(compact('start', 'end', 'storeId'));
-        $unconfirmedShifts = Shift::find()->byStore($storeId)->unconfirmed()->within($start, $end)->all();
+        // start/end are expected to be in local timezone
+        // and should be from midnight tomidnight end date
+        $timezone = Store::findOne($storeId)->timezone;
+        $start = new \DateTime($start, new \DateTimeZone($timezone));
+        $start = TimezoneHelper::convertToUTC($timezone, $start);
+        $end = new \DateTime($end, new \DateTimeZone($timezone));
+        $end = TimezoneHelper::convertToUTC($timezone, $end);
+
+        $events = ShiftCalendarService::getEvents(compact('start', 'end', 'storeId', 'timezone'));
+        $unconfirmedShifts = Shift::find()->byStore($storeId)->unconfirmed()->within($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'))->all();
 
         return Json::encode(compact('events', 'shiftId', 'unconfirmedShifts'));
     }
