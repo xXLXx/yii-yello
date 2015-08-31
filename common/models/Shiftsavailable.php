@@ -145,6 +145,24 @@ class Shiftsavailable extends \yii\db\ActiveRecord
 
         $query = static::find();
         $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
+
+        $query->andWhere(['>', 'start', time()]);
+        $query->andWhere(['shiftStateId' => 1]);//Fetched only pending ones.
+        $query->andWhere(['OR',
+            ['isYelloDrivers' => 1],
+            ['isMyDrivers' => 1, 'storeId' => $params['my']],
+            ['isFavourites' => 1, 'storeId' => $params['fav']]
+        ]);
+        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
+        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
+        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        /*$query = static::find();
+        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->orderBy(['start'=>SORT_ASC]);
@@ -153,7 +171,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
 
         return new ActiveDataProvider([
             'query' => $query,
-        ]);
+        ]);*/
     }
     
     /**
