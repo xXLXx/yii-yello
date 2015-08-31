@@ -169,12 +169,15 @@ class ShiftCopyService extends BaseService
         $droppedDrivers = 0;
         foreach ($shifts as $shift) {
             $shift->shiftCopyLog->confirmedAt = time();
+            $shift->shiftCopyLog->isArchived=1;
             $shift->shiftCopyLog->save(false);
-
             foreach ($shift->shiftHasDrivers as $shiftDriver) {
                 $shiftDriver->delete();
                 $droppedDrivers++;
             }
+            // delete shift too
+            $shift->isArchived=1;
+            $shift->save();
         }
 
         return $droppedDrivers;

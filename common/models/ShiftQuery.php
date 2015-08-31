@@ -44,8 +44,19 @@ class ShiftQuery extends \common\models\query\BaseQuery
             'shiftCopyLog' => function ($query) {
                 $query->andWhere(['confirmedAt' => '0']);
             }
-        ]);
+        ], true, 'RIGHT JOIN');
 
+    }
+
+    /**
+     * Filter by store id.
+     *
+     * @param int $storeId
+     * @return static
+     */
+    public function byStore($storeId)
+    {
+        return $this->andWhere(['storeId' => $storeId]);
     }
 
     /**

@@ -9,6 +9,7 @@ var TrackingMapController = {
     data: {
         mapOptions: {
             zoom: 12,
+            fitMaxZoom: 15,
             streetViewControl: false
         },
         selector: '#map-canvas',
@@ -41,6 +42,11 @@ var TrackingMapController = {
     markerClusterer: null,
 
     /**
+    * Count of number of history callbacks already finished
+    */
+    historyCallbacksLoaded: 0,
+
+    /**
      * Init
      */
     init: function(data) {
@@ -55,12 +61,10 @@ var TrackingMapController = {
                 'imagePath': document.location.protocol + '//' + document.location.hostname + '/img/cluster_marker',
             });
 
-            context.map.addListener('mouseover', function () {
-                context.map.addListener('bounds_changed', function () {
+            google.maps.event.addListenerOnce(context.map, 'mouseover', function () {
+                google.maps.event.addListenerOnce(context.map, 'bounds_changed', function () {
                     context.mapBoundsChanged = true;
-                    google.maps.event.clearListeners(context.map, 'bounds_changed');
                 });
-                google.maps.event.clearListeners(context.map, 'mouseover');
             });
 
             // Never mind presence for now, will be used in the future
@@ -206,7 +210,6 @@ var TrackingMapController = {
                             if (Number(m[0][0].store_id) == context.data.store.id) {
                                 var position = new google.maps.LatLng(m[0][0].lat, m[0][0].lng);
                                 context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, value.id);
-                                context.zoomFitMapMarkers();
                             }
                         } else {
                             // Place marker on store's location (default) this means channel has no history
@@ -216,6 +219,9 @@ var TrackingMapController = {
                             // );
                             // context.zoomFitMapMarkers();
                         }
+                    }
+                    if (++context.historyCallbacksLoaded >= context.mapDrivers.length) {
+                        context.zoomFitMapMarkers();
                     }
                 }
             });
@@ -320,14 +326,19 @@ var TrackingMapController = {
      * Zoom map to fit all markers
      */
     zoomFitMapMarkers: function () {
-        if (!this.mapBoundsChanged) {
+        var context = this;
+        if (!context.mapBoundsChanged) {
             var bounds = new google.maps.LatLngBounds();
-            $.each(this.mapDrivers, function (key, value) {
+            $.each(context.mapDrivers, function (key, value) {
                 if (value.marker) {
                     bounds.extend(value.marker.getPosition());
                 }
             });
-            this.map.fitBounds(bounds);
+            // Limit zoom to not go too deep
+            google.maps.event.addListenerOnce(context.map, 'bounds_changed', function(event) {
+                context.map.setZoom(Math.min(context.data.mapOptions.fitMaxZoom, context.map.getZoom()));
+            });
+            context.map.fitBounds(bounds);
             console.log('Changed map bounds');
         }
     }

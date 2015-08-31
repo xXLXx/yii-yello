@@ -6,8 +6,6 @@ use common\models\User;
 use common\models\UserDriver;
 use common\models\Vehicle;
 use yii\base\Model;
-use yii\web\UploadedFile;
-use common\models\Image;
 /**
  * Store form
  *
@@ -30,7 +28,13 @@ class DriverSignupStep2 extends Model
     public $licenseNumber;
     public $licensePhotoId;
 
+    /**
+     * @var \yii\web\UploadedFile
+     */
     public $vehiclePhotoFile;
+    /**
+     * @var \yii\web\UploadedFile
+     */
     public $licensePhotoFile;
 
     /**
@@ -107,48 +111,39 @@ class DriverSignupStep2 extends Model
             }
 
             $vehicle->setAttributes($this->getAttributes());
-
-            $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
-            $userDriver->driverLicenseNumber = $this->licenseNumber;
+            if (!$vehicle->save()) {
+                $error = $vehicle->getFirstError();
+                $this->addError(key($error), current($error));
+                throw new \yii\db\Exception(current($error));
+            }
 
             if ($this->vehiclePhotoFile) {
-                $imageVehicle = Image::findOneOrCreate(['id' => $vehicle->imageId]);
-                $imageVehicle->imageFile = $this->vehiclePhotoFile;
-                if (!$imageVehicle->saveFiles()) {
-                    $error = $imageVehicle->getFirstError();
-                    $this->addError(key($error), current($error));
-                    throw new \yii\db\Exception(current($error));
+                $url = \Yii::$app->storage->uploadFile($this->vehiclePhotoFile->tempName, str_replace('{id}', $vehicle->id, $vehicle->getVehicleRegistrationPathPattern()));
+
+                if (empty($url)) {
+                    throw new \Exception('Upload failed.');
                 }
-                $vehicle->imageId = $imageVehicle->id;
             }
 
             if ($this->licensePhotoFile) {
-                $imageLicense = Image::findOneOrCreate(['id' => $vehicle->licensePhotoId]);
-                $imageLicense->imageFile = $this->licensePhotoFile;
-                if (!$imageLicense->saveFiles()) {
-                    $error = $imageLicense->getFirstError();
-                    $this->addError(key($error), current($error));
-                    throw new \yii\db\Exception(current($error));
+                $url = \Yii::$app->storage->uploadFile($this->licensePhotoFile->tempName, str_replace('{id}', $user->id, $user->getLicensePathPattern()));
+
+                if (empty($url)) {
+                    throw new \Exception('Upload failed.');
                 }
-                $vehicle->licensePhotoId = $imageLicense->id;
-                $userDriver->driverLicensePhoto = $imageLicense->originalUrl;
             }
 
+            $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
+            $userDriver->driverLicenseNumber = $this->licenseNumber;
             if (!$userDriver->save()) {
                 $error = $userDriver->getFirstError();
                 $this->addError(key($error), current($error));
                 throw new \yii\db\Exception(current($error));
             }
 
-            if (!$vehicle->save()) {
-                $error = $vehicle->getFirstError();
-                $this->addError(key($error), current($error));
-                throw new \yii\db\Exception(current($error));
+            if($user->signup_step_completed < 2){
+                $user->signup_step_completed = 2;
             }
-                    if($user->signup_step_completed<2){
-                        $user->signup_step_completed = 2;
-                    }
-
             $user->save(false);
 
             $transaction->commit();

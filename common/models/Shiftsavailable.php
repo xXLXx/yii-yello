@@ -109,12 +109,12 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     public function fields()
     {
         return ArrayHelper::merge(parent::fields(), [
-           'start' =>  function ($model, $attribute) {
-               return strtotime($model->$attribute);
-           },
+            'start' =>  function ($model, $attribute) {
+                    return strtotime($model->$attribute);
+                },
             'end' =>  function ($model, $attribute) {
-                return strtotime($model->$attribute);
-            }
+                    return strtotime($model->$attribute);
+                }
         ]);
     }
 
@@ -147,7 +147,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
 
         $query->andWhere(['>', 'start', time()]);
-        $query->andWhere(['shiftStateId' => 1]);//Fetched only pending ones.
+        $query->andWhere(['shiftStateId' => 1]);
         $query->andWhere(['OR',
             ['isYelloDrivers' => 1],
             ['isMyDrivers' => 1, 'storeId' => $params['my']],
@@ -155,7 +155,13 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         ]);
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
-        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
+        $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
+
+        $query->orderBy(['start'=>SORT_ASC]);
+
+//        $query->orderBy(['start'=>SORT_ASC, Expression('ABS(latitude-'.$params['latitude'].')+ABS(longitude-'.$params['longitude'].')')]);
+        // todo:jovani this needs to also be sorted by proximity. See commented line above ^ (which won't work). query needs to return this expression so that it can be used in sort.
+
 
         return new ActiveDataProvider([
             'query' => $query,
@@ -173,7 +179,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             'query' => $query,
         ]);*/
     }
-    
+
     /**
      * Filter shifts by driver and within a proximity.
      *
@@ -195,9 +201,9 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         return new ActiveDataProvider([
             'query' => $query,
         ]);
-    }    
-    
-    
+    }
+
+
     /**
      * Filter shifts by driver and within a proximity.
      *
@@ -219,11 +225,11 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         return new ActiveDataProvider([
             'query' => $query,
         ]);
-    }    
-    
-    
-        
-    
+    }
+
+
+
+
 
     /**
      * @return \yii\db\ActiveQuery

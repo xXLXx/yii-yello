@@ -43,6 +43,7 @@ use common\models\query\UserQuery;
 
  * @property UserHasStore[] $userHasStores userHasStores
  * @property view_stores[] $stores stores
+ * @property Message[] $message
  * @property Store $storeCurrent the current selected store
  * @property Vehicle $vehicle
  */
@@ -80,7 +81,9 @@ class User extends BaseModel implements IdentityInterface
             'image',
             'userDriver',
             'address',
-            'company'
+            'company',
+            'companyaddress',
+            'message'
         ];
     }
 
@@ -97,6 +100,8 @@ class User extends BaseModel implements IdentityInterface
             'lastName',
             'imageId',
             'signup_step_completed',
+            'phone',
+            'phonetype'
         ];
     }
 
@@ -126,7 +131,19 @@ class User extends BaseModel implements IdentityInterface
     }
 
 
-
+    /**
+     * Get Messages for user that have not yet been sent
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMessage()
+    {
+        $time=time();
+//         return $this->hasMany(Message::className(), ['idrecipuser' => 'id','sentvia'=>null,'received'=>null,'expires'=>['>'.time()]]);
+        $msgs = $this->hasMany(Message::className(), ['idrecipuser' => 'id'])->where(['sentvia'=>null,'received'=>null,["expiresUTC","<$time"]]);
+        return $msgs;
+        
+    }
 
 
     /**
@@ -680,13 +697,23 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
-     * The path pattern.
+     * The profile photo path pattern.
      *
      * @return string
      */
     public function getProfilePhotoPathPattern()
     {
         return '/user/{id}/profile.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
+    public function getLicensePathPattern()
+    {
+        return '/user/{id}/license.png';
     }
 
     /**
@@ -697,6 +724,16 @@ class User extends BaseModel implements IdentityInterface
     public function getProfilePhotoUrl()
     {
         return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+    }
+
+    /**
+     * The license photo url.
+     *
+     * @return string
+     */
+    public function getLicensePhotoUrl()
+    {
+        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLicensePathPattern());
     }
 
 }

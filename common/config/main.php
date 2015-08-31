@@ -89,12 +89,12 @@ return [
             // for the mailer to send real emails.
         'transport' => [
              'class' => 'Swift_SmtpTransport',
-             'host' => 'smtp.sendgrid.net',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
-             'username' => 'azure_ac60fd423f8c76c7b32e4177c2991045@azure.com',
-             'password' => '7t8g2KZ9yjlUaa5',
+             'host' => 'email-smtp.us-east-1.amazonaws.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+             'username' => 'AKIAJ4CNIEYSP6UPPBXA',
+             'password' => 'AkDyihIj/BOGV7uRM7k8I7zk+usYSv7ub4tGT5PEcfA/',
              'port' => '587', // Port 25 is a very common port too
              'encryption' => 'tls', // It is often used, check your provider or mail server specs
-             ]            
+             ]               
             ,
         ],
 
