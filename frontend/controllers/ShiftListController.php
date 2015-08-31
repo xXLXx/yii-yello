@@ -106,7 +106,7 @@ class ShiftListController extends BaseController
                     $driverreview=null;
                     $userreview = null;
                     $latest='';
-                    $userId = Yii::$app->user->identity->id;
+                    $userId = \Yii::$app->user->identity->id;
                     $msg='';
 
                 if($shiftRequestReviews){
