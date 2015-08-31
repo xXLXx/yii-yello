@@ -123,7 +123,7 @@ var ShiftsCalendarController = {
                     self.renderStateCounts(result.events);
                     provide(result.events);
                     $("#tableitem-"+result.shiftid).addClass('active');
-
+                     console.log('Unconfirmed shifts : '+result.unconfirmedShifts.length);
                     self.toggleCopyButtons(result.unconfirmedShifts.length === 0);
                 },
                 dataType: 'json'
@@ -224,7 +224,7 @@ var ShiftsCalendarController = {
     toggleCopyButtons: function(confirm){
         confirm = confirm || false;
 
-        if (confirm) {
+        if (confirm) { // allow copy
             $('.js_copy_roster').removeClass('hidden');
             $('.js_confirm_roster').addClass('hidden');
             $('.js_cancel_confirmation').addClass('hidden');

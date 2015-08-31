@@ -4,7 +4,6 @@ namespace common\services;
 
 use common\helpers\TimezoneHelper;
 use common\models\Shift;
-use common\models\Store;
 use yii\helpers\Url;
 use common\models\ShiftState;
 
@@ -25,13 +24,9 @@ class ShiftCalendarService extends BaseService
     {
         $result = [];
 
-        // start/end are expected to be in local timezone
-        // and should be from midnight tomidnight end date
-        $timezone = Store::findOne($data['storeId'])->timezone;
-        $start = new \DateTime($data['start'], new \DateTimeZone($timezone));
-        $start = TimezoneHelper::convertToUTC($timezone, $start);
-        $end = new \DateTime($data['end'], new \DateTimeZone($timezone));
-        $end = TimezoneHelper::convertToUTC($timezone, $end);
+        $start = $data['start'];
+        $end = $data['end'];
+        $timezone = $data['timezone'];
         
         $shifts = Shift::find()
             ->with('applicants')

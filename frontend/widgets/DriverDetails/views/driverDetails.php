@@ -4,6 +4,9 @@ use kartik\rating\StarRating;
  * @var $this yii\web\View
  * @var $driver \common\models\Driver
  */
+if(!isset($current_page)){
+    $current_page='unknown';
+}
 ?>
 <div class="border-top-item">
     <div class="user-shifts">
