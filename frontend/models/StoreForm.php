@@ -139,9 +139,6 @@ class StoreForm extends Model
             $this->contact_phone= $storeOwnerView->contact_phone;
     }
 
-
-    
-    
     /**
      * Save this form.
      * The transactional way shall ensure we save this record at once
@@ -177,11 +174,7 @@ class StoreForm extends Model
 
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
             if (!empty($imageFile)) {
-                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $this->id, $store->getLogoPathPattern()));
-
-                if (empty($url)) {
-                    throw new \Exception('Upload failed.');
-                }
+                $url = $store->uploadLogo($imageFile);
             }
 
             $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->userId]);
