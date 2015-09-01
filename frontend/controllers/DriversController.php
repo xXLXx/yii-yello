@@ -176,6 +176,10 @@ class DriversController extends BaseController
         $connected = DriverHasStore::isConnected($id);
         $invited = DriverHasStore::isInvited($id);
 
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+        $driverHasStore = DriverHasStore::find(['driverId' => $id, 'storeId' => $storeId])->one();
+
         $completedShiftState = ShiftState::findOne(['name' => ShiftState::STATE_COMPLETED]);
         //TODO: Lalit - please comment changes
         $completedShift = Shift::findAll(['shiftStateId' => $completedShiftState->id]);
@@ -214,7 +218,8 @@ class DriversController extends BaseController
             'review_avg' => $review_avg,
             'connected' => $connected,
             'invited' => $invited,
-            'note' => $note
+            'note' => $note,
+            'driverHasStore' => $driverHasStore
         ]);
 
     }
@@ -331,4 +336,57 @@ class DriversController extends BaseController
         imagedestroy($rotate);
 
     }
+
+    public function actionChangePaymentMethod($driverId){
+
+        $this->layout = 'empty';
+        $storeInviteDriverForm = new StoreInviteDriverForm();
+        $storeInviteDriverForm->driverId = $driverId;
+        $params = \Yii::$app->request->post();
+
+        $driver = Driver::find()->where(['id' => $driverId])->one();
+
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+        $driverHasStore = DriverHasStore::find(['driverId' => $driverId, 'storeId' => $storeId])->one();
+
+        if ($storeInviteDriverForm->load($params)) {
+
+            $driverHasStore->storeRequestedMethod = $params['storeInviteDriverForm']['storeRequestedMethod'];
+            if($driverHasStore->paymentMethod == $driverHasStore->storeRequestedMethod){
+                return "<div><div class='success_message'>Payment method is already set as ".$driverHasStore->storeRequestedMethod.".</div></div>";
+            } else {
+                $driverHasStore->save();
+                return "<div><div class='success_message'>Your request for change payment method is sent.</div></div>";
+            }
+
+        }
+
+        return $this->render('change-payment-method', [
+            'storeInviteDriverForm' => $storeInviteDriverForm,
+            'driverHasStore' => $driverHasStore,
+            'driver' => $driver
+        ]);
+    }
+
+    public function actionCancelPaymentChange($driverId){
+
+        $user = \Yii::$app->user->identity;
+        $storeId = $user->storeOwner->storeCurrent->id;
+        $driverHasStore = DriverHasStore::find(['driverId' => $driverId, 'storeId' => $storeId])->one();
+
+        if($driverHasStore){
+            $driverHasStore->storeRequestedMethod = '';
+            $driverHasStore->save();
+            return Json::encode([
+                'success' => true
+            ]);
+        } else {
+            return Json::encode([
+                'success' => false
+            ]);
+        }
+
+    }
+
 }

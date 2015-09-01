@@ -13,7 +13,9 @@ var DriverNote = {
         deleteNoteSelector: '.j_note_delete',
         noteUrl: '/drivers/note',
         deleteNoteUrl: '/drivers/remove-note',
-        rotatePhotoUrl: '/drivers/rotate-photo'
+        rotatePhotoUrl: '/drivers/rotate-photo',
+        changePaymentMethod: '/drivers/change-payment-method',
+        cancelChangeRequest: '/drivers/cancel-payment-change'
     },
 
     /**
@@ -107,6 +109,59 @@ var DriverNote = {
                     $('#contact-form').html(html);
                     $(".j_colorbox").colorbox.resize();*/
 
+                },
+                dataType: 'json'
+            });
+        });
+
+
+        //@ToDo Lalit J - Shift to correct js file for payment method.
+        $(document).on('submit', '#store-invite-driver-form-payment', function() {
+            var $form = $(this);
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'post',
+                data: $form.serializeArray(),
+
+                error: function(xhr){
+                    console.log(xhr.responseText);
+                },
+                success: function(data) {
+
+                    if (data.search && data.search('success') != -1) {
+                        var html = $('.success_message', data).html();
+
+                        $('#store-invite-driver-form-payment .popup-body-inner').html(html);
+
+                        $(".j_colorbox").colorbox.resize();
+
+                        $('#j_payment_change').addClass('hidden');
+                        $('.j_cancel_payment_change').removeClass('hidden');
+
+
+                        return;
+                    }
+                    var html = $('#store-invite-driver-form', $(data)).html();
+                    $('#store-invite-driver-form').html(html);
+                    $(".j_colorbox").colorbox.resize();
+                }
+            });
+            return false;
+        });
+
+        $(document).on('click', '.j_cancel_payment_change', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            driverId = $this.data('driverid');
+            $.ajax({
+                type: 'GET',
+                url: self.options.cancelChangeRequest,
+                data: {driverId: driverId},
+                success: function (data) {
+                    if(data.success){
+                        $('#j_payment_change').removeClass('hidden');
+                        $('.j_cancel_payment_change').addClass('hidden');
+                    }
                 },
                 dataType: 'json'
             });
