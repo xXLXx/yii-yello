@@ -133,6 +133,7 @@ var ShiftsCalendarController = {
         });
         calendar.onEventClick(function(event) {
             currentselected=event.id;
+            //console.log('reassigned event');
             currentevent = calendar.getEventById(event.id);
             $.pjax({
                 url: event.data.url,

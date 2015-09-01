@@ -124,11 +124,20 @@ Calendar.prototype.sourceCallbacksCall = function() {
                         if(currentevent==null){
                             //currentevent=event;
                         }else{
-                            if(currentevent.data.shiftStateId==event.data.shiftStateId&&currentevent.data.isFavourites==event.data.isFavourites&&currentevent.data.isYelloDrivers == event.data.isYelloDrivers && currentevent.data.isMyDrivers == event.data.isMyDrivers && currentevent.begin==event.begin && currentevent.end == event.end && currentevent.applicantsCount==event.applicantsCount){
-                                console.log('unchanged');
+                            //console.log(event);
+                            //console.log("current isFavourites: "+currentevent.isFavourites+" ,, event isFavourites: "+event.isFavourites);
+                            
+                            
+                            if(currentevent.data.shiftStateId==event.data.shiftStateId&&currentevent.isFavourites==event.isFavourites&&currentevent.isYelloDrivers == event.isYelloDrivers && currentevent.isMyDrivers == event.isMyDrivers && currentevent.begin==event.begin && currentevent.end == event.end && currentevent.applicantsCount==event.applicantsCount){
+                                //console.log('unchanged');
                             }else{
-                                
-                                console.log('changed');
+                                currentevent=event;
+                                //console.log('changed');
+                                $.pjax({
+                                    url: event.data.url,
+                                    container: '#shift-form-widget-pjax',
+                                    timeout: pjaxTimeout
+                                });
                             }
                         }
                     }
