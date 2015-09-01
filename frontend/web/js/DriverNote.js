@@ -116,7 +116,7 @@ var DriverNote = {
 
 
         //@ToDo Lalit J - Shift to correct js file for payment method.
-        $(document).on('submit', '#store-invite-driver-form-payment', function() {
+        $(document).on('submit', '#driver-payment-form', function() {
             var $form = $(this);
             $.ajax({
                 url: $form.attr('action'),
@@ -131,12 +131,13 @@ var DriverNote = {
                     if (data.search && data.search('success') != -1) {
                         var html = $('.success_message', data).html();
 
-                        $('#store-invite-driver-form-payment .popup-body-inner').html(html);
+                        $form.find('.popup-body-inner').html(html);
 
                         $(".j_colorbox").colorbox.resize();
 
                         $('#j_payment_change').addClass('hidden');
-                        $('.j_cancel_payment_change').removeClass('hidden');
+                        $('#j_cancel_payment_change, .j_payment_change_text').removeClass('hidden');
+
 
 
                         return;
@@ -149,22 +150,28 @@ var DriverNote = {
             return false;
         });
 
-        $(document).on('click', '.j_cancel_payment_change', function (e) {
-            e.preventDefault();
-            $this = $(this);
-            driverId = $this.data('driverid');
+        //$(document).on('click', '.j_cancel_payment_change', function (e) {
+        $(document).on('submit', '#driver-cancel-payment-form', function() {
+            $form = $(this);
+            driverId = $form.find('.driverid').val();
+            console.log($form.serialize());
             $.ajax({
-                type: 'GET',
-                url: self.options.cancelChangeRequest,
-                data: {driverId: driverId},
+                type: 'POST',
+                url: $form.attr('action'),
+                data: $form.serialize(),
                 success: function (data) {
                     if(data.success){
+
+                        $form.find('.popup-body-inner').html(data.success);
+                        $(".j_colorbox").colorbox.resize();
+
                         $('#j_payment_change').removeClass('hidden');
-                        $('.j_cancel_payment_change').addClass('hidden');
+                        $('#j_cancel_payment_change, .j_payment_change_text').addClass('hidden');
                     }
                 },
                 dataType: 'json'
             });
+            return false;
         });
     }
 };

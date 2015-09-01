@@ -371,19 +371,33 @@ class DriversController extends BaseController
 
     public function actionCancelPaymentChange($driverId){
 
-        $user = \Yii::$app->user->identity;
-        $storeId = $user->storeOwner->storeCurrent->id;
-        $driverHasStore = DriverHasStore::find(['driverId' => $driverId, 'storeId' => $storeId])->one();
+        $params = \Yii::$app->request->post();
 
-        if($driverHasStore){
-            $driverHasStore->storeRequestedMethod = '';
-            $driverHasStore->save();
-            return Json::encode([
-                'success' => true
-            ]);
+        if(count($params)){
+
+            $user = \Yii::$app->user->identity;
+            $storeId = $user->storeOwner->storeCurrent->id;
+            $driverHasStore = DriverHasStore::find(['driverId' => $driverId, 'storeId' => $storeId])->one();
+
+            if($driverHasStore){
+                $driverHasStore->storeRequestedMethod = '';
+                $driverHasStore->save();
+                return Json::encode([
+                    'success' => 'Successfully cancelled the change payment request.'
+                ]);
+            } else {
+                return Json::encode([
+                    'success' => false
+                ]);
+            }
+
         } else {
-            return Json::encode([
-                'success' => false
+
+            $this->layout = false;
+            $driver = Driver::find()->where(['id' => $driverId])->one();
+
+            return $this->render('cancel-payment-change',[
+                'driver' => $driver
             ]);
         }
 

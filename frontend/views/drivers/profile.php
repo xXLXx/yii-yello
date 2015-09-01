@@ -142,7 +142,8 @@ $driverId = $driver->id;
                     $storeRequestedMethod = $driverHasStore->storeRequestedMethod;
                     ?>
                     <td><?= ucfirst($paymentMethod); ?>
-                        <a href="<?= \yii\helpers\Url::to(['drivers/cancel-payment-method']) ?>?driverId=<?= $driver->id ?>" data-driverId="<?=$driverId; ?>" class="orange-text j_cancel_payment_change <?php if(!$storeRequestedMethod){ ?>hidden<?php } ?>">Change pending...</a>
+                        <span class="orange-text j_payment_change_text <?php if(!$storeRequestedMethod){ ?>hidden<?php } ?>">Change pending...</span>&nbsp;
+                        <a id="j_cancel_payment_change" href="<?= \yii\helpers\Url::to(['drivers/cancel-payment-change']) ?>?driverId=<?= $driver->id ?>" data-driverId="<?=$driverId; ?>" class="j_colorbox <?php if(!$storeRequestedMethod){ ?>hidden<?php } ?>">Cancel</a>
                         <a id="j_payment_change" href="<?= \yii\helpers\Url::to(['drivers/change-payment-method']) ?>?driverId=<?= $driver->id ?>"  class="j_colorbox <?php if($storeRequestedMethod){ ?>hidden<?php } ?>">Change</a>
                     </td>
                 </tr>
