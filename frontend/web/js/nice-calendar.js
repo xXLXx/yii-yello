@@ -36,7 +36,7 @@ Calendar.prototype.refresh = function() {
 function get_shift_id_url() {
     var data = window.location.href.match(/shiftId=([^&]+)/);
     if (data) {
-        console.log(data[1]);
+       // console.log(data[1]);
         return data[1];
     }
     return 0;
@@ -120,6 +120,20 @@ Calendar.prototype.sourceCallbacksCall = function() {
                 self._events = [];
                 for (var i in eventsRaw) {
                     var event = new Calendar.Event(eventsRaw[i]);
+                    if(event.id==currentselected){
+                        if(currentevent==null){
+                            //currentevent=event;
+                        }else{
+                            if(currentevent.data.shiftStateId==event.data.shiftStateId&&currentevent.data.isFavourites==event.data.isFavourites&&currentevent.data.isYelloDrivers == event.data.isYelloDrivers && currentevent.data.isMyDrivers == event.data.isMyDrivers && currentevent.begin==event.begin && currentevent.end == event.end && currentevent.applicantsCount==event.applicantsCount){
+                                console.log('unchanged');
+                            }else{
+                                
+                                console.log('changed');
+                            }
+                        }
+                    }
+                    
+                    
                     self._events.push(event);
                 }
                 // temporarily omitted as suspected not necessary
@@ -145,6 +159,9 @@ Calendar.Event = function(data) {
     this.applicantsCount = data.applicantsCount;
     this.data = data.data;
     this.driverDeliveryCount = data.driverDeliveryCount;
+    this.isYelloDrivers = data.isYelloDrivers;
+    this.isMyDrivers = data.isMyDrivers;
+    this.isFavourites = data.isFavourites;
 };
 
 Calendar.View = function() {
@@ -259,12 +276,14 @@ Calendar.prototype.again = function(){
 
 
 Calendar.prototype.onEventClick = function(callback) {
-    console.log(new Date);
+    //console.log(new Date);
     this._clickCallbacks.push = callback;
 };
 
 Calendar.prototype.eventClickInit = function() {
     var self = this;
+    
+
     
     $(".emptyrosterspace").on('click, touchend', function(){
         
@@ -272,13 +291,18 @@ Calendar.prototype.eventClickInit = function() {
     
     $('.js-event', this.getContainer()).on('click', function() {
         // remove active cell
-        $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
-        $(this).find('.calendar-table-item').addClass('active'); // set active
-        var eventId = $(this).data('event-id');
-        currentselected=eventId; // update the currently selected event
-        var event = self.getEventById(eventId);
-        for (var i in self._clickCallbacks) {
-            self._clickCallbacks[i].call(self, event);
-        };
+        if(eventId!=currentselected){
+            // only refresh if click is not on same event
+            var eventId = $(this).data('event-id');
+            var thisevent = self.getEventById(eventId);
+            $('.js-event', self.getContainer()).find('.calendar-table-item').removeClass('active');
+            $(this).find('.calendar-table-item').addClass('active'); // set active
+            currentselected=eventId; // update the currently selected event
+            //currentevent = thisevent;
+            for (var i in self._clickCallbacks) {
+                self._clickCallbacks[i].call(self, thisevent);
+            };
+        }
+        
     });
 };
