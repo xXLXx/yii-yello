@@ -733,9 +733,29 @@ class User extends BaseModel implements IdentityInterface
      *
      * @return string
      */
+    public function getVehicleRegistrationPathPattern()
+    {
+        return '/userfiles/{id}/vehicle.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationThumbPathPattern()
+    {
+        return '/userfiles/{id}/vehicle-thumb.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
     public function getLicensePathPattern()
     {
-        return '/user/{id}/license.png';
+        return '/userfiles/{id}/drviers-license.png';
     }
 
     /**
@@ -770,6 +790,7 @@ class User extends BaseModel implements IdentityInterface
     public function uploadProfilePhoto($sourceFile)
     {
         $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.png',
             '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
         ];
@@ -798,6 +819,55 @@ class User extends BaseModel implements IdentityInterface
         }
 
         return $result['300'];
+    }
+
+    /**
+     * Upload vehicle registration photo, create thumb.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadVehiclePhoto($sourceFile)
+    {
+        $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.png',
+            '300' => str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern()),
+            '100' => str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
+    }
+
+    /**
+     * Upload drivers license.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadLicensePhoto($sourceFile)
+    {
+        $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.png',
+            '300' => str_replace('{id}', $this->id, $this->getLicensePathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
     }
 
 }
