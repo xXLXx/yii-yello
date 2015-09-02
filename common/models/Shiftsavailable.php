@@ -7,6 +7,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
+use common\models\Shift;
 
 /**
  * This is the model class for table "shiftsavailable".
@@ -142,6 +143,9 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         if (empty($params['driverId']) || empty($params['latitude']) || empty($params['longitude'])) {
             return false;
         }
+        
+
+        
         $query = static::find();
         //        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
         // only choose yello records where the driver is not a mydriver
@@ -156,10 +160,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
-        foreach ($params['my'] as $mine){
-            
-             $query->andWhere(['NOT',[['>=', 'start', $mine->start->format('Y-m-d H:i:s')],['<=','start',$mine->end->format('Y-m-d H:i:s')]]]);
-        }
+
         $query->orderBy(['start'=>SORT_ASC]);
 
         return new ActiveDataProvider([

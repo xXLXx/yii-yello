@@ -7,11 +7,9 @@ namespace api\modules\v1\controllers;
 
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\Shift;
-use common\models\DriverHasStore;
 use common\models\search\ShiftSearch;
 use common\models\ShiftHasDriver;
 use common\models\Shiftsavailable;
-use common\models\StoreOwnerFavouriteDrivers;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 
@@ -83,8 +81,13 @@ class ShiftController extends \api\common\controllers\ShiftController
      */
     public function actionApplied()
     {
+        $sort = new Sort([
+               'attributes' => [
+                   'start'=>SORT_ASC
+               ],
+           ]);
         $driverId = $this->getDriverId();
-        return Shift::getAppliedBy($driverId);
+        //return Shift::getAppliedBy($driverId)->setSort($sort);
     }
 
     /**
@@ -99,19 +102,13 @@ class ShiftController extends \api\common\controllers\ShiftController
         $latitude = \Yii::$app->request->get('latitude');
         $longitude = \Yii::$app->request->get('longitude');
 
-        $my = DriverHasStore::find()->select('storeId')->where(['driverId' => $driverId, 'isAcceptedByDriver' => 1])->asArray()->column();
-        $fav = StoreOwnerFavouriteDrivers::find()->select('storefk')->where(['driverId' => $driverId])->asArray()->column();
-
         if (empty($latitude) || empty($longitude)) {
             throw new BadRequestHttpException('Latitude and longitude are required.');
         }
+        
+        $model = new Shiftsavailable();
 
-        //$model = new Shiftsavailable();
-        $searchModel = new Shiftsavailable();
-        $shifts = $searchModel->search(compact('driverId', 'latitude', 'longitude', 'my', 'fav'));
-
-        //return $model->search(compact('driverId', 'latitude', 'longitude'));
-        return $shifts;
+        return $model->search(compact('driverId', 'latitude', 'longitude'));
     }
 
     /**
