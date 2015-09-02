@@ -195,18 +195,18 @@ class Store extends BaseModel
      * Upload logo and create thumb.
      *
      * @todo thumb should be done in the background via a queuing system.
-     * @param  \yii\web\UploadedFile $file
+     * @param  string $sourceFile path to source file
      * @return mixed
      * @throws \Exception
      */
-    public function uploadLogo($file)
+    public function uploadLogo($sourceFile)
     {
         $sizes = [
             'original' => str_replace('{id}', $this->id, $this->getLogoPathPattern()),
 //            '100' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
         ];
 
-        $result = ImageResizeHelper::resizeAndUpload($file->tempName, $sizes);
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
 
         if (empty($result)) {
             throw new \Exception('Upload failed.');
