@@ -135,6 +135,18 @@ $driverId = $driver->id;
                     <td class="gray-text">T-Shirt Size</td>
                     <td></td>
                 </tr>
+                <tr class="tr-gray">
+                    <td class="gray-text">Payment Method</td>
+                    <?php
+                    $paymentMethod = $driverHasStore->paymentMethod;
+                    $storeRequestedMethod = $driverHasStore->storeRequestedMethod;
+                    ?>
+                    <td><?= ucfirst($paymentMethod); ?>
+                        <span class="orange-text j_payment_change_text <?php if(!$storeRequestedMethod){ ?>hidden<?php } ?>">Change pending...</span>&nbsp;
+                        <a id="j_cancel_payment_change" href="<?= \yii\helpers\Url::to(['drivers/cancel-payment-change']) ?>?driverId=<?= $driver->id ?>" data-driverId="<?=$driverId; ?>" class="j_colorbox <?php if(!$storeRequestedMethod){ ?>hidden<?php } ?>">Cancel</a>
+                        <a id="j_payment_change" href="<?= \yii\helpers\Url::to(['drivers/change-payment-method']) ?>?driverId=<?= $driver->id ?>"  class="j_colorbox <?php if($storeRequestedMethod){ ?>hidden<?php } ?>">Change</a>
+                    </td>
+                </tr>
             </table>
             <?php } ?>
             <!-- <h4>Locations</h4>

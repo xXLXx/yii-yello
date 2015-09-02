@@ -87,6 +87,9 @@ class ShiftCalendarService extends BaseService
                 ],
                 'applicantsCount' => $applicantsCount,
                 'driverDeliveryCount'=>$driverdeliverycount,
+                'isYelloDrivers'=>$shift->isYelloDrivers,
+                'isFavourites'=>$shift->isFavourites,
+                'isMyDrivers'=>$shift->isMyDrivers
             ];
 //            }
         }

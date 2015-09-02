@@ -62,3 +62,7 @@
 }
 
 a .icon-pie-chart-1{display:none;}
+
+#store-invite-driver-form-payment label{
+    font-weight: normal;
+}

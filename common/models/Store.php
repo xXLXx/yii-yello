@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\ImageResizeHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -157,6 +158,61 @@ class Store extends BaseModel
     public function getTimezone()
     {
         return !empty($this->address->timezone) ? $this->address->timezone : 'Australia/Sydney';
+    }
+
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getLogoPathPattern()
+    {
+        return '/storefiles/{id}/logo.png';
+    }
+
+    /**
+     * The logo-thumb path pattern.
+     *
+     * @return string
+     */
+    public function getLogoThumbPathPattern()
+    {
+        return '/storefiles/{id}/logo-thumb.png';
+    }
+
+
+    /**
+     * The store logo url.
+     *
+     * @return string
+     */
+    public function getLogoUrl()
+    {
+        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLogoPathPattern());
+    }
+
+    /**
+     * Upload logo and create thumb.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadLogo($sourceFile)
+    {
+        $sizes = [
+            'original' => str_replace('{id}', $this->id, $this->getLogoPathPattern()),
+//            '100' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
     }
 
     /**

@@ -92,7 +92,7 @@ class SiteController extends BaseController
                 $request = Yii::$app->request->hostInfo;
                 $roleid=\Yii::$app->user->identity->roleId;
                 // add driverdev.localhost to your hosts file for development
-                $drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost');
+                $drivers = array('https://transit.driveyello.com','https://driver.yello.delivery','https://prod1driver.yello.delivery','https://driverdev.yello.delivery','http://driverdev.localhost','https://devops.yello.delivery');
                 if(in_array($request, $drivers)){
                        if($roleid!=3){
                            // log out user and redirect to store
@@ -212,9 +212,11 @@ class SiteController extends BaseController
     public function actionVerification()
     {
         $user_email = Yii::$app->request->get('user_email');
+        $sent_status = Yii::$app->request->get('sent');
         return $this->render('verification',
             [
-                'user_email' => $user_email
+                'user_email' => $user_email,
+                'sent_status' => $sent_status
             ]
         );
     }
@@ -258,7 +260,7 @@ class SiteController extends BaseController
             Yii::$app->getSession()->setFlash('success','Failed, contact admin.');
         }
         return Yii::$app->getResponse()->redirect(
-            ['site/verification', 'user_email' => $user->email]
+            ['site/verification', 'user_email' => $user->email, 'sent' => 1]
         );
 
     }
