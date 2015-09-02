@@ -70,15 +70,10 @@ class DriverForm extends UserForm
          
 
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.'Image:' . PHP_EOL, true), FILE_APPEND);
-            if (isset($_FILES['imageFile'])) {
-                $image = new Image();
-                $image->imageFile = UploadedFile::getInstanceByName('imageFile');
-                if ($image->imageFile) {
-                    $image->saveFiles();
-                    $image->save();
-                    $user->imageId = $image->id;
-                    file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(PHP_EOL.$image->imageFile.PHP_EOL, true), FILE_APPEND);
-                }
+
+            $imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if (!empty($imageFile)) {
+                $url = $user->uploadProfilePhoto($imageFile->tempName);
             }
 
             $user->firstName = $this->firstName;
