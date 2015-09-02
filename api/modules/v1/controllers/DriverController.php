@@ -121,10 +121,12 @@ class DriverController extends \api\common\controllers\DriverController
 //        return $model->getErrors() ? $model->getErrors() : $model;
     }
     
+    
+    
     public function actionAccreditation(){
         $post = \Yii::$app->request->post();
         $msg='unknown';
-        if($post->success=='1'){
+        if($post['success']=='1'){
              $user = \Yii::$app->user->identity;
              $step = $user->signup_step_completed;
              if($step>2){
@@ -150,6 +152,7 @@ class DriverController extends \api\common\controllers\DriverController
         $output['message'] = 'Accreditation Failure';
         return $output;
         
-    }
+    }    
+    
     
 }
