@@ -56,8 +56,8 @@ class SettingsLeftNavigation extends Widget
         $items=[];
         $menuItems = [];
          $menuItems[] =    ['label' => \Yii::t('app', 'Manage Account'), 'url' => ['settings/index']];
-         $menuItems[] =    ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
-         $menuItems[] =   ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
+         //$menuItems[] =    ['label' => \Yii::t('app', 'Company details'), 'url' => ['company-details/index']];
+         //$menuItems[] =   ['label' => \Yii::t('app', 'Your Stores'), 'url' => ['your-stores/index']];
  
         $items[]=['heading'=>'Preferences','menuItems'=>$menuItems];
         return $items;

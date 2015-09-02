@@ -214,6 +214,18 @@ class Store extends BaseModel
 
         return $result['original'];
     }
+    
+    
+    /**
+     * Get shiftReviews
+     * @return ActiveQuery
+     */
+    public function getStoreReviews()
+    {
+        return $this->hasMany(Storereviews::className(), ['storeId' => 'id','isArchived'=>0]);
+    }    
+    
+    
 
     /**
      * @param \DateTime $date
