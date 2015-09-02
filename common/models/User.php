@@ -1,8 +1,10 @@
 <?php
 namespace common\models;
 
+use common\helpers\ImageResizeHelper;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use yii\web\IdentityInterface;
 use frontend\models\CompanyForm;
@@ -703,7 +705,27 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getProfilePhotoPathPattern()
     {
-        return '/user/{id}/profile.png';
+        return '/userfiles/{id}/profile.png';
+    }
+
+    /**
+     * The profile photo-thumb path pattern.
+     *
+     * @return string
+     */
+    public function getProfilePhotoThumbPathPattern()
+    {
+        return '/userfiles/{id}/profile-thumb.png';
+    }
+
+    /**
+     * The profile photo-thumb path pattern.
+     *
+     * @return string
+     */
+    public function getProfileMapPathPattern()
+    {
+        return '/userfiles/{id}/profile-map.png';
     }
 
     /**
@@ -734,6 +756,48 @@ class User extends BaseModel implements IdentityInterface
     public function getLicensePhotoUrl()
     {
         return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLicensePathPattern());
+    }
+
+    /**
+     * Upload profile photo, create thumb and other images.
+     * Separate request for the marker utilizing existing implementation.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadProfilePhoto($sourceFile)
+    {
+        $sizes = [
+            '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
+            '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        $sizes = [
+            '100' => str_replace('{id}', $this->id, $this->getProfileMapPathPattern()),
+        ];
+
+        $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('driver', true).'.png';
+        file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-driver-marker', 'driverId' => $this->id, 'sourceFile' => $sourceFile], true), false,
+            stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                ]
+            ])));
+
+        if (empty(ImageResizeHelper::resizeAndUpload($temporaryFile, $sizes))) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['300'];
     }
 
 }

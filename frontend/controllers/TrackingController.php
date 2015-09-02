@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\User;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,6 +13,24 @@ use yii\helpers\ArrayHelper;
  */
 class TrackingController extends BaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['getDriverMarker'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?']
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Map
      */
@@ -50,13 +69,9 @@ class TrackingController extends BaseController
         imageAlphaBlending($marker, true);
         imageSaveAlpha($marker, true);
 
-        $imagePath = $defaultImg = \Yii::getAlias('@webroot') . "/img/Driver_Pic_bgrey_black.png";
-        if ($driver && $driver->image) {
-            $imagePath = \Yii::getAlias('@webroot') . $driver->image->thumbUrl;
-        }
-        if (!file_exists($imagePath)) {
-            $imagePath = $defaultImg;
-        }
+        $defaultImg = \Yii::getAlias('@webroot') . "/img/Driver_Pic_bgrey_black.png";
+        $imagePath = \Yii::$app->request->get('sourceFile', $defaultImg);
+
         // Only accept pngs and jpegs, else loads default
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $fileinfo = finfo_file($finfo, $imagePath);
