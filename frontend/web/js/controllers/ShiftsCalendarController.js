@@ -9,6 +9,8 @@ var calendarObject;
 var calendarInterval;
 var begindate=0;
 var currentselected=0;
+var currentselectedstatus=0;
+var currentevent=null;
 var pjaxTimeout = 0;
 var stringify=false;
 
@@ -105,11 +107,11 @@ var ShiftsCalendarController = {
                     shiftid: currentselected
                 };
                 
-            console.log("#################################\n");
+          /*  console.log("#################################\n");
             console.log("url : "+self.data.sourceUrl);
             console.log("datum");
             console.log(datum);
-            console.log("=================================\n");
+            console.log("=================================\n"); */
             $.ajax({
                 type: "POST",
                 url: self.data.sourceUrl,
@@ -123,19 +125,22 @@ var ShiftsCalendarController = {
                     self.renderStateCounts(result.events);
                     provide(result.events);
                     $("#tableitem-"+result.shiftid).addClass('active');
-                     console.log('Unconfirmed shifts : '+result.unconfirmedShifts.length);
+
                     self.toggleCopyButtons(result.unconfirmedShifts.length === 0);
                 },
                 dataType: 'json'
             });
         });
         calendar.onEventClick(function(event) {
+            currentselected=event.id;
+            //console.log('reassigned event');
+            currentevent = calendar.getEventById(event.id);
             $.pjax({
                 url: event.data.url,
                 container: '#shift-form-widget-pjax',
                 timeout: pjaxTimeout
             });
-                currentselected=event.id;
+
             $('.sidebar-container').removeClass('without-col-left');
         });
 
@@ -224,7 +229,7 @@ var ShiftsCalendarController = {
     toggleCopyButtons: function(confirm){
         confirm = confirm || false;
 
-        if (confirm) { // allow copy
+        if (confirm) {
             $('.js_copy_roster').removeClass('hidden');
             $('.js_confirm_roster').addClass('hidden');
             $('.js_cancel_confirmation').addClass('hidden');
