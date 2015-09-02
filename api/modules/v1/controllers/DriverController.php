@@ -120,4 +120,39 @@ class DriverController extends \api\common\controllers\DriverController
         return $output;
 //        return $model->getErrors() ? $model->getErrors() : $model;
     }
+    
+    
+    
+    public function actionAccreditation(){
+        $post = \Yii::$app->request->post();
+        $msg='unknown';
+        if($post['success']=='1'){
+             $user = \Yii::$app->user->identity;
+             $step = $user->signup_step_completed;
+             if($step>2){
+                $user->signup_step_completed=10;
+                $user->save();
+                $msg='success';
+                $response = \Yii::$app->getResponse();
+                $response->setStatusCode(200);
+                $output = [];
+                $output['message'] = $msg;
+                return $output;
+             }else{
+                    $response = \Yii::$app->getResponse();
+                    $response->setStatusCode(400);
+                    $output = [];
+                    $output['message'] = 'Driver profile incomplete';
+                    return $output;
+             }
+        }
+        $response = \Yii::$app->getResponse();
+        $response->setStatusCode(400);
+        $output = [];
+        $output['message'] = 'Accreditation Failure';
+        return $output;
+        
+    }    
+    
+    
 }

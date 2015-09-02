@@ -100,10 +100,11 @@ class ShiftController extends \api\common\controllers\ShiftController
         if (empty($latitude) || empty($longitude)) {
             throw new BadRequestHttpException('Latitude and longitude are required.');
         }
-
+        $my = Shift::getAllocatedFor($driverId);
+        
         $model = new Shiftsavailable();
 
-        return $model->search(compact('driverId', 'latitude', 'longitude'));
+        return $model->search(compact('driverId', 'latitude', 'longitude','my'));
     }
 
     /**
