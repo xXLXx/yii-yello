@@ -142,42 +142,29 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         if (empty($params['driverId']) || empty($params['latitude']) || empty($params['longitude'])) {
             return false;
         }
-
         $query = static::find();
-        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
+        //        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
+        // only choose yello records where the driver is not a mydriver
+        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], 
+    
+        ['AND',['thedriverId' => '0'],
+        ['NOT IN', 'storeId', (new Query())->select('storeId')->from('driverhasstore')->where(['isArchived' => '0', 'driverId' => $params['driverId'],'isAcceptedByDriver'=>1])],
+        ['NOT IN', 'storeId', (new Query())->select('storefk')->from('storeownerfavouritedrivers')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]
 
-        $query->andWhere(['>', 'start', time()]);
-        $query->andWhere(['shiftStateId' => 1]);
-        $query->andWhere(['OR',
-            ['isYelloDrivers' => 1],
-            ['isMyDrivers' => 1, 'storeId' => $params['my']],
-            ['isFavourites' => 1, 'storeId' => $params['fav']]
-        ]);
+        ]]);
+        //        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['AND',['thedriverId' => '0'],['NOT IN', 'storeId', (new Query())->select('storeId')->from('driverhasstore')->where(['isArchived' => '0', 'driverId' => $params['driverId'],'isAcceptedByDriver'=>1])]]]);
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
-
+        foreach ($params['my'] as $mine){
+            
+             $query->andWhere(['NOT',[['>=', 'start', $mine->start->format('Y-m-d H:i:s')],['<=','start',$mine->end->format('Y-m-d H:i:s')]]]);
+        }
         $query->orderBy(['start'=>SORT_ASC]);
-
-//        $query->orderBy(['start'=>SORT_ASC, Expression('ABS(latitude-'.$params['latitude'].')+ABS(longitude-'.$params['longitude'].')')]);
-        // todo:jovani this needs to also be sorted by proximity. See commented line above ^ (which won't work). query needs to return this expression so that it can be used in sort.
-
 
         return new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        /*$query = static::find();
-        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
-        $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
-        $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
-        $query->orderBy(['start'=>SORT_ASC]);
-//        $query->orderBy(new Expression('ABS(longitude-'.$params['longitude'].') + ABS(latitude-'.$params['latitude'].')'));
-        $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
-
-        return new ActiveDataProvider([
-            'query' => $query,
-        ]);*/
     }
 
     /**
@@ -255,4 +242,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     {
         return $this->store->getImage();
     }
+    
+
+    
 }
