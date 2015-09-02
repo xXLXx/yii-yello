@@ -203,7 +203,7 @@ class Store extends BaseModel
     {
         $sizes = [
             'original' => str_replace('{id}', $this->id, $this->getLogoPathPattern()),
-            '144' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
+//            '100' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
         ];
 
         $result = ImageResizeHelper::resizeAndUpload($file->tempName, $sizes);
