@@ -52,7 +52,12 @@ class TrackingController extends BaseController
             ->all();
         $drivers = ArrayHelper::toArray($drivers);
 
-        return $this->render('index', compact('drivers', 'store'));
+        $pubnub = [
+            'publishKey' => \Yii::$app->params['pubnubPublishKey'],
+            'subscribeKey' => \Yii::$app->params['pubnubSubscribeKey']
+        ];
+
+        return $this->render('index', compact('drivers', 'store', 'pubnub'));
     }
 
     /**

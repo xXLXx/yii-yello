@@ -23,6 +23,10 @@ var TrackingMapController = {
             speed: 50,
             delay: 50,
             enabled: true
+        },
+        pubnub: {
+            publishKey: '',
+            subscribeKey: ''
         }
     },
 
@@ -94,8 +98,8 @@ var TrackingMapController = {
         });
 
         context.pubnub = PUBNUB({
-            publish_key   : 'pub-c-811c6537-1862-4b4c-9dac-13220db0928d',
-            subscribe_key : 'sub-c-ac40e412-23b2-11e5-8ae2-0619f8945a4f',
+            publish_key   : context.data.pubnub.publishKey,
+            subscribe_key : context.data.pubnub.subscribeKey,
             ssl: ((document.location.protocol == 'https:') ? true : false)
         });
     },
