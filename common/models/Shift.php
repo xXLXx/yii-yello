@@ -439,6 +439,7 @@ class Shift extends BaseModel
      */
     public static function getAllocatedFor($driverId)
     {
+        
         $shiftStateIds = ShiftState::find()
             ->where([
                 'in',
@@ -458,6 +459,7 @@ class Shift extends BaseModel
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftStateIds;
         $searchModel->declinedByStoreOwner = false;
+
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
         return $dataProvider;
     }

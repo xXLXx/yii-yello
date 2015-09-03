@@ -28,28 +28,37 @@ class ShiftStoreOwnerController extends BaseController
         if (!$shift) {
             throw new NotFoundHttpException('Shift not found');
         }
-        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
-        if($isMine){
-            $shift->setStateAllocated($driverId);
-        }else{
-            $isFavourite = \common\models\StoreOwnerFavouriteDrivers::findOne(['AND', ['driverId'=>$driverId,   'storefk'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
-            if($isFavourite){
-                // according to spec, when allocating a shift to a favourite driver, the driver becomes a mydriver
-                // add to DriverHasStore
-                // omitted for the time being
-//                $dhs = new \common\models\DriverHasStore();
-//                $dhs ->driverId = $driverId;
-//                $dhs ->storeId = $shift->storeId;
-//                $dhs ->isAcceptedByDriver=1;
-//                $dhs ->isInvitedByStoreOwner=1;
-//                $dhs->save();
-//            
-//                // now that the driver is a favourite, remove from store
-//                $isFavourite->isArchived=1;
-//                $isFavourite->save();
-            }
-            $shift->setStateYelloAllocated($driverId);
-        }
+        // make sure driver is not busy on another shift
+        $start = $shift->start;
+        $others = \api\common\models\Shift::getAllocatedFor($driverId)->actualStart;
+        //TODO: make sure driver is not already booked on an overlappin shift
+        // select * from shifthasdriver where shiftid<>$shiftID and driverid=$driverid and start<=$start and end>=$start;
+        
+        
+        $shift->setStateAllocated($driverId);
+        
+//        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
+//        if($isMine){
+//            $shift->setStateAllocated($driverId);
+//        }else{
+//            $isFavourite = \common\models\StoreOwnerFavouriteDrivers::findOne(['AND', ['driverId'=>$driverId,   'storefk'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
+//            if($isFavourite){
+//                // according to spec, when allocating a shift to a favourite driver, the driver becomes a mydriver
+//                // add to DriverHasStore
+//                // omitted for the time being
+////                $dhs = new \common\models\DriverHasStore();
+////                $dhs ->driverId = $driverId;
+////                $dhs ->storeId = $shift->storeId;
+////                $dhs ->isAcceptedByDriver=1;
+////                $dhs ->isInvitedByStoreOwner=1;
+////                $dhs->save();
+////            
+////                // now that the driver is a favourite, remove from store
+////                $isFavourite->isArchived=1;
+////                $isFavourite->save();
+//            }
+//            $shift->setStateYelloAllocated($driverId);
+//        }
     }
     
     /**

@@ -17,7 +17,7 @@ var ShiftViewWidget = {
 
             if (confirm('Are you sure?')){
                 $.post($(this).attr('href'), function(response){
-                    window.location.href = '/shifts-calendar';
+                   $("#roster-sidebar").addClass("without-col-left");
                 })
             }
         });
