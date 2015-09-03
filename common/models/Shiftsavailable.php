@@ -156,10 +156,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
         $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
-        foreach ($params['my'] as $mine){
-            
-             $query->andWhere(['NOT',[['>=', 'start', $mine->start->format('Y-m-d H:i:s')],['<=','start',$mine->end->format('Y-m-d H:i:s')]]]);
-        }
+
         $query->orderBy(['start'=>SORT_ASC]);
 
         return new ActiveDataProvider([
