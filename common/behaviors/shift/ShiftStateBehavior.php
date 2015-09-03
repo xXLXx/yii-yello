@@ -91,6 +91,7 @@ class ShiftStateBehavior extends BaseBehavior
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
         $storeid = $this->owner->storeId;
+        // Determine type of allocation
         $my = DriverHasStore::find()->where([
             'driverId' => $driverId,
             'storeId' => $storeid,
@@ -116,6 +117,8 @@ class ShiftStateBehavior extends BaseBehavior
      * 
      * @param integer $driverId driver id
      */
+    // TO BE REMOVED
+    //SHOULD NO LONGER BE USED. USE FUNCTION ABOVE
     public function setStateYelloAllocated($driverId)
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
