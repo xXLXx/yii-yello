@@ -765,7 +765,67 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getProfilePhotoUrl()
     {
-        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+        return \Yii::$app->params['uploadPath'].$this->getProfilePhotoPath();
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfilePhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfilePhotoThumbPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfileMapPhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfileMapPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getLicensePhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getLicensePathPattern());
+    }
+
+    /**
+     * The vehicle registration photo path.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationPhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern());
+    }
+
+    /**
+     * The vehicle registration photo thumb path.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationPhotoThumbPath()
+    {
+        return str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern());
     }
 
     /**

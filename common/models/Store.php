@@ -180,6 +180,16 @@ class Store extends BaseModel
         return '/storefiles/{id}/logo-thumb.png';
     }
 
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getLogoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getLogoPathPattern());
+    }
+
 
     /**
      * The store logo url.
@@ -202,7 +212,7 @@ class Store extends BaseModel
     public function uploadLogo($sourceFile)
     {
         $sizes = [
-            'original' => str_replace('{id}', $this->id, $this->getLogoPathPattern()),
+            'original' => $this->getLogoPath(),
 //            '100' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
         ];
 

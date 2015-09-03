@@ -99,4 +99,24 @@ class Company extends BaseModel
         return $this->hasOne(Address::className(), ['idaddress' => 'addressfk'])
             ->via('companyAddress');
     }
+
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getLogoPathPattern()
+    {
+        return '/companyfiles/{id}/logo.png';
+    }
+
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getLogoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getLogoPathPattern());
+    }
 }
