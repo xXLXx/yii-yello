@@ -43,6 +43,7 @@ class ShiftCalendarService extends BaseService
         foreach ($shifts as $shift) {
             // Convert to store local timezone
             $startDateTime = new \DateTime($shift->start);
+            $utcstart = $startDateTime;
             $startDateTime = TimezoneHelper::convertFromUTC($timezone, $startDateTime);
             $endDateTime = new \DateTime($shift->end);
             $endDateTime = TimezoneHelper::convertFromUTC($timezone, $endDateTime);
@@ -58,19 +59,27 @@ class ShiftCalendarService extends BaseService
                 $driverdeliverycount=$lastdriverrequest->deliveryCount;
             }
             
-
+            $opacity='1';
             $active = "";
             //$active = ($shift->id == $shiftId) ? " active" : "";
 
-//            $now = date("Y-m-d H:i:s");
-//            $time = strtotime($now);
-//            $time = $time - (30 * 60);
-//            $startDate = date("Y-m-d H:i:s", $time);
 //
 //            if($startDateTime<$startDate && $shift->shiftStateId == $pendingState->id ){
 //                // ignore unused shifts
 //            }else{
 
+            
+            $now = date("Y-m-d H:i:s");
+            $time = strtotime($now);
+            $time = $time - (30 * 60);
+            $startDate = date("Y-m-d H:i:s", $time);
+            $startDate = TimezoneHelper::convertFromUTC($timezone, $startDate);
+            
+            if($startDateTime<$startDate && ($shift->shiftStateId <4 || $shift->shiftStateId==10 ) ){
+                // ignore unused shifts
+                $opacity='0.4';
+            }            
+            
             $result[] = [
                 'date'  => $startDateTime->format('Y-m-d'),
                 'begin' => $startDateTime->format('H:i'),
@@ -89,7 +98,8 @@ class ShiftCalendarService extends BaseService
                 'driverDeliveryCount'=>$driverdeliverycount,
                 'isYelloDrivers'=>$shift->isYelloDrivers,
                 'isFavourites'=>$shift->isFavourites,
-                'isMyDrivers'=>$shift->isMyDrivers
+                'isMyDrivers'=>$shift->isMyDrivers,
+                'opacity'=>$opacity
             ];
 //            }
         }

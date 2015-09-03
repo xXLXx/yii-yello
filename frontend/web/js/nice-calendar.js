@@ -171,6 +171,7 @@ Calendar.Event = function(data) {
     this.isYelloDrivers = data.isYelloDrivers;
     this.isMyDrivers = data.isMyDrivers;
     this.isFavourites = data.isFavourites;
+    this.opacity = data.opacity;
 };
 
 Calendar.View = function() {
@@ -199,7 +200,7 @@ Calendar.prototype.render = function() {
                             '<% if (eventGroups.groups[j] && eventGroups.groups[j][i] && eventGroups.groups[j][i].id==currentselected )  {%>'+
                                 
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
-                                    '<div class="calendar-table-item active <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
+                                    '<div class="calendar-table-item active <%=  eventGroups.groups[j][i].data.color %>" style="opacity:<%=  eventGroups.groups[j][i].opacity %>;" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
                                         '<a class="calendar-table-cell">' +
                                             '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
@@ -213,7 +214,7 @@ Calendar.prototype.render = function() {
                                '<% if (eventGroups.groups[j] && eventGroups.groups[j][i]) {%>'+
                                 
                                 '<td class="js-event" data-event-id="<%= eventGroups.groups[j][i].id %>">' +
-                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>" id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
+                                    '<div class="calendar-table-item <%=  eventGroups.groups[j][i].data.color %>"  style="opacity:<%=  eventGroups.groups[j][i].opacity %>;"  id="tableitem-<%= eventGroups.groups[j][i].id %>">' +
                                         '<a class="calendar-table-cell">' +
                                             '<%= eventGroups.groups[j][i].begin %> to <%= eventGroups.groups[j][i].end %>' +
                                             '<span class="bold-text"><%= eventGroups.groups[j][i].title %></span>' +
