@@ -12,6 +12,6 @@ return [
     'aws_access_secret' => 'PuQ7SsVooyWPQ6SEvGkbCE1e6IOIEgP5jy19/5TF',
     'aws_files_bucket' => 'media.driveyello.com',
 
-    'pubnubPublishKey' => 'pub-c-811c6537-1862-4b4c-9dac-13220db0928d',
-    'pubnubSubscribeKey' => 'sub-c-ac40e412-23b2-11e5-8ae2-0619f8945a4f'
+    'pubnubPublishKey' => 'pub-c-3f2e0e9b-f34c-42f1-91f3-61215a533af8',
+    'pubnubSubscribeKey' => 'sub-c-af132c94-4cee-11e5-9d31-02ee2ddab7fe'
 ];
