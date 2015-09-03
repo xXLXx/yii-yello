@@ -176,7 +176,8 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             $query->andWhere(['LIKE', ['title' => '%'.$params['text'].'%']]);
         }
         
-            
+        // TODO: Jovani/Alireza - if $params['fromDate'] && $params['toDate'] are valid dates, constrain search to these dates using store's timezone
+        
         
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
