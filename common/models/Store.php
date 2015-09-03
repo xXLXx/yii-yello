@@ -198,7 +198,7 @@ class Store extends BaseModel
      */
     public function getLogoUrl()
     {
-        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLogoPathPattern());
+        return '/images/store/logo/'.$this->id;
     }
 
     /**

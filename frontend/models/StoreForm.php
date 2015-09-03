@@ -170,6 +170,7 @@ class StoreForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
+            $store->refresh();
             $this->id = $store->id;
 
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
