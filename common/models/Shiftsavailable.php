@@ -170,15 +170,13 @@ class Shiftsavailable extends \yii\db\ActiveRecord
                 // only connected stores
                 $query->andWhere(['IN', 'id', (new Query())->select('storeId')->from('driverHasStore')->where(['isArchived' => '0','isAcceptedByDriver'=>1 ,'driverId' => $params['driverId']])]);
             }elseif(!empty($params['stores'])){
-                    // comma separated explode to list
-                
+                    // comma separated storeids explode to list
+                    // where storeId in storeids
                 }else{
-                    // text search on store names and other nominated fields
-                
-            
+            $query->andWhere(['LIKE', ['title' => '%'.$params['text'].'%']]);
         }
         
-        
+            
         
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
