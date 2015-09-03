@@ -223,6 +223,7 @@ class Shift extends BaseModel
      */
     public function addApplicant($driverId)
     {
+        
         $params = [
             'driverId' => $driverId,
             'shiftId' => $this->id,
@@ -260,11 +261,20 @@ class Shift extends BaseModel
         if (!empty($existingLink) && $existingLink instanceof ShiftHasDriver) {
             return $existingLink;
         }
+
+        //TODO: Alireza - Make sure driver is not already booked on another shift 
+        // if driver is already booked, return error "Driver is booked on a different shift"
+        // maybe use getAllocatedFor from below
+        
+        
         $this->removeDrivers();
         $shiftHasDriver = new ShiftHasDriver();
         $shiftHasDriver->driverId = $driverId;
         $shiftHasDriver->shiftId = $this->id;
         $shiftHasDriver->save();
+        //TODO: Alireza - remove any other applications by this driver for shifts that start during this shift
+        // Maybe use getAppliedBy from below
+        
         return $shiftHasDriver;
     }
 
