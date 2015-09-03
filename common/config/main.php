@@ -63,6 +63,11 @@ return [
                         'v1/ShiftState',
                     ],
                 ],
+
+                'images/store/logo/<id:\d+>' => 'images/store-logo',
+                'images/company/logo/<id:\d+>' => 'images/company-logo',
+                'images/<action>/<id:\d+>' => 'images/<action>',
+
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
@@ -112,6 +117,12 @@ return [
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
             'forceCopy' => YII_DEBUG,
+        ],
+        'storage' => [
+            'class' => '\jovanialferez\yii2s3\AmazonS3',
+            'key' => 'AKIAID3OZY6UNFSSIWJA',
+            'secret' => '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',
+            'bucket' => 'media.driveyello.com',
         ],
     ],
     'controllerMap' => [

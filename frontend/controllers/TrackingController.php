@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\User;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,6 +13,23 @@ use yii\helpers\ArrayHelper;
  */
 class TrackingController extends BaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['getDriverMarker'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?']
+                    ],
+                ],
+            ],
+        ]);
+    }
     /**
      * Map
      */
@@ -33,7 +51,12 @@ class TrackingController extends BaseController
             ->all();
         $drivers = ArrayHelper::toArray($drivers);
 
-        return $this->render('index', compact('drivers', 'store'));
+        $pubnub = [
+            'publishKey' => \Yii::$app->params['pubnubPublishKey'],
+            'subscribeKey' => \Yii::$app->params['pubnubSubscribeKey']
+        ];
+
+        return $this->render('index', compact('drivers', 'store', 'pubnub'));
     }
 
     /**

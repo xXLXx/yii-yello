@@ -96,6 +96,11 @@ class ShiftController extends \api\common\controllers\ShiftController
         $driverId = $this->getDriverId();
         $latitude = \Yii::$app->request->get('latitude');
         $longitude = \Yii::$app->request->get('longitude');
+        $stores = \Yii::$app->request->get('stores');
+        $text = \Yii::$app->request->get('keyword');
+        $fromDate = \Yii::$app->request->get('fromDate');
+        $toDate = \Yii::$app->request->get('toDate');
+        $connectedstores = \Yii::$app->request->get('connectedstores');
 
         if (empty($latitude) || empty($longitude)) {
             throw new BadRequestHttpException('Latitude and longitude are required.');
@@ -103,7 +108,7 @@ class ShiftController extends \api\common\controllers\ShiftController
         
         $model = new Shiftsavailable();
 
-        return $model->search(compact('driverId', 'latitude', 'longitude'));
+        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate','toDate'));
     }
 
     /**
