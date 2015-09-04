@@ -207,7 +207,7 @@ var TrackingMapController = {
                     context.removeMapDriver(driver.id);
                 }
 
-                console.log(context.driverChannelPrefix + context.mapDrivers[mapDriversCurrentIdx].driver.id);
+                console.log(context.driverChannelPrefix + driver.id);
                 console.log(m);
             },
             historyCallback: function (m) {
