@@ -156,6 +156,9 @@ class DriverController extends \api\common\controllers\DriverController
         
     }    
     
+    /**
+     * Gets all drivers with active shifts limited from 24 hours ago to now
+     */
     public function actionActive()
     {
         $storeId = \Yii::$app->request->get('storeid');
@@ -166,9 +169,10 @@ class DriverController extends \api\common\controllers\DriverController
             'query' => Driver::find()
                 ->innerJoinWith(['acceptedShifts'])
                 ->andWhere([
-                    'storeId'   => $storeId,
-                    'shiftStateId' => $shiftState->id
-                ]),
+                    'storeId'       => $storeId,
+                    'shiftStateId'  => $shiftState->id
+                ])
+                ->andWhere(['>=', 'end', date('Y-m-d H:i:s', strtotime('-24 hours'))]),
             'pagination' => false
         ]);
     }
