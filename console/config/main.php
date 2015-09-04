@@ -20,6 +20,9 @@ return [
                 ],
             ],
         ],
+        'urlManager' => [
+            'baseUrl' => 'https://devopstore.yello.delivery',
+        ]
     ],
     'params' => $params,
 ];
