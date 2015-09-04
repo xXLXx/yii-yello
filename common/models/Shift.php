@@ -293,6 +293,8 @@ class Shift extends BaseModel
      */
     public function removeDriver($driverId)
     {
+        $this->shiftStateId=1;
+        $this->save();
         ShiftHasDriver::deleteAll([
             'driverId' => $driverId,
             'shiftId' => $this->id,
