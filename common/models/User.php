@@ -674,9 +674,11 @@ class User extends BaseModel implements IdentityInterface
     {
         switch ($this->roleId){
             case 6:
+            case 7:
+            case 4:
                 return ['shifts-calendar/index'];
             default:
-                return ['settings/index'];
+                return ['shifts-calendar/index'];
         }
     }
 
