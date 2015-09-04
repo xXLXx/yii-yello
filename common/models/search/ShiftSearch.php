@@ -140,7 +140,7 @@ class ShiftSearch extends Shift
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['start'=>SORT_DESC]]            
+            'sort'=> ['defaultOrder' => ['start'=>SORT_DESC]]
         ]);
         $dataProvider->sort->attributes['start'] = [
               // The tables are the ones our relation are configured to
@@ -155,7 +155,7 @@ class ShiftSearch extends Shift
             // $query->where('0=1');
             // return $dataProvider;
         }
-        
+
         // omit failed applications
         if (isset($this->declinedByStoreOwner) && !is_null($this->declinedByStoreOwner)) {
             $shiftIds = ShiftHasDriver::find()
@@ -209,14 +209,14 @@ class ShiftSearch extends Shift
             $date = date("Y-m-d H:i:s");
             $time = strtotime($date);
             $time = $time - (30 * 60);
-            $startDate = date("Y-m-d H:i:s", $time);           
+            $startDate = date("Y-m-d H:i:s", $time);
             $query->andWhere([
                 '>','start',$startDate
             ]);
        }
-       
-       
-       
+
+
+
         if ($this->shiftStateId) {
             $query->andWhere([
                 'shiftStateId' => $this->shiftStateId,

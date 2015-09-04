@@ -12,31 +12,31 @@ use yii\helpers\Url;
  *
  * @author markov
  */
-class ShiftStoreOwnerController extends BaseController 
+class ShiftStoreOwnerController extends BaseController
 {
     /**
      * Store owner accept to driver
-     * 
+     *
      * @param integer $driverId
      * @param integer $shiftId
-     * 
+     *
      * @throws NotFoundHttpException;
      */
     public function actionApplicantAccept($driverId, $shiftId)
     {
         $shift = Shift::findOne($shiftId);
+
         if (!$shift) {
             throw new NotFoundHttpException('Shift not found');
         }
         // make sure driver is not busy on another shift
-        $start = $shift->start;
-        $others = \api\common\models\Shift::getAllocatedFor($driverId)->actualStart;
-        //TODO: make sure driver is not already booked on an overlappin shift
-        // select * from shifthasdriver where shiftid<>$shiftID and driverid=$driverid and start<=$start and end>=$start;
-        
-        
+//        $start = $shift->start;
+//        $others = \api\common\models\Shift::getAllocatedFor($driverId)->actualStart;
+//        //TODO: make sure driver is not already booked on an overlappin shift
+        //It has done in the shift->addDriver function, which is called by setStateAllocated
+//
         $shift->setStateAllocated($driverId);
-        
+
 //        $isMine = \common\models\DriverHasStore::findOne(['AND', ['driverId'=>$driverId,   'storeId'=>$shift->storeId,'isAcceptedByDriver'=>1,'isArchived'=>0]]);
 //        if($isMine){
 //            $shift->setStateAllocated($driverId);
@@ -60,13 +60,13 @@ class ShiftStoreOwnerController extends BaseController
 //            $shift->setStateYelloAllocated($driverId);
 //        }
     }
-    
+
     /**
      * Store owner accept to driver
-     * 
+     *
      * @param integer $driverId
      * @param integer $shiftId
-     * 
+     *
      * @throws NotFoundHttpException;
      */
     public function actionApplicantDecline($driverId, $shiftId)
@@ -77,22 +77,22 @@ class ShiftStoreOwnerController extends BaseController
         }
         $shift->driverDecline($driverId);
     }
-    
+
     /**
      * Store owner unassign driver
-     * 
+     *
      * @param integer $driverId
      * @param integer $shiftId
-     * 
+     *
      * @throws NotFoundHttpException;
      */
     public function actionDriverUnassign($driverId, $shiftId)
     {
         $shift = Shift::findOne($shiftId);
         if (!$shift) {
-        return Json::encode([
-                       'result' => 'notfound'
-                   ]);
+            return Json::encode([
+                'result' => 'notfound'
+            ]);
 
 //            throw new NotFoundHttpException('Shift not found');
         }
@@ -100,22 +100,22 @@ class ShiftStoreOwnerController extends BaseController
 
         if (1==1) {
             $shift->unassignDriver($driverId);
-                    return Json::encode([
-                       'result' => 'success'
-                   ]);
+            return Json::encode([
+                'result' => 'success'
+            ]);
         } else {
-                    return Json::encode([
-                       'result' => 'notauthorised'
-                   ]);
+            return Json::encode([
+                'result' => 'notauthorised'
+            ]);
 
         }
     }
-    
+
     /**
      * Store owner approve
-     * 
+     *
      * @param integer $shiftId
-     * 
+     *
      * @throws NotFoundHttpException;
      */
     public function actionShiftApprove($shiftId)
@@ -134,6 +134,6 @@ class ShiftStoreOwnerController extends BaseController
         if($money<60){
             $money=60;
         }
-        $shift->setStateCompleted($count,$money); 
+        $shift->setStateCompleted($count,$money);
     }
 }

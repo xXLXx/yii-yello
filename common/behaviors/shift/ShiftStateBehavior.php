@@ -97,19 +97,24 @@ class ShiftStateBehavior extends BaseBehavior
             'storeId' => $storeid,
             'isAcceptedByDriver' => '1',
             'isArchived' => '0'
-             ])->exists();
+        ])->exists();
 //            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', PHP_EOL.'driver= '.$driverId.', store='.$storeid.', found='.$my. PHP_EOL, FILE_APPEND);
-        
+
         if($my){
             $state = ShiftState::STATE_ALLOCATED;
         }
-        
-        
+
+
         $shiftHasDriver = $this->owner->addDriver($driverId);
+        if(empty($shiftHasDriver))
+        {
+            return false;
+        }
         $shiftHasDriver->acceptedByStoreOwner = true;
         $shiftHasDriver->update();
         $this->setStateByName($state);
         $this->owner->update();
+
     }
     
     /**

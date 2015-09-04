@@ -81,13 +81,9 @@ class ShiftController extends \api\common\controllers\ShiftController
      */
     public function actionApplied()
     {
-        $sort = new Sort([
-               'attributes' => [
-                   'start'=>SORT_ASC
-               ],
-           ]);
         $driverId = $this->getDriverId();
-        //return Shift::getAppliedBy($driverId)->setSort($sort);
+
+        return Shift::getAppliedBy($driverId);
     }
 
     /**
@@ -104,13 +100,12 @@ class ShiftController extends \api\common\controllers\ShiftController
         $stores = \Yii::$app->request->get('stores');
         $text = \Yii::$app->request->get('keyword');
         $fromDate = \Yii::$app->request->get('fromDate');
-        $toDate = \Yii::$app->request->get('toDate');
         $connectedstores = \Yii::$app->request->get('connectedstores');
 
         if (empty($latitude) || empty($longitude)) {
             throw new BadRequestHttpException('Latitude and longitude are required.');
         }
-        
+
         $model = new Shiftsavailable();
 
         return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate','toDate'));
@@ -220,8 +215,8 @@ class ShiftController extends \api\common\controllers\ShiftController
         $shift->setStateCompleted($deliverycount, $payment);
         return $shift;
     }
-    
 
-    
-    
+
+
+
 }

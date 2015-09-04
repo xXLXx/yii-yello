@@ -146,25 +146,25 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         if (empty($params['driverId']) || empty($params['latitude']) || empty($params['longitude'])) {
             return false;
         }
-        
-        
-        
+
+
+
         $query = static::find();
         //        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['thedriverId' => '0']]);
         // only choose yello records where the driver is not a mydriver
-        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], 
-    
+        $query->andWhere(['OR', ['thedriverid' => $params['driverId']],
+
             ['AND',['thedriverId' => '0'],
             ['NOT IN', 'storeId', (new Query())->select('storeId')->from('driverhasstore')->where(['isArchived' => '0', 'driverId' => $params['driverId'],'isAcceptedByDriver'=>1])],
             ['NOT IN', 'storeId', (new Query())->select('storefk')->from('storeownerfavouritedrivers')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]
 
         ]]);
-        
-        
+
+
         //        $query->andWhere(['OR', ['thedriverid' => $params['driverId']], ['AND',['thedriverId' => '0'],['NOT IN', 'storeId', (new Query())->select('storeId')->from('driverhasstore')->where(['isArchived' => '0', 'driverId' => $params['driverId'],'isAcceptedByDriver'=>1])]]]);
-        
+
         // check for other criteria, use proximity by default.
-        
+
         if(empty($params['connectedstores']) && empty($params['text']) && empty($params['stores'])){
             // use proximity
             $query->andWhere(new Expression('ABS(latitude-'.$params['latitude'].') < 0.15'));
@@ -176,19 +176,28 @@ class Shiftsavailable extends \yii\db\ActiveRecord
                     // TODO: Alireza
                     // comma separated storeids explode to list
                     // where storeId in storeids
+                    $storesIdArrays = explode(",", $params['stores']);
+                    $query->andWhere(['IN', 'storeId', $storesIdArrays]);
                 }else{
             $query->andWhere(['LIKE', ['title' => '%'.$params['text'].'%']]);
         }
-        
-        // TODO: Alireza/Jovani - if $params['fromDate'] && $params['toDate'] are valid dates, constrain search to these dates using store's timezone
-        
-        
+
+        // TODO: Alireza/Jovani - if $params['fromDate'] && .
+        //re valid dates, constrain search to these dates using store's timezone
+        if(!empty($params['fromDate'])){
+            $nowTime = new \DateTime();
+            $nowTime->setTimestamp($params['fromDate']);
+            $dateTime = $nowTime->format('Y-m-d H:i:s');
+            $query->andWhere(['>=','start', $dateTime]);
+        }
+
+
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
 
         // also exclude shifts that start during times when driver is booked for a shift
-        
-        
+
+
         return new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -269,7 +278,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     {
         return $this->store->getImage();
     }
-    
 
-    
+
+
 }
