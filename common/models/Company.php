@@ -102,6 +102,16 @@ class Company extends BaseModel
     }
 
     /**
+     * Get image
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasOne(Image::className(), ['id' => 'imageId']);
+    }
+
+    /**
      * The path pattern.
      *
      * @return string
