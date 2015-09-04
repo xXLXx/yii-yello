@@ -77,9 +77,13 @@ class TrackingController extends BaseController
         imageAlphaBlending($marker, true);
         imageSaveAlpha($marker, true);
 
-        $defaultImg = \Yii::getAlias('@webroot') . "/img/Driver_Pic_bgrey_black.png";
-        $imagePath = \Yii::$app->request->get('sourceFile', $defaultImg);
-
+        $imagePath = $defaultImg = \Yii::getAlias('@webroot') . "/img/Driver_Pic_bgrey_black.png";
+        if ($driver && $driver->image) {
+            $imagePath = \Yii::getAlias('@webroot') . $driver->image->thumbUrl;
+        }
+        if (!file_exists($imagePath)) {
+            $imagePath = $defaultImg;
+        }
         // Only accept pngs and jpegs, else loads default
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $fileinfo = finfo_file($finfo, $imagePath);
