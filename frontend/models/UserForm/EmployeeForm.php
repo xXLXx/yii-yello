@@ -5,7 +5,7 @@ namespace frontend\models\UserForm;
 /**
  * Employee form
  */
-class EmployeeForm extends UserForm
+class EmployeeForm extends StoresAwareUserForm
 {
     
 }

@@ -30,16 +30,7 @@ trait StoresAwareTrait
     public function needToShowStoresField()
     {
         /** @var User $user */
-        $user = Yii::$app->user->identity;
-        $roleName = $user->role->name;
-        $hasPerms = in_array($roleName, [
-            Role::ROLE_STORE_OWNER,
-            Role::ROLE_SUPER_ADMIN
-        ]) || ($roleName === Role::ROLE_MANAGER && $user->hasExtendedRights);
-        if ($hasPerms && $this instanceof StoresAwareUserForm) {
-            return true;
-        }
-        return false;
+        return \Yii::$app->user->can('AssignUserToStore');
     }
 
     /**

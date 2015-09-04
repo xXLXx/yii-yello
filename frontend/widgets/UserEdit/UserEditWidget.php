@@ -49,7 +49,8 @@ class UserEditWidget extends Widget
             'user' => $this->user,
             'model' => $model,
             'pageName' => $this->pageName,
-            'canSetIsAdmin' => $this->canUserSetIsAdmin(Yii::$app->user->identity),
+            'canSetIsAdmin' => \Yii::$app->user->can('PromoteUserAsAdmin')
+            //'canSetIsAdmin' => $this->canUserSetIsAdmin(Yii::$app->user->identity),
         ]);
     }
 

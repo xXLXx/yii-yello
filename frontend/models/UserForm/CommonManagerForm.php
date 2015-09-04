@@ -13,6 +13,7 @@ use common\models\User;
 
 class CommonManagerForm extends UserForm
 {
+    use StoresAwareTrait;
     public $isAdmin;
 
     public function rules()
