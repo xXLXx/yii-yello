@@ -96,17 +96,7 @@ use yii\helpers\Html;
                 <?= Html::error($model, 'confirm', ['class' => 'error-message']) ?>
             </td>
         </tr>
-        <?php if (\Yii::$app->user->can('PromoteUserAsAdmin')){ ?>
 
-        <tr>
-            <td>
-                <div class="checkbox-input">
-                    <input type="checkbox" checked="checked" value="" id="agreement">
-                    <label for="agreement" class="j_checkbox active">This user has Admin privileges</label>
-                </div>
-            </td>
-        </tr>
-        <?php } ?>
     </table>
     <div class="profile-user-photo">
         <div class="user-photo-container">

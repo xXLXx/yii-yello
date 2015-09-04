@@ -13,7 +13,7 @@ use common\models\User;
 
 class CommonManagerForm extends UserForm
 {
-    use StoresAwareTrait;
+
     public $isAdmin;
 
     public function rules()
@@ -36,7 +36,10 @@ class CommonManagerForm extends UserForm
 
     protected function setIsAdminDependentRole(User $user)
     {
-
+        // change admin role if appropriate
+            if(\Yii::$app->user->can('AssignUserToStore')){
+                
+            }
     }
 
     public function getTemplate()
