@@ -20,6 +20,9 @@ return [
                 ],
             ],
         ],
+        'urlManager' => [
+            'baseUrl' => 'https://transitstore.yello.delivery',
+        ]
     ],
     'params' => $params,
 ];

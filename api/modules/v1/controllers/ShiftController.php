@@ -107,7 +107,7 @@ class ShiftController extends \api\common\controllers\ShiftController
         }
         
         $model = new Shiftsavailable();
-
+        // new get variables added
         return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate','toDate'));
     }
 
