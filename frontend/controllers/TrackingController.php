@@ -40,17 +40,20 @@ class TrackingController extends BaseController
         $currentStore = $storeOwner->storeCurrent;
         $store = [
             'id' => $currentStore->id,
-            'position' => [$currentStore->address->latitude, $currentStore->address->longitude]
+            'position' => [$currentStore->address->latitude, $currentStore->address->longitude],
+            'accessToken' => \Yii::$app->user->identity->accessToken
         ];
 
-        $drivers = User::find()
-            ->innerJoinWith(['acceptedShifts'])
-            ->andWhere([
-                'storeId'   => $currentStore->id,
-                'actualEnd' => null
-            ])
-            ->all();
-        $drivers = ArrayHelper::toArray($drivers);
+        // Is not used right now, use /v1/driver/active API
+        // $drivers = User::find()
+        //     ->innerJoinWith(['acceptedShifts'])
+        //     ->andWhere([
+        //         'storeId'   => $currentStore->id,
+        //         'actualEnd' => null
+        //     ])
+        //     ->all();
+        // $drivers = ArrayHelper::toArray($drivers);
+        $drivers = [];
 
         $pubnub = [
             'publishKey' => \Yii::$app->params['pubnubPublishKey'],

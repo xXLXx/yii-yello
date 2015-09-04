@@ -9,6 +9,8 @@ use api\modules\v1\models\VehicleForm;
 use api\modules\v1\models\DriverForm;
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\WorkDetailsForm;
+use api\modules\v1\models\ShiftState;
+use yii\data\ActiveDataProvider;
 
 class DriverController extends \api\common\controllers\DriverController
 {
@@ -154,5 +156,20 @@ class DriverController extends \api\common\controllers\DriverController
         
     }    
     
-    
+    public function actionActive()
+    {
+        $storeId = \Yii::$app->request->get('storeid');
+
+        $shiftState = ShiftState::findOne(['name' => ShiftState::STATE_ACTIVE]);
+        
+        return new ActiveDataProvider([
+            'query' => Driver::find()
+                ->innerJoinWith(['acceptedShifts'])
+                ->andWhere([
+                    'storeId'   => $storeId,
+                    'shiftStateId' => $shiftState->id
+                ]),
+            'pagination' => false
+        ]);
+    }
 }
