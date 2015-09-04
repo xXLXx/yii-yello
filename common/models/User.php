@@ -103,7 +103,13 @@ class User extends BaseModel implements IdentityInterface
             'imageId',
             'signup_step_completed',
             'phone',
-            'phonetype'
+            'phonetype',
+            'profilePhotoUrl' => function () {
+                return '/images/profile/'.$this->id;
+            },
+            'profilePhotoThumbUrl' => function () {
+                return '/images/profile-thumb/'.$this->id;
+            },
         ];
     }
 
