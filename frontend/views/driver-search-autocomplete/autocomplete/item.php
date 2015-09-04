@@ -6,13 +6,7 @@
     <div class="user-photo-info">
         <div><?= $driver->username ?>, <span class="middle-gray-text">ID <?= $driver->id ?></span></div>
         <div>
-            <span class="star-block">
-                <span class="font-star-two"></span>
-                <span class="font-star-two"></span>
-                <span class="font-star-two"></span>
-                <span class="font-star-half"></span>
-                <span class="font-star"></span>
-            </span>
+            <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
         </div>
     </div>
 </div>

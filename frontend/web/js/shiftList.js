@@ -128,6 +128,8 @@
                 shiftView.$shiftsList.on('click', '.shift-link', shiftView.showShift);
                 shiftView.$container = $('#shift-detail-container');
                 shiftView.$container.on('click', '#link-approve-shift', shiftView.approveShift);
+
+                shiftView.$shiftsList.find('.shift-link').eq(0).click();
             },
             showShift: function () {
 
@@ -144,6 +146,7 @@
 
                     shiftView.requestShift(data);
                 }
+
                 return false;
             },
             approveShift: function () {
@@ -151,7 +154,9 @@
                 var $that = $(this),
                     data = {
                         shiftId: Number($that.data('shiftId')),
-                        approved: 1
+                        approved: 1,
+                        reviewText: $('.j_driver-review').val(),
+                        reviewStars: $('#w1').val()
                     };
 
                 shiftView.requestShift(data);
@@ -181,6 +186,15 @@
                     shiftView.$shiftsList.find('.shift-item[data-id=' + data.shiftId + ']').replaceWith(data.itemHtml);
                     shiftView.$shiftsList.find('.shift-item[data-id=' + data.shiftId + ']').addClass('active');
                 }
+
+                jQuery(".rating-loading").rating('refresh', {
+                        showClear: false,
+                        size: 'xs',
+                        glyphicon: false,
+                        showCaption: false,
+                        ratingClass: 'star-block big'
+                    }
+                );
             }
         };
 

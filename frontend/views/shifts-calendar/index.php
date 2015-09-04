@@ -70,6 +70,7 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 
         <div class="calendar-wrapper"></div>
     </div>
+    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
 </div>
 
 <?php

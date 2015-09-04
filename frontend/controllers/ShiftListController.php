@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use common\helpers\ArrayHelper;
+use common\models\ShiftReviews;
 use \yii\web\Response;
 use \yii\helpers\Url;
 use \common\models\Shift;
@@ -88,60 +89,74 @@ class ShiftListController extends BaseController
     {
         $request = \Yii::$app->request;
 
-        if ( $request->isAjax ) {
-            
+        if ($request->isAjax) {
+
             $response = \Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
             $response->data = [];
 
             $shiftId = (int)$request->get('shiftId');
             $isApproved = (bool)$request->get('approved');
-            $shift = Shift::findOne(['id' => $shiftId]);
-            if ( $shift ) {
-                    $deliverycount = $shift->deliveryCount;
-                    $lastrequest = null;
-                    $deliveryamount = $shift->payment;
-                    $shiftRequestReviews = $shift->shiftRequestReview;
-                    $lastdriverrequest = $shift->LastDriverShiftRequestReview;
-                    $driverreview=null;
-                    $userreview = null;
-                    $latest='';
-                    $userId = \Yii::$app->user->identity->id;
-                    $msg='';
+            $reviewText = $request->get('reviewText');
+            $reviewStars = $request->get('reviewStars');
 
-                if($shiftRequestReviews){
+            $shift = Shift::findOne(['id' => $shiftId]);
+            $driver = $shift->driverAccepted;
+
+            if($reviewText && $reviewStars){
+                $review = ShiftReviews::findOneOrCreate(['shiftId' => $shiftId]);
+                $review->stars = $reviewStars;
+                $review->text = $reviewText;
+                $review->storeId = $shift->storeId;
+                $review->driverId = $driver->id;
+                $review->save();
+            }
+
+            if ($shift) {
+                $deliverycount = $shift->deliveryCount;
+                $lastrequest = null;
+                $deliveryamount = $shift->payment;
+                $shiftRequestReviews = $shift->shiftRequestReview;
+                $lastdriverrequest = $shift->LastDriverShiftRequestReview;
+                $driverreview = null;
+                $userreview = null;
+                $latest = '';
+                $userId = \Yii::$app->user->identity->id;
+                $msg = '';
+
+                if ($shiftRequestReviews) {
                     // get the most recent 2 arguments
-                    foreach ($shiftRequestReviews as $review){
-                    if($review->userId==$userId){ // ascertain the argument
-                            $userreview=$review;
-                            $latest='user';
-                        }else{
-                            $driverreview=$review;
-                            $deliverycount=$review->deliveryCount;
-                            $latest='driver';
+                    foreach ($shiftRequestReviews as $review) {
+                        if ($review->userId == $userId) { // ascertain the argument
+                            $userreview = $review;
+                            $latest = 'user';
+                        } else {
+                            $driverreview = $review;
+                            $deliverycount = $review->deliveryCount;
+                            $latest = 'driver';
                         }
                     }
-                    if($lastdriverrequest){
+                    if ($lastdriverrequest) {
                         $deliverycount = $lastdriverrequest->deliveryCount;
                     }
 
                     // figure out the most recent argument
-                    if($latest=='user'){
+                    if ($latest == 'user') {
                         $msg = "You've requested review of $deliverycount to <span id='last-delivery-count'>$userreview->deliveryCount</span>.";
-                    }else{
+                    } else {
                         $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
                     }
-                    $shift->deliveryCount=$deliverycount;
+                    $shift->deliveryCount = $deliverycount;
 
-            }
+                }
 
-                    $deliveryamount = $deliverycount*5;
-                    if($deliveryamount<60){
-                        $deliveryamount=60;
-                    }
-            
+                $deliveryamount = $deliverycount * 5;
+                if ($deliveryamount < 60) {
+                    $deliveryamount = 60;
+                }
 
-                if ( $isApproved ) {
+
+                if ($isApproved) {
 
                     $shift->setStateCompleted($deliverycount, $deliveryamount);
                     $shift = Shift::findOne(['id' => $shiftId]);
@@ -150,7 +165,7 @@ class ShiftListController extends BaseController
                     $response->data['shiftId'] = $shift->id;
                 }
 
-                $driver = $shift->driverAccepted;
+
                 $viewHtml = $this->renderPartial('shiftDetails', [
                     'shift' => $shift,
                     'driver' => $driver,

@@ -18,7 +18,8 @@ class ShiftRequestReviewForm extends Model
     public $title;
     public $text;
     public $shiftId;
-    
+    public $deliveryCount;
+
     /**
      * @inheritdoc
      */
@@ -26,7 +27,8 @@ class ShiftRequestReviewForm extends Model
     {
         return [
             [['title', 'text'], 'required'],
-            [['shiftId', 'id'], 'integer']
+            [['shiftId', 'id'], 'integer'],
+            [['deliveryCount', 'id'], 'integer']
         ];
     }
     

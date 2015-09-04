@@ -1,5 +1,5 @@
 <div class="name"><?= $driver->username ?></div>
 <div class="middle-gray-text">ID #<?= $driver->id ?></div>
 <div>
-    <?= $this->render('//blocks//userRatingBlock') ?>
+    <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
 </div>

@@ -53,12 +53,13 @@
     </div>
     <div class="table-block">
         <div class="table-cell-item">
-            <!--
+
             <h4>Driver fee</h4>
             <h3>$5 For Delivery</h3>
             <div>(Minimum 12 deliveries)</div>
-            -->
+
         </div>
+
         <div class="table-cell-item">
             <?php if ( $shift->deliveryCount ): ?>
                 <h4>Completed deliveries</h4>
@@ -83,30 +84,75 @@
     </p>
 </div>
 -->
+<?php if($shift->shiftRequestReview): ?>
+<div class="border-top-item">
+    <h4>Dispute Log</h4>
+    <?php /*foreach($shift->shiftRequestReview as $item){
+        //print_r($item);continue;
+        $user_data = \common\models\User::find($item->userId);
+        ?>
+        <div class="table-block">
+            <div class="table-cell-item">
+                <?= $item->createdAt; ?>
+            </div>
+            <div class="table-cell-item">
+                <?= $item->userId; ?> has disputed payment.<br/>
+                No. of deliveries for review: <?= $item->deliveryCount; ?><br/>
+                Reason:<br/>
+                <?= $item->text; ?>
+            </div>
+            <div class="table-cell-item"></div>
+            <div class="table-cell-item"></div>
+        </div>
+    <?php }*/ ?>
+    <?php foreach( $shift->shiftRequestReview as $requestReview ): ?>
 
+        <div class="table-block">
+            <div class="gray-text pull-left">
+                <?= (new \DateTime($requestReview->createdAtAsDatetime))->format('j M, Y, g:i A'); ?>&nbsp;&nbsp;
+            </div>
+            <div class="pull-left">
+                <?php
+                if( $requestReview->user->role->name !== \common\models\Role::ROLE_DRIVER ): ?>
+                    You've requested Review of deliveries from <?= $shift->deliveryCount; ?> to <?= $requestReview->deliveryCount; ?>
+                <?php else: ?>
+                    Driver has submitted <?= $requestReview->deliveryCount; ?> Deliveries for Approval
+                <?php endif; ?>
+                <br>Reason:<br>
+                <?= $requestReview->text; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
 <div class="border-top-item">
     <!--
     <h4 class="bold-text black-text">Total to pay</h4>
     <h2 class="bold-text">$145</h2>
     -->
 
+    <div class="table-block">
+        <div class="table-cell-item">
+            <?php if ( 1 || $shift->payment ): ?>
+                <h3>Total to Pay</h3>
+                <h2 id="totalpayment">$<?= $shift->payment; ?></h2>
+            <?php endif; ?>
+        </div>
+        <div class="table-cell-item"></div>
+        <div class="table-cell-item">
+
+        </div>
+    </div>
     <div class="recall-block">
-        <!--
-            <h4 class="inline-block valign-middle">Job review</h4>
-                                    <span class="star-block big">
-                                        <span class="font-star-two"></span>
-                                        <span class="font-star-two"></span>
-                                        <span class="font-star-two"></span>
-                                        <span class="font-star-half"></span>
-                                        <span class="font-star"></span>
-                                    </span>
-            <div><textarea class="textarea">Nice job. as always! Thank you!</textarea></div>
-        -->
-        <div class="button-container j_request_link">
-            <!--
-            <a href="calendar-store-owner-request-review.html" class="btn j_colorbox">Request Review</a>
-            -->
-            <?php if( $shiftState->name === $shiftState::STATE_APPROVAL || $shiftState->name === $shiftState::STATE_DISPUTED || $shiftState->name === $shiftState::STATE_UNDER_REVIEW): ?>
+        <?php if( $shiftState->name === $shiftState::STATE_APPROVAL || $shiftState->name === $shiftState::STATE_DISPUTED || $shiftState->name === $shiftState::STATE_UNDER_REVIEW): ?>
+            <h4 class="inline-block valign-middle">Rate Driver</h4>
+
+            <?php echo \kartik\rating\StarRating::widget(['value' => 3, 'disabled' => false]); ?>
+            <div><textarea class="textarea j_driver-review" >Nice job. as always! Thank you!</textarea></div>
+
+            <div class="button-container j_request_link">
+
+                <a href="<?= \yii\helpers\Url::to(['shift-request-review/index']) ?>?shiftId=<?= $shift->id; ?>" class="btn j_colorbox">Request Review</a>
                 <a href="#" id="link-approve-shift" class="btn blue" rel="nofollow" data-shift-id="<?= $shift->id; ?>">Approve</a>
             <?php endif; ?>
         </div>

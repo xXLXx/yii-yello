@@ -33,17 +33,18 @@ use yii\bootstrap\ActiveForm;
             <p><?= \Yii::t('app', 'Driver entered {deliveryCount} Deliveries', [
                     'deliveryCount' => $shift->deliveryCount
                 ]); ?></p>
+            <?= Html::errorSummary($reviewForm, ['class' => 'red-error-text']) ?>
             <label for="review" class="bold-text"><?= \Yii::t('app', 'No. Of deliveries for review'); ?></label>
             <?= Html::activeTextInput($reviewForm, 'title', [
                 'class'         => 'text-input small',
-                'placeholder'   => \Yii::t('app', 'Placeholder'),
+                'placeholder'   => \Yii::t('app', 'No. of deliveries'),
                 'id'            => 'review'
             ]) ?>
             <?= Html::activeTextarea($reviewForm, 'text', [
                 'placeholder'   => \Yii::t ('app', 'Type here reason of review'),
                 'class'         => 'textarea'
             ]) ?>
-            <?= Html::errorSummary($reviewForm) ?>
+
             <div class="button-container">
                 <a href="javascript:;" class="btn j_colorbox_close"><?= \Yii::t('app', 'Cancel'); ?></a>
                 <?= Html::submitButton(\Yii::t('app', 'Request'), [

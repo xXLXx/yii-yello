@@ -10,7 +10,11 @@ use frontend\assets\ShiftListAsset;
  */
 
 ShiftListAsset::register($this);
+\frontend\assets\ShiftRequestReviewAsset::register($this);
+$this->registerJs('$(function(){ShiftRequestReviewController.init();})');
 ?>
+
+
 
 <div class="sidebar-container sidebar-actions">
     <div class="col-left">
@@ -57,5 +61,7 @@ ShiftListAsset::register($this);
         ]); ?>
 
     </div>
+    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
+
     <div class="col-right" id="shift-detail-container"></div>
 </div>
