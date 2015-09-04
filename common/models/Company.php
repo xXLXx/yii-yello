@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\ImageResizeHelper;
 use Yii;
 
 /**
@@ -118,5 +119,28 @@ class Company extends BaseModel
     public function getLogoPath()
     {
         return str_replace('{id}', $this->id, $this->getLogoPathPattern());
+    }
+
+    /**
+     * Upload logo.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadLogo($sourceFile)
+    {
+        $sizes = [
+            'original' => $this->getLogoPath(),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
     }
 }
