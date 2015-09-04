@@ -115,7 +115,10 @@ class Shiftsavailable extends \yii\db\ActiveRecord
                 },
             'end' =>  function ($model, $attribute) {
                     return strtotime($model->$attribute);
-                }
+                },
+            'logoUrl' => function () {
+                return '/images/store/logo/'.$this->storeId;
+            },
         ]);
     }
 
