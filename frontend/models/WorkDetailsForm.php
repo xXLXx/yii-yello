@@ -26,7 +26,7 @@ class WorkDetailsForm extends Model
     public function rules()
     {
         return [
-            [['abn', 'accountNumber', 'bankName', 'bsb', 'isAllowedToWorkInAustralia', 'registeredForGst', 'availability'], 'required'],
+            [['accountNumber', 'bankName', 'bsb', 'isAllowedToWorkInAustralia'], 'required'],
             [['isAllowedToWorkInAustralia', 'registeredForGst'], 'boolean'],
             [['accountNumber', 'availability', 'abn', 'bankName', 'bsb', 'companyName'], 'string', 'max' => 255]
         ];
