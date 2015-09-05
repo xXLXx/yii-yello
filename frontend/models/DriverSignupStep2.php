@@ -6,6 +6,8 @@ use common\models\User;
 use common\models\UserDriver;
 use common\models\Vehicle;
 use yii\base\Model;
+use yii\web\UploadedFile;
+use common\models\Image;
 /**
  * Store form
  *

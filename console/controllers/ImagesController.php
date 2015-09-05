@@ -40,7 +40,7 @@ class ImagesController extends \yii\console\Controller
                 continue;
             }
 
-            print $sourceFile.' found.'.PHP_EOL;
+            print $sourceFile.' mug found  for '.$user->username.PHP_EOL;
             $user->uploadProfilePhoto($sourceFile);
         }
 

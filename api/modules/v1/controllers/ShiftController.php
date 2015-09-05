@@ -100,6 +100,7 @@ class ShiftController extends \api\common\controllers\ShiftController
         $stores = \Yii::$app->request->get('stores');
         $text = \Yii::$app->request->get('keyword');
         $fromDate = \Yii::$app->request->get('fromDate');
+
         $connectedstores = \Yii::$app->request->get('connectedstores');
 
         if (empty($latitude) || empty($longitude)) {
@@ -108,7 +109,7 @@ class ShiftController extends \api\common\controllers\ShiftController
 
         $model = new Shiftsavailable();
 
-        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate','toDate'));
+        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate'));
     }
 
     /**

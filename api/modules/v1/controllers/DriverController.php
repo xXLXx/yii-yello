@@ -36,7 +36,7 @@ class DriverController extends \api\common\controllers\DriverController
         $actions = parent::actions();
 
         // disable the "index", "delete" and "create" actions
-        unset($actions['delete'], $actions['create'], $actions['index'], $actions['view'], $actions['active']);
+        unset($actions['delete'], $actions['create'], $actions['index'], $actions['view']);
 
         return $actions;
     }
