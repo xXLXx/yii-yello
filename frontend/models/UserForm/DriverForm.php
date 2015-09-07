@@ -28,13 +28,14 @@ class DriverForm extends UserForm
     {
         return [
             [['userId'], 'integer'],
-            [['firstName', 'lastName'], 'filter', 'filter' => 'trim'],
+            [['firstName', 'lastName', 'phone'], 'filter', 'filter' => 'trim'],
             ['firstName', 'required',
                 'message' => \Yii::t('app', 'Please enter your First Name.')
             ],
             ['lastName', 'required',
                 'message' => \Yii::t('app', 'Please enter your Last Name.')
             ],
+            ['phone','required', 'message' => \Yii::t('app', 'Please provide your phone number.')],
 
             [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
 //            [['formatted_address'],'string','max'=>1500],
@@ -70,20 +71,20 @@ class DriverForm extends UserForm
          
 
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.'Image:' . PHP_EOL, true), FILE_APPEND);
-            if (isset($_FILES['imageFile'])) {
-                $image = new Image();
-                $image->imageFile = UploadedFile::getInstanceByName('imageFile');
-                if ($image->imageFile) {
-                    $image->saveFiles();
-                    $image->save();
-                    $user->imageId = $image->id;
-                    file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(PHP_EOL.$image->imageFile.PHP_EOL, true), FILE_APPEND);
-                }
+
+            $imageFile = UploadedFile::getInstance($this, 'imageFile');
+            if (!empty($imageFile)) {
+                $url = $user->uploadProfilePhoto($imageFile->tempName);
             }
 
             $user->firstName = $this->firstName;
             $user->lastName = $this->lastName;
-            //$user->phone = $this->phone;
+            if(!empty($this->phone)){
+                $user->phone = $this->phone;
+            }
+            if(!empty($this->phonetype)){
+                $user->phonetype = $this->phonetype;
+            }
             if($user->signup_step_completed<1){
                 $user->signup_step_completed = 1;
             }

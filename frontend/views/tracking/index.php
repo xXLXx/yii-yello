@@ -30,5 +30,10 @@ $this->title = \Yii::t('app', 'Tracking');
 </div>
 
 <?php
-    $this->registerJs("TrackingMapController.init({selector: '#map-canvas', store: " . json_encode($store) .", drivers:" . json_encode($drivers) . "});");
+    $this->registerJs("TrackingMapController.init({
+        selector: '#map-canvas',
+        store: " . json_encode($store) .",
+        drivers:" . json_encode($drivers) .",
+        pubnub:" . json_encode($pubnub) .
+    "});");
 ?>

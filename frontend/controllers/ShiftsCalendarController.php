@@ -136,11 +136,18 @@ class ShiftsCalendarController extends BaseController {
                         'store' => $user->storeCurrent
             ]);
         } else {
-            return $this->render('index', [
-                        'mode' => 'shiftView',
-                        'shiftId' => $shiftId,
-                        'store' => $user->storeCurrent
-            ]);
+            $shift = Shift::findOne($shiftId);
+                if (!$shift) {
+                    return \Yii::$app->getResponse()->redirect(['shifts-calendar/index']);
+                }else{
+                    return $this->render('index', [
+                                'mode' => 'shiftView',
+                                'shiftId' => $shiftId,
+                                'store' => $user->storeCurrent
+                    ]);
+                    
+                }
+            
         }
     }
 

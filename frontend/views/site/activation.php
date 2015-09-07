@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="select-form">
             <h2 class="center"><?= \Yii::t('app', 'Account Activated'); ?></h2>
             <?php if (Yii::$app->session->hasFlash('success')): ?>
-                <div class="center" role="alert">
+                <div class="justify" role="alert">
                     <?= Yii::$app->session->getFlash('success') ?>
                 </div>
             <?php endif; ?>

@@ -24,16 +24,17 @@ namespace common\models;
  */
 class Driver extends User
 {
-//    /**
-//     * @inheritdoc
-//     */
-//    public static function find()
-//    {
-//        $role = Role::findOne(['name' => Role::ROLE_DRIVER]);
-//        return parent::find()
-//            ->joinWith('userDriver')
-//            ->andWhere(['roleId' => $role->id]);
-//    }
+   /**
+    * @inheritdoc
+    */
+   public static function find()
+   {
+       $role = Role::findOne(['name' => Role::ROLE_DRIVER]);
+       return parent::find()
+            // Remove this to prevent error on initial driver signup
+            // ->joinWith('userDriver')
+            ->andWhere(['roleId' => $role->id]);
+   }
 
     /**
      * @inheritdoc

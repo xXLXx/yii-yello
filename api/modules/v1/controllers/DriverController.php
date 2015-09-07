@@ -9,6 +9,8 @@ use api\modules\v1\models\VehicleForm;
 use api\modules\v1\models\DriverForm;
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\WorkDetailsForm;
+use api\modules\v1\models\ShiftState;
+use yii\data\ActiveDataProvider;
 
 class DriverController extends \api\common\controllers\DriverController
 {
@@ -29,6 +31,20 @@ class DriverController extends \api\common\controllers\DriverController
         return $behaviors;
     }
 
+    public function actions()
+    {
+        $actions = parent::actions();
+
+        // disable the "index", "delete" and "create" actions
+        unset($actions['delete'], $actions['create'], $actions['index'], $actions['view']);
+
+        return $actions;
+    }
+    
+    
+    
+    
+    
     /**
      * @inheritdoc
      */
@@ -119,5 +135,59 @@ class DriverController extends \api\common\controllers\DriverController
         $output['message'] = $model->getErrors();
         return $output;
 //        return $model->getErrors() ? $model->getErrors() : $model;
+    }
+    
+    
+    
+    public function actionAccreditation(){
+        $post = \Yii::$app->request->post();
+        $msg='unknown';
+        if($post['success']=='1'){
+             $user = \Yii::$app->user->identity;
+             $step = $user->signup_step_completed;
+             if($step>2){
+                $user->signup_step_completed=10;
+                $user->save();
+                $msg='success';
+                $response = \Yii::$app->getResponse();
+                $response->setStatusCode(200);
+                $output = [];
+                $output['message'] = $msg;
+                return $output;
+             }else{
+                    $response = \Yii::$app->getResponse();
+                    $response->setStatusCode(400);
+                    $output = [];
+                    $output['message'] = 'Driver profile incomplete';
+                    return $output;
+             }
+        }
+        $response = \Yii::$app->getResponse();
+        $response->setStatusCode(400);
+        $output = [];
+        $output['message'] = 'Accreditation Failure';
+        return $output;
+        
+    }    
+    
+    /**
+     * Gets all drivers with active shifts limited from 24 hours ago to now
+     */
+    public function actionActive()
+    {
+        $storeId = \Yii::$app->request->get('storeid');
+
+        $shiftState = ShiftState::findOne(['name' => ShiftState::STATE_ACTIVE]);
+        
+        return new ActiveDataProvider([
+            'query' => Driver::find()
+                ->innerJoinWith(['acceptedShifts'])
+                ->andWhere([
+                    'storeId'       => $storeId,
+                    'shiftStateId'  => $shiftState->id
+                ])
+                ->andWhere(['>=', 'end', date('Y-m-d H:i:s', strtotime('-24 hours'))]),
+            'pagination' => false
+        ]);
     }
 }

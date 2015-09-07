@@ -1,8 +1,10 @@
 <?php
 namespace common\models;
 
+use common\helpers\ImageResizeHelper;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use yii\web\IdentityInterface;
 use frontend\models\CompanyForm;
@@ -22,6 +24,8 @@ use common\models\query\UserQuery;
  * @property Boolean $active active?
  * @property string $firstName first name
  * @property string $lastName last name
+ * @property string $phone phone number
+ * @property string $phonetype handset type
  * @property integer $imageId imageId
  * @property Boolean $hasExtendedRights has extended rights
  * @property Boolean $isBlocked is user blocked
@@ -69,7 +73,7 @@ class User extends BaseModel implements IdentityInterface
     public function rules()
     {
         return array_merge([
-            [['firstName', 'lastName', 'email', 'roleId', 'stores'], 'safe']
+            [['firstName', 'lastName', 'phone','phonetype', 'email', 'roleId', 'stores'], 'safe']
         ], parent::rules());
     }
     /**
@@ -101,7 +105,13 @@ class User extends BaseModel implements IdentityInterface
             'imageId',
             'signup_step_completed',
             'phone',
-            'phonetype'
+            'phonetype',
+            'profilePhotoUrl' => function () {
+                return '/images/profile/'.$this->id;
+            },
+            'profilePhotoThumbUrl' => function () {
+                return '/images/profile-thumb/'.$this->id;
+            },
         ];
     }
 
@@ -672,9 +682,11 @@ class User extends BaseModel implements IdentityInterface
     {
         switch ($this->roleId){
             case 6:
+            case 7:
+            case 4:
                 return ['shifts-calendar/index'];
             default:
-                return ['settings/index'];
+                return ['shifts-calendar/index'];
         }
     }
 
@@ -703,7 +715,47 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getProfilePhotoPathPattern()
     {
-        return '/user/{id}/profile.png';
+        return '/userfiles/{id}/profile.png';
+    }
+
+    /**
+     * The profile photo-thumb path pattern.
+     *
+     * @return string
+     */
+    public function getProfilePhotoThumbPathPattern()
+    {
+        return '/userfiles/{id}/profile-thumb.png';
+    }
+
+    /**
+     * The profile photo-thumb path pattern.
+     *
+     * @return string
+     */
+    public function getProfileMapPathPattern()
+    {
+        return '/userfiles/{id}/profile-map.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationPathPattern()
+    {
+        return '/userfiles/{id}/vehicle.png';
+    }
+
+    /**
+     * The license photo path pattern.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationThumbPathPattern()
+    {
+        return '/userfiles/{id}/vehicle-thumb.png';
     }
 
     /**
@@ -713,7 +765,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getLicensePathPattern()
     {
-        return '/user/{id}/license.png';
+        return '/userfiles/{id}/drviers-license.png';
     }
 
     /**
@@ -723,7 +775,67 @@ class User extends BaseModel implements IdentityInterface
      */
     public function getProfilePhotoUrl()
     {
-        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+        return \Yii::$app->params['uploadPath'].$this->getProfilePhotoPath();
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfilePhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfilePhotoThumbPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getProfileMapPhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getProfileMapPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
+    public function getLicensePhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getLicensePathPattern());
+    }
+
+    /**
+     * The vehicle registration photo path.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationPhotoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern());
+    }
+
+    /**
+     * The vehicle registration photo thumb path.
+     *
+     * @return string
+     */
+    public function getVehicleRegistrationPhotoThumbPath()
+    {
+        return str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern());
     }
 
     /**
@@ -734,6 +846,98 @@ class User extends BaseModel implements IdentityInterface
     public function getLicensePhotoUrl()
     {
         return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLicensePathPattern());
+    }
+
+    /**
+     * Upload profile photo, create thumb and other images.
+     * Separate request for the marker utilizing existing implementation.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadProfilePhoto($sourceFile)
+    {
+        $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.png',
+            '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
+            '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        $sizes = [
+            '100' => str_replace('{id}', $this->id, $this->getProfileMapPathPattern()),
+        ];
+
+        $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('driver', true).'.png';
+        file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-driver-marker', 'driverId' => $this->id, 'sourceFile' => $sourceFile], true), false,
+            stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                ]
+            ])));
+
+        if (empty(ImageResizeHelper::resizeAndUpload($temporaryFile, $sizes))) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['300'];
+    }
+
+    /**
+     * Upload vehicle registration photo, create thumb.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadVehiclePhoto($sourceFile)
+    {
+        $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.png',
+            '300' => str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern()),
+            '100' => str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
+    }
+
+    /**
+     * Upload drivers license.
+     *
+     * @todo thumb should be done in the background via a queuing system.
+     * @param  string $sourceFile path to source file
+     * @return mixed
+     * @throws \Exception
+     */
+    public function uploadLicensePhoto($sourceFile)
+    {
+        $sizes = [
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.png',
+            '300' => str_replace('{id}', $this->id, $this->getLicensePathPattern()),
+        ];
+
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
+
+        if (empty($result)) {
+            throw new \Exception('Upload failed.');
+        }
+
+        return $result['original'];
     }
 
 }

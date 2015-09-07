@@ -192,11 +192,7 @@ class SignupStoreFirstStore extends Model
 
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
             if (!empty($imageFile)) {
-                $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $store->id, $store->getLogoPathPattern()));
-
-                if (empty($url)) {
-                    throw new \Exception('Upload failed.');
-                }
+                $url = $store->uploadLogo($imageFile->tempName);
             }
 
             $storeAddress = new StoreAddress([

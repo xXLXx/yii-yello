@@ -217,12 +217,13 @@ class Shift extends BaseModel
 
     /**
      * Add applicant
-     * 
+     *
      * @param integer $driverId driver id
      * @return ShiftHasDriver
      */
     public function addApplicant($driverId)
     {
+
         $params = [
             'driverId' => $driverId,
             'shiftId' => $this->id,
@@ -242,7 +243,7 @@ class Shift extends BaseModel
         }
         return $shiftHasDriver;
     }
-    
+
     /**
      * add driver
      *
@@ -251,22 +252,107 @@ class Shift extends BaseModel
      */
     public function addDriver($driverId)
     {
+        if(Shift::checkOverLapAllocated($driverId, $this)){
+            return false;
+        }
         $existingLink = ShiftHasDriver::find()
             ->andWhere([
                 'driverId' => $driverId,
                 'shiftId' => $this->id,
             ])
             ->one();
-        if (!empty($existingLink) && $existingLink instanceof ShiftHasDriver) {
+        if (!empty($existingLink) && $existingLink instanceof ShiftHasDriver){
+            $this->removeOtherAppliedOverLapShifts($driverId);
             return $existingLink;
         }
+
+        //TODO: Alireza - Make sure driver is not already booked on another shift
+        // if driver is already booked, return error "Driver is booked on a different shift"
+        // maybe use getAllocatedFor from below
+        ////Done in the checkForOverlap function. It has be done before returning $existingLink.
+
+
         $this->removeDrivers();
         $shiftHasDriver = new ShiftHasDriver();
         $shiftHasDriver->driverId = $driverId;
         $shiftHasDriver->shiftId = $this->id;
-        $shiftHasDriver->save();
-        return $shiftHasDriver;
+        if($shiftHasDriver->save()){
+            $this->removeOtherAppliedOverLapShifts($driverId);
+            return $shiftHasDriver;
+        }else{
+            return false;
+        }
+
+        //TODO: Alireza - remove any other applications by this driver for shifts that start during this shift
+        // Maybe use getAppliedBy from below
+        ///Done in the removeOtherAppliedOverLapShifts.
+
+
     }
+
+    /**
+     * This function will check that if a driver has another allocated shift which has overlap with the selected shift.
+     * And if it found overlap, it will return true.
+     * @param integer $driverId driver id
+     * @param $targetShift Shift
+     * @return bool
+     */
+    public static function checkOverLapAllocated($driverId, Shift $targetShift)
+    {
+        $allocatedShiftsDP = Shift::getAllocatedFor($driverId);
+        $shifts = $allocatedShiftsDP->getModels();
+
+        foreach($shifts as $shift){
+            if(Shift::checkOverLapBetweenShifts($targetShift,$shift)){
+                return true;
+            };
+        }
+        return false;
+    }
+
+    /**
+     * This function will check remove other driver's applied shifts.
+     * And if it found overlap between them, it will return true.
+     * @param integer $driverId
+     */
+
+    private function removeOtherAppliedOverLapShifts($driverId)
+    {
+        $pendingShifts = Shift::getAppliedBy($driverId);
+        $shifts = $pendingShifts->getModels();
+        if(!empty($shifts) && is_array($shifts)){
+            foreach($shifts as $shift){
+                if(Shift::checkOverLapBetweenShifts($this, $shift)){
+                    if($shift !== $this->id){
+                        $shift->removeDriver($driverId);
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    /**
+     * This function will check overlap between two different shifts.
+     * And if it found overlap between them, it will return true.
+     * @param $shift Shift
+     * @param $targetShift Shift
+     * @return bool
+     */
+    public static function checkOverLapBetweenShifts(Shift $targetShift, Shift $shift)
+    {
+        if($targetShift->start > $shift->start && $targetShift->start < $shift->end){
+            return true;
+        }elseif($targetShift->start < $shift->start && $targetShift->end > $shift->start){
+            return true;
+        }
+    }
+
+
+
+
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -439,6 +525,7 @@ class Shift extends BaseModel
      */
     public static function getAllocatedFor($driverId)
     {
+
         $shiftStateIds = ShiftState::find()
             ->where([
                 'in',
@@ -458,6 +545,7 @@ class Shift extends BaseModel
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftStateIds;
         $searchModel->declinedByStoreOwner = false;
+
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
         return $dataProvider;
     }
@@ -498,10 +586,10 @@ class Shift extends BaseModel
         if (empty($shiftState)) {
             return [];
         }
-            $date = new \DateTime();
+        $date = new \DateTime();
         $startDate = $date->format('Y-m-d H:i:s');
-        
-        
+
+
         $searchModel = new ShiftSearch();
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftState->id;
@@ -613,7 +701,7 @@ class Shift extends BaseModel
         }
         return false;
     }
-    
+
     public function getIsEditable(){
         static $shiftStateNamesDisabled = [
             ShiftState::STATE_APPROVAL,
@@ -626,9 +714,9 @@ class Shift extends BaseModel
         if($is&&empty($this->actualStart)&&strtotime($this->start) > time()){
             return true;
         }
-        return false;        
+        return false;
     }
-    
+
 
     /**
      * Check if we can delete this shift.
@@ -680,8 +768,8 @@ class Shift extends BaseModel
             ->orderBy('createdAt DESC')
             ->limit(1)
             ->one();
-    }    
-    
+    }
+
 
     /**
      * @return ShiftRequestReview|null
@@ -693,8 +781,8 @@ class Shift extends BaseModel
             ->orderBy('createdAt DESC')
             ->limit(1)
             ->one();
-    }    
-    
+    }
+
 
     /**
      * @return ShiftRequestReview|null
@@ -710,7 +798,7 @@ class Shift extends BaseModel
             ->one();
     }
 
-    
+
     /**
      * @return ShiftRequestReview|null
      */
@@ -725,9 +813,9 @@ class Shift extends BaseModel
             ->limit(1)
             ->one();
     }
-        
-    
-    
+
+
+
     /**
      * Create activity deliveryCount
      */
@@ -744,7 +832,7 @@ class Shift extends BaseModel
             ]);
         }
     }
-    
+
     /**
      * Create activity payment
      */
@@ -761,11 +849,11 @@ class Shift extends BaseModel
             ]);
         }
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function afterSave($insert, $changedAttributes) 
+    public function afterSave($insert, $changedAttributes)
     {
         if (isset($changedAttributes['deliveryCount'])) {
             $this->createActivityDeliveryCount();
@@ -775,6 +863,6 @@ class Shift extends BaseModel
         }
         return parent::afterSave($insert, $changedAttributes);
     }
-    
+
 
 }

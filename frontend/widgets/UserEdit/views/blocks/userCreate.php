@@ -96,18 +96,11 @@ use yii\helpers\Html;
                 <?= Html::error($model, 'confirm', ['class' => 'error-message']) ?>
             </td>
         </tr>
-<!--        <tr>
-            <td>
-                <div class="checkbox-input">
-                    <input type="checkbox" checked="checked" value="" id="agreement">
-                    <label for="agreement" class="j_checkbox active">This user has Admin privileges</label>
-                </div>
-            </td>
-        </tr>-->
+
     </table>
     <div class="profile-user-photo">
         <div class="user-photo-container">
-            <img class="j_image-file-destination" src="<?= $model->profilePhotoUrl; ?>" alt="<?=$model->firstName ?>" />
+            <img class="j_image-file-destination" src="/images/profile-thumb/<?= $model->id; ?>" alt="<?=$model->firstName ?>" />
         </div>
         <div class="upload-file">
             <div class="icon-link font-picture-streamline blue-text">Upload new photo</div>
@@ -122,11 +115,12 @@ use yii\helpers\Html;
         <a class="icon-link font-delete-garbage-streamline red-text" href="#">Delete</a>
     </div>
 </div>
-<?php if ($model instanceof ManagerForm || $model instanceof YelloAdminForm || $model instanceof CommonManagerForm): ?>
+<?php if (\Yii::$app->user->can('AssignUserToStore')){ ?>
+
 <div class="checkbox-input js-admin-priv-container <?php if (!(($model instanceof ManagerForm || $model instanceof YelloAdminForm || $model instanceof CommonManagerForm) && $canSetIsAdmin)): ?> hide<?php endif; ?>">
     <?= Html::checkbox($model->formName() . '[isAdmin]', $model->isAdmin, ['id' => 'is-admin']) ?>
     <label for="is-admin" class="j_checkbox <?php if ($model->isAdmin): ?>active<?php endif; ?>">
         <?= \Yii::t('app', 'This user has Admin privileges'); ?>
     </label>
 </div>
-<?php endif; ?>
+<?php } ?>

@@ -18,12 +18,14 @@ use Yii;
  * Class StoresAwareUserForm
  * @package frontend\models\UserForm
  */
-class StoresAwareUserForm extends UserForm
+class StoresAwareUserForm extends CommonManagerForm
 {
     use StoresAwareTrait;
 
     public $isBlocked;
 
+    
+    
     /**
      * Check rules
      * @return array
@@ -32,7 +34,7 @@ class StoresAwareUserForm extends UserForm
     {
         return array_merge([
             [['firstName', 'lastName', 'email', 'roleId', 'stores' ], 'safe'],
-            ['isBlocked', 'boolean']
+            [['isBlocked','isAdmin'], 'boolean']
         ], parent::rules());
     }
 
@@ -46,9 +48,13 @@ class StoresAwareUserForm extends UserForm
         if ($user) {
             $this->saveUserStoreRelations($user);
             $user->isBlocked = $this->isBlocked;
+//            if(\Yii::$app->user->can('AssignUserToStore')){
+//                $this->setIsAdminDependentRole($user);
+//            }
             $user->save();
         }
         parent::save();
     }
+
 
 }

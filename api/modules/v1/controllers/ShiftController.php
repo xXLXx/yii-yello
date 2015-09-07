@@ -7,11 +7,9 @@ namespace api\modules\v1\controllers;
 
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\Shift;
-use common\models\DriverHasStore;
 use common\models\search\ShiftSearch;
 use common\models\ShiftHasDriver;
 use common\models\Shiftsavailable;
-use common\models\StoreOwnerFavouriteDrivers;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 
@@ -84,6 +82,7 @@ class ShiftController extends \api\common\controllers\ShiftController
     public function actionApplied()
     {
         $driverId = $this->getDriverId();
+
         return Shift::getAppliedBy($driverId);
     }
 
@@ -98,20 +97,19 @@ class ShiftController extends \api\common\controllers\ShiftController
         $driverId = $this->getDriverId();
         $latitude = \Yii::$app->request->get('latitude');
         $longitude = \Yii::$app->request->get('longitude');
+        $stores = \Yii::$app->request->get('stores');
+        $text = \Yii::$app->request->get('keyword');
+        $fromDate = \Yii::$app->request->get('fromDate');
 
-        $my = DriverHasStore::find()->select('storeId')->where(['driverId' => $driverId, 'isAcceptedByDriver' => 1])->asArray()->column();
-        $fav = StoreOwnerFavouriteDrivers::find()->select('storefk')->where(['driverId' => $driverId])->asArray()->column();
+        $connectedstores = \Yii::$app->request->get('connectedstores');
 
         if (empty($latitude) || empty($longitude)) {
             throw new BadRequestHttpException('Latitude and longitude are required.');
         }
 
-        //$model = new Shiftsavailable();
-        $searchModel = new Shiftsavailable();
-        $shifts = $searchModel->search(compact('driverId', 'latitude', 'longitude', 'my', 'fav'));
+        $model = new Shiftsavailable();
 
-        //return $model->search(compact('driverId', 'latitude', 'longitude'));
-        return $shifts;
+        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate'));
     }
 
     /**
@@ -161,6 +159,7 @@ class ShiftController extends \api\common\controllers\ShiftController
      */
     public function actionMy()
     {
+        //TODO: Alireza sort ascending
         $driverId = $this->getDriverId();
         return Shift::getAllocatedFor($driverId);
     }
@@ -217,8 +216,8 @@ class ShiftController extends \api\common\controllers\ShiftController
         $shift->setStateCompleted($deliverycount, $payment);
         return $shift;
     }
-    
 
-    
-    
+
+
+
 }

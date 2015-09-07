@@ -16,7 +16,7 @@ $sourceUrl = Url::to(['shifts-calendar/get-events']);
 $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 
 ?>
-<div class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
+<div id="roster-sidebar" class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
     <div class="col-left">
 
         

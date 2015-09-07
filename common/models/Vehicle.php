@@ -104,24 +104,4 @@ class Vehicle extends BaseModel
             VehicleType::className(), ['id' => 'vehicleTypeId']
         );
     }
-
-    /**
-     * The vehicle registration photo path pattern.
-     *
-     * @return string
-     */
-    public function getVehicleRegistrationPathPattern()
-    {
-        return '/vehicle/{id}/registration.png';
-    }
-
-    /**
-     * The vehicle registration photo url.
-     *
-     * @return string
-     */
-    public function getVehicleRegistrationPhotoUrl()
-    {
-        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern());
-    }
 }

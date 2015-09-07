@@ -6,6 +6,8 @@ use common\models\User;
 use common\models\UserDriver;
 use common\models\Vehicle;
 use yii\base\Model;
+use yii\web\UploadedFile;
+use common\models\Image;
 /**
  * Store form
  *
@@ -118,19 +120,11 @@ class DriverSignupStep2 extends Model
             }
 
             if ($this->vehiclePhotoFile) {
-                $url = \Yii::$app->storage->uploadFile($this->vehiclePhotoFile->tempName, str_replace('{id}', $vehicle->id, $vehicle->getVehicleRegistrationPathPattern()));
-
-                if (empty($url)) {
-                    throw new \Exception('Upload failed.');
-                }
+                $user->uploadVehiclePhoto($this->vehiclePhotoFile->tempName);
             }
 
             if ($this->licensePhotoFile) {
-                $url = \Yii::$app->storage->uploadFile($this->licensePhotoFile->tempName, str_replace('{id}', $user->id, $user->getLicensePathPattern()));
-
-                if (empty($url)) {
-                    throw new \Exception('Upload failed.');
-                }
+                $user->uploadLicensePhoto($this->licensePhotoFile->tempName);
             }
 
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);

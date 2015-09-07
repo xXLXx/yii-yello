@@ -15,14 +15,20 @@ var TrackingMapController = {
         selector: '#map-canvas',
         store: {
             id: -1,
-            position: [0, 0]
+            position: [0, 0],
+            accessToken: null
         },
         drivers: [],
         inactiveDriverTimeout: 30000,
+        updateDriversInterval: 60000,
         markerAnimation: {
             speed: 50,
             delay: 50,
-            enabled: true
+            enabled: false
+        },
+        pubnub: {
+            publishKey: '',
+            subscribeKey: ''
         }
     },
 
@@ -31,7 +37,7 @@ var TrackingMapController = {
     pubnub: null,
 
     // drivers that are currently on the map
-    mapDrivers: [],
+    mapDrivers: {},
 
     driverChannelPrefix: 'driver_',
 
@@ -40,6 +46,9 @@ var TrackingMapController = {
     mapBoundsChanged: false,
 
     markerClusterer: null,
+
+    // The interval to auto update map drivers
+    updateDriversIntervalInstance: null,
 
     /**
     * Count of number of history callbacks already finished
@@ -66,13 +75,29 @@ var TrackingMapController = {
                     context.mapBoundsChanged = true;
                 });
             });
+            
+            context.updateDriversIntervalInstance = setInterval(function () {
+                context.updateMapDrivers();
+            }, context.data.updateDriversInterval);
+            context.updateMapDrivers();
 
-            // Never mind presence for now, will be used in the future
-            //
-            // setInterval(function () {
-            //     context.initActiveDrivers();
-            // }, 30000);
-            context.initActiveDrivers();
+            // Subscribe to PN strore channe;
+            context.pubnub.subscribe({
+                channel : 'store_' + context.data.store.id,
+                message : function (m) {
+                    console.log(m);
+                    // See if something has changed
+                    if (!context.mapDrivers[m.driver_id]) {
+                        context.updateMapDrivers();
+
+                        // Delay update map drivers interval to start on next [updateDriversInterval] milliseconds
+                        clearInterval(context.updateDriversIntervalInstance);
+                        context.updateDriversIntervalInstance = setInterval(function () {
+                            context.updateMapDrivers();
+                        }, context.data.updateDriversInterval);
+                    }
+                }
+            });
 
             // Dont call this for now. We'll be listening to 'stillClockedOn' (string) field sent by app
             // setInterval(function () {
@@ -88,14 +113,14 @@ var TrackingMapController = {
                     url: document.location.protocol + '//' + document.location.hostname + '/img/marker-store.png',
                     scaledSize: new google.maps.Size(40, 40)
                 },
-                zIndex: Number.MAX_SAFE_INTEGER,
+                zIndex: -Number.MAX_SAFE_INTEGER,
                 optimized: false
             });
         });
 
         context.pubnub = PUBNUB({
-            publish_key   : 'pub-c-811c6537-1862-4b4c-9dac-13220db0928d',
-            subscribe_key : 'sub-c-ac40e412-23b2-11e5-8ae2-0619f8945a4f',
+            publish_key   : context.data.pubnub.publishKey,
+            subscribe_key : context.data.pubnub.subscribeKey,
             ssl: ((document.location.protocol == 'https:') ? true : false)
         });
     },
@@ -126,113 +151,139 @@ var TrackingMapController = {
     },
 
     /**
-     * Initialize all currently active drivers to the map
+     * Removes a map driver by driverId
+     *
+     * @return true when removed, false when not found
      */
-    initActiveDrivers: function () {
+    removeMapDriver: function (driverId) {
+        if (this.mapDrivers[driverId]) {
+            this.pubnub.unsubscribe({
+                channel: this.driverChannelPrefix + driverId
+            });
+            this.mapDrivers[driverId].marker.setMap(null);
+            this.updateDriverCount(-1);
+            this.markerClusterer.removeMarker(this.mapDrivers[driverId].marker);
+            delete this.mapDrivers[driverId];
+
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
+     * Adds a new map driver
+     *
+     * @param driver object serialized version of common\models\User
+     * @return false if unable to add, and true when successful
+     */
+     addMapDriver: function (driver) {
         var context = this;
-        // Never mind presence for now, will be used in the future
-        //
-        // context.pubnub.here_now({
-        //     channel: 'store_' + context.data.storeId,
-        //     state: true,
-        //     callback: function(m){
-        //         console.log(m);
+        var mapDriversCurrentIdx = driver.id;
 
-        //         // Clear all mapdriver makers and array
-        //         $.each(context.mapDrivers, function (key, value) {
-        //             value.marker.setMap(null);
-        //             // unsubscribe to this driver's channel
-        //             pubnub.unsubscribe(value.state.channel);
-        //         });
-        //         context.mapDrivers = [];
+        // Do not add when existing
+        if (context.mapDrivers[mapDriversCurrentIdx]) {
+            return false;
+        }
+        context.mapDrivers[mapDriversCurrentIdx] = {
+            driver: driver,
+            pubnubCallback: function (m) {
+                if (!m.time || !m.driver_id || !m.lat || !m.lng) {
+                    console.log('Error parsing: %O', m);
+                    return;
+                }
 
-        //         // Add all active drivers to map
-        //         $.each(m.uuids, function (key, value) {
-        //             if (value.state) {
-        //                 if (value.state.lat && value.state.lng) {
-        //                     var mapDriversCurrentIdx = context.mapDrivers.length;
-        //                     context.mapDrivers.push({
-        //                         state: value.state,
-        //                         marker: new google.maps.Marker({
-        //                             position: new google.maps.LatLng(value.state.lat, value.state.lng),
-        //                             map: context.map
-        //                         }),
-        //                         pubnubCallback: function (m) {
-        //                             context.mapDrivers[mapDriversCurrentIdx].state = m;
-        //                             context.mapDrivers[mapDriversCurrentIdx].marker.setPosition(new google.maps.LatLng(m.lat, m.lng));
-        //                         }
-        //                     });
+                context.mapDrivers[mapDriversCurrentIdx].state = m;
+                context.mapDrivers[mapDriversCurrentIdx].lastUpdate = new Date();
+                var position = new google.maps.LatLng(m.lat, m.lng);
+                // Check if marker is on shift on current store
+                if (Number(m.store_id) == context.data.store.id) {
+                    if (context.mapDrivers[mapDriversCurrentIdx].marker) {
+                        context.animateMarker(context.mapDrivers[mapDriversCurrentIdx].marker, [[m.lat, m.lng]]);
+                    } else {
+                        context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, driver.id);
+                    }
+                } else {
+                    context.removeMapDriver(driver.id);
+                }
 
-        //                     // Subscribe to this driver's channel
-        //                     console.log(context.mapDrivers[mapDriversCurrentIdx]);
-        //                     pubnub.subscribe({
-        //                         channel : context.mapDrivers[mapDriversCurrentIdx].state.channel,
-        //                         message : context.mapDrivers[mapDriversCurrentIdx].pubnubCallback,
-        //                     });
-        //                 }
-        //             }
-        //         });
-        //     }
-        // });
-
-        $.each(context.data.drivers, function (key, value) {
-            var mapDriversCurrentIdx = context.mapDrivers.length;
-            context.mapDrivers.push({
-                pubnubCallback: function (m) {
-                    context.mapDrivers[mapDriversCurrentIdx].driver = value;
-                    context.mapDrivers[mapDriversCurrentIdx].state = m;
-                    context.mapDrivers[mapDriversCurrentIdx].lastUpdate = new Date();
-                    var position = new google.maps.LatLng(m.lat, m.lng);
-                    // Check if marker is on shift on current store
-                    if (Number(m.store_id) == context.data.store.id) {
-                        if (context.mapDrivers[mapDriversCurrentIdx].marker) {
-                            context.animateMarker(context.mapDrivers[mapDriversCurrentIdx].marker, [[m.lat, m.lng]]);
-                        } else {
-                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, value.id);
+                console.log(context.driverChannelPrefix + context.mapDrivers[mapDriversCurrentIdx].driver.id);
+                console.log(m);
+            },
+            historyCallback: function (m) {
+                console.log(m);
+                if (!context.mapDrivers[mapDriversCurrentIdx].marker) {
+                    if (m[0].length) {
+                        // if last store_id is not equal to current store id, it means he ended shift or shifted for other companies
+                        if (Number(m[0][0].store_id) == context.data.store.id) {
+                            var position = new google.maps.LatLng(m[0][0].lat, m[0][0].lng);
+                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, driver.id);
                         }
                     } else {
-                        if (context.mapDrivers[mapDriversCurrentIdx].marker) {
-                            context.mapDrivers[mapDriversCurrentIdx].marker.setMap(null);
-                            context.mapDrivers[mapDriversCurrentIdx].marker = null;
-                            context.updateDriverCount(-1);
-                            context.markerClusterer.removeMarker(context.mapDrivers[mapDriversCurrentIdx].marker);
-                        }
-                    }
-
-                    console.log(context.driverChannelPrefix + context.mapDrivers[mapDriversCurrentIdx].driver.id);
-                    console.log(m);
-                },
-                historyCallback: function (m) {
-                    console.log(m);
-                    if (!context.mapDrivers[mapDriversCurrentIdx].marker) {
-                        if (m[0].length) {
-                            // if last store_id is not equal to current store id, it means he ended shift or shifted for other companies
-                            if (Number(m[0][0].store_id) == context.data.store.id) {
-                                var position = new google.maps.LatLng(m[0][0].lat, m[0][0].lng);
-                                context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, value.id);
-                            }
-                        } else {
-                            // Place marker on store's location (default) this means channel has no history
-                            // context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
-                            //     new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
-                            //     value.id
-                            // );
-                            // context.zoomFitMapMarkers();
-                        }
-                    }
-                    if (++context.historyCallbacksLoaded >= context.mapDrivers.length) {
-                        context.zoomFitMapMarkers();
+                        // Place marker on store's location (default) this means channel has no history
+                        context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
+                            new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
+                            driver.id
+                        );
                     }
                 }
+                if (--context.historyCallbacksLoaded <= 0) {
+                    context.zoomFitMapMarkers();
+                }
+            }
+        };
+
+        context.pubnub.subscribe({
+            channel : context.driverChannelPrefix + driver.id,
+            message : context.mapDrivers[mapDriversCurrentIdx].pubnubCallback,
+        });
+        context.pubnub.history({
+            channel: context.driverChannelPrefix + driver.id,
+            callback: context.mapDrivers[mapDriversCurrentIdx].historyCallback,
+            count: 1,
+        });
+
+        return true;
+    },
+
+    /**
+     * Checks from API all active drivers then validates then with the current map drivers
+     */
+    updateMapDrivers: function () {
+        var context = this;
+        $.ajax({
+            url: document.location.protocol + '//' + document.location.hostname + '/v1/driver/active',
+            data: {
+                storeid: context.data.store.id
+            },
+            headers: {
+                'access-token': context.data.store.accessToken
+            }
+        }).done(function (response) {
+            console.log(response);
+
+            // Traverse though map drivers and determine which is currenlty active or not
+            $.each(context.mapDrivers, function (mapDriverKey, mapDriver) {
+                var found = false;
+                $.each(response.items, function (drivereKey, driver) {
+                    if (driver.id == mapDriver.driver.id) {
+                        found = true;
+                        return false;
+                    }
+                });
+
+                // If map driver is not found from API active drivers, it means map driver is already invalid
+                if (!found) {
+                    context.removeMapDriver(mapDriverKey);
+                }
             });
-            context.pubnub.subscribe({
-                channel : context.driverChannelPrefix + value.id,
-                message : context.mapDrivers[mapDriversCurrentIdx].pubnubCallback,
-            });
-            context.pubnub.history({
-                channel: context.driverChannelPrefix + value.id,
-                callback: context.mapDrivers[mapDriversCurrentIdx].historyCallback,
-                count: 1,
+
+            // Traverse through the API's list of drivers and see which should be added to map drivers
+            context.historyCallbacksLoaded = response.items.length;
+            $.each(response.items, function (driverKey, driver) {
+                if (!context.mapDrivers[driver.id]) {
+                    context.addMapDriver(driver);
+                }
             });
         });
     },

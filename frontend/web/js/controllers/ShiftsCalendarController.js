@@ -9,6 +9,8 @@ var calendarObject;
 var calendarInterval;
 var begindate=0;
 var currentselected=0;
+var currentselectedstatus=0;
+var currentevent=null;
 var pjaxTimeout = 0;
 var stringify=false;
 
@@ -105,11 +107,11 @@ var ShiftsCalendarController = {
                     shiftid: currentselected
                 };
                 
-            console.log("#################################\n");
+          /*  console.log("#################################\n");
             console.log("url : "+self.data.sourceUrl);
             console.log("datum");
             console.log(datum);
-            console.log("=================================\n");
+            console.log("=================================\n"); */
             $.ajax({
                 type: "POST",
                 url: self.data.sourceUrl,
@@ -130,12 +132,15 @@ var ShiftsCalendarController = {
             });
         });
         calendar.onEventClick(function(event) {
+            currentselected=event.id;
+            //console.log('reassigned event');
+            currentevent = calendar.getEventById(event.id);
             $.pjax({
                 url: event.data.url,
                 container: '#shift-form-widget-pjax',
                 timeout: pjaxTimeout
             });
-                currentselected=event.id;
+
             $('.sidebar-container').removeClass('without-col-left');
         });
 

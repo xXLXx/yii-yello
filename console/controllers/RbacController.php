@@ -163,6 +163,9 @@ class RbacController extends Controller
         $promoteUserAsAdmin = $auth->createPermission('PromoteUserAsAdmin');
         $auth->add($promoteUserAsAdmin);
 
+        $assignUserToStore = $auth->createPermission('AssignUserToStore');
+        $auth->add($assignUserToStore);
+
         /*** Roles ***/
 
         // Let's add manually from matrix and roles table
@@ -277,6 +280,7 @@ class RbacController extends Controller
         $auth->addChild($employee, $viewCalendar);
         $auth->addChild($employee, $viewShiftLog);
         $auth->addChild($employee, $viewStoreDashboard);
+        $auth->addChild($employee, $assignUserToStore);
 
         $auth->addChild($storeOwner, $changeOrgUsersPassword);
         $auth->addChild($storeOwner, $viewPaymentDetails);

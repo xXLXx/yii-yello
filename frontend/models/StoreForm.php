@@ -170,11 +170,12 @@ class StoreForm extends Model
                 throw new \yii\db\Exception(current($error));
             }
 
+            $store->refresh();
             $this->id = $store->id;
 
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
             if (!empty($imageFile)) {
-                $url = $store->uploadLogo($imageFile);
+                $url = $store->uploadLogo($imageFile->tempName);
             }
 
             $userHasStore = UserHasStore::findOneOrCreate(['storeId' => $store->id, 'userId' => $userStoreOwner->userId]);

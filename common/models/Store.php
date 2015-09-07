@@ -180,6 +180,16 @@ class Store extends BaseModel
         return '/storefiles/{id}/logo-thumb.png';
     }
 
+    /**
+     * The path pattern.
+     *
+     * @return string
+     */
+    public function getLogoPath()
+    {
+        return str_replace('{id}', $this->id, $this->getLogoPathPattern());
+    }
+
 
     /**
      * The store logo url.
@@ -188,25 +198,25 @@ class Store extends BaseModel
      */
     public function getLogoUrl()
     {
-        return \Yii::$app->params['uploadPath'].str_replace('{id}', $this->id, $this->getLogoPathPattern());
+        return '/images/store/logo/'.$this->id;
     }
 
     /**
      * Upload logo and create thumb.
      *
      * @todo thumb should be done in the background via a queuing system.
-     * @param  \yii\web\UploadedFile $file
+     * @param  string $sourceFile path to source file
      * @return mixed
      * @throws \Exception
      */
-    public function uploadLogo($file)
+    public function uploadLogo($sourceFile)
     {
         $sizes = [
-            'original' => str_replace('{id}', $this->id, $this->getLogoPathPattern()),
-            '144' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
+            'original' => $this->getLogoPath(),
+//            '100' => str_replace('{id}', $this->id, $this->getLogoThumbPathPattern()),
         ];
 
-        $result = ImageResizeHelper::resizeAndUpload($file->tempName, $sizes);
+        $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
 
         if (empty($result)) {
             throw new \Exception('Upload failed.');
@@ -214,6 +224,18 @@ class Store extends BaseModel
 
         return $result['original'];
     }
+    
+    
+    /**
+     * Get shiftReviews
+     * @return ActiveQuery
+     */
+    public function getStoreReviews()
+    {
+        return $this->hasMany(Storereviews::className(), ['storeId' => 'id','isArchived'=>0]);
+    }    
+    
+    
 
     /**
      * @param \DateTime $date
