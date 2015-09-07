@@ -40,8 +40,12 @@ class ImagesController extends \yii\console\Controller
                 continue;
             }
 
-            print $sourceFile.' mug found  for '.$user->username.PHP_EOL;
-            $user->uploadProfilePhoto($sourceFile);
+            print $sourceFile.' found  for '.$user->username.PHP_EOL;
+            try {
+                $user->uploadProfilePhoto($sourceFile);
+            } catch (\Exception $e) {
+                \Yii::error($e->getMessage());
+            }
         }
 
         $stores = Store::find()->joinWith('image', true, 'RIGHT JOIN')->all();
@@ -54,7 +58,11 @@ class ImagesController extends \yii\console\Controller
             }
 
             print $sourceFile.' found.'.PHP_EOL;
-            $store->uploadLogo($sourceFile);
+            try {
+                $store->uploadLogo($sourceFile);
+            } catch (\Exception $e) {
+                \Yii::error($e->getMessage());
+            }
         }
 
         $vehicles = Vehicle::find()->joinWith(['image', 'user'], true, 'RIGHT JOIN')->all();
@@ -67,7 +75,11 @@ class ImagesController extends \yii\console\Controller
             }
 
             print $sourceFile.' found.'.PHP_EOL;
-            $vehicle->user->uploadVehiclePhoto($sourceFile);
+            try {
+                $vehicle->user->uploadVehiclePhoto($sourceFile);
+            } catch (\Exception $e) {
+                \Yii::error($e->getMessage());
+            }
         }
 
         $vehicles = Vehicle::find()->joinWith(['licensePhoto', 'user'], true, 'RIGHT JOIN')->all();
@@ -80,7 +92,11 @@ class ImagesController extends \yii\console\Controller
             }
 
             print $sourceFile.' found.'.PHP_EOL;
-            $vehicle->user->uploadLicensePhoto($sourceFile);
+            try {
+                $vehicle->user->uploadLicensePhoto($sourceFile);
+            } catch (\Exception $e) {
+                \Yii::error($e->getMessage());
+            }
         }
 
         $companies = Company::find()->joinWith('image', true, 'RIGHT JOIN')->all();
@@ -93,7 +109,11 @@ class ImagesController extends \yii\console\Controller
             }
 
             print $sourceFile.' found.'.PHP_EOL;
-            $company->uploadLogo($sourceFile);
+            try {
+                $company->uploadLogo($sourceFile);
+            } catch (\Exception $e) {
+                \Yii::error($e->getMessage());
+            }
         }
 
         return 0;

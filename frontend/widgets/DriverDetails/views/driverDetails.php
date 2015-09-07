@@ -11,7 +11,7 @@ if(!isset($current_page)){
 <div class="border-top-item">
     <div class="user-shifts">
         <div class="user-photo-container">
-            <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>"
+            <img src="/images/profile-thumb/<?= $driver->id; ?>"
                  alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
         </div>
         <div class="user-photo-info">
