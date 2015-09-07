@@ -2,6 +2,8 @@
 
 namespace common\models\query;
 
+use common\models\DriverHasStore;
+
 /**
  * This is the ActiveQuery class for [[\common\models\DriverHasStore]].
  *
@@ -35,5 +37,20 @@ class DriverHasStoreQuery extends BaseQuery
     public function accepted()
     {
         return $this->andWhere(['isAcceptedByDriver' => '1']);
+    }
+
+    /**
+     * filters all driverhasstore of current store
+     *
+     * @return self
+     */
+    public function ofCurrentStore()
+    {
+        $storeOwner = \Yii::$app->user->identity->storeOwner;
+        $currentStore = $storeOwner->storeCurrent;
+        return $this->andWhere([
+            DriverHasStore::tableName() . '.storeId'    => $currentStore->id,
+            'isAcceptedByDriver'                        => 1
+        ]);
     }
 }

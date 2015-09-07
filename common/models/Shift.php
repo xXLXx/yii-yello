@@ -61,6 +61,8 @@ use common\helpers\ArrayHelper;
  */
 class Shift extends BaseModel
 {
+    public $applicantsCount = 0;
+
     /**
      * @inheritdoc
      */

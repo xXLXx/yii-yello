@@ -27,7 +27,8 @@
         "kartik-v/yii2-widget-rating": "*",
         "stripe/stripe-php": "2.*",
         "jovanialferez/yii2-s3": "^1.0",
-        "nickcv/yii2-mandrill": "*"
+        "nickcv/yii2-mandrill": "*",
+        "scotthuangzl/yii2-google-chart": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

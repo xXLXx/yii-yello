@@ -1,19 +1,40 @@
 <?php
     use frontend\widgets\Dashboard\DonutChartWidget;
+    use frontend\widgets\Dashboard\LineChartWidget;
+    use yii\web\View;
+    use yii\jui\DatePicker;
+
+    $this->registerJs('
+        function OnEndDateChange (value) {
+            var regex = /(.+enddate=)\d{4}-\d{2}-\d{2}(.+)?/;
+            if (!window.location.href.match(regex)) {
+                window.location.href = window.location.href.replace(/\?/, "?enddate=" + value + "&");
+            } else {
+                window.location.href = window.location.href.replace(regex, "$1" + value + "$2");
+            }
+        }
+    ', View::POS_BEGIN);
 ?>
 <div class="content clearfix">
     <div class="top-filter">
         <div class="period-list clearfix">
-            <div class="item">Today</div>
-            <div class="item">Yesterday</div>
-            <div class="item active">Week</div>
-            <div class="item">Month</div>
-            <div class="item">Quarter</div>
-            <div class="item">Year</div>
+            <?php foreach (['today', 'yesterday', 'week', 'month', 'quarter', 'year'] as $value) : ?>
+                <a class="item <?= $range == $value ? 'active' : '' ?>" href="?range=<?= $value ?>&enddate=<?= $enddate ?>"><?= ucfirst($value) ?></a>
+            <?php endforeach; ?>
         </div>
         <div class="datepicker-wrapp">
-            <label for="period">Period</label>
-            <input id="period" type="text" class="text-input small" value="17 Aprill, 2015" />
+            <label for="period">End Date</label>
+            <?=
+                DatePicker::widget([
+                    'attribute'     => 'date',
+                    'dateFormat'    => 'yyyy-MM-dd',
+                    'value'         => $enddate,
+                    'options'       => [
+                        'class'         => 'text-input small',
+                        'onchange'      => 'OnEndDateChange(this.value)'
+                    ]
+                ]);
+            ?>
         </div>
     </div>
     <div class="dashboard-two-cols-container">
@@ -61,56 +82,73 @@
             </div>
         </div>
         <div class="dashboard-second-column">
-            <div class="border-all-list">
-                <div class="time-line">
-                    <div class="time-item empty"></div>
-                    <div class="time-item"><span>01.03.15</span></div>
-                    <div class="time-item"><span>02.03.15</span></div>
-                    <div class="time-item"><span>03.03.15</span></div>
-                    <div class="time-item"><span>04.03.15</span></div>
-                    <div class="time-item"><span>05.03.15</span></div>
-                    <div class="time-item"><span>06.03.15</span></div>
-                    <div class="time-item"><span>07.03.15</span></div>
-                </div>
-                <div class="border-all-item clearfix">
-                    <div class="f-left">
+            <table class="border-all-list">
+                <tr class="time-line">
+                    <td class="time-item empty"></td>
+                    <td>
+                        <table class="line-header <?= $range ?>">
+                            <tr>
+                                <?php foreach ($timeline as $item) if (isset($item['label'])) : ?>
+                                <td class="time-item"><span><?= $item['label'] ?></span></td>
+                                <?php endif; ?>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="border-all-item">
+                    <td class="f-left">
                         <h3>Paid</h3>
-                        <h2>$1,233</h2>
-                        <h4>Avg. $213/day</h4>
-                    </div>
-                    <div class="f-right">
-                        <img src="img/temp/11.png" />
-                    </div>
-                </div>
-                <div class="border-all-item clearfix">
-                    <div class="f-left">
+                        <h2><?= $paid ?></h2>
+                        <h4>Avg. <?= $paidAverage?>/day</h4>
+                    </td>
+                    <td class="f-right">
+                        <?= LineChartWidget::widget(array(
+                            'data' => $paidData,
+                            'color' => '#BDD071',
+                            'scriptAfterArrayToDataTable' => '
+                                var formatter = new google.visualization.NumberFormat({prefix: "$"});
+                                formatter.format(data, 1);'
+                        )); ?>
+                    </td>
+                </tr>
+                <tr class="border-all-item">
+                    <td class="f-left">
                         <h3>Applications</h3>
-                        <h2>1183</h2>
-                    </div>
-                    <div class="f-right">
-                        <img src="img/temp/12.png" />
-                    </div>
-                </div>
-                <div class="border-all-item clearfix">
-                    <div class="f-left">
+                        <h2><?= $applications ?></h2>
+                    </td>
+                    <td class="f-right">
+                        <?= LineChartWidget::widget(array(
+                            'data' => $applicationsData,
+                            'color' => '#3BAFDA'
+                        )); ?>
+                    </td>
+                </tr>
+                <tr class="border-all-item">
+                    <td class="f-left">
                         <h3>Deliveries</h3>
-                        <h2>4383</h2>
-                        <h4>Avg. 813/day</h4>
-                    </div>
-                    <div class="f-right">
-                        <img src="img/temp/13.png" />
-                    </div>
-                </div>
-                <div class="border-all-item clearfix">
-                    <div class="f-left">
+                        <h2><?= $deliveries ?></h2>
+                        <h4>Avg. <?= $deliveriesAverage ?>/day</h4>
+                    </td>
+                    <td class="f-right">
+                        <?= LineChartWidget::widget(array(
+                            'data' => $deliveriesData,
+                            'color' => '#F5AA2E'
+                        )); ?>
+                    </td>
+                </tr>
+                <tr class="border-all-item">
+                    <td class="f-left">
                         <h3>Shifts Booked</h3>
-                        <h2>3383</h2>
-                        <h4>Avg. 813/day</h4>
-                    </div>
-                    <div class="f-right">
-                        <img src="img/temp/14.png" />
-                    </div>
-                </div>
-            </div>
+                        <h2><?= $shiftsBooked ?></h2>
+                        <h4>Avg. <?= $shiftsBookedAverage ?>/day</h4>
+                    </td>
+                    <td class="f-right">
+                        <?= LineChartWidget::widget(array(
+                            'data' => $shiftsBookedData,
+                            'color' => '#5396E3'
+                        )); ?>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>

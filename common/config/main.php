@@ -116,7 +116,8 @@ return [
 
         'formatter' => [
             'class' => 'common\components\Formatter',
-            'timeZone' => 'UTC'
+            'timeZone' => 'UTC',
+            'currencyCode' => 'USD'
         ],
         'activity' => [
             'class' => 'common\components\Activity'
