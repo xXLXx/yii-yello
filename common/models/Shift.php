@@ -340,13 +340,57 @@ class Shift extends BaseModel
      * @param $targetShift Shift
      * @return bool
      */
-    public static function checkOverLapBetweenShifts(Shift $targetShift, Shift $shift)
+    public static function checkOverLapBetweenShifts($targetShift, $shift)
     {
+        $firstGoesMidnight = false;
+        $secondGoesMidnight = false;
+        //First we should detect that the shift is after midnight or not for both shifts;
+
+
+        //If the time difference of the start time is more than 8 hours, they cannot have any overlap.
+        if(abs(strtotime($targetShift->start) - strtotime($shift->start)) > 8 * 60 * 60)
+        {
+            return false;
+        }
+
+        //If the first one is after midnight
+        if($targetShift->start > $targetShift->end)
+        {
+            $firstGoesMidnight = true;
+
+            if($targetShift->start > $shift->start && $targetShift->start < $shift->end){
+                return true;
+            }
+            //If the start time is before the other's start time, it has overlap, because the first one will go to the midnight
+            elseif($targetShift->start < $shift->start){
+                return true;
+            }
+        }
+
+        if($shift->start > $shift->end)
+        {
+            if($shift->start > $targetShift->start && $shift->start < $targetShift->end)
+            {
+                return true;
+            }
+            elseif($shift->start < $targetShift->start)
+            {
+                return true;
+            }
+        }
+
+        //IF both of them goes midnight!
+        if($firstGoesMidnight && $secondGoesMidnight){
+            return true;
+        }
+
         if($targetShift->start > $shift->start && $targetShift->start < $shift->end){
             return true;
         }elseif($targetShift->start < $shift->start && $targetShift->end > $shift->start){
             return true;
         }
+
+        return false;
     }
 
 

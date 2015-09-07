@@ -3,11 +3,12 @@
 namespace common\models;
 
 use common\helpers\ArrayHelper;
+use common\models\Shift;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
-use common\models\Shift;
+use yii\data\ArrayDataProvider;
 
 /**
  * This is the model class for table "shiftsavailable".
@@ -139,7 +140,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
      *
      * @param array $params
      *
-     * @return \yii\data\ActiveDataProvider
+     * @return \yii\data\ArrayDataProvider
      */
     public function search($params = [])
     {
@@ -185,21 +186,46 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         // TODO: Alireza/Jovani - if $params['fromDate'] && .
         //re valid dates, constrain search to these dates using store's timezone
         if(!empty($params['fromDate'])){
-            $nowTime = new \DateTime();
-            $nowTime->setTimestamp($params['fromDate']);
-            $dateTime = $nowTime->format('Y-m-d H:i:s');
-            $query->andWhere(['>=','start', $dateTime]);
+            $startTime = date('Y-m-d H:i:s', $params['fromDate'] );
+            $query->andWhere(['>=','start', $startTime]);
         }
+
+//        if(!empty($params['toDate'])){
+//            $endTime = date('Y-m-d H:i:s',$params['toDate'] );
+//            $query->andWhere(['<','end', $endTime]);
+//        }
 
 
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
 
+
         // also exclude shifts that start during times when driver is booked for a shift
 
+        $bookedShifts = Shift::getAllocatedFor($params['driverId'])->getModels();
 
-        return new ActiveDataProvider([
-            'query' => $query,
+        if(!empty($bookedShifts)){
+            foreach($bookedShifts as $bShift)
+            {
+                $query->andWhere(['NOT BETWEEN', 'start', $bShift->start, $bShift->end]);
+                $query->andWhere(['NOT BETWEEN', 'end', $bShift->start, $bShift->end ]);
+            }
+        }
+        $models = $query->all();
+
+        $filteredModels = $this->removeOverlapsFrom($models, $bookedShifts);
+
+//        return new ActiveDataProvider([
+//            'query' => $query,
+//        ]);
+        return new ArrayDataProvider([
+            'allModels' => $filteredModels,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'attributes' => ['start'],
+            ],
         ]);
     }
 
@@ -280,5 +306,27 @@ class Shiftsavailable extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * This function will remove overlapped shifts from founded available shifts.
+     * @param $availableShifts
+     * @param $bookedShifts
+     * @return \yii\db\ActiveQuery
+     */
+
+    protected function removeOverlapsFrom($availableShifts, $bookedShifts)
+    {
+        foreach($availableShifts as $aShiftKey => $aShift)
+        {
+            foreach($bookedShifts as $bShift)
+            {
+                if(Shift::checkOverLapBetweenShifts($aShift, $bShift))
+                {
+                    $a[] = $aShift;
+                  unset($availableShifts[$aShiftKey]);
+                }
+            }
+        }
+        return array_values($availableShifts);
+    }
 
 }

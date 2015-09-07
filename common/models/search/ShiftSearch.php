@@ -140,7 +140,7 @@ class ShiftSearch extends Shift
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['start'=>SORT_DESC]]
+            'sort'=> ['defaultOrder' => ['start'=>SORT_ASC]]
         ]);
         $dataProvider->sort->attributes['start'] = [
               // The tables are the ones our relation are configured to
