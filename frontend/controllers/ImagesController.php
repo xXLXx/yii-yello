@@ -266,7 +266,7 @@ class ImagesController extends \yii\web\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'store_image.png';
+            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
         }
 
         return $this->redirect($signedUrl);
@@ -289,15 +289,16 @@ class ImagesController extends \yii\web\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'store_image.png';
+            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
         }
 
+        return $this->redirect($signedUrl);
 
-        $image = imagecreatefrompng($signedUrl);
-
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 }
