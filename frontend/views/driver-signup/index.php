@@ -52,7 +52,7 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                             </div>
                             <div class="col col-md-6">
                                 <?php echo $form->field($model, 'phone'); ?>
-                                <?php echo $form->field($model, 'phonetype')->radioList(['iPhone' => 'iPhone', 'Android' => 'Android', 'Windows' => 'Windows'],['class' => 'form-inline form-group'])->label(false); ?>
+                                <?php echo $form->field($model, 'phonetype')->radioList(['iPhone' => 'iPhone', 'Android' => 'Android'],['class' => 'form-inline form-group'])->label(false); ?>
                                 
                                 <?= \frontend\widgets\Address\AddressWidget::widget(['model' => $model, 'form' => $form]); ?>
                             </div>

@@ -79,10 +79,10 @@ class DriverForm extends UserForm
 
             $user->firstName = $this->firstName;
             $user->lastName = $this->lastName;
-            if(!empty($user->phone)){
+            if(!empty($this->phone)){
                 $user->phone = $this->phone;
             }
-            if(!empty($user->phonetype)){
+            if(!empty($this->phonetype)){
                 $user->phonetype = $this->phonetype;
             }
             if($user->signup_step_completed<1){
