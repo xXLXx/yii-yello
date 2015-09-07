@@ -3,7 +3,7 @@ use yii\helpers\Html;
 ?>
 <div class="item no-border">
     <div class="user-photo-container f-left">
-        <img src="/images/profile/<?= $user->id; ?>" alt="<?= $user->username ?>" />
+        <img src="/images/profile-thumb/<?= $user->id; ?>" alt="<?= $user->username ?>" />
     </div>
     <div class="user-photo-info">
         <span><?= \Yii::t('app', 'Hello') ?>, <?= $user->username ?></span>
