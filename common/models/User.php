@@ -24,6 +24,8 @@ use common\models\query\UserQuery;
  * @property Boolean $active active?
  * @property string $firstName first name
  * @property string $lastName last name
+ * @property string $phone phone number
+ * @property string $phonetype handset type
  * @property integer $imageId imageId
  * @property Boolean $hasExtendedRights has extended rights
  * @property Boolean $isBlocked is user blocked
@@ -71,7 +73,7 @@ class User extends BaseModel implements IdentityInterface
     public function rules()
     {
         return array_merge([
-            [['firstName', 'lastName', 'email', 'roleId', 'stores'], 'safe']
+            [['firstName', 'lastName', 'phone','phonetype', 'email', 'roleId', 'stores'], 'safe']
         ], parent::rules());
     }
     /**

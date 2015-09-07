@@ -52,6 +52,15 @@ class DriverSignupController extends BaseController
                     if(isset($_FILES['DriverSignupStep1']['name']['imageFile'])){
                         $user->imageId = $this->saveImage($driversignupform, 'imageFile');
                     }
+                    if(!empty($driversignupform->phone)){
+                        $user->phone = $driversignupform->phone;
+                        $user->save();
+                    }
+                    if(!empty($driversignupform->phonetype)){
+                        $user->phonetype = $driversignupform->phonetype;
+                        $user->save();
+                    }                    
+                    
                     // save address
                     if($user->signup_step_completed<1){
                         $user->signup_step_completed = 1;

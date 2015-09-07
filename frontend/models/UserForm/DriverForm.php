@@ -28,13 +28,14 @@ class DriverForm extends UserForm
     {
         return [
             [['userId'], 'integer'],
-            [['firstName', 'lastName'], 'filter', 'filter' => 'trim'],
+            [['firstName', 'lastName', 'phone'], 'filter', 'filter' => 'trim'],
             ['firstName', 'required',
                 'message' => \Yii::t('app', 'Please enter your First Name.')
             ],
             ['lastName', 'required',
                 'message' => \Yii::t('app', 'Please enter your Last Name.')
             ],
+            ['phone','required', 'message' => \Yii::t('app', 'Please provide your phone number.')],
 
             [['emergencyContactName', 'emergencyContactPhone', 'personalProfile'], 'string', 'max' => 255],
 //            [['formatted_address'],'string','max'=>1500],
@@ -78,7 +79,12 @@ class DriverForm extends UserForm
 
             $user->firstName = $this->firstName;
             $user->lastName = $this->lastName;
-            //$user->phone = $this->phone;
+            if(!empty($user->phone)){
+                $user->phone = $this->phone;
+            }
+            if(!empty($user->phonetype)){
+                $user->phonetype = $this->phonetype;
+            }
             if($user->signup_step_completed<1){
                 $user->signup_step_completed = 1;
             }

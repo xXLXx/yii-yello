@@ -45,12 +45,15 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                         <div class="row" style="margin-top:30px;">
                             <div class="col col-md-6">
                                 <div class="col col-md-10">
-                                <h3>Address</h3>
+                                <h3>Address & phone</h3>
                                 <div class="gray-text"><p>Start entering your home address in the top field and let Google help you find your address.</p></div>
                                 <div class="error-summary"></div>
                                 </div>
                             </div>
                             <div class="col col-md-6">
+                                <?php echo $form->field($model, 'phone'); ?>
+                                <?php echo $form->field($model, 'phonetype')->radioList(['iPhone' => 'iPhone', 'Android' => 'Android', 'Windows' => 'Windows'],['class' => 'form-inline form-group'])->label(false); ?>
+                                
                                 <?= \frontend\widgets\Address\AddressWidget::widget(['model' => $model, 'form' => $form]); ?>
                             </div>
                         </div>

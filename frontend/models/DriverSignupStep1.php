@@ -20,6 +20,8 @@ class DriverSignupStep1 extends Model
     public $id; // storeid
     
     // company address
+    public $phone;
+    public $phonetype;
     public $emergencyContactName;
     public $emergencyContactPhone;
     public $personalProfile;
@@ -49,7 +51,7 @@ class DriverSignupStep1 extends Model
         return [
             [
                 [
-                    'emergencyContactName', 'emergencyContactPhone'
+                    'emergencyContactName', 'emergencyContactPhone','phone','phonetype'
                 ],
                 'required'
             ],
@@ -58,7 +60,7 @@ class DriverSignupStep1 extends Model
             ],
             [
                 [
-                    'id', 
+                    'id', 'phone','phonetype',
                     'emergencyContactName', 'emergencyContactPhone', 'personalProfile',
                     'block_or_unit', 'street_number', 'route', 'locality', 'administrative_area_level_1', 'postal_code', 'country',
                     'formatted_address', 'latitude', 'longitude','googleplaceid','googleobj', 'utcOffset', 'timezone'
@@ -73,6 +75,8 @@ class DriverSignupStep1 extends Model
     public function attributeLabels()
     {
         $labels = [
+            'phone'=>'Phone Number',
+            'phonetype'=>'Handset Type',
             'street_number' => '',
             'route' => '',
             'companyname'=>'Company Name',
@@ -179,6 +183,7 @@ class DriverSignupStep1 extends Model
                    throw new \Exception('Upload failed.');
                }
            }
+
 
             $transaction->commit();
 
