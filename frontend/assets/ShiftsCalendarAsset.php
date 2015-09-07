@@ -13,7 +13,8 @@ class ShiftsCalendarAsset extends AssetBundle
     ];
     public $js = [
         'js/nice-calendar.js',
-        'js/controllers/ShiftsCalendarController.js'
+        'js/controllers/ShiftsCalendarController.js',
+        'js/AddFavouriteDriver.js'
     ];
     public $depends = [
         'yii\jui\JuiAsset',

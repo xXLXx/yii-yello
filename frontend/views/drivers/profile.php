@@ -20,13 +20,13 @@ $driverId = $driver->id;
                     <div class="info-item font-star-two j_add-favourite-driver
                         <?php if ($driver->favouriteForCurrentStore()): ?>
                          hidden
-                        <?php endif; ?>" data-driverid="<?= $driverId; ?>">
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
                         Add to Favourites
                     </div>
                     <div class="info-item red-text font-star-two j_remove-favourite-driver
                         <?php if (!$driver->favouriteForCurrentStore()): ?>
                             hidden
-                        <?php endif; ?>" data-driverid="<?= $driverId; ?>">
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
                         Remove from Favourites
                     </div>
                 </div>

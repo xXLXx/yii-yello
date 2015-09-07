@@ -21,18 +21,18 @@ if(!isset($current_page)){
                     <span class="info-link" title="Info"></span>
                     <div class="info-popup">
                         <a href="/drivers/profile?id=<?=$driver->id?>" class="info-item font-user">View Profile</a>
-                        <div class="info-item font-letter-mail">Email</div>
-                        <div class="info-item font-edit-write">Add Note</div>
+                        <a class="info-item font-letter-mail" href="mailto:<?= $driver->email; ?>">Email</a>
+                        <a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="info-item font-edit-write j_colorbox"><?= \Yii::t('app', 'Add Note') ?></a>
                         <div class="info-item font-star-two j_add-favourite-driver
-                        <?php if ($driver->favouriteForCurrentStore() || $current_page == "my"): ?>
-                            hidden
-                        <?php endif; ?>">
+                        <?php if ($driver->favouriteForCurrentStore()): ?>
+                         hidden
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
                             Add to Favourites
                         </div>
-                        <div class="info-item font-star-two j_remove-favourite-driver
-                        <?php if (!$driver->favouriteForCurrentStore() || $current_page == "my"): ?>
+                        <div class="info-item red-text font-star-two j_remove-favourite-driver
+                        <?php if (!$driver->favouriteForCurrentStore()): ?>
                             hidden
-                        <?php endif; ?>">
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
                             Remove from Favourites
                         </div>
                     </div>

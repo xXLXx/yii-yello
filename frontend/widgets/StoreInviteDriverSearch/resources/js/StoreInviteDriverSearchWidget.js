@@ -14,8 +14,10 @@ var StoreInviteDriverSearchWidget = {
         var self = this;
         this.data = data;
         var waitHelper = new WaitHelper();
+        scrollPane = false;
         $(document).on('keyup', '.js-driver-search-widget-search', function() {
             var searchText = $(this).val();
+
             waitHelper.wait(500, function() {
                 self.loadDrivers(searchText, function(result) {
 
@@ -24,11 +26,22 @@ var StoreInviteDriverSearchWidget = {
 
 
                     jQuery('#w0.grid-view').attr('id', ''); //#w0 is added by rating plugin and causing problem.
-                    
+
+
                     var $searchSelect = $(
                         self.getContainerName() + ' .j_search_select'
                     );
-                    $searchSelect.html(result);
+                    $searchSelect.show();
+
+                    if(scrollPane !== false){
+                        scrollPane.getContentPane().html(result)
+                        scrollPane.reinitialise();
+                    } else {
+                        $searchSelect.html(result);
+                    }
+
+
+
 
 
                     if(result.search('error_message') == "-1"){
@@ -39,11 +52,14 @@ var StoreInviteDriverSearchWidget = {
                         $('.popup.store-invite').addClass('with-error');
                     }
 
-                    $searchSelect.show();
-                    $(self.getContainerName() + ' .j_scrollpane').jScrollPane();
+
+
                     $(".j_colorbox").colorbox.resize();
 
 
+                    if(scrollPane == false){
+                        scrollPane = $(self.getContainerName() + ' .j_scrollpane').jScrollPane().data('jsp');
+                    }
                     $(".rating-loading").rating('refresh', {
                         showClear: false,
                         size: 'xs',
@@ -51,8 +67,6 @@ var StoreInviteDriverSearchWidget = {
                         glyphicon: false,
                         ratingClass: 'star-block big'
                     });
-
-
 
                 });
             });

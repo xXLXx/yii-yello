@@ -519,7 +519,7 @@ a.blue-text {text-decoration:none;}
     .toggle-popup-container .info-popup {left:0; width:auto; right:0; margin-left:0;}
         .toggle-popup-container .info-popup:after {display:none;}
         .toggle-popup-container .info-popup:after {display:none;}
-.search-select-popup {position:absolute; z-index:1; top:-6px; left:0; width:218px; background:#fff; border:1px solid #cccccc; box-shadow:0 1px 2px rgba(0,0,0,0.1); border-radius:4px; max-height:168px;}
+.search-select-popup {position:absolute; z-index:1; top:-6px; left:0; width:273px; background:#fff; border:1px solid #cccccc; box-shadow:0 1px 2px rgba(0,0,0,0.1); border-radius:4px; height:168px;}
     .search-select-item {border:none; border-top:1px solid #ccc; padding:5px 8px; cursor:pointer;}
     .search-select-item:hover {background:#ebf1f4;}
     .search-select-popup .search-select-item:first-child {border:none;}

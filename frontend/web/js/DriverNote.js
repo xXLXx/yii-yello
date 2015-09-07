@@ -63,7 +63,12 @@ var DriverNote = {
         $(document).on('click', this.options.deleteNoteSelector, function (e) {
             e.preventDefault();
 
+            //driverId = $(this).data('driverid');
             driverId = $(this).data('driverid');
+            if(!driverId){
+                var $row = $(this).closest('tr'),
+                    driverId = $row.data('key');
+            }
 
             $.ajax({
                 type: 'GET',

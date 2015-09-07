@@ -11,7 +11,7 @@ use frontend\assets\ShiftListAsset;
 
 ShiftListAsset::register($this);
 \frontend\assets\ShiftRequestReviewAsset::register($this);
-$this->registerJs('$(function(){ShiftRequestReviewController.init();})');
+$this->registerJs('$(function(){ShiftRequestReviewController.init();AddFavouriteDriver.init();})');
 ?>
 
 

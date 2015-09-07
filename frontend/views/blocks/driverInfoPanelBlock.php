@@ -1,10 +1,21 @@
 <div class="info-panel f-right">
     <span class="info-link" title="Info"></span>
     <div class="info-popup">
-        <div class="info-item font-user"><a href="/drivers/profile?id=<?=$driver->id?>" class="driver-ddl">View Profile</a></div>
-        <div class="info-item font-letter-mail">Email</div>
-        <div class="info-item font-edit-write">Add Note</div>
-        <div class="info-item font-star-two">Add to Favourites</div>
+        <a class="info-item font-user driver-ddl" href="/drivers/profile?id=<?=$driver->id?>">View Profile</a>
+        <a class="info-item font-letter-mail" href="mailto:<?= $driver->email; ?>">Email</a>
+        <a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="info-item font-edit-write j_colorbox"><?= \Yii::t('app', 'Add Note') ?></a>
+        <div class="info-item font-star-two j_add-favourite-driver
+                        <?php if ($driver->favouriteForCurrentStore()): ?>
+                         hidden
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
+            Add to Favourites
+        </div>
+        <div class="info-item red-text font-star-two j_remove-favourite-driver
+                        <?php if (!$driver->favouriteForCurrentStore()): ?>
+                            hidden
+                        <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
+            Remove from Favourites
+        </div>
     </div>
 </div>
 <div class="user-photo-container f-left">
