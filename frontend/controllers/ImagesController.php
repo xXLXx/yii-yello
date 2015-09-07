@@ -135,7 +135,11 @@ class ImagesController extends \yii\web\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            if ($user->role->name == Role::ROLE_DRIVER) {
+                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            } else {
+                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+            }
         }
 
         return $this->redirect($signedUrl);
@@ -158,7 +162,11 @@ class ImagesController extends \yii\web\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            if ($user->role->name == Role::ROLE_DRIVER) {
+                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            } else {
+                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+            }
         }
 
         return $this->redirect($signedUrl);
