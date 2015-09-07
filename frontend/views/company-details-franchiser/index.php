@@ -154,11 +154,7 @@ $this->title = \Yii::t('app', 'Company Details');
             </table>
             <div class="company-logo">
                 <div class="company-logo-container no-photo f-left">
-                    <?php if ($model->image): ?>
-                        <img src="<?= $model->image->thumbUrl ?>" class="j_image-file-destination">
-                    <?php else: ?>
-                        <img src="" class="j_image-file-destination hide">
-                    <?php endif; ?>
+                    <img src="/images/profile-thumb/<?= $model->id; ?>" class="j_image-file-destination">
                 </div>
                 <div class="company-info">
                     <h5><?= Yii::t('app', 'Logo'); ?></h5>

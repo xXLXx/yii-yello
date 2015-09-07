@@ -13,10 +13,8 @@ $image = $store->image;
 ?>
 <div class="company-logo clearfix">
     <a href="#">
-        <div class="company-logo-container f-left <?php if (!$image): ?>no-photo<?php endif; ?>">
-            <?php if ($image): ?>
-                <img src="<?= $image->thumbUrl ?>">
-            <?php endif; ?>
+        <div class="company-logo-container f-left">
+            <img src="/images/company/logo/<?= $store->company->id; ?>">
         </div>
     </a>
     <div class="company-info">
