@@ -289,6 +289,14 @@ class Shift extends BaseModel
 
 
     }
+
+    /**
+     * This function will check that if a driver has another allocated shift which has overlap with the selected shift.
+     * And if it found overlap, it will return true.
+     * @param integer $driverId driver id
+     * @param $targetShift Shift
+     * @return bool
+     */
     public static function checkOverLapAllocated($driverId, Shift $targetShift)
     {
         $allocatedShiftsDP = Shift::getAllocatedFor($driverId);
@@ -301,6 +309,12 @@ class Shift extends BaseModel
         }
         return false;
     }
+
+    /**
+     * This function will check remove other driver's applied shifts.
+     * And if it found overlap between them, it will return true.
+     * @param integer $driverId
+     */
 
     private function removeOtherAppliedOverLapShifts($driverId)
     {
@@ -319,7 +333,13 @@ class Shift extends BaseModel
     }
 
 
-
+    /**
+     * This function will check overlap between two different shifts.
+     * And if it found overlap between them, it will return true.
+     * @param $shift Shift
+     * @param $targetShift Shift
+     * @return bool
+     */
     public static function checkOverLapBetweenShifts(Shift $targetShift, Shift $shift)
     {
         if($targetShift->start > $shift->start && $targetShift->start < $shift->end){
