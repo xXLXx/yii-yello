@@ -321,7 +321,6 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             {
                 if(Shift::checkOverLapBetweenShifts($aShift, $bShift))
                 {
-                    $a[] = $aShift;
                   unset($availableShifts[$aShiftKey]);
                 }
             }
