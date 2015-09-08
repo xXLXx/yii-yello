@@ -180,7 +180,8 @@ class Shiftsavailable extends \yii\db\ActiveRecord
                     $storesIdArrays = explode(",", $params['stores']);
                     $query->andWhere(['IN', 'storeId', $storesIdArrays]);
                 }else{
-            $query->andWhere(['LIKE', ['title' => '%'.$params['text'].'%']]);
+                    $text = $params['text'];
+                    $query->andWhere(['LIKE', 'title', $text]);
         }
 
         // TODO: Alireza/Jovani - if $params['fromDate'] && .
@@ -190,10 +191,16 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             $query->andWhere(['>=','start', $startTime]);
         }
 
-//        if(!empty($params['toDate'])){
-//            $endTime = date('Y-m-d H:i:s',$params['toDate'] );
-//            $query->andWhere(['<','end', $endTime]);
-//        }
+        if(!empty($params['fromTime'])){
+            $query->andWhere(['>=','TIME(start)', $params['fromTime']]);
+        }
+        if(!empty($params['toTime'])){
+            $query->andWhere(['<=','TIME(end)', $params['toTime']]);
+        }
+
+
+
+
 
 
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);

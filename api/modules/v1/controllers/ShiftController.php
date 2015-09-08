@@ -98,8 +98,10 @@ class ShiftController extends \api\common\controllers\ShiftController
         $latitude = \Yii::$app->request->get('latitude');
         $longitude = \Yii::$app->request->get('longitude');
         $stores = \Yii::$app->request->get('stores');
-        $text = \Yii::$app->request->get('keyword');
+        $text = \Yii::$app->request->get('text');
         $fromDate = \Yii::$app->request->get('fromDate');
+        $fromTime  = \Yii::$app->request->get('fromTime');
+        $toTime  = \Yii::$app->request->get('toTime');
 
         $connectedstores = \Yii::$app->request->get('connectedstores');
 
@@ -109,7 +111,7 @@ class ShiftController extends \api\common\controllers\ShiftController
 
         $model = new Shiftsavailable();
 
-        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate'));
+        return $model->search(compact('driverId', 'latitude', 'longitude','stores','text','connectedstores','fromDate','toTime', 'fromTime'));
     }
 
     /**
