@@ -146,7 +146,7 @@ $this->registerJs('ImageUploadPreview.init();');
                 </div>
                 <div class="col col-md-6 col-lg-6">
                     <div class="user-photo-container big">
-                        <img class="j_image-file-destination" src="/images/store/logo<?= $model->id; ?>"/>
+                        <img class="j_image-file-destination" src="/img/store_image.svg"/>
                     </div>
                     <div class="upload-file">
                         <div class="blue-text">Upload logo</div>
