@@ -11,6 +11,7 @@ use api\modules\v1\filters\Auth;
 use api\modules\v1\models\WorkDetailsForm;
 use api\modules\v1\models\ShiftState;
 use yii\data\ActiveDataProvider;
+use common\models\ShiftReviews;
 
 class DriverController extends \api\common\controllers\DriverController
 {
@@ -135,6 +136,18 @@ class DriverController extends \api\common\controllers\DriverController
         $output['message'] = $model->getErrors();
         return $output;
 //        return $model->getErrors() ? $model->getErrors() : $model;
+    }
+    
+    public function actionMyReviews(){
+    
+        
+        $me = \Yii::$app->user->identity->id;
+        $query = ShiftReviews::find()->where(['driverId'=>$me,'ShiftReviews.isArchived'=>0])->orderBy(['createdAt'=>SORT_DESC])
+        ->joinWith(['store']);
+        return new ActiveDataProvider([
+            'query' => $query,
+
+        ]);
     }
     
     
