@@ -47,7 +47,7 @@ class StoreReviewsController extends BaseActiveController
      */
     public function actionCreate()
     {
-        /* @var $model \yii\db\ActiveRecord */
+        /* @var $model \common\models\Storereviews */
         $model = new $this->modelClass();
 
         $model->driverId = \Yii::$app->user->id;
