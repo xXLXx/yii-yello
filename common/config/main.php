@@ -64,6 +64,8 @@ return [
                     ],
                 ],
 
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'v1/store-reviews'],
+
                 'images/store/logo/<id:\d+>' => 'images/store-logo',
                 'images/company/logo/<id:\d+>' => 'images/company-logo',
                 'images/<action>/<id:\d+>' => 'images/<action>',

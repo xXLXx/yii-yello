@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $text
  * @property double $stars
- * @property integer $shiftId
  * @property integer $storeId
  * @property integer $driverId
  * @property integer $createdAt
@@ -18,10 +17,9 @@ use Yii;
  * @property integer $isArchived
  *
  * @property User $driver
- * @property Shift $shift
  * @property Store $store
  */
-class Storereviews extends \yii\db\ActiveRecord
+class Storereviews extends BaseModel
 {
     /**
      * @inheritdoc
@@ -37,10 +35,9 @@ class Storereviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text', 'stars', 'shiftId', 'storeId', 'driverId', 'createdAt', 'updatedAt', 'isArchived'], 'required'],
+            [['text', 'stars', 'storeId', 'driverId'], 'required'],
             [['text'], 'string'],
             [['stars'], 'number'],
-            [['shiftId', 'storeId', 'driverId', 'createdAt', 'updatedAt', 'isArchived'], 'integer']
         ];
     }
 
@@ -63,19 +60,22 @@ class Storereviews extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @inheritdoc
      */
-    public function getDriver()
+    public function extraFields()
     {
-        return $this->hasOne(User::className(), ['id' => 'driverId']);
+        return [
+            'driver',
+            'store',
+        ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShift()
+    public function getDriver()
     {
-        return $this->hasOne(Shift::className(), ['id' => 'shiftId']);
+        return $this->hasOne(User::className(), ['id' => 'driverId']);
     }
 
     /**
