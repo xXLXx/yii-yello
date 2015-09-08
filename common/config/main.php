@@ -64,6 +64,8 @@ return [
                     ],
                 ],
 
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'v1/store-reviews'],
+
                 'images/store/logo/<id:\d+>' => 'images/store-logo',
                 'images/company/logo/<id:\d+>' => 'images/company-logo',
                 'images/<action>/<id:\d+>' => 'images/<action>',
@@ -117,7 +119,7 @@ return [
         'formatter' => [
             'class' => 'common\components\Formatter',
             'timeZone' => 'UTC',
-            'currencyCode' => 'USD'
+            'currencyCode' => 'AUD'
         ],
         'activity' => [
             'class' => 'common\components\Activity'

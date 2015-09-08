@@ -9,12 +9,14 @@ use Yii;
 use common\models\search\ShiftSearch;
 use yii\data\ActiveDataProvider;
 use common\helpers\ArrayHelper;
+use common\models\Store;
 
 /**
  * This is the model class for table "Shift".
  * Class Shift
  * @package \common\models
  *
+ * @property Store[] $stores
  */
 class ShiftReviews extends BaseModel
 {
@@ -46,7 +48,15 @@ class ShiftReviews extends BaseModel
         return array_merge(parent::behaviors(), $behaviors);
     }*/
 
-
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return [
+            'store'
+        ];
+    }
 
     /**
      * Get Shift's store
