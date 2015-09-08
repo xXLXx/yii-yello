@@ -1,11 +1,13 @@
 <?php
 namespace frontend\widgets;
 
-use common\models\Store;
+use frontend\assets\TopNavigationAsset;
 use yii\base\Widget;
 use common\models\User;
 use common\models\Role;
 use yii\helpers\Url;
+use yii\web\View;
+
 /**
  * Class TopNavigation
  *
@@ -20,11 +22,15 @@ class TopNavigation extends Widget
      */
     public function run()
     {
+        TopNavigationAsset::register($this->view);
+
         $user = \Yii::$app->user->identity;
         $store = $user->StoreCurrent;
         $timezone = $store->timezone;
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         $menuItems = $this->getMenuItems($user);
+
+        $this->view->registerJs('var TIMEZONE="'.$timezone.'"', View::POS_HEAD);
 
         return $this->render('topNavigation', [
             'date' => $date,

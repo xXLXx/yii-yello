@@ -426,6 +426,16 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * Quick getter to user's current store timezone.
+     *
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->getStoreCurrent()->timezone;
+    }
+
+    /**
      * Set current store
      *
      * @param int $storeId
