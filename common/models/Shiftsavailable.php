@@ -205,28 +205,51 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         $bookedShifts = Shift::getAllocatedFor($params['driverId'])->getModels();
 
         if(!empty($bookedShifts)){
+
+            $founded = (new Query())->from('shift');
+
             foreach($bookedShifts as $bShift)
             {
-                $query->andWhere(['NOT BETWEEN', 'start', $bShift->start, $bShift->end]);
-                $query->andWhere(['NOT BETWEEN', 'end', $bShift->start, $bShift->end ]);
+                $endTime = $this->findEndTime($bShift);
+                $founded->orWhere(['AND', ['>=','start', $bShift->start],['<=','start', $endTime]]);
+                $founded->orWhere(['AND', ['>=','end', $bShift->start],['<=','start', $endTime]]);
+
             }
+            $founded->andWhere(['isArchived' => '0']);
+            $foundedOverlapShifts = $founded->all();
+
+
+            $query->andWhere(['NOT IN', 'id', $foundedOverlapShifts]);
+
         }
-        $models = $query->all();
 
-        $filteredModels = $this->removeOverlapsFrom($models, $bookedShifts);
 
-//        return new ActiveDataProvider([
-//            'query' => $query,
-//        ]);
-        return new ArrayDataProvider([
-            'allModels' => $filteredModels,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'attributes' => ['start'],
-            ],
+        $query->orderBy(['start'=>SORT_ASC]);
+
+
+
+        return new ActiveDataProvider([
+            'query' => $query,
+
         ]);
+
+///////// The code below is for case of using php for filtering overlap and because of the unexpected behaviour of
+// ArrayDataProvider is commented and we are using ActiveDataProvider. It can be improved later for both performance and
+// more accurate filtering.
+//        $models = $query->all();
+//        $filteredModels = $this->removeOverlapsFrom($models, $bookedShifts);
+//
+//
+//        return new ArrayDataProvider([
+//            'allModels' => $filteredModels,
+//            'pagination' => [
+//                'pageSize' => 20,
+//            ],
+//            'sort' => [
+//                'attributes' => ['start'],
+//            ],
+//        ]);
+
     }
 
     /**
@@ -327,5 +350,27 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         }
         return array_values($availableShifts);
     }
+
+    protected function findEndTime($shift)
+    {
+        $startTimeStamp = strtotime($shift->start);
+        $endTimeStamp = strtotime($shift->end);
+
+        $dateS = date('Y-m-d', $startTimeStamp);
+
+        //finding the last time of the shift day
+        $date1 = strtotime($dateS . ' ' . '13:59:59'); //because of +10 GMT
+        if($startTimeStamp > $endTimeStamp )
+        {
+            $endTime = date('Y-m-d H:i:s', $date1);
+
+        }else{
+
+            $endTime = $shift->end;
+        }
+
+        return $endTime;
+    }
+
 
 }

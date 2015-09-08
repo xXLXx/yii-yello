@@ -364,8 +364,13 @@ class Shift extends BaseModel
                 return true;
             }
             //If the start time is before the other's start time, it has overlap, because the first one will go to the midnight
-            elseif($targetShift->start < $shift->start){
-                return true;
+            elseif($targetShift->start < $shift->start)
+            {
+                $actualTimeOfEnd = (int)strtotime($targetShift->end) + (24 * 60 * 60);
+                if($actualTimeOfEnd > (int)strtotime($targetShift->start)){
+                    return true;
+                }
+
             }
         }
 
@@ -377,7 +382,11 @@ class Shift extends BaseModel
             }
             elseif($shift->start < $targetShift->start)
             {
-                return true;
+                $actualTimeOfEnd = (int)strtotime($shift->end) + (24 * 60 * 60);
+                if($actualTimeOfEnd > (int)strtotime($targetShift->start)){
+                    return true;
+                }
+
             }
         }
 
