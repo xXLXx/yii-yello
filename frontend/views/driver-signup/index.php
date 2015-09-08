@@ -8,7 +8,10 @@ $this->title = 'Driver Signup / Yello';
 $this->registerJsFile('/js/ImageUploadPreview.js');
 $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
 ?>
-
+<style>
+    
+    #driversignupstep1-phonetype div.radio {margin-right:10px;}
+    </style>
 
 
 <h2 class="center">Welcome!</h2>
@@ -51,10 +54,12 @@ $this->registerJs('ImageUploadPreview.init({hideDestination: true});');
                                 </div>
                             </div>
                             <div class="col col-md-6">
-                                <?php echo $form->field($model, 'phone'); ?>
-                                <?php echo $form->field($model, 'phonetype')->radioList(['iPhone' => 'iPhone', 'Android' => 'Android'],['class' => 'form-inline form-group'])->label(false); ?>
                                 
                                 <?= \frontend\widgets\Address\AddressWidget::widget(['model' => $model, 'form' => $form]); ?>
+                                <?php echo $form->field($model, 'phone'); ?>
+                                <label class="control-label" for="phonetype">Phone Type</label><br>
+                                <?php echo $form->field($model, 'phonetype')->radioList(['iPhone' => 'iPhone', 'Android' => 'Android'],['class' => 'form-inline form-group'])->label(false); ?>
+
                             </div>
                         </div>
                     </div>

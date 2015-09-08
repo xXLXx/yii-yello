@@ -16,7 +16,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class ImagesController extends \yii\base\Controller
+class ImagesController extends \yii\web\Controller
 {
     /**
      * @inheritdoc
@@ -135,15 +135,21 @@ class ImagesController extends \yii\base\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'Driver_Pic_bgrey_black.png';
+            if ($user->role->name == Role::ROLE_DRIVER) {
+                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            } else {
+                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+            }
         }
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -156,15 +162,21 @@ class ImagesController extends \yii\base\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'Driver_Pic_bgrey_black.png';
+            if ($user->role->name == Role::ROLE_DRIVER) {
+                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+            } else {
+                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+            }
         }
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -177,15 +189,17 @@ class ImagesController extends \yii\base\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'marker-driver.png';
+            $signedUrl = \Yii::getAlias('@web/img/').'marker-driver.png';
         }
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -196,12 +210,14 @@ class ImagesController extends \yii\base\Controller
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getLicensePhotoPath(), '+2 minutes');
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -212,12 +228,14 @@ class ImagesController extends \yii\base\Controller
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getVehicleRegistrationPhotoPath(), '+2 minutes');
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -228,12 +246,14 @@ class ImagesController extends \yii\base\Controller
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getVehicleRegistrationPhotoThumbPath(), '+2 minutes');
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -246,15 +266,17 @@ class ImagesController extends \yii\base\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'store_image.png';
+            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
         }
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 
     /**
@@ -267,14 +289,16 @@ class ImagesController extends \yii\base\Controller
         $headers = @get_headers($signedUrl);
         // that dont exist
         if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@webroot/img/').'store_image.png';
+            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
         }
 
-        $image = imagecreatefrompng($signedUrl);
+        return $this->redirect($signedUrl);
 
-        header('Content-Type: image/png');
-
-        imagepng($image);
-        imagedestroy($image);
+//        $image = imagecreatefrompng($signedUrl);
+//
+//        header('Content-Type: image/png');
+//
+//        imagepng($image);
+//        imagedestroy($image);
     }
 }

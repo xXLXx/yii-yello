@@ -867,7 +867,8 @@ class User extends BaseModel implements IdentityInterface
 
         $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
 
-        if (empty($result)) {
+        // We didnt get expected upload counts (3 sizes; see above)
+        if (count($result) < 3) {
             throw new \Exception('Upload failed.');
         }
 
@@ -909,7 +910,8 @@ class User extends BaseModel implements IdentityInterface
 
         $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
 
-        if (empty($result)) {
+        // We didnt get expected upload counts (3 sizes; see above)
+        if (count($result) < 3) {
             throw new \Exception('Upload failed.');
         }
 
@@ -933,7 +935,8 @@ class User extends BaseModel implements IdentityInterface
 
         $result = ImageResizeHelper::resizeAndUpload($sourceFile, $sizes);
 
-        if (empty($result)) {
+        // We didnt get expected upload counts (2 sizes; see above)
+        if (count($result) < 2) {
             throw new \Exception('Upload failed.');
         }
 

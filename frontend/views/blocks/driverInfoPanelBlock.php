@@ -20,6 +20,6 @@
 </div>
 <div class="user-photo-container f-left">
   
-    <img src="<?= $driver->imageId  ? $driver->image->thumbUrl   : '/img/Driver_Pic_bgrey_black.png' ?>"
+    <img src="/images/profile-thumb/<?= $driver->id; ?>"
         alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
 </div>

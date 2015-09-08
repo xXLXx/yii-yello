@@ -75,7 +75,7 @@ class DriverSignupStep1 extends Model
     public function attributeLabels()
     {
         $labels = [
-            'phone'=>'Phone Number',
+            'phone'=>'Mobile Number',
             'phonetype'=>'Handset Type',
             'street_number' => '',
             'route' => '',

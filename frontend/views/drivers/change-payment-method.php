@@ -26,7 +26,7 @@ use frontend\widgets\StoreInviteDriverSearch\StoreInviteDriverSearchWidget;
             <div class="popup-body-inner request-review">
                 <div class="driver-info clearfix">
                     <div class="user-photo-container f-left">
-                        <img src="<?= $driver->image ? $driver->image->thumbUrl : '/img/Driver_Pic_bgrey_black.png' ?>"
+                        <img src="/images/profile-thumb/<?= $driver->id; ?>"
                              alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
                     </div>
                     <div class="user-photo-info">

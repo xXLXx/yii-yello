@@ -11,9 +11,14 @@ var DonutChart = {
                 colors.push(items[i].color);
             }
             var options = {
-                 legend:'none',
-                 pieHole: 0.3,
-                 colors: colors
+                legend:'none',
+                pieHole: 0.3,
+                colors: colors,
+                chartArea: {
+                    width: 300,
+                    height: 300
+                },
+                pieSliceText: 'none'
             };
             var chart = new google.visualization.PieChart(document.getElementById('donutchart' + title));
             chart.draw(data, options);

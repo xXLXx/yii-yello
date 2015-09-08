@@ -3,11 +3,12 @@
 namespace common\models;
 
 use common\helpers\ArrayHelper;
+use common\models\Shift;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
-use common\models\Shift;
+use yii\data\ArrayDataProvider;
 
 /**
  * This is the model class for table "shiftsavailable".
@@ -139,7 +140,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
      *
      * @param array $params
      *
-     * @return \yii\data\ActiveDataProvider
+     * @return \yii\data\ArrayDataProvider
      */
     public function search($params = [])
     {
@@ -185,22 +186,70 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         // TODO: Alireza/Jovani - if $params['fromDate'] && .
         //re valid dates, constrain search to these dates using store's timezone
         if(!empty($params['fromDate'])){
-            $nowTime = new \DateTime();
-            $nowTime->setTimestamp($params['fromDate']);
-            $dateTime = $nowTime->format('Y-m-d H:i:s');
-            $query->andWhere(['>=','start', $dateTime]);
+            $startTime = date('Y-m-d H:i:s', $params['fromDate'] );
+            $query->andWhere(['>=','start', $startTime]);
         }
+
+//        if(!empty($params['toDate'])){
+//            $endTime = date('Y-m-d H:i:s',$params['toDate'] );
+//            $query->andWhere(['<','end', $endTime]);
+//        }
 
 
         $query->andWhere(['NOT IN', 'id', (new Query())->select('shiftId')->from('shifthasdriver')->where(['isArchived' => '0', 'driverId' => $params['driverId']])]);
         $query->orderBy(['start'=>SORT_ASC]);
 
+
         // also exclude shifts that start during times when driver is booked for a shift
+
+        $bookedShifts = Shift::getAllocatedFor($params['driverId'])->getModels();
+
+        if(!empty($bookedShifts)){
+
+            $founded = (new Query())->from('shift');
+
+            foreach($bookedShifts as $bShift)
+            {
+                $endTime = $this->findEndTime($bShift);
+                $founded->orWhere(['AND', ['>=','start', $bShift->start],['<=','start', $endTime]]);
+                $founded->orWhere(['AND', ['>=','end', $bShift->start],['<=','start', $endTime]]);
+
+            }
+            $founded->andWhere(['isArchived' => '0']);
+            $foundedOverlapShifts = $founded->all();
+
+
+            $query->andWhere(['NOT IN', 'id', $foundedOverlapShifts]);
+
+        }
+
+
+        $query->orderBy(['start'=>SORT_ASC]);
+
 
 
         return new ActiveDataProvider([
             'query' => $query,
+
         ]);
+
+///////// The code below is for case of using php for filtering overlap and because of the unexpected behaviour of
+// ArrayDataProvider is commented and we are using ActiveDataProvider. It can be improved later for both performance and
+// more accurate filtering.
+//        $models = $query->all();
+//        $filteredModels = $this->removeOverlapsFrom($models, $bookedShifts);
+//
+//
+//        return new ArrayDataProvider([
+//            'allModels' => $filteredModels,
+//            'pagination' => [
+//                'pageSize' => 20,
+//            ],
+//            'sort' => [
+//                'attributes' => ['start'],
+//            ],
+//        ]);
+
     }
 
     /**
@@ -279,6 +328,49 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         return $this->store->getImage();
     }
 
+
+    /**
+     * This function will remove overlapped shifts from founded available shifts.
+     * @param $availableShifts
+     * @param $bookedShifts
+     * @return \yii\db\ActiveQuery
+     */
+
+    protected function removeOverlapsFrom($availableShifts, $bookedShifts)
+    {
+        foreach($availableShifts as $aShiftKey => $aShift)
+        {
+            foreach($bookedShifts as $bShift)
+            {
+                if(Shift::checkOverLapBetweenShifts($aShift, $bShift))
+                {
+                  unset($availableShifts[$aShiftKey]);
+                }
+            }
+        }
+        return array_values($availableShifts);
+    }
+
+    protected function findEndTime($shift)
+    {
+        $startTimeStamp = strtotime($shift->start);
+        $endTimeStamp = strtotime($shift->end);
+
+        $dateS = date('Y-m-d', $startTimeStamp);
+
+        //finding the last time of the shift day
+        $date1 = strtotime($dateS . ' ' . '13:59:59'); //because of +10 GMT
+        if($startTimeStamp > $endTimeStamp )
+        {
+            $endTime = date('Y-m-d H:i:s', $date1);
+
+        }else{
+
+            $endTime = $shift->end;
+        }
+
+        return $endTime;
+    }
 
 
 }

@@ -161,7 +161,12 @@ class ShiftController extends \api\common\controllers\ShiftController
     {
         //TODO: Alireza sort ascending
         $driverId = $this->getDriverId();
-        return Shift::getAllocatedFor($driverId);
+
+        $dataProvider = Shift::getAllocatedFor($driverId);
+        $dataProvider->setSort([
+            'defaultOrder' => ['start'=> SORT_ASC]
+        ]);
+        return $dataProvider;
     }
 
     /**

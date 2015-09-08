@@ -125,11 +125,7 @@ class UserAddForm extends AbstractForm
 
         $imageFile = UploadedFile::getInstance($this, 'imageFile');
         if (!empty($imageFile)) {
-            $url = \Yii::$app->storage->uploadFile($imageFile->tempName, str_replace('{id}', $this->id, $user->getProfilePhotoPathPattern()));
-
-            if (empty($url)) {
-                throw new \Exception('Upload failed.');
-            }
+            $url = $user->uploadProfilePhoto($imageFile->tempName);
         }
     }
 

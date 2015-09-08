@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use common\models\query\StoreOwnerFavouriteDriversQuery;
 
 /**
  * This is the model class for table "StoreOwnerFavouriteDrivers".
@@ -54,6 +55,15 @@ class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
 
     /**
      * @inheritdoc
+     * @return StoreOwnerFavouriteDriversQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new StoreOwnerFavouriteDriversQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -66,5 +76,18 @@ class StoreOwnerFavouriteDrivers extends \common\models\BaseModel
             'isArchived' => 'Is Archived',
             'storefk' => 'Store ID'
         ];
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getDriver()
+    {
+        return $this->hasOne(
+            static::getClassName('Driver'),
+            [
+                'id' => 'driverId',
+            ]
+        );
     }
 }
