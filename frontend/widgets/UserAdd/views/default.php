@@ -107,7 +107,7 @@ UserAddAsset::register($this);
         </table>
         <div class="profile-user-photo">
             <div class="user-photo-container no-photo">
-                <img src="/images/profile-thumb/<?= $model->id; ?>" class="j_image-file-destination">
+                <img class="j_image-file-destination hide">
             </div>
             <div class="upload-file">
                 <div class="link-icon font-picture-streamline blue-text"><?= \Yii::t('app', 'Add profile photo'); ?></div>
