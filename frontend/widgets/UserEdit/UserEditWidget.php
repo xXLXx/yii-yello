@@ -41,6 +41,10 @@ class UserEditWidget extends Widget
             $loaded = $model->load($post);
             if ($loaded && $model->validate()) {
                 $model->save();
+                
+                 return Yii::$app->getResponse()->redirect(
+                        ['settings/users']
+                    );
             }
         } else {
             $model->setData($this->user);
