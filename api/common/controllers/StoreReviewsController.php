@@ -18,6 +18,16 @@ class StoreReviewsController extends BaseActiveController
      */
     public $modelClass = 'common\models\Storereviews';
 
+    public function init()
+    {
+        parent::init();
+
+        $this->serializer = \yii\helpers\ArrayHelper::merge($this->serializer, [
+            'class' => 'api\modules\v1\components\StoreReviewsSerializer',
+        ]);
+    }
+
+
     /**
      * @inheritdoc
      */
