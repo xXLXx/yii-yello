@@ -68,14 +68,15 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
+        
         if (!\Yii::$app->user->isGuest) {
+            
             return \Yii::$app->getResponse()->redirect(['shifts-calendar/index']);
         }else{
             return \Yii::$app->getResponse()->redirect(['site/login']);
         }
         return $this->render('index');
     }
-
 
 
 

@@ -50,7 +50,6 @@ class Storereviews extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'text' => Yii::t('app', 'Text'),
             'stars' => Yii::t('app', 'Stars'),
-            'shiftId' => Yii::t('app', 'Shift ID'),
             'storeId' => Yii::t('app', 'Store ID'),
             'driverId' => Yii::t('app', 'Driver ID'),
             'createdAt' => Yii::t('app', 'Created At'),

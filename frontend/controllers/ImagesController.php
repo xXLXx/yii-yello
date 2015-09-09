@@ -48,7 +48,7 @@ class ImagesController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['profile', 'profile-thumb', 'profile-map', 'vehicle', 'vehicle-thumb'],
+                        'actions' => ['profile', 'profile-thumb', 'profile-map', 'vehicle', 'vehicle-thumb','map-default'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if (\Yii::$app->user->isGuest) {
@@ -202,6 +202,11 @@ class ImagesController extends \yii\web\Controller
 //        imagedestroy($image);
     }
 
+
+    
+    
+    
+    
     /**
      * The driver's license
      */
