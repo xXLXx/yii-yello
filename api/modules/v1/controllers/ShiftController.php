@@ -99,7 +99,7 @@ class ShiftController extends \api\common\controllers\ShiftController
         $longitude = \Yii::$app->request->get('longitude');
         $stores = \Yii::$app->request->get('stores');
         $text = \Yii::$app->request->get('text');
-        $fromDate = \Yii::$app->request->get('fromDate');
+        $fromDate = \Yii::$app->request->get('startDate');
         $fromTime  = \Yii::$app->request->get('fromTime');
         $toTime  = \Yii::$app->request->get('toTime');
 

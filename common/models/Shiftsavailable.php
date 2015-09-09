@@ -187,15 +187,29 @@ class Shiftsavailable extends \yii\db\ActiveRecord
         // TODO: Alireza/Jovani - if $params['fromDate'] && .
         //re valid dates, constrain search to these dates using store's timezone
         if(!empty($params['fromDate'])){
-            $startTime = date('Y-m-d H:i:s', $params['fromDate'] );
-            $query->andWhere(['>=','start', $startTime]);
+
+            $startTime = date('Y-m-d', $params['fromDate']);
+            $query->andWhere(['>=','DATE(start)', $startTime]);
         }
 
-        if(!empty($params['fromTime'])){
-            $query->andWhere(['>=','TIME(start)', $params['fromTime']]);
-        }
-        if(!empty($params['toTime'])){
+        if(!empty($params['fromTime']) && !empty($params['toTime'])){
+                if($params['fromTime'] > $params['toTime']){
+                    $query->andWhere(['AND',
+                        ['OR',['>=', 'TIME(start)', $params['fromTime']],['<=', 'TIME(start)',$params['toTime']] ],
+                        ['OR',['>=', 'TIME(end)', $params['fromTime']],['<=', 'TIME(end)',$params['toTime']] ]
+                    ]);
+            }else{
+                    $query->andWhere(['>=','TIME(start)', $params['fromTime']]);
+                    $query->andWhere(['<=','TIME(end)', $params['toTime']]);
+                }
+
+        }elseif(!empty($params['toTime'])){
+
             $query->andWhere(['<=','TIME(end)', $params['toTime']]);
+
+        }elseif(!empty($params['fromTime']) ){
+
+            $query->andWhere(['>=','TIME(start)', $params['fromTime']]);
         }
 
 
