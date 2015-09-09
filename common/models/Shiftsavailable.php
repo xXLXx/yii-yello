@@ -196,16 +196,15 @@ class Shiftsavailable extends \yii\db\ActiveRecord
                 if($params['fromTime'] > $params['toTime']){
                     $query->andWhere(['AND',
                         ['OR',['>=', 'TIME(start)', $params['fromTime']],['<=', 'TIME(start)',$params['toTime']] ],
-                        ['OR',['>=', 'TIME(end)', $params['fromTime']],['<=', 'TIME(end)',$params['toTime']] ]
                     ]);
-            }else{
+                }else{
                     $query->andWhere(['>=','TIME(start)', $params['fromTime']]);
-                    $query->andWhere(['<=','TIME(end)', $params['toTime']]);
+                    $query->andWhere(['<=','TIME(start)', $params['toTime']]);
                 }
 
         }elseif(!empty($params['toTime'])){
 
-            $query->andWhere(['<=','TIME(end)', $params['toTime']]);
+            $query->andWhere(['<=','TIME(start)', $params['toTime']]);
 
         }elseif(!empty($params['fromTime']) ){
 
