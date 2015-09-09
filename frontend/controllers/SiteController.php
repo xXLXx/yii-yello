@@ -103,7 +103,7 @@ class SiteController extends BaseController
                                     'model' => $model,
                                 ]);
                             }
-                    return \Yii::$app->getResponse()->redirect(\Yii::$app->user->identity->indexUrl);
+                    return \Yii::$app->getResponse()->redirect(['driver/index']);
                 }else{
                     if($roleid==3){
                             Yii::$app->user->logout();
