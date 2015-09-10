@@ -5,8 +5,10 @@ var ShiftViewWidget = {
      */
     init: function() {
         $('.js-shift-approve').on('click', function(e) {
+
+            e.preventDefault();
             $.get($(this).attr('href'), function() {
-                $.pjax.reload({container: '#shift-form-widget-pjax'});
+                
             });
             e.stopPropagation();
             return false;

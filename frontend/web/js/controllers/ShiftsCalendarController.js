@@ -310,6 +310,11 @@ function allocateshift(){
 
 
 // the replacement functions
+
+function approveShift(hr){
+    
+}
+
 function driverunassign(hr){
             defaultact(hr);
 }
