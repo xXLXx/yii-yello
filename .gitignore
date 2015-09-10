@@ -26,3 +26,4 @@ frontend/web/img/msapplication-tiny.png
 frontend/web/img/apple-touch*
 frontend/web/img/favicon*
 vendor
+composer.lock
