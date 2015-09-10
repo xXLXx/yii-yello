@@ -172,7 +172,7 @@ class Shiftsavailable extends \yii\db\ActiveRecord
             $query->andWhere(new Expression('ABS(longitude-'.$params['longitude'].') < 0.15'));
         }elseif(!empty($params['connectedstores']) && $params['connectedstores']=='1'){
                 // only connected stores
-                $query->andWhere(['IN', 'id', (new Query())->select('storeId')->from('driverHasStore')->where(['isArchived' => '0','isAcceptedByDriver'=>1 ,'driverId' => $params['driverId']])]);
+                $query->andWhere(['IN', 'storeId', (new Query())->select('storeId')->from('driverHasStore')->where(['isArchived' => '0','isAcceptedByDriver'=>1 ,'driverId' => $params['driverId']])]);
             }elseif(!empty($params['stores'])){
                     // TODO: Alireza
                     // comma separated storeids explode to list
