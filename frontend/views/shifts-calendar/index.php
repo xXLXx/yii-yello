@@ -72,7 +72,7 @@ $this->registerJs('$(function(){AddFavouriteDriver.init();})');
     </div>
     <div class="hidden"><?php //echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
 
-    <div class="hidde"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
+    <div class="hidden"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
 </div>
 
 <?php
