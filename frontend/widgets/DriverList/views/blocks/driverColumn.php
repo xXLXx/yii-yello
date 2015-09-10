@@ -22,7 +22,7 @@ use yii\helpers\Html;
             <div class="name"><a href="/drivers/profile?id=<?=$driver->id?>"><?= $driver->username ?></a></div>
             <div>
                 <div>
-                    <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
+                    <?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => $driver->ratings]); ?>
 
                 </div>
                 <span class="gray-text">ID #<?= $driver->id ?></span>

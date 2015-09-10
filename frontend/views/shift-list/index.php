@@ -61,7 +61,13 @@ $this->registerJs('$(function(){ShiftRequestReviewController.init();AddFavourite
         ]); ?>
 
     </div>
-    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
+    <div class="hidden"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
 
-    <div class="col-right" id="shift-detail-container"></div>
+    <div class="col-right" id="shift-detail-container">
+        <div class="center">
+            <img src="/img/Shifts.png"><br><br>
+            <h2 style="font-weight: bold;">Sorry.</h2>
+            <h2>There are no assigned shifts <br>scheduled for today.</h2>
+        </div>
+    </div>
 </div>

@@ -15,7 +15,8 @@ class ShiftListAsset extends AssetBundle
         'js/moment.min.js',
         'js/shiftList.js',
         'js/star-rating.js',
-        'js/AddFavouriteDriver.js'
+        'js/AddFavouriteDriver.js',
+        'js/retina.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

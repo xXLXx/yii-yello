@@ -14,7 +14,7 @@ ShiftsCalendarAsset::register($this);
 
 $sourceUrl = Url::to(['shifts-calendar/get-events']);
 $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
-
+$this->registerJs('$(function(){AddFavouriteDriver.init();})');
 ?>
 <div id="roster-sidebar" class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
     <div class="col-left">
@@ -70,7 +70,9 @@ $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 
         <div class="calendar-wrapper"></div>
     </div>
-    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
+    <div class="hidden"><?php //echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
+
+    <div class="hidde"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
 </div>
 
 <?php

@@ -17,6 +17,7 @@ $driverId = $driver->id;
 
                     <div class="info-item font-link j_invite-driver <?php if($invited){ ?> hidden <?php } ?>" data-driverid="<?= $driverId; ?>">Invite to store</div>
 
+                    <?php if(!$connected){ ?>
                     <div class="info-item font-star-two j_add-favourite-driver
                         <?php if ($driver->favouriteForCurrentStore()): ?>
                          hidden
@@ -29,6 +30,7 @@ $driverId = $driver->id;
                         <?php endif; ?>" data-driverid="<?= $driver->id; ?>">
                         Remove from Favourites
                     </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="driver-info profile-view clearfix">
@@ -46,7 +48,7 @@ $driverId = $driver->id;
                             <div>
 
 
-                                <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg]); ?>
+                                <?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => $review_avg]); ?>
                                 <!--<span class="star-block">
                                     <span class="font-star-two"></span>
                                     <span class="font-star-two"></span>
@@ -191,7 +193,7 @@ $driverId = $driver->id;
                             <?php foreach ($reviews as $review):?>
                                 <div class="company-item">
                                     <h5><?= $review->store->title; ?></h5>
-                                    <div><?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?></div>
+                                    <div><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => $review->stars]); ?></div>
                                     <div><?= $review->text; ?></div>
                                     <div class="gray-text">
                                         <?php
