@@ -76,6 +76,9 @@ class Store extends \api\common\models\Store implements Linkable
             'updatedAtAsDatetime' => function ($model) {
                 return date('c', $model->updatedAt);
             },
+            'stars' =>  function ($model, $attribute) {
+                return $this->getStars();
+            },
         ];
     }
 
