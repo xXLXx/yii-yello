@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\helpers\ImageResizeHelper;
+use common\helpers\TimezoneHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -263,16 +264,12 @@ class Store extends BaseModel
 
         $dayStart = $date->format('Y-m-d 00:00:00');
         $dayEnd = $date->format('Y-m-d 23:59:59');
+        $StartStamp = strtotime($dayStart);
+        $EndStamp = strtotime($dayEnd);
 
-        $timeOffset = timezone_offset_get(new \DateTimeZone($timeZone),new \DateTime());
 
-        $gmtStartStamp = strtotime($dayStart);
-        $gmtStartStamp = (int)$gmtStartStamp - ($timeOffset );
-        $dayStart = date('Y-m-d H:i:s', $gmtStartStamp);
-
-        $gmtEndStamp = strtotime($dayEnd);
-        $gmtEndStamp = (int)$gmtEndStamp - ($timeOffset);
-        $dayEnd = date('Y-m-d H:i:s', $gmtEndStamp);
+        $dayStart = TimezoneHelper::convertToGMT($timeZone,$StartStamp);
+        $dayEnd = TimezoneHelper::convertToGMT($timeZone,$EndStamp);
 
         $shiftsDataProvider = new ActiveDataProvider([
             'query' => $this
@@ -283,6 +280,13 @@ class Store extends BaseModel
                 ->orderBy(['Shift.start' => SORT_ASC]),
             'pagination' => false,
         ]);
+        $models = $shiftsDataProvider->getModels();
+        foreach($models as $model)
+        {
+            $model->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->start);
+            $model->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->end);
+        }
+        $shiftsDataProvider->setModels($models);
 
         return $shiftsDataProvider;
     }

@@ -2,8 +2,7 @@ assets/*
 !assets/.gitignore
 protected/runtime/*
 !protected/runtime/.gitignore
-vendor/*
-!vendor/.gitignore
+vendor
 protected/data/*.db
 themes/classic/views/
 **/Thumbs.db
