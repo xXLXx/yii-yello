@@ -132,15 +132,15 @@ class ImagesController extends \yii\web\Controller
     {
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getProfilePhotoPath(), '+2 minutes');
-        $headers = @get_headers($signedUrl);
-        // that dont exist
-        if (strpos($headers[0],'404') !== false) {
-            if ($user->role->name == Role::ROLE_DRIVER) {
-                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
-            } else {
-                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
-            }
-        }
+//        $headers = @get_headers($signedUrl);
+//        // that dont exist
+//        if (strpos($headers[0],'404') !== false) {
+//            if ($user->role->name == Role::ROLE_DRIVER) {
+//                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+//            } else {
+//                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+//            }
+//        }
 
         return $this->redirect($signedUrl);
 
@@ -169,8 +169,6 @@ class ImagesController extends \yii\web\Controller
 //                    $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
 //                }
 //            }
-            
-        
 
         return $this->redirect($signedUrl);
 
@@ -189,11 +187,11 @@ class ImagesController extends \yii\web\Controller
     {
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getProfileMapPhotoPath(), '+2 minutes');
-        $headers = @get_headers($signedUrl);
-        // that dont exist
-        if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@web/img/').'marker-driver.png';
-        }
+//        $headers = @get_headers($signedUrl);
+//        // that dont exist
+//        if (strpos($headers[0],'404') !== false) {
+//            $signedUrl = \Yii::getAlias('@web/img/').'marker-driver.png';
+//        }
 
         return $this->redirect($signedUrl);
 
@@ -205,10 +203,16 @@ class ImagesController extends \yii\web\Controller
 //        imagedestroy($image);
     }
 
+    /**
+     * The initials marker image.
+     */
+    public function actionInitials()
+    {
+        $user = User::findOne(\Yii::$app->getRequest()->get('id'));
+        $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getInitialsMapPath(), '+2 minutes');
+        return $this->redirect($signedUrl);
+    }
 
-    
-    
-    
     
     /**
      * The driver's license
@@ -271,11 +275,11 @@ class ImagesController extends \yii\web\Controller
     {
         $store = Store::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $store->getLogoPath(), '+2 minutes');
-        $headers = @get_headers($signedUrl);
-        // that dont exist
-        if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
-        }
+//        $headers = @get_headers($signedUrl);
+//        // that dont exist
+//        if (strpos($headers[0],'404') !== false) {
+//            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
+//        }
 
         return $this->redirect($signedUrl);
 
@@ -294,11 +298,11 @@ class ImagesController extends \yii\web\Controller
     {
         $company = Company::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $company->getLogoPath(), '+2 minutes');
-        $headers = @get_headers($signedUrl);
-        // that dont exist
-        if (strpos($headers[0],'404') !== false) {
-            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
-        }
+//        $headers = @get_headers($signedUrl);
+//        // that dont exist
+//        if (strpos($headers[0],'404') !== false) {
+//            $signedUrl = \Yii::getAlias('@web/img/').'store_image.png';
+//        }
 
         return $this->redirect($signedUrl);
 
