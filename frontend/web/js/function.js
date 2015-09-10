@@ -80,12 +80,12 @@ $(document).ready(function() {
                 scrolling:false,
                 close:"",
                 onComplete: function() {
-                    var params = {
-                        changedEl: ".j_select",
-                        visRows:3,
-                        scrollArrows:false
-                    }
-                    cuSel(params);
+                    //var params = {
+                    //    changedEl: ".j_select",
+                    //    visRows:3,
+                    //    scrollArrows:false
+                    //}
+                    //cuSel(params);
                     $(".j_colorbox_live").colorbox(colorboxParams);
                     $('.j_placeholder').each(function() {
                         new Placeholder($(this));
