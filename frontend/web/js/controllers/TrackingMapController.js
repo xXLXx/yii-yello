@@ -218,13 +218,13 @@ var TrackingMapController = {
                         if (Number(m[0][0].store_id) == context.data.store.id) {
                             var position = new google.maps.LatLng(m[0][0].lat, m[0][0].lng);
                             context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(position, driver.id);
+                        } else {
+                            // Place marker on store's location (default) this means channel has no history
+                            context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(null, driver.id);
                         }
                     } else {
                         // Place marker on store's location (default) this means channel has no history
-                        context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(
-                            new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]),
-                            driver.id
-                        );
+                        context.mapDrivers[mapDriversCurrentIdx].marker = context.createDriverMarker(null, driver.id);
                     }
                 }
                 if (--context.historyCallbacksLoaded <= 0) {
@@ -291,11 +291,17 @@ var TrackingMapController = {
     /**
      * Creates a driver marker instance from position and driverId
      *
+     * @param position google.maps.LatLng position to add marker, null to set to store location
      * @return google.maps.Marker marker
      */
     createDriverMarker: function (position, driverId) {
         var context = this;
         context.updateDriverCount(1);
+
+        if (!position) {
+            position = new google.maps.LatLng(context.data.store.position[0], context.data.store.position[1]);
+        }
+
         var marker = new google.maps.Marker({
             position: position,
             map: context.map,
@@ -380,17 +386,22 @@ var TrackingMapController = {
         var context = this;
         if (!context.mapBoundsChanged) {
             var bounds = new google.maps.LatLngBounds();
+            var driverPositionsCount = 0;
             $.each(context.mapDrivers, function (key, value) {
                 if (value.marker) {
                     bounds.extend(value.marker.getPosition());
+                    driverPositionsCount++;
                 }
             });
-            // Limit zoom to not go too deep
-            google.maps.event.addListenerOnce(context.map, 'bounds_changed', function(event) {
-                context.map.setZoom(Math.min(context.data.mapOptions.fitMaxZoom, context.map.getZoom()));
-            });
-            context.map.fitBounds(bounds);
-            console.log('Changed map bounds');
+            
+            if (driverPositionsCount) {
+                // Limit zoom to not go too deep
+                google.maps.event.addListenerOnce(context.map, 'bounds_changed', function(event) {
+                    context.map.setZoom(Math.min(context.data.mapOptions.fitMaxZoom, context.map.getZoom()));
+                });
+                context.map.fitBounds(bounds);
+                console.log('Changed map bounds');
+            }
         }
     }
 };
