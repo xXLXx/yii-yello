@@ -20,7 +20,7 @@ var ShiftRequestReviewController = {
                     if (data === 'success') {
 
                         $.colorbox.close();
-                        $.pjax.reload({container: '#shift-form-widget-pjax'});
+                        //$.pjax.reload({container: '#shift-form-widget-pjax'});
                         return;
 
                     } else if ( data.context === 'disputeLog' && data.status === 'success' ) {

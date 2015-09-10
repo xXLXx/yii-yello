@@ -159,15 +159,18 @@ class ImagesController extends \yii\web\Controller
     {
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         $signedUrl = $this->client->getObjectUrl(\Yii::$app->params['aws_files_bucket'], $user->getProfilePhotoThumbPath(), '+2 minutes');
-        $headers = @get_headers($signedUrl);
-        // that dont exist
-        if (strpos($headers[0],'404') !== false) {
-            if ($user->role->name == Role::ROLE_DRIVER) {
-                $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
-            } else {
-                $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
-            }
-        }
+        
+//            $headers = @get_headers($signedUrl);
+//            // that dont exist
+//            if (strpos($headers[0],'404') !== false) {
+//                if ($user->role->name == Role::ROLE_DRIVER) {
+//                    $signedUrl = \Yii::getAlias('@web/img/').'Driver_Pic_bgrey_black.png';
+//                } else {
+//                    $signedUrl = \Yii::getAlias('@web/img/').'shop_white_front.png';
+//                }
+//            }
+            
+        
 
         return $this->redirect($signedUrl);
 

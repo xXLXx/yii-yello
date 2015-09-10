@@ -226,6 +226,7 @@ class User extends BaseModel implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
+
     /**
      * Finds user by email
      *
@@ -328,6 +329,24 @@ class User extends BaseModel implements IdentityInterface
     {
         $this->passwordHash = Yii::$app->security->generatePasswordHash($password);
     }
+
+    /**
+     * Set the email of the user.
+     *
+     * @param string email
+     * @return bool
+     */
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        if($this->save()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     /**
      * Generates "remember me" authentication key

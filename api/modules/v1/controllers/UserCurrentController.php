@@ -7,7 +7,7 @@ namespace api\modules\v1\controllers;
 use api\modules\v1\filters\Auth;
 use api\modules\v1\models\Driver;
 use api\modules\v1\models\PasswordChangeForm;
-
+use api\modules\v1\models\EmailChangeApiForm;
 class UserCurrentController extends \api\common\controllers\UserCurrentController
 {
     /**
@@ -85,5 +85,22 @@ class UserCurrentController extends \api\common\controllers\UserCurrentControlle
             'isAllowedToReceiveNotifications' => (int) $on,
         ]);
         return Driver::getCurrent();
+    }
+
+
+
+    public function actionChangeEmail()
+    {
+        $model = new EmailChangeApiForm();
+        if($model->load(\Yii::$app->request->post()) && $model->validate())
+        {
+            if($model->changeEmail()){
+                return Driver::getCurrent();
+            }
+        }
+        $response = \Yii::$app->getResponse();
+        $response->setStatusCode(400);
+        $response->data['message'] = $model->getErrors();
+        return $response;
     }
 }
