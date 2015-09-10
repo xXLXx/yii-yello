@@ -259,19 +259,19 @@ class Store extends BaseModel
             $date = new \DateTime();
         }
 
+        $timeZone = $this->getTimezone();
+
         $dayStart = $date->format('Y-m-d 00:00:00');
         $dayEnd = $date->format('Y-m-d 23:59:59');
 
-        $timeOffset = $this->getUtcOffset();
-
-        //The TimezoneHelper::convertToUtc did not work, then I have done it myself here.
+        $timeOffset = timezone_offset_get(new \DateTimeZone($timeZone),new \DateTime());
 
         $gmtStartStamp = strtotime($dayStart);
-        $gmtStartStamp = (int)$gmtStartStamp - ($timeOffset * 60);
+        $gmtStartStamp = (int)$gmtStartStamp - ($timeOffset );
         $dayStart = date('Y-m-d H:i:s', $gmtStartStamp);
 
         $gmtEndStamp = strtotime($dayEnd);
-        $gmtEndStamp = (int)$gmtEndStamp - ($timeOffset * 60);
+        $gmtEndStamp = (int)$gmtEndStamp - ($timeOffset);
         $dayEnd = date('Y-m-d H:i:s', $gmtEndStamp);
 
         $shiftsDataProvider = new ActiveDataProvider([
