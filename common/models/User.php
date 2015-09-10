@@ -758,13 +758,23 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
-     * The profile photo-thumb path pattern.
+     * The profile photo path pattern.
      *
      * @return string
      */
     public function getProfileMapPathPattern()
     {
         return '/userfiles/{id}/profile-map.png';
+    }
+
+    /**
+     * The initials path pattern.
+     *
+     * @return string
+     */
+    public function getInitialsMapPathPattern()
+    {
+        return '/userfiles/{id}/initials-map.png';
     }
 
     /**
@@ -842,6 +852,16 @@ class User extends BaseModel implements IdentityInterface
      *
      * @return string
      */
+    public function getInitialsMapPath()
+    {
+        return str_replace('{id}', $this->id, $this->getInitialsMapPathPattern());
+    }
+
+    /**
+     * The profile photo path.
+     *
+     * @return string
+     */
     public function getLicensePhotoPath()
     {
         return str_replace('{id}', $this->id, $this->getLicensePathPattern());
@@ -904,9 +924,24 @@ class User extends BaseModel implements IdentityInterface
         $sizes = [
             '100' => str_replace('{id}', $this->id, $this->getProfileMapPathPattern()),
         ];
-
         $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('driver', true).'.png';
         file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-driver-marker', 'driverId' => $this->id, 'sourceFile' => $sourceFile], true), false,
+            stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                ]
+            ])));
+
+        if (empty(ImageResizeHelper::resizeAndUpload($temporaryFile, $sizes))) {
+            throw new \Exception('Upload failed.');
+        }
+
+        $sizes = [
+            '100' => str_replace('{id}', $this->id, $this->getInitialsMapPathPattern()),
+        ];
+        $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('driver_initials', true).'.png';
+        file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-driver-initials-marker', 'driverId' => $this->id], true), false,
             stream_context_create([
                 'ssl' => [
                     'verify_peer' => false,

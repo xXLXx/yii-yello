@@ -4,9 +4,11 @@ namespace console\controllers;
 
 use common\models\Company;
 use common\models\Image;
+use common\models\Role;
 use common\models\Store;
 use common\models\User;
 use common\models\Vehicle;
+use yii\helpers\Url;
 
 /**
  * For console commands acting on Images.
@@ -30,17 +32,25 @@ class ImagesController extends \yii\console\Controller
      */
     public function actionMigrate()
     {
-        $localPath = \Yii::getAlias('@frontend/web');
-        $users = User::find()->joinWith('image', true, 'RIGHT JOIN')->all();
-        print 'Users images found in db: '.count($users).PHP_EOL;
+        $localPath = \Yii::getAlias('@frontend/web/img');
+        $users = User::find()->with(['image', 'role'])->all();
         foreach ($users as $user) {
-            $sourceFile = $localPath.$user->image->originalUrl;
-            if (!file_exists($sourceFile)) {
-                print $sourceFile.' does not exist!'.PHP_EOL;
-                continue;
+            $sourceFile = '';
+            if ($user->image && file_exists($localPath.$user->image->originalUrl)) {
+                $sourceFile = $localPath.$user->image->originalUrl;
+            } else {
+                $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('profile', true).'.png';
+                file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-user-initials', 'id' => $user->id], true), false,
+                    stream_context_create([
+                        'ssl' => [
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                        ]
+                    ])));
+                $sourceFile = $temporaryFile;
             }
 
-            print $sourceFile.' found  for '.$user->username.PHP_EOL;
+            print $sourceFile.' for '.$user->username.PHP_EOL;
             try {
                 $user->uploadProfilePhoto($sourceFile);
             } catch (\Exception $e) {
@@ -48,16 +58,15 @@ class ImagesController extends \yii\console\Controller
             }
         }
 
-        $stores = Store::find()->joinWith('image', true, 'RIGHT JOIN')->all();
-        print 'Store images found in db: '.count($stores).PHP_EOL;
+        $stores = Store::find()->with('image')->all();
         foreach ($stores as $store) {
-            $sourceFile = $localPath.$store->image->originalUrl;
-            if (!file_exists($sourceFile)) {
-                print $sourceFile.' does not exist!'.PHP_EOL;
-                continue;
+            $sourceFile = $localPath.'/store_image.png';
+
+            if ($store->image && file_exists($localPath.$store->image->originalUrl)) {
+                $sourceFile = $localPath.$store->image->originalUrl;
             }
 
-            print $sourceFile.' found.'.PHP_EOL;
+            print $sourceFile.' for store '.$store->id.PHP_EOL;
             try {
                 $store->uploadLogo($sourceFile);
             } catch (\Exception $e) {
@@ -65,16 +74,19 @@ class ImagesController extends \yii\console\Controller
             }
         }
 
-        $vehicles = Vehicle::find()->joinWith(['image', 'user'], true, 'RIGHT JOIN')->all();
-        print 'Vehicle registration images found in db: '.count($vehicles).PHP_EOL;
+        $vehicles = Vehicle::find()->with(['image', 'user'])->all();
         foreach ($vehicles as $vehicle) {
-            $sourceFile = $localPath.$vehicle->image->originalUrl;
-            if (!file_exists($sourceFile)) {
-                print $sourceFile.' does not exist!'.PHP_EOL;
+            if (!$vehicle->user) {
                 continue;
             }
 
-            print $sourceFile.' found.'.PHP_EOL;
+            $sourceFile = $localPath.'/vehicle.jpg';
+
+            if ($vehicle->image && file_exists($localPath.$vehicle->image->originalUrl)) {
+                $sourceFile = $localPath.$vehicle->image->originalUrl;
+            }
+
+            print $sourceFile.' for vehicle '.$vehicle->id.PHP_EOL;
             try {
                 $vehicle->user->uploadVehiclePhoto($sourceFile);
             } catch (\Exception $e) {
@@ -82,16 +94,19 @@ class ImagesController extends \yii\console\Controller
             }
         }
 
-        $vehicles = Vehicle::find()->joinWith(['licensePhoto', 'user'], true, 'RIGHT JOIN')->all();
-        print 'Vehicle license images found in db: '.count($vehicles).PHP_EOL;
+        $vehicles = Vehicle::find()->with(['licensePhoto', 'user'])->all();
         foreach ($vehicles as $vehicle) {
-            $sourceFile = $localPath.$vehicle->licensePhoto->originalUrl;
-            if (!file_exists($sourceFile)) {
-                print $sourceFile.' does not exist!'.PHP_EOL;
+            if (!$vehicle->user) {
                 continue;
             }
 
-            print $sourceFile.' found.'.PHP_EOL;
+            $sourceFile = $localPath.'/Driverslicense.jpg';
+
+            if ($vehicle->licensePhoto && file_exists($localPath.$vehicle->licensePhoto->originalUrl)) {
+                $sourceFile = $localPath.$vehicle->licensePhoto->originalUrl;
+            }
+
+            print $sourceFile.' license photo for '.$vehicle->id.PHP_EOL;
             try {
                 $vehicle->user->uploadLicensePhoto($sourceFile);
             } catch (\Exception $e) {
@@ -99,16 +114,15 @@ class ImagesController extends \yii\console\Controller
             }
         }
 
-        $companies = Company::find()->joinWith('image', true, 'RIGHT JOIN')->all();
-        print 'Company images found in db: '.count($companies).PHP_EOL;
+        $companies = Company::find()->with('image')->all();
         foreach ($companies as $company) {
-            $sourceFile = $localPath.$company->image->originalUrl;
-            if (!file_exists($sourceFile)) {
-                print $sourceFile.' does not exist!'.PHP_EOL;
-                continue;
+            $sourceFile = $localPath.'/store_image.png';
+
+            if ($company->image && file_exists($localPath.$company->image->originalUrl)) {
+                $sourceFile = $localPath.$company->image->originalUrl;
             }
 
-            print $sourceFile.' found.'.PHP_EOL;
+            print $sourceFile.' for company '.$company->id.PHP_EOL;
             try {
                 $company->uploadLogo($sourceFile);
             } catch (\Exception $e) {

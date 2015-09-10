@@ -20,7 +20,7 @@ class TrackingController extends BaseController
         return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['getDriverMarker'],
+                'only' => ['get-driver-marker', 'get-driver-initials-marker', 'get-user-initials'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -167,5 +167,45 @@ class TrackingController extends BaseController
         imagedestroy($smallMarker);
         imagedestroy($blankImg);
         imagedestroy($driverImg);
+    }
+
+    /**
+     * Generate driver marker with initials.
+     */
+    public function actionGetDriverInitialsMarker()
+    {
+        putenv('GDFONTPATH=' . \Yii::getAlias('@webroot/fonts'));
+        $user = User::findOne(\Yii::$app->getRequest()->get('driverId'));
+        header("Content-type: image/png");
+        $string = substr($user->firstName, 0,1).substr($user->lastName,0,1);
+        $im = imagecreatefrompng(\Yii::getAlias('@webroot') . "/img/marker-driver.png");
+        $grey = imagecolorallocate($im, 128, 128, 128);
+        $black = imagecolorallocate($im, 0, 0, 0);
+        $px     = (imagesx($im) - 28 * strlen($string)) / 2;
+        //imagestring($im, 50, $px, 40, $string, $orange);
+        imagettftext($im, 44, 0, $px-2, 93, $black, 'DejaVuSans-Bold.ttf', $string);
+        imagettftext($im, 44, 0, $px, 91, $grey, 'DejaVuSans-Bold.ttf', $string);
+        imagepng($im);
+        imagedestroy($im);
+    }
+
+    /**
+     * Generate default photo/thumb with initials.
+     */
+    public function actionGetUserInitials()
+    {
+        putenv('GDFONTPATH=' . \Yii::getAlias('@webroot/fonts'));
+        $user = User::findOne(\Yii::$app->getRequest()->get('id'));
+        header("Content-type: image/png");
+        $string = substr($user->firstName, 0,1).substr($user->lastName,0,1);
+        $im = imagecreatefrompng(\Yii::getAlias('@webroot') . "/img/default-initials-template.png");
+        $grey = imagecolorallocate($im, 128, 128, 128);
+        $black = imagecolorallocate($im, 0, 0, 0);
+        $px     = (imagesx($im) - 28 * strlen($string)) / 2;
+        //imagestring($im, 50, $px, 40, $string, $orange);
+        imagettftext($im, 44, 0, $px-2, 80, $black, 'DejaVuSans-Bold.ttf', $string);
+        imagettftext($im, 44, 0, $px, 78, $grey, 'DejaVuSans-Bold.ttf', $string);
+        imagepng($im);
+        imagedestroy($im);
     }
 }
