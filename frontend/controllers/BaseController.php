@@ -111,7 +111,7 @@ class BaseController extends Controller
                             }
 
                             // Completed driver signup will be denied access
-                            if ($role->name == Role::ROLE_DRIVER && $user->signup_step_completed == \Yii::$app->params['driver.signup_completion_step']) {
+                            if ($role->name == Role::ROLE_DRIVER && $user->signup_step_completed >= \Yii::$app->params['driver.signup_completion_step']) {
                                 return true;
                             }
 
@@ -130,7 +130,7 @@ class BaseController extends Controller
                     if (\Yii::$app->user->isGuest) {
                         \Yii::$app->user->loginRequired();
                     } elseif ($user->role->name == Role::ROLE_DRIVER
-                        && $user->signup_step_completed == \Yii::$app->params['driver.signup_completion_step']) {
+                        && $user->signup_step_completed >= \Yii::$app->params['driver.signup_completion_step']) {
                         \Yii::$app->user->logout();
                         \Yii::$app->getResponse()->redirect(['/driver/index']);
                     } else {
