@@ -63,6 +63,8 @@ $this->registerJs('$(function(){ShiftRequestReviewController.init();AddFavourite
     </div>
     <div class="hidden"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
 
+    <?php
+    if(!$shiftsDataProvider->getTotalCount()): ?>
     <div class="col-right" id="shift-detail-container">
         <div class="center">
             <img src="/img/Shifts.png"><br><br>
@@ -70,4 +72,5 @@ $this->registerJs('$(function(){ShiftRequestReviewController.init();AddFavourite
             <h2>There are no assigned shifts <br>scheduled for today.</h2>
         </div>
     </div>
+    <?php endif; ?>
 </div>
