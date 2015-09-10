@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use common\helpers\ArrayHelper;
+use common\helpers\TimezoneHelper;
 use common\models\ShiftReviews;
 use \yii\web\Response;
 use \yii\helpers\Url;
@@ -123,6 +124,18 @@ class ShiftListController extends BaseController
                 $latest = '';
                 $userId = \Yii::$app->user->identity->id;
                 $msg = '';
+                $store = $shift->getStore()->one();
+                $timeZone = $store->getTimezone();
+
+                $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->start);
+                $shift->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->end);
+
+                if($shift->actualStart){
+                    $shift->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualStart);
+                }
+                if($shift->actualEnd){
+                    $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
+                }
 
                 if ($shiftRequestReviews) {
                     // get the most recent 2 arguments
