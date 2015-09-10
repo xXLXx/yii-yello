@@ -66,12 +66,7 @@ class StoreReviewsController extends BaseActiveController
 
         $model->driverId = \Yii::$app->user->id;
         $model->load(\Yii::$app->getRequest()->getBodyParams(), '');
-        if ($model->save()) {
-            $response = \Yii::$app->getResponse();
-            $response->setStatusCode(201);
-            $id = implode(',', array_values($model->getPrimaryKey(true)));
-            $response->getHeaders()->set('Location', Url::toRoute(['view', 'id' => $id], true));
-        } elseif (!$model->hasErrors()) {
+        if (!$model->save()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
 
