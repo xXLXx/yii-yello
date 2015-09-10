@@ -1,7 +1,7 @@
 <div class="info-panel f-right">
     <span class="info-link" title="Info"></span>
     <div class="info-popup">
-        <a class="info-item font-user driver-ddl" href="/drivers/profile?id=<?=$driver->id?>">View Profile</a>
+        <a class="info-item font-user driver-ddl j_colorbox" href="/drivers/profile?id=<?=$driver->id?>&quickLayout=1">View Profile</a>
         <a class="info-item font-letter-mail" href="mailto:<?= $driver->email; ?>">Email</a>
         <a href="<?= \yii\helpers\Url::to(['drivers/note']) ?>?driverId=<?= $driver->id ?>" class="info-item font-edit-write j_colorbox"><?= \Yii::t('app', 'Add Note') ?></a>
         <div class="info-item font-star-two j_add-favourite-driver

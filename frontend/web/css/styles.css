@@ -224,7 +224,7 @@ a.blue-text {text-decoration:none;}
 .green-text {color:#69b100;}
 .orange-text {color:#f5a623;}
 .black-text {color:#000;}
-.brown-text {color:#bb7e18;}
+.brown-text {color:#bb7e18 !important;}
 .text-small-11 {font-size:11px;}
 .bold-text {font-weight:600;}
 .icon-orange:before {color:#f5a623;}
@@ -605,6 +605,7 @@ a.blue-text {text-decoration:none;}
         .border-top-block .text-icon {padding-left:15px;}
         .border-top-block .text-icon.big-padding-2 {padding-left:28px;}
         .border-top-block .border-top-block-inner {padding-right:41px;}
+.quick-profile {padding: 30px;}
 
 
 /* Users page */
@@ -657,7 +658,7 @@ a.blue-text {text-decoration:none;}
         .info-panel {position:relative;}
             .info-panel .info-link {background:#ebebeb; border-radius:4px; color:#c0c0c0; font-weight:700; font-size:20px; line-height:0; height:12px; width:24px; display:inline-block; position:relative; cursor:pointer;}
                 .info-panel .info-link:after {content:"..."; position:absolute; top:0; bottom:0; left:0; right:0; text-align:center;}
-                .info-popup {display:none; position:absolute; z-index:1; top:100%; left:50%; width:145px; margin:1px 0 0 -75px; padding:4px 0 13px; border:1px solid #f3f3f3; box-shadow:0 3px 5px rgba(0,0,0,0.2); background:#fff; border-radius:4px;}
+                .info-popup {display:none; position:absolute; z-index:1; top:100%; left:50%; width:145px; margin:1px 0 0 -75px; padding:4px 0 13px; border:1px solid #f3f3f3; box-shadow:0 3px 5px rgba(0,0,0,0.2); background:#fff; border-radius:4px; word-wrap: break-word; white-space: normal;}
                 .info-popup.width-266 {width:266px; margin-left:-133px;}
                 .info-popup.text-info {padding:8px 17px 10px; font-size:13px; box-sizing:border-box;}
                     .info-popup.text-info .middle-gray-text {margin:3px 0 0; font-size:12px;}
@@ -1083,17 +1084,23 @@ a.blue-text {text-decoration:none;}
 .inline-header-block .filter-btn + .toggle-popup-container {margin:0 0 0 8px;}
 
 .filter-btn {display: inline-block; vertical-align:middle; font-size: 13px; color: #3bafda;}
-    .filter-btn .item {padding: 4px 10px; border: 1px solid #3bafda; cursor:pointer; float:left; margin:0 0 0 -1px;}
+.filter-btn.driverprof-tabs {border: none; width: 100%; font: inherit;}
+.filter-btn.driverprof-tabs ul {margin-top: 10px; width: 100%; display: table; background: none; border: none; padding: 0px;}
+    .filter-btn.driverprof-tabs .ui-tabs-panel {padding: 0px}
+        .filter-btn.driverprof-tabs .ui-tabs-panel .item {border: none;}
+    .filter-btn.driverprof-tabs .item {display: table-cell; text-align: center; float: none; padding: 4px 10px; margin: 0 0 0 -1px; border-bottom-width: thin; outline: none;}
+        .filter-btn.driverprof-tabs .item a {text-decoration: none; float: none; color: #3bafda; cursor: pointer !important; display: block; padding: 1px;}
+    .filter-btn .item {padding: 4px 10px; border: 1px solid #3bafda; cursor:pointer; float:left; margin:0 0 0 -1px; background: white; border-radius: 0px;}
     /*.filter-btn .item a {color: #FFF;}*/
     .filter-btn .item.small {padding: 0 10px}
     .filter-btn .item:first-child {border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
     .filter-btn .item:last-child {border-top-right-radius: 4px; border-bottom-right-radius: 4px;}
     .filter-btn .item:hover {background:#e8f9ff;}
-    .filter-btn .item:active {background:#c3e8f6;}
-    .filter-btn .item.active {background-color:#3bafda; color:#fff;}
-    .filter-btn .item.active a {color: #FFF;}
-    .filter-btn .item.active:hover {background:#2a94bb; border-color:#2a94bb;}
-    .filter-btn .item.active:active {background:#217d9f; border-color:#217d9f;}
+    .filter-btn .item:active, .filter-btn .item.ui-state-active {background:#c3e8f6;}
+    .filter-btn .item.active, .filter-btn .item.ui-state-active {background-color:#3bafda; color:#fff;}
+    .filter-btn .item.active a, .filter-btn .item.ui-state-active a, .filter-btn .item.ui-state-active a * {color: #FFF;}
+    .filter-btn .item.active:hover, .filter-btn .item.ui-state-active:hover {background:#2a94bb; border-color:#2a94bb;}
+    .filter-btn .item.active:active, .filter-btn .item.ui-state-active:active {background:#217d9f; border-color:#217d9f;}
 
 .driver-info {position:relative;}
 .driver-info.border-bottom {border:none; border-bottom:1px solid #d8d8d8; padding:0 0 10px;}
@@ -1102,10 +1109,12 @@ a.blue-text {text-decoration:none;}
     .driver-info .user-photo-info {font-weight:400; color:#000; font-size:13px; padding-left:62px; line-height:50px;}
         .driver-info .user-photo-info-inner {line-height:1.2em; display:inline-block; vertical-align:middle;}
             .driver-info .user-photo-info .name {font-weight:600; font-size:14px;}
+                .driver-info .user-photo-info .username {display: inline-block;}
+                .driver-info .user-photo-info .info-panel {display: inline-block; margin-left: 20px; margin-bottom: 10px;}
                 .driver-info .user-photo-info .name a {color:#000;}
                 .driver-info .user-photo-info .name a:hover {color:#3bafda;}
         .driver-info .user-photo-info .star-block,
-        .driver-info .user-photo-info .gray-text {display:inline-block; vertical-align:top; max-width:none; overflow:visible;}
+        .driver-info .user-photo-info .gray-text {display:block; vertical-align:top; max-width:none; overflow:visible;}
         .driver-info .user-photo-info .star-block {line-height:19px; margin:2px 7px 0 0;}
         .driver-info .user-photo-info .state {margin:-2px 0;}
         .driver-info .user-photo-info h3 {margin:0 0 2px;}
@@ -1121,6 +1130,12 @@ a.blue-text {text-decoration:none;}
             .driver-info.profile-view .star-block {margin:5px 0 0;}
         .driver-info.profile-view .user-panel-button {top:90px;}
             .driver-info.profile-view .user-panel-button span {width:22px; height:22px; border-radius:22px; line-height:25px; font-size:14px;}
+.driver-photos {table-layout: fixed; width: 100%;}
+.driver-photos td {text-align: center; vertical-align: middle;}
+.driver-photos td:first-child {padding-right: 20px;}
+.driver-photos td:last-child {padding-left: 20px;}
+    .driver-photos td .img-frame {border: 1px solid #DEDEDE; padding: 2px; display: inline-block; max-width: 100%;}
+        .driver-photos td .img {background: #C8C8C8; max-width: 100%; float: left;}
 .achivements-list {}
     .achivements-list .item {width:16px; height:16px; display:inline-block; vertical-align:top;}
     .achivements-list .item.check {background:url('../img/check.png') no-repeat 0 0;}

@@ -164,7 +164,7 @@ class DriversController extends BaseController
         ]);
     }
 
-    public function actionProfile($id)
+    public function actionProfile($id, $quickLayout = 0)
     {
 
         $driver = Driver::findOne($id);
@@ -210,7 +210,13 @@ class DriversController extends BaseController
             $review_avg = $review_sum / count($reviews);
         }
 
-        return $this->render('profile', [
+        $layout = 'profile';
+        if ($quickLayout) {
+            $layout = 'quick-profile';
+            $this->layout = 'empty';
+        }
+
+        return $this->render($layout, [
             'driver' => $driver,
             'completedShiftCount' => $shiftData['completedShift'],
             'deliveriesCount' => $shiftData['deliveriesCount'] ?: 0,
