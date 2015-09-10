@@ -118,6 +118,7 @@ class ShiftState extends BaseModel
             self::STATE_COMPLETED,
             self::STATE_DISPUTED,
             self::STATE_PENDING_PAYMENT,
+            self::STATE_UNDER_REVIEW,
         ];
     }
 
