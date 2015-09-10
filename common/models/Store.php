@@ -161,6 +161,17 @@ class Store extends BaseModel
     }
 
     /**
+     * Retrieve timezone offset from its address.
+     *
+     * @return integer offset
+     */
+
+    public function getUtcOffset()
+    {
+        return !empty($this->address->utcOffset) ? (int)$this->address->utcOffset : 600;
+    }
+
+    /**
      * The path pattern.
      *
      * @return string
@@ -233,8 +244,8 @@ class Store extends BaseModel
     public function getStoreReviews()
     {
         return $this->hasMany(Storereviews::className(), ['storeId' => 'id','isArchived'=>0]);
-    }    
-    
+    }
+
     
 
     /**
@@ -250,6 +261,18 @@ class Store extends BaseModel
 
         $dayStart = $date->format('Y-m-d 00:00:00');
         $dayEnd = $date->format('Y-m-d 23:59:59');
+
+        $timeOffset = $this->getUtcOffset();
+
+        //The TimezoneHelper::convertToUtc did not work, then I have done it myself here.
+
+        $gmtStartStamp = strtotime($dayStart);
+        $gmtStartStamp = (int)$gmtStartStamp - ($timeOffset * 60);
+        $dayStart = date('Y-m-d H:i:s', $gmtStartStamp);
+
+        $gmtEndStamp = strtotime($dayEnd);
+        $gmtEndStamp = (int)$gmtEndStamp - ($timeOffset * 60);
+        $dayEnd = date('Y-m-d H:i:s', $gmtEndStamp);
 
         $shiftsDataProvider = new ActiveDataProvider([
             'query' => $this
