@@ -79,6 +79,17 @@ class Store extends BaseModel
     }
 
     /**
+     * The average stars rating of this store.
+     *
+     * @return float
+     */
+    public function getStars()
+    {
+        return (float)Storereviews::find()->where(['storeId' => $this->id])->average('stars');
+    }
+
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getDriverhasstores()
