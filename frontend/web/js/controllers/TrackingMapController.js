@@ -300,7 +300,7 @@ var TrackingMapController = {
             position: position,
             map: context.map,
             icon: {
-                url: document.location.protocol + '//' + document.location.hostname + '/tracking/get-driver-marker?driverId=' + driverId,
+                url: document.location.protocol + '//' + document.location.hostname + '/images/profile-map/' + driverId,
                 scaledSize: new google.maps.Size(45, 50)
             },
             optimized: false
