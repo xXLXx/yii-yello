@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="checkbox-input">
                                     <?= Html::checkbox('SignupForm[isAccepted]', $model->isAccepted, ['id' => 'agreement']) ?>
                                     <label for="agreement" class="j_checkbox <?php if ($model->isAccepted): ?>active<?php endif; ?>">
-                                        <?= \Yii::t('app', 'I Accept Terms &amp; Conditions'); ?>
+                                        <?= \Yii::t('app', 'I Accept <a class="j_colorbox" href="'. \yii\helpers\Url::to(['site/terms-conditions']).'">Terms &amp; Conditions</a>'); ?>
                                     </label>
                                     <?= Html::error($model, 'isAccepted', [
                                         'class' => 'help-block help-block-error error-message'
