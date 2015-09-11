@@ -50,11 +50,12 @@ class ImagesController extends \yii\console\Controller
                 $sourceFile = $temporaryFile;
             }
 
-            print $sourceFile.' for '.$user->username.PHP_EOL;
+            print $sourceFile.' for '.$user->id.PHP_EOL;
             try {
                 $user->uploadProfilePhoto($sourceFile);
             } catch (\Exception $e) {
                 \Yii::error($e->getMessage());
+                print 'ERROR :: '.$e->getMessage().PHP_EOL;
             }
         }
 
@@ -71,6 +72,7 @@ class ImagesController extends \yii\console\Controller
                 $store->uploadLogo($sourceFile);
             } catch (\Exception $e) {
                 \Yii::error($e->getMessage());
+                print 'ERROR :: '.$e->getMessage().PHP_EOL;
             }
         }
 
@@ -91,6 +93,7 @@ class ImagesController extends \yii\console\Controller
                 $vehicle->user->uploadVehiclePhoto($sourceFile);
             } catch (\Exception $e) {
                 \Yii::error($e->getMessage());
+                print 'ERROR :: '.$e->getMessage().PHP_EOL;
             }
         }
 
@@ -111,6 +114,7 @@ class ImagesController extends \yii\console\Controller
                 $vehicle->user->uploadLicensePhoto($sourceFile);
             } catch (\Exception $e) {
                 \Yii::error($e->getMessage());
+                print 'ERROR :: '.$e->getMessage().PHP_EOL;
             }
         }
 
@@ -127,6 +131,7 @@ class ImagesController extends \yii\console\Controller
                 $company->uploadLogo($sourceFile);
             } catch (\Exception $e) {
                 \Yii::error($e->getMessage());
+                print 'ERROR :: '.$e->getMessage().PHP_EOL;
             }
         }
 
