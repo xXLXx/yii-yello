@@ -15,6 +15,7 @@ class ShiftDetailsWidget extends Widget
 {
 
     public $shift;
+    public $lastDeliveryCount;
 
     public function run()
     {
@@ -22,9 +23,14 @@ class ShiftDetailsWidget extends Widget
 
             $shiftState = $this->shift->shiftState;
 
+            if(empty($this->lastDeliveryCount)){
+                $this->lastDeliveryCount = $this->shift->deliveryCount;
+            }
+
             return $this->render('shiftDetails', [
                 'shift' => $this->shift,
                 'shiftState' => $shiftState,
+                'lastDeliveryCount' => $this->lastDeliveryCount,
             ]);
         }
 

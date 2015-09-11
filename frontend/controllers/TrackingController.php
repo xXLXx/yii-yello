@@ -198,13 +198,13 @@ class TrackingController extends BaseController
         $user = User::findOne(\Yii::$app->getRequest()->get('id'));
         header("Content-type: image/png");
         $string = strtoupper($user->firstName[0].$user->lastName[0]); //substr($user->firstName, 0, 1).substr($user->lastName, 0,1);
-        $im = imagecreatefrompng(\Yii::getAlias('@webroot') . "/img/default-initials-template.png");
-        $grey = imagecolorallocate($im, 128, 128, 128);
+        $im = imagecreatefrompng(\Yii::getAlias('@webroot') . "/img/userbg.png");
+        $grey = imagecolorallocate($im, 88, 88, 88);
         $black = imagecolorallocate($im, 0, 0, 0);
         $px     = (imagesx($im) - 42 * strlen($string)) / 2;
         //imagestring($im, 50, $px, 40, $string, $orange);
-        imagettftext($im, 44, 0, $px-2, 80, $black, 'DejaVuSans-Bold.ttf', $string);
-        imagettftext($im, 44, 0, $px, 78, $grey, 'DejaVuSans-Bold.ttf', $string);
+//        imagettftext($im, 44, 0, $px-2, 80, $black, 'DejaVuSans-Bold.ttf', $string);
+        imagettftext($im, 44, 0, $px, 88, $grey, 'DejaVuSans-Bold.ttf', $string);
         imagepng($im);
         imagedestroy($im);
     }

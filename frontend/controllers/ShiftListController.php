@@ -163,7 +163,7 @@ class ShiftListController extends BaseController
                     } else {
                         $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
                     }
-                    $shift->deliveryCount = $deliverycount;
+//                    $shift->deliveryCount = $deliverycount;
 
                 }
 
@@ -205,6 +205,7 @@ class ShiftListController extends BaseController
                 $viewHtml = $this->renderPartial('shiftDetails', [
                     'shift' => $shift,
                     'driver' => $driver,
+                    'lastDeliveryCount' => $deliverycount,
                 ]);
 
                 $response->data['viewHtml'] = $viewHtml;
