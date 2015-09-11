@@ -64,6 +64,7 @@ class ShiftListController extends BaseController
                 $viewHtml = $this->returnShift($firstShift, $driver);
             }
 
+
             $listHtml = $this->renderPartialShifts($shifts);
             $quantityHtml = (string)count($shifts) . ' Shifts';
 
@@ -136,18 +137,6 @@ class ShiftListController extends BaseController
                 $latest = '';
                 $userId = \Yii::$app->user->identity->id;
                 $msg = '';
-                $store = $shift->getStore()->one();
-                $timeZone = $store->getTimezone();
-
-                $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->start);
-                $shift->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->end);
-
-                if($shift->actualStart){
-                    $shift->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualStart);
-                }
-                if($shift->actualEnd){
-                    $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
-                }
 
                 if ($shiftRequestReviews) {
                     // get the most recent 2 arguments
@@ -188,6 +177,20 @@ class ShiftListController extends BaseController
 
                     $response->data['itemHtml'] = $this->renderPartialShifts([$shift]);
                     $response->data['shiftId'] = $shift->id;
+                }
+
+                if($shift){
+                    $store = $shift->getStore()->one();
+                    $timeZone = $store->getTimezone();
+                    $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone, $shift->start);
+                    $shift->end = TimezoneHelper::convertGMTToTimeZone($timeZone, $shift->end);
+
+                    if($shift->actualStart){
+                        $shift->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualStart);
+                    }
+                    if($shift->actualEnd){
+                        $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
+                    }
                 }
 
 
