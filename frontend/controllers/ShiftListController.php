@@ -258,7 +258,7 @@ class ShiftListController extends BaseController
 
     private function returnShift(Shift $shift, $driver ,$isApproved = null)
     {
-        if ($shift && $driver) {
+        if ($shift) {
             $deliverycount = $shift->deliveryCount;
             $lastrequest = null;
             $deliveryamount = $shift->payment;
@@ -271,16 +271,6 @@ class ShiftListController extends BaseController
             $msg = '';
             $store = $shift->getStore()->one();
             $timeZone = $store->getTimezone();
-
-            $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->start);
-            $shift->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->end);
-
-            if($shift->actualStart){
-                $shift->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualStart);
-            }
-            if($shift->actualEnd){
-                $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
-            }
 
             if ($shiftRequestReviews) {
                 // get the most recent 2 arguments
