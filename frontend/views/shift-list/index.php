@@ -61,7 +61,7 @@ $this->registerJs('$(function(){ShiftRequestReviewController.init();AddFavourite
         ]); ?>
 
     </div>
-    <div class="hidden"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
+    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
     <div class="col-right" id="shift-detail-container">
     <?php
     if(!$shiftsDataProvider->getTotalCount()):?>

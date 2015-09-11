@@ -9,6 +9,7 @@ use kartik\rating\StarRating;
 /* @var $content string */
 
 AppAsset::register($this);
+unset($this->assetBundles['yii\bootstrap\BootstrapAsset']);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
