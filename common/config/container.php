@@ -1,7 +1,7 @@
 <?php
 
-//Yii::$container->set('kartik\rating\StarRating', [
-Yii::$container->set('frontend\widgets\StarRating\StarRating', [
+Yii::$container->set('kartik\rating\StarRating', [
+//Yii::$container->set('frontend\widgets\StarRating\StarRating', [
     'name' => 'rating_2',
     'disabled' => true,
     'pluginOptions' => [

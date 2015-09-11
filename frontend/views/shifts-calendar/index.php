@@ -15,6 +15,7 @@ ShiftsCalendarAsset::register($this);
 $sourceUrl = Url::to(['shifts-calendar/get-events']);
 $copyWeeklySheetUrl = Url::to(['shift-weekly-copy/copy']);
 $this->registerJs('$(function(){AddFavouriteDriver.init();})');
+unset($this->assetBundles['yii\bootstrap\BootstrapAsset']);
 ?>
 <div id="roster-sidebar" class="sidebar-container sidebar-actions <?php if (!$mode): ?>without-col-left<?php endif; ?>">
     <div class="col-left">
@@ -72,7 +73,7 @@ $this->registerJs('$(function(){AddFavouriteDriver.init();})');
     </div>
     <div class="hidden"><?php //echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
 
-    <div class="hidden"><?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => 3]); ?></div>
+    <div class="hidden"><?php echo \kartik\rating\StarRating::widget(['value' => 3]); ?></div>
 </div>
 
 <?php

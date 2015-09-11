@@ -38,7 +38,7 @@ if(!isset($current_page)){
                     </div>
                 </div>
                 <div class="gray-text">Yello ID: #<?= $driver->id; ?></div>
-                <?php echo \frontend\widgets\StarRating\StarRating::widget(['value' => $driver->ratings]); ?>
+                <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
             </div>
         </div>
     </div>
