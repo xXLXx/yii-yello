@@ -22,7 +22,7 @@ class Auth extends AuthMethod implements AuthInterface
      */
     public function authenticate($user, $request, $response)
     {
-        if ($user && $user instanceof User && !empty($user->id)) {
+        if ($user && $user->identity instanceof User && !empty($user->id)) {
             return $user;
         }
         if ($request->headers->has('access-token')) {
