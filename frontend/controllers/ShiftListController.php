@@ -177,12 +177,11 @@ class ShiftListController extends BaseController
 
                     $shift->setStateCompleted($deliverycount, $deliveryamount);
                     $shift = Shift::findOne(['id' => $shiftId]);
-
-                    $response->data['itemHtml'] = $this->renderPartialShifts([$shift]);
-                    $response->data['shiftId'] = $shift->id;
                 }
 
                 if($shift){
+                    //As the $shift->setStateCompleted in the above update the shift in database, Changing timezone should be done
+                    //after that.
                     $store = $shift->getStore()->one();
                     $timeZone = $store->getTimezone();
                     $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone, $shift->start);
@@ -194,6 +193,12 @@ class ShiftListController extends BaseController
                     if($shift->actualEnd){
                         $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
                     }
+                }
+
+                if($isApproved){
+                    //We should add the shift to the view after changing timezone.
+                    $response->data['itemHtml'] = $this->renderPartialShifts([$shift]);
+                    $response->data['shiftId'] = $shift->id;
                 }
 
 
