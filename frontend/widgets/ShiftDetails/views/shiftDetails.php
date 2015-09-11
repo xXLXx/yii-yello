@@ -149,8 +149,8 @@
         <?php if( $shiftState->name === $shiftState::STATE_APPROVAL || $shiftState->name === $shiftState::STATE_DISPUTED || $shiftState->name === $shiftState::STATE_UNDER_REVIEW): ?>
             <h4 class="inline-block valign-middle">Rate Driver</h4>
 
-            <?php echo \kartik\rating\StarRating::widget(['value' => 3, 'disabled' => false]); ?>
-            <div><textarea class="textarea j_driver-review" >Nice job. as always! Thank you!</textarea></div>
+            <?php echo \kartik\rating\StarRating::widget(['value' => 0, 'disabled' => false]); ?>
+            <div><textarea class="textarea j_driver-review" placeholder="Write a review for driver!"></textarea></div>
 
             <div class="button-container j_request_link">
 
