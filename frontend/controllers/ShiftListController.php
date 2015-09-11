@@ -78,7 +78,10 @@ class ShiftListController extends BaseController
             if(!empty($viewHtml)){
                 $response->data['viewHtml'] = $viewHtml;
                 $response->data['shiftId'] = $firstShift->id;
-
+            }
+            if(empty($shifts))
+            {
+                $response->data['viewHtml'] = $this->renderPartial('_splash',['notToday' => true]);
             }
 
         } else {
