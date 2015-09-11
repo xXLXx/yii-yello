@@ -58,6 +58,12 @@ class ShiftListController extends BaseController
             $shiftsDataProvider = $storeCurrent->getAssignedShiftsByDate( $date );
             $shifts = $shiftsDataProvider->getModels();
 
+            if(!empty($shifts)){
+                $firstShift = $shifts[0];
+                $driver = $firstShift->driverAccepted;
+                $viewHtml = $this->returnShift($firstShift, $driver);
+            }
+
             $listHtml = $this->renderPartialShifts($shifts);
             $quantityHtml = (string)count($shifts) . ' Shifts';
 
@@ -67,6 +73,12 @@ class ShiftListController extends BaseController
                 'listHtml' => $listHtml,
                 'quantityHtml' => $quantityHtml,
             ];
+
+            if(!empty($viewHtml)){
+                $response->data['viewHtml'] = $viewHtml;
+                $response->data['shiftId'] = $firstShift->id;
+
+            }
 
         } else {
 
@@ -227,6 +239,99 @@ class ShiftListController extends BaseController
         }
 
         return $output;
+    }
+
+    /**
+     * This function should return the shift with the id for both actionView and actionList. It is retrieved from actionView.
+     * But now it is just serve the actionList and the code with actionView is duplicated. We should do fix it later but now
+     * because the lack of time it just serving actionList.
+     *
+     *
+     * @param \common\models\Shift $shift
+     * @param  $driver
+     * @param string $isApproved
+     * @return string viewHtml
+     */
+
+    private function returnShift(Shift $shift, $driver ,$isApproved = null)
+    {
+        if ($shift && $driver) {
+            $deliverycount = $shift->deliveryCount;
+            $lastrequest = null;
+            $deliveryamount = $shift->payment;
+            $shiftRequestReviews = $shift->shiftRequestReview;
+            $lastdriverrequest = $shift->LastDriverShiftRequestReview;
+            $driverreview = null;
+            $userreview = null;
+            $latest = '';
+            $userId = \Yii::$app->user->identity->id;
+            $msg = '';
+            $store = $shift->getStore()->one();
+            $timeZone = $store->getTimezone();
+
+            $shift->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->start);
+            $shift->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->end);
+
+            if($shift->actualStart){
+                $shift->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualStart);
+            }
+            if($shift->actualEnd){
+                $shift->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$shift->actualEnd);
+            }
+
+            if ($shiftRequestReviews) {
+                // get the most recent 2 arguments
+                foreach ($shiftRequestReviews as $review) {
+                    if ($review->userId == $userId) { // ascertain the argument
+                        $userreview = $review;
+                        $latest = 'user';
+                    } else {
+                        $driverreview = $review;
+                        $deliverycount = $review->deliveryCount;
+                        $latest = 'driver';
+                    }
+                }
+                if ($lastdriverrequest) {
+                    $deliverycount = $lastdriverrequest->deliveryCount;
+                }
+
+                // figure out the most recent argument
+                if ($latest == 'user') {
+                    $msg = "You've requested review of $deliverycount to <span id='last-delivery-count'>$userreview->deliveryCount</span>.";
+                } else {
+                    $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
+                }
+                $shift->deliveryCount = $deliverycount;
+
+            }
+
+            $deliveryamount = $deliverycount * 5;
+            if ($deliveryamount < 60) {
+                $deliveryamount = 60;
+            }
+
+
+//            if ($isApproved) {
+//
+//                $shift->setStateCompleted($deliverycount, $deliveryamount);
+//                $shift = Shift::findOne(['id' => $shiftId]);
+//
+//                $response->data['itemHtml'] = $this->renderPartialShifts([$shift]);
+//                $response->data['shiftId'] = $shift->id;
+//            }
+
+            $viewHtml = $this->renderPartial('shiftDetails', [
+                'shift' => $shift,
+                'driver' => $driver,
+            ]);
+
+            return $viewHtml;
+
+        }else{
+
+            return false;
+        }
+
     }
 
 }

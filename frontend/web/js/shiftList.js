@@ -63,8 +63,24 @@
 
                     $('#shifts-quantity').html(data.quantityHtml);
                 }
+                if ( 'viewHtml' in data ) {
+                    shiftView.$container.html(data.viewHtml);
+                    jQuery(".rating-loading").rating('refresh', {
+                            showClear: false,
+                            size: 'xs',
+                            glyphicon: false,
+                            showCaption: false,
+                            ratingClass: 'star-block big'
+                        }
+                    );
+                    if ( data.shiftId ) {
+                        shiftView.$shiftsList.find('.shift-item[data-id=' + data.shiftId + ']').addClass('active');
+                    }
 
-                shiftView.pasteData({ viewHtml: '' });
+                }else{
+                    shiftView.pasteData({ viewHtml: '' });
+                }
+
             },
             formatDate: function (date) {
 
