@@ -3,7 +3,9 @@
  * @var $this yii\web\View
  * @var $shift \common\models\Shift
  * @var $shiftState \common\models\ShiftState
+ * @var $lastDeliveryCount String
  */
+
 ?>
 <div class="border-top-item">
     <div class="table-block">
@@ -63,7 +65,7 @@
         <div class="table-cell-item">
             <?php if ( $shift->deliveryCount ): ?>
                 <h4>Completed deliveries</h4>
-                <h3 id="shiftdeliverycount"><?= $shift->deliveryCount; ?></h3>
+                <h3 id="shiftdeliverycount"><?= $lastDeliveryCount; ?></h3>
             <?php endif; ?>
         </div>
         <div class="table-cell-item"></div>
