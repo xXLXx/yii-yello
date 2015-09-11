@@ -449,6 +449,7 @@ a.blue-text {text-decoration:none;}
 
 /* Popups */
 .login-popup.width-340 {width:340px;}
+.login-popup.width-266 {width:266px;}
 .login-popup.width-460 {width:460px;}
 .login-popup {margin:0 auto; border-radius:4px; padding:25px 0 36px; background:#fff; font-size:13px; line-height:18px;}
     .login-popup .text-input{width:100%;}
