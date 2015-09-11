@@ -41,7 +41,7 @@ use yii\helpers\Url;
                         <div class="user-photo-container">
                             <img src="/images/profile-thumb/<?= $user->id; ?>" alt="<?= $user->firstName ?>" />
                         </div>
-                        <?php if ($user->role->name == 'yelloAdmin'): ?>
+                        <?php if ($user->role->name == 'manager'): ?>
                             <div class="user-role"><span><?= \Yii::t('app', 'Admin') ?></span></div>
                         <?php endif; ?>
                         <div class="user-panel-button">
