@@ -91,6 +91,8 @@ class StoreReviewsController extends BaseActiveController
             $query->where(['driverId' => \Yii::$app->user->id]);
         }
 
+        $query->orderBy(['createdAt' => SORT_DESC]);
+
         return new ActiveDataProvider([
             'query' => $query,
         ]);
