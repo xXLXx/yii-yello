@@ -32,7 +32,7 @@ class ImagesController extends \yii\console\Controller
      */
     public function actionMigrate()
     {
-        $localPath = \Yii::getAlias('@frontend/web/img');
+        $localPath = \Yii::getAlias('@frontend/web');
         $users = User::find()->with(['image', 'role'])->all();
         foreach ($users as $user) {
             $sourceFile = '';
