@@ -9,6 +9,10 @@
 /**
  * @var bool $notToday
  */
+if(!isset($notToday)){
+    $notToday=true;
+}
+
 ?>
 <div class="center">
     <img src="/img/Shifts.png"><br><br>
