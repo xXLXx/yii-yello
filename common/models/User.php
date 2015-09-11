@@ -918,7 +918,7 @@ class User extends BaseModel implements IdentityInterface
 
         // We didnt get expected upload counts (3 sizes; see above)
         if (count($result) < 3) {
-            throw new \Exception('Upload failed.');
+            throw new \Exception('Upload failed. Unable to upload all the sizes.');
         }
 
         $sizes = [
@@ -934,7 +934,7 @@ class User extends BaseModel implements IdentityInterface
             ])));
 
         if (empty(ImageResizeHelper::resizeAndUpload($temporaryFile, $sizes))) {
-            throw new \Exception('Upload failed.');
+            throw new \Exception('Upload failed. Unable to upload driver marker.');
         }
 
         $sizes = [
@@ -950,7 +950,7 @@ class User extends BaseModel implements IdentityInterface
             ])));
 
         if (empty(ImageResizeHelper::resizeAndUpload($temporaryFile, $sizes))) {
-            throw new \Exception('Upload failed.');
+            throw new \Exception('Upload failed. Unable to upload driver initials.');
         }
 
         return $result['300'];
@@ -976,7 +976,7 @@ class User extends BaseModel implements IdentityInterface
 
         // We didnt get expected upload counts (3 sizes; see above)
         if (count($result) < 3) {
-            throw new \Exception('Upload failed.');
+            throw new \Exception('Upload failed. Unable to upload all the sizes.');
         }
 
         return $result['original'];
@@ -1001,7 +1001,7 @@ class User extends BaseModel implements IdentityInterface
 
         // We didnt get expected upload counts (2 sizes; see above)
         if (count($result) < 2) {
-            throw new \Exception('Upload failed.');
+            throw new \Exception('Upload failed. Unable to upload all the sizes.');
         }
 
         return $result['original'];

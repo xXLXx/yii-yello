@@ -27,6 +27,23 @@ class ImageResizeHelper
                 } else {
                     $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid($size, true).'.png';
                     $image = \yii\imagine\Image::getImagine()->open($sourceFile);
+
+                    // Only jpegs have exif data
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mimeType = finfo_file($finfo, $sourceFile);
+                    finfo_close($finfo);
+                    if ($mimeType == 'image/jpg' || $mimeType == 'image/jpeg') {
+                        $exif = exif_read_data($sourceFile);
+                        switch ($exif['Orientation']) {
+                            case 6:
+                                $image->rotate(90);
+                                break;
+
+                            case 8:
+                                $image->rotate(-90);
+                                break;
+                        }
+                    }
                     $image->resize($image->getSize()->widen($size));
                     $image->save($temporaryFile, ['quality' => 50]);
 
