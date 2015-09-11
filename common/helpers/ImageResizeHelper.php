@@ -26,7 +26,17 @@ class ImageResizeHelper
                     $url = \Yii::$app->storage->uploadFile($sourceFile, $destinationFile);
                 } else {
                     $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid($size, true).'.png';
+                    $exif = exif_read_data($sourceFile);
                     $image = \yii\imagine\Image::getImagine()->open($sourceFile);
+                    switch ($exif['Orientation']) {
+                        case 6:
+                            $image->rotate(90);
+                            break;
+
+                        case 8:
+                            $image->rotate(-90);
+                            break;
+                    }
                     $image->resize($image->getSize()->widen($size));
                     $image->save($temporaryFile, ['quality' => 50]);
 
