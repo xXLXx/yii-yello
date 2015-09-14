@@ -8,6 +8,7 @@ use common\models\Role;
 use common\models\User;
 use frontend\models\Exception\UserStoreOwnerUndefinedException;
 use Yii;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 /**
@@ -94,39 +95,73 @@ class UserAddForm extends AbstractForm
      */
     public function save()
     {
-        $user = User::findOne($this->id);
-        if (!$user) {
-            $user = new User();
-            /** @var User $currentUser */
-            $currentUser = Yii::$app->user->identity;
-            $user->parentId = $this->getStoreOwnerId($currentUser);
-        }
-        $user->setAttributes($this->getAttributes());
-        $role = Role::findOne(['name' => Role::ROLE_EMPLOYEE]);
-        $user->roleId =  $role->id;
-        if ($this->isAdmin) {
-            $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
-            $user->roleId = $role->id;
-        }
-        if ($this->password) {
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
-            $this->password = null;
+        if (!$this->validate()) {
+            return false;
         }
 
-        $user->generateAccessToken();
-        $user->active = true;
-        $user->save();
-        $this->image = $user->image;
-        $this->stores = $this->storeslist;
-        $this->saveUserStoreRelations($user);
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            $user = User::findOne($this->id);
+            if (!$user) {
+                $user = new User();
+                /** @var User $currentUser */
+                $currentUser = Yii::$app->user->identity;
+                $user->parentId = $this->getStoreOwnerId($currentUser);
+            }
+            $user->setAttributes($this->getAttributes());
+            $role = Role::findOne(['name' => Role::ROLE_EMPLOYEE]);
+            $user->roleId =  $role->id;
+            if ($this->isAdmin) {
+                $role = Role::findOne(['name' => Role::ROLE_MANAGER]);
+                $user->roleId = $role->id;
+            }
+            if ($this->password) {
+                $user->setPassword($this->password);
+                $user->generateAuthKey();
+                $this->password = null;
+            }
 
-        $this->id = $user->id;
+            $user->generateAccessToken();
+            $user->active = true;
+            $user->save();
+            $this->image = $user->image;
+            $this->stores = $this->storeslist;
+            $this->saveUserStoreRelations($user);
 
-        $imageFile = UploadedFile::getInstance($this, 'imageFile');
-        if (!empty($imageFile)) {
-            $url = $user->uploadProfilePhoto($imageFile->tempName);
+            $this->id = $user->id;
+
+            $transaction->commit();
+
+            try {
+                // After transaction is committed so we got the user record.
+                $imageFile = UploadedFile::getInstance($this, 'imageFile');
+                if (!empty($imageFile)) {
+                    $url = $user->uploadProfilePhoto($imageFile->tempName);
+                } else {
+                    $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('profile', true).'.png';
+                    file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-user-initials', 'id' => $user->id], true), false,
+                        stream_context_create([
+                            'ssl' => [
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                            ]
+                        ])));
+                    $user->uploadProfilePhoto($temporaryFile);
+                }
+            } catch (\Exception $e) {
+                $this->addError('id', $e->getMessage());
+                \Yii::error($e->getMessage());
+                return false;
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->addError('id', $e->getMessage());
+            \Yii::error($e->getMessage());
+            $transaction->rollBack();
         }
+
+        return false;
     }
 
     /**
