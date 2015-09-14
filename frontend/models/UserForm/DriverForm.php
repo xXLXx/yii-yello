@@ -67,6 +67,13 @@ class DriverForm extends UserForm
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.'FindOrCreate userdriver' . PHP_EOL, true), FILE_APPEND);
             
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
+            $averageStars = (new Query())->from('ShiftReviews')->where(
+                ['driverId'=> $user->id,'isArchived'=>0]
+            )->average('stars');
+            $userDriver->rating=$averageStars;
+            $userDriver->save();
+            
+            
            // file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.$userDriver->toArray() . PHP_EOL, true), FILE_APPEND);
          
 
