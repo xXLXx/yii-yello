@@ -34,7 +34,7 @@ class UserAddWidget extends \yii\base\Widget
             if ($model->validate()) {
                 $model->save();
 
-                $user = User::find($model->id)->one();
+                $user = User::find()->where(['id' => $model->id])->one();
                 $user->generatePasswordResetToken();
                 $user->save();
 

@@ -201,11 +201,15 @@ class ShiftListController extends BaseController
                     $response->data['shiftId'] = $shift->id;
                 }
 
+                if(!isset($review)){
+                    $review = null;
+                }
 
                 $viewHtml = $this->renderPartial('shiftDetails', [
                     'shift' => $shift,
                     'driver' => $driver,
                     'lastDeliveryCount' => $deliverycount,
+                    'review' => $review
                 ]);
 
                 $response->data['viewHtml'] = $viewHtml;
