@@ -88,20 +88,27 @@ return [
                 Role::ROLE_YELLO_ADMIN
             ],
         ],
+        
+  
+        
+        
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
+//            'class' => 'yii\swiftmailer\Mailer',
+//            'viewPath' => '@common/mail',
+        'class' => 'nickcv\mandrill\Mailer',
+        'apikey' => 'e7c09BIEVFQb8vkz9hJshQ',
+            'useMandrillTemplates' => true,
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-        'transport' => [
-             'class' => 'Swift_SmtpTransport',
-             'host' => 'smtp.mandrillapp.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
-             'username' => 'steve@driveyello.com',
-             'password' => 'e7c09BIEVFQb8vkz9hJshQ',
-             'port' => '587', // Port 25 is a very common port too
-             'encryption' => 'tls', // It is often used, check your provider or mail server specs
-             ]               
+//        'transport' => [
+//             'class' => 'Swift_SmtpTransport',
+//             'host' => 'smtp.mandrillapp.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+//             'username' => 'steve@driveyello.com',
+//             'password' => 'e7c09BIEVFQb8vkz9hJshQ',
+//             'port' => '587', // Port 25 is a very common port too
+//             'encryption' => 'tls', // It is often used, check your provider or mail server specs
+//             ],               
 
 //        'transport' => [
 //             'class' => 'Swift_SmtpTransport',
@@ -110,10 +117,10 @@ return [
 //             'password' => 'AkDyihIj/BOGV7uRM7k8I7zk+usYSv7ub4tGT5PEcfA/',
 //             'port' => '587', // Port 25 is a very common port too
 //             'encryption' => 'tls', // It is often used, check your provider or mail server specs
-//             ]              
+//             ],              
             
             
-            ,
+            
         ],
 
         'formatter' => [
