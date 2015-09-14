@@ -8,21 +8,24 @@ use yii\helpers\Html;
 /* @var $exception Exception */
 
 $this->title = $name;
+$pos = strpos($name, '404');
+if($pos !== false){
+    $notFound = true;
+}else{
+    $notFound = false;
+}
 ?>
 <div class="site-error">
 
     <h1><?= 'Oops, sorry we seem to have had an accident.' ?></h1>
 
-<!--    <div class="alert alert-danger">-->
-<!--        --><?//= nl2br(Html::encode($message)) ?>
-<!--    </div>-->
-<!---->
-<!--    <p>-->
-<!--        The above error occurred while the Web server was processing your request.-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        Please contact us if you think this is a server error. Thank you.-->
-<!--    </p>-->
+    <?php if($notFound === false){?>
+
+        <div class="alert alert-danger">
+            <?= nl2br(Html::encode($message)) ?>
+        </div>
+
+    <?php } ?>
     <p>
         Click on the following button to redirect to Drive Yello Home.
     </p>
