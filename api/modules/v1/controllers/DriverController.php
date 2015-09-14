@@ -139,8 +139,12 @@ class DriverController extends \api\common\controllers\DriverController
     }
     
     public function actionMyReviews(){
-    
-        
+        //As we want to add another meta to activeDataProvider, The serializer should be merged.
+
+        $this->serializer = \yii\helpers\ArrayHelper::merge($this->serializer, [
+            'class' => 'api\modules\v1\components\MyReviewSerializer',
+        ]);
+
         $me = \Yii::$app->user->identity->id;
         $query = ShiftReviews::find()->where(['driverId'=>$me,'ShiftReviews.isArchived'=>0])->orderBy(['createdAt'=>SORT_DESC])
         ->joinWith(['store']);
