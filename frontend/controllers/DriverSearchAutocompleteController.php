@@ -33,7 +33,8 @@ class DriverSearchAutocompleteController extends BaseController
         if (!$drivers) {
             return false;
         }
-        return $this->renderPartial('autocomplete', [
+        $this->layout = 'empty';
+        return $this->render('autocomplete', [
             'drivers' => $drivers
         ]);
     }
@@ -50,7 +51,8 @@ class DriverSearchAutocompleteController extends BaseController
         if (!$driver) {
             throw new NotFoundHttpException('the driver cannot be found.');
         }
-        return $this->renderPartial('selected', [
+        $this->layout = 'empty';
+        return $this->render('selected', [
             'driver' => $driver
         ]); 
     }
