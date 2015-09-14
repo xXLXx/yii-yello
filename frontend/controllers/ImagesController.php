@@ -44,6 +44,9 @@ class ImagesController extends \yii\web\Controller
      */
     public function behaviors() {
         return [
+            'authenticator' => [
+                'class' => \api\common\filters\Auth::className()
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -60,10 +63,10 @@ class ImagesController extends \yii\web\Controller
                                 return true;
                             }
 
-                            $userId = \Yii::$app->getRequest()->get('userId');
+                            $userId = \Yii::$app->getRequest()->get('id');
 
                             // Allow himself
-                            if ($userId === \Yii::$app->user->id) {
+                            if ($userId == \Yii::$app->user->id) {
                                 return true;
                             }
 

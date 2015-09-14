@@ -8,20 +8,28 @@ use yii\helpers\Html;
 /* @var $exception Exception */
 
 $this->title = $name;
+$pos = strpos($name, '404');
+if($pos !== false){
+    $notFound = true;
+}else{
+    $notFound = false;
+}
 ?>
 <div class="site-error">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= 'Oops, sorry we seem to have had an accident.' ?></h1>
 
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
-    </div>
+    <?php if($notFound === false){?>
 
+        <div class="alert alert-danger">
+            <?= nl2br(Html::encode($message)) ?>
+        </div>
+
+    <?php } ?>
     <p>
-        The above error occurred while the Web server was processing your request.
+        Click on the following button to redirect to Drive Yello Home.
     </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
+    <?= Html::a('Drive Yello', Yii::$app->urlManager->createUrl('site/index'), ['class' => 'btn']) ?>
+
 
 </div>

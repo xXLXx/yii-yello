@@ -22,7 +22,7 @@ class SettingsController extends BaseController
         return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'users', 'invoices', 'bank', 'schedules', 'yello'],
+                'only' => ['index', 'users', 'invoices', 'bank', 'schedules', 'yello','test'],
                 'rules' => [
                     [
                         'actions' => ['users', 'invoices', 'bank', 'schedules', 'yello'],
@@ -61,6 +61,29 @@ class SettingsController extends BaseController
     {
         return $this->render('index');
     }
+    
+    public function actionTest(){
+        $to='mark@pottie.com';
+        $template= 'adding-user-to-a-store';
+        
+        if(isset($_GET['to'])){
+            $to=$_GET['to'];
+        }
+        
+        if(isset($_GET['template'])){
+            $tempate=$_GET['template'];
+        }
+        
+        
+        
+        \Yii::$app->mailer
+            ->compose($template,$model=array('name'=>'FNAME','content'=>'Fuey'))
+            ->setTo($to)
+            ->send();      
+        
+        return  $this->render('test');
+    }
+    
 
     /**
      * Display list of user created

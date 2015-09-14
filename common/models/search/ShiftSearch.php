@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Shift;
+use yii\db\Query;
 
 /**
  * ShiftSearch represents the model behind the search form about `common\models\Shift`.
@@ -39,6 +40,16 @@ class ShiftSearch extends Shift
      * @var bool
      */
     public $declinedByStoreOwner;
+
+    /**
+     * Search shifts completed by user, so their actualStart property is set. This variable provided for just filtering time for
+     * completed shifts, as we should search in actualStart instead of start property. There is no other way to find out between
+     * completed and allocated.
+     *
+     * @var bool
+     */
+
+    public $isCompleted;
 
     /**
      * Driver which to search shifts for
@@ -240,6 +251,56 @@ class ShiftSearch extends Shift
             $query->andWhere([
                 'storeId' => $this->storeId,
             ]);
+        }
+
+        if(isset($params['text']))
+        {
+            $text = $params['text'];
+            $query->andWhere(['IN', 'storeId', (new Query())->select('id')->from('store')->where(['isArchived' => '0'])->andWhere(['LIKE', 'title', $text])->distinct()->column()]);
+
+        }
+
+        if(isset($this->isCompleted))
+        {
+
+            $timeColumn = 'TIME(actualStart)';
+            $dateColumn = 'DATE(actualStart)';
+        }else{
+
+            $timeColumn = 'TIME(start)';
+            $dateColumn = 'DATE(start)';
+        }
+
+        if(!empty($params['fromTime']) && !empty($params['toTime'])){
+            if($params['fromTime'] > $params['toTime']){
+                $query->andWhere(['AND',
+                    ['OR',['>=', $timeColumn, $params['fromTime']],['<=', $timeColumn,$params['toTime']] ],
+                ]);
+            }else{
+                $query->andWhere(['>=',$timeColumn, $params['fromTime']]);
+                $query->andWhere(['<=',$timeColumn, $params['toTime']]);
+            }
+
+        }elseif(!empty($params['toTime'])){
+
+            $query->andWhere(['<=',$timeColumn, $params['toTime']]);
+
+        }elseif(!empty($params['fromTime']) ){
+
+            $query->andWhere(['>=',$timeColumn, $params['fromTime']]);
+        }
+
+        if(!empty($params['startDate'])){
+
+            $startTime = date('Y-m-d', $params['startDate']);
+            $query->andWhere(['>=',$dateColumn, $startTime]);
+        }
+        if(!empty($params['connectedstores']) && $params['connectedstores']=='1'){
+            // only connected stores
+            if(!empty($this->driverId)){
+                $query->andWhere(['IN', 'storeId', (new Query())->select('storeId')->from('driverHasStore')->where(['isArchived' => '0','isAcceptedByDriver'=>1 ,'driverId' => $this->driverId])]);
+            }
+
         }
 
         $query->andFilterWhere(['like', 'approvedApplicationId', $this->approvedApplicationId]);
