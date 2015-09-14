@@ -59,10 +59,10 @@
 .hidden{display:none !important;}
 .star-rating.rating-xs.rating-disabled{
     cursor: default;
-    width: 57px;
+    width: 71px;
 }
 .star-rating.rating-xs.rating-disabled .star-block.big{
-    width: 57px;
+    width: 71px;
 }
 
 a .icon-pie-chart-1{display:none;}
