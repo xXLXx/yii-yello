@@ -687,6 +687,8 @@ class Shift extends BaseModel
         $searchModel->acceptedByStoreOwner = true;
         $searchModel->modelClass = static::className();
         $searchModel->shiftStateId = $shiftStateIds;
+        $searchModel->isCompleted = true;
+
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
         return $dataProvider;
     }
