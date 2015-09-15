@@ -61,7 +61,7 @@ class ImagesController extends \yii\web\Controller
                             $loggedUser = \Yii::$app->user->identity;
 
                             // Of course, super admin
-                            if ($loggedUser->roleId == 1) {
+                            if ($loggedUser->roleId == 1 || $loggedUser->roleId == 8) {
                                 return true;
                             }
 
