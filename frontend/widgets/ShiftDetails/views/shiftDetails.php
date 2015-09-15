@@ -156,7 +156,7 @@
 
             <div class="button-container j_request_link">
 
-                <a href="<?= \yii\helpers\Url::to(['shift-request-review/index']) ?>?shiftId=<?= $shift->id; ?>" class="btn j_colorbox">Request Review</a>
+                <a href="<?= \yii\helpers\Url::to(['shift-request-review/index']) ?>?shiftId=<?= $shift->id; ?>" class="btn j_colorbox red-text">Dispute Orders</a>
                 <a href="#" id="link-approve-shift" class="btn blue" rel="nofollow" data-shift-id="<?= $shift->id; ?>">Approve</a>
             <?php endif; ?>
         </div>
