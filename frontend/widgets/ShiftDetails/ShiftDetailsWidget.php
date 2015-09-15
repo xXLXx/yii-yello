@@ -26,7 +26,7 @@ class ShiftDetailsWidget extends Widget
 
             $shiftState = $this->shift->shiftState;
 
-            if(empty($this->review)){
+            if(empty($this->review) || !($this->review instanceof ShiftReviews)){
                 if($shiftState->name == ShiftState::STATE_COMPLETED){
                     $this->review = ShiftReviews::findOne(['shiftId' => $this->shift->id]);
                 }
