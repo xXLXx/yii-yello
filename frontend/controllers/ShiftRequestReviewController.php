@@ -36,7 +36,17 @@ class ShiftRequestReviewController extends BaseController
         $reviewForm->shiftId = $shiftId;
         if ( $reviewForm->load($post) && $reviewForm->validate() ) {
             $reviewForm->save();
-            return 'success';
+//            return 'success';
+            $response = Yii::$app->response;
+            $response->format = Response::FORMAT_JSON;
+
+            $viewHtml = $this->shiftRequestReviewDetailView($shift);
+
+            return [
+                'context' => 'viewHtml',
+                'status' => 'success',
+                'veiwHtml' => $viewHtml,
+               ];
             
         } else {
             $shiftRequestReviewId = Yii::$app->request->post('id');
@@ -94,5 +104,62 @@ class ShiftRequestReviewController extends BaseController
             return $this->redirect(Url::to(['shifts-calendar/index']), 301);
         }
     }
+
+    private function shiftRequestReviewDetailView(Shift $shift, $driver = null , $isApproved = null)
+    {
+        if ($shift) {
+            $deliverycount = $shift->deliveryCount;
+            $lastrequest = null;
+            $shiftRequestReviews = $shift->shiftRequestReview;
+            $lastdriverrequest = $shift->LastDriverShiftRequestReview;
+            $driverreview = null;
+            $userreview = null;
+            $latest = '';
+            $userId = \Yii::$app->user->identity->id;
+            $msg = '';
+            if ($shiftRequestReviews) {
+                // get the most recent 2 arguments
+                foreach ($shiftRequestReviews as $review) {
+                    if ($review->userId == $userId) { // ascertain the argument
+                        $userreview = $review;
+                        $latest = 'user';
+                    } else {
+                        $driverreview = $review;
+                        $deliverycount = $review->deliveryCount;
+                        $latest = 'driver';
+                    }
+                }
+                if ($lastdriverrequest) {
+                    $deliverycount = $lastdriverrequest->deliveryCount;
+                }
+
+                // figure out the most recent argument
+                if ($latest == 'user') {
+                    $msg = "You've requested review of $deliverycount to <span id='last-delivery-count'>$userreview->deliveryCount</span>.";
+                } else {
+                    $msg = "Driver has responded to your review of $userreview->deliveryCount with <span id='last-delivery-count'>$deliverycount</span>.";
+                }
+                $shift->deliveryCount = $deliverycount;
+
+            }
+
+            $deliveryamount = $deliverycount * 5;
+            if ($deliveryamount < 60) {
+                $deliveryamount = 60;
+            }
+
+            $viewHtml = $this->renderPartial('shiftRequestReview', [
+                'shift' => $shift,
+            ]);
+
+            return $viewHtml;
+
+        }else{
+
+            return false;
+        }
+
+    }
+
 
 }

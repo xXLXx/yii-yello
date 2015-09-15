@@ -88,6 +88,8 @@
     </p>
 </div>
 -->
+<div id="shift-request-review">
+    <div></div>
 <?php if($shift->shiftRequestReview): ?>
 <div class="border-top-item">
     <h4>Dispute Log</h4>
@@ -129,6 +131,7 @@
     <?php endforeach; ?>
 </div>
 <?php endif; ?>
+</div>
 <div class="border-top-item">
     <!--
     <h4 class="bold-text black-text">Total to pay</h4>
