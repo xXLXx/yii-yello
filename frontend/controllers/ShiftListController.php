@@ -176,6 +176,10 @@ class ShiftListController extends BaseController
                 if ($isApproved) {
 
                     $shift->setStateCompleted($deliverycount, $deliveryamount);
+                    if($userDriver = $driver->userDriver){
+                        $userDriver->rating = $driver->ratings;
+                        $userDriver->save();
+                    }
                     $shift = Shift::findOne(['id' => $shiftId]);
                 }
 
