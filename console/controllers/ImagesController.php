@@ -61,7 +61,7 @@ class ImagesController extends \yii\console\Controller
 
         $stores = Store::find()->with('image')->all();
         foreach ($stores as $store) {
-            $sourceFile = $localPath.'/store_image.png';
+            $sourceFile = $localPath.'/img/store_image.png';
 
             if ($store->image && file_exists($localPath.$store->image->originalUrl)) {
                 $sourceFile = $localPath.$store->image->originalUrl;
@@ -82,7 +82,7 @@ class ImagesController extends \yii\console\Controller
                 continue;
             }
 
-            $sourceFile = $localPath.'/vehicle.jpg';
+            $sourceFile = $localPath.'/img/vehicle.jpg';
 
             if ($vehicle->image && file_exists($localPath.$vehicle->image->originalUrl)) {
                 $sourceFile = $localPath.$vehicle->image->originalUrl;
@@ -103,7 +103,7 @@ class ImagesController extends \yii\console\Controller
                 continue;
             }
 
-            $sourceFile = $localPath.'/Driverslicense.jpg';
+            $sourceFile = $localPath.'/img/Driverslicense.jpg';
 
             if ($vehicle->licensePhoto && file_exists($localPath.$vehicle->licensePhoto->originalUrl)) {
                 $sourceFile = $localPath.$vehicle->licensePhoto->originalUrl;
@@ -120,7 +120,7 @@ class ImagesController extends \yii\console\Controller
 
         $companies = Company::find()->with('image')->all();
         foreach ($companies as $company) {
-            $sourceFile = $localPath.'/store_image.png';
+            $sourceFile = $localPath.'/img/store_image.png';
 
             if ($company->image && file_exists($localPath.$company->image->originalUrl)) {
                 $sourceFile = $localPath.$company->image->originalUrl;
