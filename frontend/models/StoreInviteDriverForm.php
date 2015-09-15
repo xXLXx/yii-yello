@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use yii\base\Model;
 use common\models\DriverHasStore;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * Driver has store form
@@ -69,6 +70,9 @@ class StoreInviteDriverForm extends Model
         $driverHasStore->isInvitedByStoreOwner = true;
         
         $driverHasStore->save();
+
+        EventNotificationsHelper::storeInvite($this->driverId, $this->storeId);
+
         return $driverHasStore;
     }
 }

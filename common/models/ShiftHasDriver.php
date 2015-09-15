@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviors\DatetimeFormatBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * This is the model class for table "ShiftHasDriver".
@@ -90,6 +91,8 @@ class ShiftHasDriver extends \common\models\BaseModel
     {
         $this->isDeclinedByStoreOwner = true;
         $this->save();
+
+        EventNotificationsHelper::declineShift($this->driverId, $this->shiftId);
     }
     
     /**
