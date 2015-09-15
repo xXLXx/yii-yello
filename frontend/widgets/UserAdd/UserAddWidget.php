@@ -31,10 +31,8 @@ class UserAddWidget extends \yii\base\Widget
         $model = new UserAddForm();
         $post = \Yii::$app->request->post();
         if ($model->load($post)) {
-            if ($model->validate()) {
-                $model->save();
-
-                $user = User::find()->where(['id' => $model->id])->one();
+            if ($model->save()) {
+                $user = User::find($model->id)->one();
                 $user->generatePasswordResetToken();
                 $user->save();
 

@@ -4,6 +4,8 @@
  * @var $shift \common\models\Shift
  * @var $shiftState \common\models\ShiftState
  * @var $lastDeliveryCount String
+ * @var $review common\models\ShiftReviews
+ *
  */
 
 ?>
@@ -86,6 +88,8 @@
     </p>
 </div>
 -->
+<div id="shift-request-review">
+    <div></div>
 <?php if($shift->shiftRequestReview): ?>
 <div class="border-top-item">
     <h4>Dispute Log</h4>
@@ -127,6 +131,7 @@
     <?php endforeach; ?>
 </div>
 <?php endif; ?>
+</div>
 <div class="border-top-item">
     <!--
     <h4 class="bold-text black-text">Total to pay</h4>
@@ -154,9 +159,24 @@
 
             <div class="button-container j_request_link">
 
-                <a href="<?= \yii\helpers\Url::to(['shift-request-review/index']) ?>?shiftId=<?= $shift->id; ?>" class="btn j_colorbox">Request Review</a>
+                <a href="<?= \yii\helpers\Url::to(['shift-request-review/index']) ?>?shiftId=<?= $shift->id; ?>" class="btn j_colorbox red-text">Dispute Orders</a>
                 <a href="#" id="link-approve-shift" class="btn blue" rel="nofollow" data-shift-id="<?= $shift->id; ?>">Approve</a>
             <?php endif; ?>
         </div>
     </div>
+
+        <?php if( $shiftState->name === $shiftState::STATE_COMPLETED && !empty($review) && $review instanceof \common\models\ShiftReviews): ?>
+        <div class="border-top-item">
+            <div class="recall-block">
+
+                <h4 class="inline-block valign-middle">JOB REVIEW</h4><?php echo \kartik\rating\StarRating::widget(['value' => $review->stars, 'disabled' => true]); ?>
+        <p><?= \yii\helpers\Html::encode($review->text)?></p>
+
+        <div class="button-container j_request_link">
+        </div>
+                </div>
+
+            <?php endif; ?>
+        </div>
+
 </div>

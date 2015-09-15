@@ -29,7 +29,14 @@ var ShiftRequestReviewController = {
                         $('#dispute-log-quantity').html(data.requestReviewCount);
                         $('#last-delivery-count').html(data.deliveryCount);
                         return;
+                    }else if (data.context === 'viewHtml' && data.status === 'success' && data.veiwHtml)
+                    {
+                        $.colorbox.close();
+                        $('#shift-request-review').html(data.veiwHtml);
+
+                        return;
                     }
+
 
                     var html = $('#shift-request-review-form', $(data)).html();
                     $('#shift-request-review-form').html(html);

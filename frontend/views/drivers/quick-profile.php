@@ -47,7 +47,7 @@ $driverId = $driver->id;
                     <div>
 
 
-                        <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg]); ?>
+                        <?php echo \kartik\rating\StarRating::widget(['value' => $review_avg, 'id' => 'rating0']); ?>
                         <!--<span class="star-block">
                             <span class="font-star-two"></span>
                             <span class="font-star-two"></span>
@@ -188,7 +188,7 @@ $driverId = $driver->id;
         <?php foreach ($reviews as $review):?>
             <div class="company-item">
                 <h5><?= $review->store->title; ?></h5>
-                <div><?php echo \kartik\rating\StarRating::widget(['value' => $review->stars]); ?></div>
+                <div><?php echo \kartik\rating\StarRating::widget(['value' => $review->stars, 'id' => 'review-rating' . $review->id]); ?></div>
                 <div><?= $review->text; ?></div>
                 <div class="gray-text">
                     <?php

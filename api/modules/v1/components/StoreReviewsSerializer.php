@@ -2,6 +2,8 @@
 
 namespace api\modules\v1\components;
 
+use common\models\Store;
+
 class StoreReviewsSerializer extends Serializer
 {
     /**
@@ -14,22 +16,14 @@ class StoreReviewsSerializer extends Serializer
     {
         $result = parent::serialize($data);
 
-        if (!\Yii::$app->getRequest()->get('storeId')) {
+        $storeId = \Yii::$app->getRequest()->get('storeId');
+        if (!$storeId) {
             return $result;
-        }
-
-        $averageStars = 0;
-        if (count($result[$this->collectionEnvelope]) > 0) {
-            $_totalStars = 0;
-            foreach ($result[$this->collectionEnvelope] as $item) {
-                $_totalStars += (float)$item['stars'];
-            }
-            $averageStars = $_totalStars / count($result[$this->collectionEnvelope]);
         }
 
         $result = \yii\helpers\ArrayHelper::merge($result, [
             $this->metaEnvelope => [
-                'averageStars' => $averageStars,
+                'averageStars' => Store::findOne($storeId)->getStars(),
             ]
         ]);
 

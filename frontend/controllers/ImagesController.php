@@ -51,7 +51,7 @@ class ImagesController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['profile', 'profile-thumb', 'profile-map', 'vehicle', 'vehicle-thumb','map-default'],
+                        'actions' => ['profile', 'profile-thumb', 'profile-map', 'initials', 'vehicle', 'vehicle-thumb', 'map-default'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if (\Yii::$app->user->isGuest) {
@@ -112,7 +112,7 @@ class ImagesController extends \yii\web\Controller
                             }
 
                             // Allow himself
-                            if (\Yii::$app->getRequest()->get('userId') === \Yii::$app->user->id) {
+                            if (\Yii::$app->getRequest()->get('id') == \Yii::$app->user->id) {
                                 return true;
                             }
 

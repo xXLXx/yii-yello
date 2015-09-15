@@ -332,6 +332,9 @@ a.blue-text {text-decoration:none;}
 .btn.blue {background:#3bafda; color:#fff;}
 .btn.blue:hover {background:#2a94bb; border-color:#2a94bb;}
 .btn.blue:active {background:#217d9f; border-color:#217d9f;}
+.btn.red-text{color:#ff0000;border-color:#ff0000;}
+.btn.red-text:hover{background:#ffdada;}
+.btn.red-text:active{background:#ff0000;color:#FFFFFF;}
 .btn.green {background:#59a600; border-color:#59a600; color:#fff;}
 .btn.red {background:#de4341; border-color:#de4341; color:#fff;}
 .btn.uppercase {text-transform:uppercase;}

@@ -7,6 +7,7 @@ use common\models\Vehicle;
 use common\models\Company;
 use common\models\CompanyAddress;
 use common\models\Address;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 /**
@@ -67,6 +68,9 @@ class DriverForm extends UserForm
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.'FindOrCreate userdriver' . PHP_EOL, true), FILE_APPEND);
             
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
+
+
+            
            // file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.$userDriver->toArray() . PHP_EOL, true), FILE_APPEND);
          
 
@@ -75,6 +79,16 @@ class DriverForm extends UserForm
             $imageFile = UploadedFile::getInstance($this, 'imageFile');
             if (!empty($imageFile)) {
                 $url = $user->uploadProfilePhoto($imageFile->tempName);
+            } else {
+                $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('profile', true).'.png';
+                file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-user-initials', 'id' => $user->id], true), false,
+                    stream_context_create([
+                        'ssl' => [
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                        ]
+                    ])));
+                $user->uploadProfilePhoto($temporaryFile);
             }
 
             $user->firstName = $this->firstName;
