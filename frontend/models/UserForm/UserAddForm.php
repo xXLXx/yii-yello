@@ -136,7 +136,7 @@ class UserAddForm extends AbstractForm
                 // After transaction is committed so we got the user record.
                 $imageFile = UploadedFile::getInstance($this, 'imageFile');
                 if (!empty($imageFile)) {
-                    $url = $user->uploadProfilePhoto($imageFile->tempName);
+                    $url = $user->uploadProfilePhoto($imageFile->tempName, $imageFile->extension);
                 } else {
                     $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('profile', true).'.png';
                     file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-user-initials', 'id' => $user->id], true), false,
@@ -146,7 +146,7 @@ class UserAddForm extends AbstractForm
                                 'verify_peer_name' => false,
                             ]
                         ])));
-                    $user->uploadProfilePhoto($temporaryFile);
+                    $user->uploadProfilePhoto($temporaryFile, 'png');
                 }
             } catch (\Exception $e) {
                 $this->addError('id', $e->getMessage());
