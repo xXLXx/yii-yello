@@ -9,7 +9,8 @@ use kartik\rating\StarRating;
 /* @var $content string */
 
 AppAsset::register($this);
-if(Yii::$app->controller->uniqueId != "company-details" && Yii::$app->controller->uniqueId != "store-edit"){
+$unique_id = Yii::$app->controller->uniqueId;
+if(!in_array($unique_id, ["company-details","store-edit", "store-add"])){
     unset($this->assetBundles['yii\bootstrap\BootstrapAsset']);
 };
 
