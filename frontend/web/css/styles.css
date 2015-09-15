@@ -633,9 +633,11 @@ a.blue-text {text-decoration:none;}
 .company-logo {margin:8px 0;}
     .company-logo-container {overflow:hidden; border:1px solid #dedede; background:#f3f3f3; height:70px; width:70px;}
     .company-logo-container.no-photo {color:#8f8f8f; text-align:center; font-size:30px; line-height:70px; font-family:"streamline-30px"; position:relative;}
+    .company-logo-container.no-photo.big {color:#8f8f8f; text-align:center; font-size:40px; line-height:140px; font-family:"streamline-30px"; position:relative;}
     .company-logo-container.no-photo:after {content:"\e37a";}
         .company-logo-container img {width:100%;}
     .company-info {padding:0 0 0 90px;}
+    .company-info.big {padding: 0px;}
         .company-info h5 {padding:0; font-weight:600; margin:0 0 1px;}
             .company-info h5:after {display:none;}
         .company-info h3 {margin:0 0 4px;}
@@ -1040,7 +1042,9 @@ a.blue-text {text-decoration:none;}
                 .create-body .card-list .text-input {width:270px;}
                 .create-body .card-list .card-icon {margin:3px 0 0; width:32px;}
             .create-body .company-logo {margin:16px 0 0;}
+            .create-body .company-logo.big {margin:0px;}
                 .create-body .company-logo .company-logo-container {width:70px; height:70px; text-align:center;}
+            .create-body .company-logo .company-logo-container.big {width:140px; height:140px; text-align:center;}
             .create-body .checkbox-input.small {max-width:435px; text-align:left; margin:0 auto;}
         .create-footer {border:none; border-top:1px solid #bcc0c1; padding:12px 29px;}
             .create-footer .btn.blue {margin:0 0 0 18px;}
