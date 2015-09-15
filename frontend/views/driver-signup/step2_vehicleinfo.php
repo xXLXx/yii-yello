@@ -64,12 +64,13 @@ $this->registerJs('ImageUploadPreview.init({
                                <?php echo $form->field($model, 'year',['options'=>['class'=>'col col-sm-4 col-md-3 col-lg-3 pull-right','style'=>'padding-left:0;padding-right:0;']]) ?>
                                 
                                 <div class="input-block inline-block">
-                                    <div class="company-logo">
-                                        <div class="company-logo-container no-photo f-left">
+                                    <label>Photo</label>
+                                    <div class="company-logo big">
+                                        <div class="company-logo-container no-photo big">
                                             <img class="j_image-file-destination-vehicle" src="" />
                                         </div>
-                                        <div class="company-info">
-                                            <h5>Photo</h5>
+                                        <div class="company-info big">
+
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
                                                 <div class="link-icon font-picture-streamline blue-text">Upload Photo</div>
@@ -111,12 +112,13 @@ $this->registerJs('ImageUploadPreview.init({
 
 
                                 <div class="input-block">
-                                    <div class="company-logo">
-                                        <div class="company-logo-container no-photo f-left">
+                                    <label>Photo</label>
+                                    <div class="company-logo big">
+                                        <div class="company-logo-container no-photo big">
                                             <img class="j_image-file-destination" src="" />
                                         </div>
-                                        <div class="company-info">
-                                            <h5>Photo</h5>
+                                        <div class="company-info big">
+
                                             <?= Html::error($model, 'licensePhotoFile', ['class' => 'error-message']); ?>
                                             <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                                             <div class="upload-file">
