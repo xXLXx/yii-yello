@@ -912,15 +912,15 @@ class User extends BaseModel implements IdentityInterface
      * Separate request for the marker utilizing existing implementation.
      *
      * @todo thumb should be done in the background via a queuing system.
-     * @param  string $sourceFile path to source file
+     * @param string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadProfilePhoto($sourceFile)
+    public function uploadProfilePhoto($sourceFile, $extension = 'jpg')
     {
-        $pathInfo = pathinfo($sourceFile);
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.'.$pathInfo['extension'],
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
         ];
@@ -972,14 +972,14 @@ class User extends BaseModel implements IdentityInterface
      *
      * @todo thumb should be done in the background via a queuing system.
      * @param  string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadVehiclePhoto($sourceFile)
+    public function uploadVehiclePhoto($sourceFile, $extension = 'jpg')
     {
-        $pathInfo = pathinfo($sourceFile);
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.'.$pathInfo['extension'],
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern()),
         ];
@@ -999,14 +999,15 @@ class User extends BaseModel implements IdentityInterface
      *
      * @todo thumb should be done in the background via a queuing system.
      * @param  string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadLicensePhoto($sourceFile)
+    public function uploadLicensePhoto($sourceFile, $extension = 'jpg')
     {
-        $pathInfo = pathinfo($sourceFile);
+
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.'.$pathInfo['extension'],
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getLicensePathPattern()),
         ];
 
