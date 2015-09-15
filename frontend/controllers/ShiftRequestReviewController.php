@@ -36,17 +36,27 @@ class ShiftRequestReviewController extends BaseController
         $reviewForm->shiftId = $shiftId;
         if ( $reviewForm->load($post) && $reviewForm->validate() ) {
             $reviewForm->save();
-//            return 'success';
-            $response = Yii::$app->response;
-            $response->format = Response::FORMAT_JSON;
 
-            $viewHtml = $this->shiftRequestReviewDetailView($shift);
+            //check for if it comes from shift-list (assigned page)
+            $header = Yii::$app->request->getReferrer();
+            $pos = strpos($header,'shift-list');
 
-            return [
-                'context' => 'viewHtml',
-                'status' => 'success',
-                'veiwHtml' => $viewHtml,
-               ];
+            //if it comes from the shift-list page.
+            if($pos != false){
+                $response = Yii::$app->response;
+                $response->format = Response::FORMAT_JSON;
+
+                $viewHtml = $this->shiftRequestReviewDetailView($shift);
+
+                return [
+                    'context' => 'viewHtml',
+                    'status' => 'success',
+                    'veiwHtml' => $viewHtml,
+                ];
+            }
+            //else return success. It comes from calendar page.
+            return 'success';
+
             
         } else {
             $shiftRequestReviewId = Yii::$app->request->post('id');
