@@ -65,9 +65,9 @@ if($shiftRequestReviews){
 
         <div class="j_request_link">
             <br/>
-            <a class="btn small j_colorbox"
+            <a class="btn small j_colorbox red-text"
                href="<?= Url::to(['shift-request-review/index', 'shiftId' => $shift->id]); ?>">
-                <?= Yii::t('app', 'Request Review'); ?>
+                <?= Yii::t('app', 'Dispute Orders'); ?>
             </a>
         </div>
 
