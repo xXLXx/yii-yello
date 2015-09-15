@@ -58,41 +58,48 @@ class ImagesController extends \yii\web\Controller
                                 return false;
                             }
 
-                            // Of course,
-                            if (\Yii::$app->user->identity->role->name == Role::ROLE_SUPER_ADMIN) {
+                            $loggedUser = \Yii::$app->user->identity;
+
+                            // Of course, super admin
+                            if ($loggedUser->roleId == 1) {
                                 return true;
                             }
 
                             $userId = \Yii::$app->getRequest()->get('id');
 
                             // Allow himself
-                            if ($userId == \Yii::$app->user->id) {
+                            if ($userId == $loggedUser->id) {
                                 return true;
                             }
 
                             // Allow storeowner
-                            if (\Yii::$app->user->identity->role->name == Role::ROLE_STORE_OWNER) {
+                            if ($loggedUser->roleId == 6) {
                                 $storeIds = UserHasStore::find()->select('storeId')->where(['userId' => \Yii::$app->user->id])->column();
-                                if (empty($storeIds)) {
-                                    return false;
-                                }
+                            }
 
-                                // my drivers
-                                if (count(DriverHasStore::find()->where(['driverId' => $userId, 'storeId' => $storeIds])->count()) > 0) {
-                                    return true;
-                                }
+                            // And the store admin or employee
+                            if ($loggedUser->roleId == 4 || $loggedUser->roleId == 7) {
+                                $storeIds = User::findOne($loggedUser->id)->getAllStores()->select('id')->column();
+                            }
 
-                                // faves
-                                if (count(StoreOwnerFavouriteDrivers::find()->where(['driverId' => $userId, 'storefk' => $storeIds])->count()) > 0) {
-                                    return true;
-                                }
+                            if (empty($storeIds)) {
+                                return false;
+                            }
 
-                                // applied for shifts
-                                if (count(Shift::find()->joinWith(['shiftHasDrivers'], true, 'RIGHT JOIN')
-                                        ->where(['storeId' => $storeIds, 'driverId' => $userId])->count()) > 0) {
-                                    return true;
-                                }
+                            // my drivers
+                            if (count(DriverHasStore::find()->where(['driverId' => $userId, 'storeId' => $storeIds])->count()) > 0) {
+                                return true;
+                            }
 
+                            // faves
+                            if (count(StoreOwnerFavouriteDrivers::find()->where(['driverId' => $userId, 'storefk' => $storeIds])->count()) > 0) {
+                                return true;
+                            }
+
+                            // applied for shifts
+                            if (count(Shift::find()->joinWith(['shiftHasDrivers'], true, 'RIGHT JOIN')
+                                    ->where(['storeId' => $storeIds, 'driverId' => $userId])->count()) > 0) {
+                                return true;
                             }
 
                             return false;

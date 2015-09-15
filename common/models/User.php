@@ -185,6 +185,16 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * All the stores this user has access.
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAllStores()
+    {
+        return $this->storeOwner ? $this->storeOwner->getStores() : $this->getStores();
+    }
+
+    /**
      * @param $stores
      */
     public function setStores($stores)
