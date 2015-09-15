@@ -918,8 +918,9 @@ class User extends BaseModel implements IdentityInterface
      */
     public function uploadProfilePhoto($sourceFile)
     {
+        $pathInfo = pathinfo($sourceFile);
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.'.$pathInfo['extension'],
             '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
         ];
@@ -976,8 +977,9 @@ class User extends BaseModel implements IdentityInterface
      */
     public function uploadVehiclePhoto($sourceFile)
     {
+        $pathInfo = pathinfo($sourceFile);
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.'.$pathInfo['extension'],
             '300' => str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern()),
         ];
@@ -1002,8 +1004,9 @@ class User extends BaseModel implements IdentityInterface
      */
     public function uploadLicensePhoto($sourceFile)
     {
+        $pathInfo = pathinfo($sourceFile);
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.'.$pathInfo['extension'],
             '300' => str_replace('{id}', $this->id, $this->getLicensePathPattern()),
         ];
 
