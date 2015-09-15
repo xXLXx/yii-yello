@@ -247,8 +247,7 @@ class Driver extends User
      */
     public function favouriteForCurrentStore()
     {
-        $store = \Yii::$app->user->getIdentity()->storeOwner->storeCurrent;
-        return $this->favouriteForStore($store->id);
+        return $this->favouriteForStore(\Yii::$app->user->getIdentity()->getStoreCurrent()->id);
     }
 
     /**

@@ -123,19 +123,18 @@ class DriverSearch extends Driver
             
         }
         
-        
+        $currentStoreId = \Yii::$app->user->getIdentity()->getStoreCurrent()->id;
+
         if (!empty($params['category']) && $params['category'] == 'favourites') {
-            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('storeOwnerFavouriteDrivers');
             $query->andFilterWhere(
                 [
-                    'StoreOwnerFavouriteDrivers.storefk' => $storeOwner->getStoreCurrent()->id
+                    'StoreOwnerFavouriteDrivers.storefk' => $currentStoreId
                 ]
             );
         }
 
         if (!empty($params['category']) && $params['category'] == 'all') {
-            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->join('LEFT OUTER JOIN', 'driverHasStore',
                 'driverHasStore.driverId =user.id');     
             $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
@@ -143,23 +142,22 @@ class DriverSearch extends Driver
             
             $query->andFilterWhere(['or',
                 [
-                    'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
+                    'DriverHasStore.storeId' => $currentStoreId,
                     'DriverHasStore.isAcceptedByDriver' => 1,
                     'DriverHasStore.isArchived' => 0
                 ],
                 [
-                    'StoreOwnerFavouriteDrivers.storefk' => $storeOwner->storeCurrent->id,
+                    'StoreOwnerFavouriteDrivers.storefk' => $currentStoreId,
                     'StoreOwnerFavouriteDrivers.isArchived' => 0
                 ]]
             );            
         }
 
         if (!empty($params['category']) && $params['category'] == 'my') {
-            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->joinWith('driverHasStore');
             $query->andFilterWhere(
                 [
-                    'DriverHasStore.storeId' => $storeOwner->storeCurrent->id,
+                    'DriverHasStore.storeId' => $currentStoreId,
                     'DriverHasStore.isAcceptedByDriver' => 1
                 ]
             );
@@ -167,7 +165,6 @@ class DriverSearch extends Driver
 
         if (!empty($params['category']) && $params['category'] == 'uninvited') {
         //if (empty($params['category'])) {
-            $storeOwner = \Yii::$app->user->getIdentity()->storeOwner;
             $query->join('LEFT OUTER JOIN', 'driverHasStore',
                 'driverHasStore.driverId =user.id');     
             $query->join('LEFT OUTER JOIN', 'storeOwnerFavouriteDrivers',
