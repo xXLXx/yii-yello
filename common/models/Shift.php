@@ -9,6 +9,7 @@ use Yii;
 use common\models\search\ShiftSearch;
 use yii\data\ActiveDataProvider;
 use common\helpers\ArrayHelper;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * This is the model class for table "Shift".
@@ -441,6 +442,9 @@ class Shift extends BaseModel
             'driverId' => $driverId,
             'shiftId' => $this->id,
         ]);
+
+        EventNotificationsHelper::cancelShift($driverId, $this->id);
+
         return true;
     }
 
@@ -520,6 +524,16 @@ class Shift extends BaseModel
     public function getShiftHasAccepted()
     {
         return $this->getShiftHasDrivers()->andWhere([
+            'acceptedByStoreOwner' => 1
+        ]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShiftHasAcceptedDriver()
+    {
+        return $this->hasOne(ShiftHasDriver::className(), ['shiftId' => 'id'])->andWhere([
             'acceptedByStoreOwner' => 1
         ]);
     }
@@ -853,6 +867,23 @@ class Shift extends BaseModel
 
         return $this->getShiftRequestReview()
             ->where(['userId' => $userId])
+            ->orderBy('createdAt DESC')
+            ->limit(1)
+            ->one();
+    }
+
+    /**
+     * Gets shift store owner's last request review
+     *
+     * @return ShiftRequestReview|null
+     */
+    public function getLastStoreOwnerShiftRequestReview()
+    {
+        $storeOwner = $this->store->storeOwnerId;
+
+        return $this->getShiftRequestReview()
+            ->where(['userId' => $storeOwner])
+            ->andWhere(['shiftId' => $this->id])
             ->orderBy('createdAt DESC')
             ->limit(1)
             ->one();

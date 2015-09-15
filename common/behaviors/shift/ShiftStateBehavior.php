@@ -10,6 +10,7 @@ use common\models\Shift;
 use common\models\ShiftState;
 use common\models\ShiftStateLog;
 use common\models\DriverHasStore;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * Class ShiftStateBehavior
@@ -64,6 +65,8 @@ class ShiftStateBehavior extends BaseBehavior
         $shift->deliveryCount = $deliveryCount;
         $shift->payment = $payment;
         $shift->update();
+
+        EventNotificationsHelper::approveShift($shift->driverAccepted->id, $shift->id);
     }
     
     /**
@@ -90,7 +93,8 @@ class ShiftStateBehavior extends BaseBehavior
     public function setStateAllocated($driverId)
     {
         $state = ShiftState::STATE_YELLO_ALLOCATED;
-        $storeid = $this->owner->storeId;
+        $shift = $this->owner;
+        $storeid = $shift->storeId;
         // Determine type of allocation
         $my = DriverHasStore::find()->where([
             'driverId' => $driverId,
@@ -105,7 +109,7 @@ class ShiftStateBehavior extends BaseBehavior
         }
 
 
-        $shiftHasDriver = $this->owner->addDriver($driverId);
+        $shiftHasDriver = $shift->addDriver($driverId);
         if(empty($shiftHasDriver))
         {
             return false;
@@ -113,8 +117,14 @@ class ShiftStateBehavior extends BaseBehavior
         $shiftHasDriver->acceptedByStoreOwner = true;
         $shiftHasDriver->update();
         $this->setStateByName($state);
-        $this->owner->update();
+        $shift->update();
 
+        $applicantsNotDeclined = $shift->shiftHasApplicants;
+        foreach ($applicantsNotDeclined as $shiftHasDriver) {
+            EventNotificationsHelper::declineShift($shiftHasDriver->driverId, $shiftHasDriver->shiftId);
+        }
+
+        EventNotificationsHelper::allocateShift($driverId, $shift->id);
     }
     
     /**
@@ -159,8 +169,11 @@ class ShiftStateBehavior extends BaseBehavior
      */
     public function setStateDisputed()
     {
+        $shift = $this->owner;
         $this->setStateByName(ShiftState::STATE_DISPUTED);
         $this->owner->update();
+
+        EventNotificationsHelper::disputeShift($shift->driverAccepted->id, $shift->id);
     }
 
     /**
