@@ -282,9 +282,6 @@ class ShiftListController extends BaseController
             $latest = '';
             $userId = \Yii::$app->user->identity->id;
             $msg = '';
-            $store = $shift->getStore()->one();
-            $timeZone = $store->getTimezone();
-
             if ($shiftRequestReviews) {
                 // get the most recent 2 arguments
                 foreach ($shiftRequestReviews as $review) {
