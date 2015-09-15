@@ -296,6 +296,13 @@ class Store extends BaseModel
         {
             $model->start = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->start);
             $model->end = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->end);
+
+            if(!empty($model->actualStart)){
+                $model->actualStart = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->actualStart);
+            }
+            if(!empty($model->actualEnd)){
+                $model->actualEnd = TimezoneHelper::convertGMTToTimeZone($timeZone,$model->actualEnd);
+            }
         }
         $shiftsDataProvider->setModels($models);
 

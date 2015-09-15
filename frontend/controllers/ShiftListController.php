@@ -61,7 +61,7 @@ class ShiftListController extends BaseController
             if(!empty($shifts)){
                 $firstShift = $shifts[0];
                 $driver = $firstShift->driverAccepted;
-                $viewHtml = $this->returnShift($firstShift, $driver);
+                $viewHtml = $this->returnShiftViewDetail($firstShift, $driver);
             }
 
 
@@ -269,9 +269,12 @@ class ShiftListController extends BaseController
      * @return string viewHtml
      */
 
-    private function returnShift(Shift $shift, $driver ,$isApproved = null)
+    private function returnShiftViewDetail(Shift $shift, $driver = null , $isApproved = null)
     {
         if ($shift) {
+            if(empty($driver)){
+                $driver = $shift->driverAccepted;
+            }
             $deliverycount = $shift->deliveryCount;
             $lastrequest = null;
             $deliveryamount = $shift->payment;
@@ -282,9 +285,6 @@ class ShiftListController extends BaseController
             $latest = '';
             $userId = \Yii::$app->user->identity->id;
             $msg = '';
-            $store = $shift->getStore()->one();
-            $timeZone = $store->getTimezone();
-
             if ($shiftRequestReviews) {
                 // get the most recent 2 arguments
                 foreach ($shiftRequestReviews as $review) {
