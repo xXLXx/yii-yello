@@ -11,9 +11,21 @@ class MessageHelper
     const SENTVIA_SMS = 'sms';
     const SENTVIA_WEBAPP = 'webapp';
 
-    const MESSAGETYPE_SHIFTNOTIF = 'Shift Notification';
-    const MESSAGETYPE_STORENOTIF = 'Store Notification';
-    const MESSAGETYPE_CALLTOACTION = 'Call to Action';
+//    const MESSAGETYPE_SHIFTNOTIF = 'Shift Notification';
+//    const MESSAGETYPE_STORENOTIF = 'Store Notification';
+//    const MESSAGETYPE_CALLTOACTION = 'Call to Action';
+
+    /*
+     * The MESSAGETYPE_* is the type of the receiver of the message(Notification). It will go to messagetype column of the message
+     * table, if it is 'driver', it means that the idrecipuser is the user id of the driver. If it is 'store', it means that the
+     * idrecipuser is the Store id.
+     *
+     *
+     * */
+    const MESSAGETYPE_USER = 'user';
+    const MESSAGETYPE_DRIVER = 'driver';
+    const MESSAGETYPE_STORE = 'store';
+
 
     /*
      *  notifyUser

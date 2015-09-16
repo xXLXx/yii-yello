@@ -262,12 +262,20 @@ class EventNotificationsHelper extends MessageHelper
             }
         }
 
-        $messageType = self::MESSAGETYPE_SHIFTNOTIF;
         switch ($notificationType) {
+
+            case self::NOTIFTTYPE_SHIFTAPPROVED:
+            case self::NOTIFTTYPE_SHIFTDECLINED:
+            case self::NOTIFTTYPE_PAYMENTPROCESSED:
+            case self::NOTIFTTYPE_SHIFTDISPUTED:
+            case self::NOTIFTTYPE_SHIFTALLOCATED:
+            case self::NOTIFTTYPE_SHIFTCANCELLED:
             case self::NOTIFTTYPE_STOREINVITATION:
             case self::NOTIFTTYPE_STOREDISCONNECTED:
-                $messageType = self::MESSAGETYPE_STORENOTIF;
+                $messageType = self::MESSAGETYPE_DRIVER;
                 break;
+            default:
+                $messageType = self::MESSAGETYPE_USER;
         }
 
         self::notifyUser($channelPostfix, $notificationType, self::SENTVIA_PUBNUB, 'None', 'System', $messageType, null, json_encode($message), 0, $messageSentUTC);
