@@ -90,6 +90,8 @@ $(document).ready(function() {
                     $('.j_placeholder').each(function() {
                         new Placeholder($(this));
                     });
+
+                    $('#colorbox').find('.j_focus').focus();
                 }
             }
             $(".j_colorbox").colorbox(colorboxParams);
