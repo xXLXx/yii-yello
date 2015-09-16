@@ -64,7 +64,7 @@ class EventNotificationsHelper extends MessageHelper
             $driverId,
             ['shift_id' => "$shiftId"],
             self::NOTIFTTYPE_SHIFTDECLINED,
-            $shift->store->title . ' has declined your application. Sorry :( ' . $shift->start
+            'Sorry,' . $shift->store->title . ' Has awarded this application to another driver :(' . $shift->start
         );
     }
 
