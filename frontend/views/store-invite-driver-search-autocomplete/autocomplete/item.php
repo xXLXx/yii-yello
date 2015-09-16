@@ -8,5 +8,6 @@
         <div>
             <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings]); ?>
         </div>
+        <div class="rating-overlay"></div>
     </div>
 </div>

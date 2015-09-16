@@ -171,3 +171,11 @@ background-color:#FFFFFF;
     padding-top: 3px;
     height: 32px;
 }
+
+.rating-overlay {
+    height: 19px;
+    position: relative;
+    top: -19px;
+    margin-bottom: -19px;
+    z-index: 100;
+}
