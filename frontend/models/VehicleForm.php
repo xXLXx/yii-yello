@@ -70,7 +70,7 @@ class VehicleForm extends Model
         file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('vehiclePhotoFile' . PHP_EOL, true), FILE_APPEND);
         $vehiclePhotoFile = UploadedFile::getInstanceByName('vehiclePhotoFile');
         if (!empty($vehiclePhotoFile)) {
-            $user->uploadVehiclePhoto($vehiclePhotoFile->tempName);
+            $user->uploadVehiclePhoto($vehiclePhotoFile->tempName, $vehiclePhotoFile->extension);
         }
 //        if ($image->imageFile) {
 //            $image->saveFiles();
@@ -84,7 +84,7 @@ class VehicleForm extends Model
 //        $image = new Image();
         $licensePhotoFile = UploadedFile::getInstanceByName('licensePhotoFile');
         if (!empty($licensePhotoFile)) {
-            $user->uploadLicensePhoto($licensePhotoFile->tempName);
+            $user->uploadLicensePhoto($licensePhotoFile->tempName, $licensePhotoFile->extension);
         }
 //        if ($image->imageFile) {
 //            $image->saveFiles();
