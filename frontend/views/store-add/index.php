@@ -40,15 +40,23 @@ $this->registerJs('ImageUploadPreview.init();');
                 </div>
                 <div class="row">
                     <?= $form->field($model, 'businessHours',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->textarea(); ?>
-                    <?= $form->field($model, 'storeProfile',['options'=>['class'=>'form-group col-sm-12 col-md-6']])->textarea(); ?>
+                    <?= $form->field($model, 'storeProfile',['options'=>['class'=>'form-group col-sm-12 col-md-12']])->textarea(['rows' => 4]); ?>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="user-photo-container">
-                    <img class="j_image-file-destination" src="/img/store_image.png"/>
+                <label><?= Yii::t('app', 'Logo'); ?></label>
+                <div class="user-photo-container big">
+
+                    <?php if($model->id): ?>
+                        <img class="j_image-file-destination" src="/images/store/logo/<?= $model->id; ?>"/>
+                    <?php else: ?>
+                        <img class="j_image-file-destination" src="/img/store_image.png"/>
+                    <?php endif; ?>
                 </div>
+                <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
                 <div class="upload-file">
                     <div class="blue-text">Upload logo</div>
+
                     <?=
                     Html::activeFileInput($model, 'imageFile', [
                         'class' => 'j_image-file-input',
@@ -56,6 +64,7 @@ $this->registerJs('ImageUploadPreview.init();');
                     ]);
                     ?>
                 </div>
+
             </div>
         </div>
         <div class="border-top-block">
