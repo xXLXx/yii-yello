@@ -879,14 +879,16 @@ class Shift extends BaseModel
      */
     public function getLastStoreOwnerShiftRequestReview()
     {
-        $storeOwner = $this->store->storeOwnerId;
-
-        return $this->getShiftRequestReview()
-            ->where(['userId' => $storeOwner])
-            ->andWhere(['shiftId' => $this->id])
+        $LastRequestReview = ShiftRequestReview::find()
+            ->innerJoin('shifthasdriver')
+            ->where([
+            'shiftrequestreview.shiftId' => $this->id,
+            ])
+            ->andWhere(['NOT IN','shiftrequestreview.userId','shifthasdriver.driverId'])
             ->orderBy('createdAt DESC')
             ->limit(1)
             ->one();
+        return $LastRequestReview;
     }
 
 
