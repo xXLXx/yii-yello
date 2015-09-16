@@ -15,6 +15,7 @@ use common\models\UserDriver;
 use frontend\models\NoteForm;
 use frontend\models\StoreInviteDriverForm;
 use yii\helpers\Json;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * Driver list controller
@@ -134,6 +135,8 @@ class DriversController extends BaseController
             ]
         );
         $driverHasStore->delete();
+
+        EventNotificationsHelper::storeDisconnect($driver->id, $storeId);
 
         return Json::encode([
             'success' => true

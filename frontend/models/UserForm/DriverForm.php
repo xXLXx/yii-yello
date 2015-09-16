@@ -76,9 +76,9 @@ class DriverForm extends UserForm
 
             file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export(  PHP_EOL.'Image:' . PHP_EOL, true), FILE_APPEND);
 
-            $imageFile = UploadedFile::getInstance($this, 'imageFile');
+            $imageFile = UploadedFile::getInstanceByName('imageFile');
             if (!empty($imageFile)) {
-                $url = $user->uploadProfilePhoto($imageFile->tempName);
+                $url = $user->uploadProfilePhoto($imageFile->tempName, $imageFile->extension);
             } else {
                 $temporaryFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('profile', true).'.png';
                 file_put_contents($temporaryFile, file_get_contents(Url::to(['/tracking/get-user-initials', 'id' => $user->id], true), false,
@@ -88,7 +88,7 @@ class DriverForm extends UserForm
                             'verify_peer_name' => false,
                         ]
                     ])));
-                $user->uploadProfilePhoto($temporaryFile);
+                $user->uploadProfilePhoto($temporaryFile, 'png');
             }
 
             $user->firstName = $this->firstName;

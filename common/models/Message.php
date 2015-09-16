@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "message".
@@ -22,6 +23,21 @@ use Yii;
  */
 class Message extends \yii\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    self::EVENT_BEFORE_INSERT => ['createdUTC'],
+                ],
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */

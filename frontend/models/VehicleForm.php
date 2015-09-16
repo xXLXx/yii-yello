@@ -66,28 +66,34 @@ class VehicleForm extends Model
         }
         $vehicle->setAttributes($this->getAttributes());
 //        if (isset($_FILES['vehiclePhotoFile'])) {
-            $image = new Image();
-            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('vehiclePhotoFile' . PHP_EOL, true), FILE_APPEND);
-                $image->imageFile = UploadedFile::getInstanceByName('vehiclePhotoFile');
-            if ($image->imageFile) {
-                $image->saveFiles();
-                $image->save();
-                $vehicle->imageId = $image->id;
-            }
-                file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
+//        $image = new Image();
+        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('vehiclePhotoFile' . PHP_EOL, true), FILE_APPEND);
+        $vehiclePhotoFile = UploadedFile::getInstanceByName('vehiclePhotoFile');
+        if (!empty($vehiclePhotoFile)) {
+            $user->uploadVehiclePhoto($vehiclePhotoFile->tempName, $vehiclePhotoFile->extension);
+        }
+//        if ($image->imageFile) {
+//            $image->saveFiles();
+//            $image->save();
+//            $vehicle->imageId = $image->id;
 //        }
-            $userDriver->driverLicenseNumber = $this->licenseNumber;
+//        file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
+//        }
+        $userDriver->driverLicenseNumber = $this->licenseNumber;
 //            file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export('licensePhotoFile' . PHP_EOL, true), FILE_APPEND);
-            $image = new Image();
-                $image->imageFile = UploadedFile::getInstanceByName('licensePhotoFile');
-            if ($image->imageFile) {
-                $image->saveFiles();
-                $image->save();
-                $vehicle->licensePhotoId = $image->id;
-                $userDriver->driverLicensePhoto = $image->id;
-            }
+//        $image = new Image();
+        $licensePhotoFile = UploadedFile::getInstanceByName('licensePhotoFile');
+        if (!empty($licensePhotoFile)) {
+            $user->uploadLicensePhoto($licensePhotoFile->tempName, $licensePhotoFile->extension);
+        }
+//        if ($image->imageFile) {
+//            $image->saveFiles();
+//            $image->save();
+//            $vehicle->licensePhotoId = $image->id;
+//            $userDriver->driverLicensePhoto = $image->id;
+//        }
 //                file_put_contents(\Yii::$app->basePath . '/../frontend/runtime/logs/driverApiLog.txt', var_export($image->imageFile, true), FILE_APPEND);
-        
+
         $vehicle->save();
         $this->licensePhoto = $vehicle->licensePhoto;
         $this->vehiclePhoto = $vehicle->image;

@@ -185,6 +185,16 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
+     * All the stores this user has access.
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAllStores()
+    {
+        return $this->storeOwner ? $this->storeOwner->getStores() : $this->getStores();
+    }
+
+    /**
      * @param $stores
      */
     public function setStores($stores)
@@ -902,14 +912,15 @@ class User extends BaseModel implements IdentityInterface
      * Separate request for the marker utilizing existing implementation.
      *
      * @todo thumb should be done in the background via a queuing system.
-     * @param  string $sourceFile path to source file
+     * @param string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadProfilePhoto($sourceFile)
+    public function uploadProfilePhoto($sourceFile, $extension = 'jpg')
     {
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('profile').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getProfilePhotoPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getProfilePhotoThumbPathPattern()),
         ];
@@ -961,13 +972,14 @@ class User extends BaseModel implements IdentityInterface
      *
      * @todo thumb should be done in the background via a queuing system.
      * @param  string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadVehiclePhoto($sourceFile)
+    public function uploadVehiclePhoto($sourceFile, $extension = 'jpg')
     {
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('vehicle').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getVehicleRegistrationPathPattern()),
             '100' => str_replace('{id}', $this->id, $this->getVehicleRegistrationThumbPathPattern()),
         ];
@@ -987,13 +999,15 @@ class User extends BaseModel implements IdentityInterface
      *
      * @todo thumb should be done in the background via a queuing system.
      * @param  string $sourceFile path to source file
+     * @param string $extension
      * @return mixed
      * @throws \Exception
      */
-    public function uploadLicensePhoto($sourceFile)
+    public function uploadLicensePhoto($sourceFile, $extension = 'jpg')
     {
+
         $sizes = [
-            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.png',
+            'original' => '/userfiles/'.$this->id.'/'.uniqid('license').'.'.$extension,
             '300' => str_replace('{id}', $this->id, $this->getLicensePathPattern()),
         ];
 

@@ -12,6 +12,7 @@ use yii\helpers\Json;
 use common\models\Shift;
 use common\services\ShiftCalendarService;
 use yii\web\Response;
+use common\helpers\EventNotificationsHelper;
 
 /**
  * Shifts calendar controller
@@ -114,6 +115,8 @@ class ShiftsCalendarController extends BaseController {
         $shift = Shift::findOne($shiftId);
         if ($shift) {
             $shift->delete();
+            
+            EventNotificationsHelper::cancelShift($shift->shiftHasAcceptedDriver->driverId, $shift->id);
         }
 
         \Yii::$app->response->format = Response::FORMAT_JSON;

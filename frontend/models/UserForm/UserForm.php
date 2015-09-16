@@ -102,7 +102,7 @@ class UserForm extends AbstractForm
 
         $imageFile = UploadedFile::getInstance($this, 'imageFile');
         if (!empty($imageFile)) {
-            $url = $user->uploadProfilePhoto($imageFile->tempName);
+            $url = $user->uploadProfilePhoto($imageFile->tempName, $imageFile->extension);
         }
     }
     

@@ -120,11 +120,11 @@ class DriverSignupStep2 extends Model
             }
 
             if ($this->vehiclePhotoFile) {
-                $user->uploadVehiclePhoto($this->vehiclePhotoFile->tempName);
+                $user->uploadVehiclePhoto($this->vehiclePhotoFile->tempName, $this->vehiclePhotoFile->extension);
             }
 
             if ($this->licensePhotoFile) {
-                $user->uploadLicensePhoto($this->licensePhotoFile->tempName);
+                $user->uploadLicensePhoto($this->licensePhotoFile->tempName, $this->licensePhotoFile->extension);
             }
 
             $userDriver = UserDriver::findOneOrCreate(['userId' => $user->id]);
