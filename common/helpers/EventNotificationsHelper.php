@@ -251,7 +251,16 @@ class EventNotificationsHelper extends MessageHelper
     		]
     	] + $extraAttrs;
 
-		$pubnub->publish(self::$channelPrefix . $channelPostfix, $message);
+		$info = $pubnub->publish(self::$channelPrefix . $channelPostfix, $message);
+
+        $messageSentUTC = null;
+
+        if(!empty($info) && isset($info[1]) && isset($info[2])){
+
+            if($info[1] == 'Sent'){
+                $messageSentUTC = substr($info[2],0,10);
+            }
+        }
 
         $messageType = self::MESSAGETYPE_SHIFTNOTIF;
         switch ($notificationType) {
@@ -261,6 +270,6 @@ class EventNotificationsHelper extends MessageHelper
                 break;
         }
 
-        self::notifyUser($channelPostfix, $notificationType, self::SENTVIA_PUBNUB, 'None', 'System', $messageType, null, json_encode($message), 0);
+        self::notifyUser($channelPostfix, $notificationType, self::SENTVIA_PUBNUB, 'None', 'System', $messageType, null, json_encode($message), 0, $messageSentUTC);
     }
 }

@@ -21,7 +21,7 @@ class MessageHelper
      * $supercedes can nominate previous unsent messages to be cancelled.
      */
     
-    public static function notifyUser($recipuserid, $messagetext, $sentVia, $calltoaction = 'None', $origin = 'System', $messagetype = 'Notice', $supercedes = null, $messagejson = '', $expiresUTC = 0)
+    public static function notifyUser($recipuserid, $messagetext, $sentVia, $calltoaction = 'None', $origin = 'System', $messagetype = 'Notice', $supercedes = null, $messagejson = '', $expiresUTC = 0, $sentUTC = null)
     {
     	$message = new Message();
     	$message->idrecipuser = $recipuserid;
@@ -32,6 +32,7 @@ class MessageHelper
     	$message->sentVia = $sentVia;
     	$message->calltoaction = $calltoaction;
     	$message->expiresUTC = $expiresUTC;
+        $message->sentUTC = $sentUTC;
     	
     	return $message->save();
     }
