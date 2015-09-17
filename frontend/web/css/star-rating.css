@@ -173,9 +173,10 @@ background-color:#FFFFFF;
 }
 
 .rating-overlay {
-    height: 19px;
-    position: relative;
-    top: -19px;
-    margin-bottom: -19px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 100;
 }
