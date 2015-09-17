@@ -1286,3 +1286,8 @@ a.blue-text {text-decoration:none;}
     padding-bottom: 50px;
     padding-top: 50px;
 }
+
+.upload-file input[type="file"] {
+    cursor: pointer !important;
+    margin-left: -80px;
+}
