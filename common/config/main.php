@@ -97,7 +97,7 @@ return [
 //            'viewPath' => '@common/mail',
         'class' => 'nickcv\mandrill\Mailer',
         'apikey' => 'e7c09BIEVFQb8vkz9hJshQ',
-            'useMandrillTemplates' => true,
+//            'useMandrillTemplates' => true,
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.

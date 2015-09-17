@@ -141,7 +141,7 @@ class SiteController extends BaseController
     }
 
     public function actionContact()
-    {
+    {  
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -180,6 +180,13 @@ class SiteController extends BaseController
                 'model' => $model,
             ]);
         }
+        $vlink = Yii::$app->urlManager->createAbsoluteUrl(
+                        [
+                            'site/confirm',
+                            'id'  => $user->id,
+                            'key' => $user->authKey
+                        ]
+                    );
         
          $email = EmailHelper::sendEmail('verifynewaccount',
             [
@@ -189,15 +196,14 @@ class SiteController extends BaseController
             [
             'FNAME' => $user->firstName,
             'LNAME' => $user->lastName,
+            'LONG_VERIFY_LINK' => Html::a(
+                    $vlink,
+                   $vlink,
+                    ['target' => '_blank']
+                ),
             'VERIFY_LINK' => Html::a(
                     'Verify',
-                    Yii::$app->urlManager->createAbsoluteUrl(
-                        [
-                            'site/confirm',
-                            'id'  => $user->id,
-                            'key' => $user->authKey
-                        ]
-                    ),
+                  $vlink,
                     ['target' => '_blank']
                 )
         ]);
@@ -239,24 +245,36 @@ class SiteController extends BaseController
             );
         }
 
-        $email = Yii::$app->mailer->compose()
-            ->setTo($user->email)
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setSubject('Signup Confirmation')
-            ->setHtmlBody(
-                "Click this link " . Html::a(
-                    'Confirm',
-                    Yii::$app->urlManager->createAbsoluteUrl(
+        $vlink = Yii::$app->urlManager->createAbsoluteUrl(
                         [
                             'site/confirm',
                             'id'  => $user->id,
                             'key' => $user->authKey
                         ]
-                    ),
+                    );
+        
+         $email = EmailHelper::sendEmail('verifynewaccount',
+            [
+                'email' => $user->email,
+                'name' => $user->firstName
+            ],
+            [
+            'FNAME' => $user->firstName,
+            'LNAME' => $user->lastName,
+            'LONG_VERIFY_LINK' => Html::a(
+                    $vlink,
+                   $vlink,
+                    ['target' => '_blank']
+                ),
+            'VERIFY_LINK' => Html::a(
+                    'Verify',
+                  $vlink,
                     ['target' => '_blank']
                 )
-            )
-            ->send();
+        ]);
+    
+        
+        
         if ($email) {
             Yii::$app->getSession()->setFlash('success',
                 'An email with an activation link has been sent to your email. Please check your email and click on the link to activate your account. Check your spam if not received and be sure to add @driveyello.com to your safe email list.<br><br>Click "Resend Verification" to resend activation email.'
