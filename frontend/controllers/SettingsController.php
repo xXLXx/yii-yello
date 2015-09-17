@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\helpers\ArrayHelper;
+use common\helpers\EmailHelper;
 use common\models\Role;
 use common\models\User;
 use frontend\models\Exception\UserStoreOwnerUndefinedException;
@@ -63,9 +64,9 @@ class SettingsController extends BaseController
     }
     
     public function actionTest(){
-        $to='mark@pottie.com';
+        $to='anorouzi69@gmail.com';
         $template= 'adding-user-to-a-store';
-        
+
         if(isset($_GET['to'])){
             $to=$_GET['to'];
         }
@@ -73,15 +74,25 @@ class SettingsController extends BaseController
         if(isset($_GET['template'])){
             $tempate=$_GET['template'];
         }
-        
-        
-        
-        \Yii::$app->mailer
-            ->compose($template,$model=array('name'=>'FNAME','content'=>'Fuey'))
-            ->setTo($to)
-            ->send();      
-        
-        return  $this->render('test');
+
+        $sent = EmailHelper::sendEmail($template,
+            [
+                'email' => $to,
+                'name' => 'Alireza'
+            ],
+            [
+            'FNAME' => 'Alireza',
+            'STNAME' => 'YelloStore',
+            'PWRESETLK' => Yii::$app->urlManager->createAbsoluteUrl('site/index')
+        ]);
+
+
+        if($sent){
+            return  $this->render('test');
+        }else{
+            var_dump($sent);
+        }
+
     }
     
 
