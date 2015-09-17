@@ -154,7 +154,7 @@ $this->title = \Yii::t('app', 'Company Details');
             </table>
             <div class="company-logo">
                 <div class="company-logo-container no-photo f-left">
-                    <img src="/images/profile-thumb/<?= $model->id; ?>" class="j_image-file-destination">
+                    <img src="/images/profile-thumb/<?= $model->id; ?>" class="j_image-file-destination"   onError="this.onerror=null;this.src='/img/Driver_Pic_bgrey_black.png';" >
                 </div>
                 <div class="company-info">
                     <h5><?= Yii::t('app', 'Logo'); ?></h5>

@@ -21,5 +21,5 @@
 <div class="user-photo-container f-left">
   
     <img src="/images/profile-thumb/<?= $driver->id; ?>"
-        alt="<?= $driver->username ?>" title="<?= $driver->username ?>" />
+        alt="<?= $driver->username ?>" title="<?= $driver->username ?>"  onError="this.onerror=null;this.src='/img/Driver_Pic_bgrey_black.png';"  />
 </div>
