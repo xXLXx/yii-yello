@@ -5,8 +5,7 @@
     </div>
     <div class="user-photo-info">
         <div><?= $driver->username ?>, <span class="middle-gray-text">ID <?= $driver->id ?></span></div>
-        <div>
-            <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings, 'id' => 'rating' . $driver->id]); ?>
-        </div>
+        <?php echo \kartik\rating\StarRating::widget(['value' => $driver->ratings, 'id' => 'rating' . $driver->id]); ?>
+        <div class="rating-overlay"></div>
     </div>
 </div>
