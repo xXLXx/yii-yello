@@ -12,6 +12,7 @@ use yii\base\InvalidParamException;
 use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\filters\AccessControl;
+use common\helpers\EmailHelper;
 use yii\web\JsonResponseFormatter;
 use yii\web\Response;
 
@@ -179,13 +180,17 @@ class SiteController extends BaseController
                 'model' => $model,
             ]);
         }
-        $email = Yii::$app->mailer->compose()
-            ->setTo($user->email)
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setSubject('Signup Confirmation')
-            ->setHtmlBody(
-                "Click this link " . Html::a(
-                    'Confirm',
+        
+         $email = EmailHelper::sendEmail('verifynewaccount',
+            [
+                'email' => $user->email,
+                'name' => $user->firstName
+            ],
+            [
+            'FNAME' => $user->firstName,
+            'LNAME' => $user->lastName,
+            'VERIFY_LINK' => Html::a(
+                    'Verify',
                     Yii::$app->urlManager->createAbsoluteUrl(
                         [
                             'site/confirm',
@@ -195,8 +200,8 @@ class SiteController extends BaseController
                     ),
                     ['target' => '_blank']
                 )
-            )
-            ->send();
+        ]);
+        
         if ($email) {
             Yii::$app->getSession()->setFlash('success',
                 'An email with an activation link has been sent to your email. Please check your email and click on the link to activate your account. Check your spam if not received and be sure to add @driveyello.com to your safe email list.<br><br>Click "Resend Verification" to resend activation email.'
