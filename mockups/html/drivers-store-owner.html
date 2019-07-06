@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Drivers Store Owner / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/colorbox.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2 active" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="header-panel">
+                    <div class="inline-header-block align-top">
+                        <h2>Drivers</h2>
+                    </div>
+                    <div class="inline-header-block align-top">
+                        <div class="filter-btn">
+                            <div class="item active">
+                                All drivers
+                            </div>
+                            <div class="item">
+                                My Drivers
+                            </div>
+                            <div class="item">
+                                Favourites
+                            </div>
+                        </div>
+                        <div class="inline-header-block">
+                            <div class="toggle-popup-container j_toggle_container">
+                                <a class="btn blue small j_toggle_link">
+                                    <span class="font-filter"></span>
+                                    Filter
+                                </a>
+                                <div class="toggle-popup width-326 j_toggle_block">
+                                    <table class="profile-settings">
+                                        <col width="40%"/>
+                                        <tr>
+                                            <td>
+                                                <label>Vehicle type</label>
+                                                <div>
+                                                    <div class="checkbox-input"><input id="schedule-1" value="" type="checkbox" checked="checked"><label class="j_checkbox active" for="schedule-1">Car</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="checkbox-input"><input id="schedule-5" value="" type="checkbox" checked="checked"><label class="j_checkbox active" for="schedule-5">Bike</label></div>
+                                                </div>
+                                                <br/>
+                                                <label>Availability</label>
+                                                <div>
+                                                    <div class="checkbox-input"><input id="schedule-6" value="" type="checkbox" checked="checked"><label class="j_checkbox active" for="schedule-6">Shift</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="checkbox-input"><input id="schedule-7" value="" type="checkbox" checked="checked"><label class="j_checkbox active" for="schedule-7">Roamer</label></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <label>Rating</label>
+                                                <div class="j_radio_container">
+                                                    <div class="radio-input"><input id="rating-1" name="rating" value="" type="radio" checked="checked"><label class="j_radio active" for="rating-1">Doesn't matter</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="radio-input"><input id="rating-2" name="rating" value="" type="radio"><label class="j_radio" for="rating-2">1 star</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="radio-input"><input id="rating-3" name="rating" value="" type="radio"><label class="j_radio" for="rating-3">2 stars</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="radio-input"><input id="rating-4" name="rating" value="" type="radio"><label class="j_radio" for="rating-4">3 stars</label></div>
+                                                    <div class="clear"></div>
+                                                    <div class="radio-input"><input id="rating-5" name="rating" value="" type="radio"><label class="j_radio" for="rating-5">More than 4 stars</label></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <input id="search" class="text-input small search j_placeholder" type="text" alt="Search" onclick="$('.j_search_link').toggle();" />
+                        </div>
+                    </div>
+                    <div class="f-right">
+                        <a href="driver-profile-store-owner-add-driver.html" class="btn blue small j_colorbox"><span class="round-btn font-plus white"></span>Invite Driver</a>
+                    </div>
+                </div>
+                <div class="header-panel-results j_search_link">
+                    <div class="inline-header-block">
+                        <div><b>1223</b> Drivers found for: "John Smith"</div>
+                    </div>
+                    <div class="inline-header-block">
+                        <div class="inline-block">Filter option:</div>
+                        <div class="inline-block">
+                            <div class="label">
+                                Vehicle: Car
+                                <a href="#" class="round-btn font-x"></a>
+                            </div>
+                            <div class="label">
+                                Minimal rating: 2
+                                <a href="#" class="round-btn font-x"></a>
+                            </div> 
+                        </div>
+                        <div class="inline-block"><a href="#">Clear filter</a></div>
+                    </div> 
+                </div>
+                <div class="header-panel-results j_search_link" style="display:none;">
+                    <div class="inline-header-block">
+                        <div class="inline-block">Filter option:</div>
+                        <div class="inline-block">
+                            <div class="label">
+                                Vehicle: Car
+                                <a href="#" class="round-btn font-x"></a>
+                            </div>
+                            <div class="label">
+                                Minimal rating: 2
+                                <a href="#" class="round-btn font-x"></a>
+                            </div> 
+                        </div>
+                        <div class="inline-block"><a href="#">Clear filter</a></div>
+                    </div> 
+                </div>
+                
+                <table class="border-table big-padding align-top j_search_link">
+                    <thead>
+                        <tr>
+                            <th><strong>Driver</strong></th>
+                            <th><strong>Payments</strong></th>
+                            <th><strong>Vehicle</strong></th>
+                            <th><strong>Availability</strong></th>
+                            <th><strong>Achivements</strong></th>
+                            <th width="30%"><strong>Locations</strong></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="driver-info">
+                                    <div class="user-photo-container f-left"><a href="driver-profile-store-owner.html"><img src="img/temp/01.jpg" alt="John" /></a></div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <div class="name"><a href="driver-profile-store-owner.html">John Smith</a></div>
+                                            <div class="state green">Available</div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                                <span class="grey">ID #332211</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Yello</td>
+                            <td>Bike</td>
+                            <td>Shift, Roamer</td>
+                            <td>
+                                <div class="achivements-list">
+                                    <div class="item check"></div>
+                                </div>
+                            </td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </td>
+                            <td class="info-button-cell">
+                                <div class="info-panel f-right">
+                                    <span class="info-link" title="Info"></span>
+                                    <div class="info-popup width-175">
+                                        <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                                        <div class="info-item font-letter-mail">Email</div>
+                                        <a href="driver-profile-store-owner-add-note.html" class="info-item font-edit-write">Add Note</a>
+                                        <div class="info-item font-star-two">Add to Favourites</div>
+                                        <div class="info-item font-dollar">Change payment method</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>
+                                <div class="driver-info">
+                                    <div class="user-photo-container f-left"><a href="driver-profile-store-owner.html"><img src="img/temp/01.jpg" alt="John" /></a></div>
+                                    <div class="user-panel-button">
+                                        <span class="font-star-two"></span>
+                                    </div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <div class="name"><a href="driver-profile-store-owner.html">John Loreipsum</a></div>
+                                            <div class="state red">Booked</div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                                <span class="grey">ID #332211</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Yello</td>
+                            <td>Bike</td>
+                            <td>Shift, Roamer</td>
+                            <td>
+                                <div class="achivements-list">
+                                    <div class="item check"></div>
+                                </div>
+                            </td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </td>
+                            <td class="info-button-cell">
+                                <div class="info-panel f-right">
+                                    <span class="info-link" title="Info"></span>
+                                    <div class="info-popup width-175">
+                                        <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                                        <div class="info-item font-letter-mail">Email</div>
+                                        <a href="driver-profile-store-owner-add-note.html" class="info-item font-edit-write">Add Note</a>
+                                        <div class="info-item font-star-two">Add to Favourites</div>
+                                        <div class="info-item font-dollar">Change payment method</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="driver-info">
+                                    <div class="user-photo-container f-left"><a href="driver-profile-store-owner.html"><img src="img/temp/01.jpg" alt="John" /></a></div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <div class="name"><a href="driver-profile-store-owner.html">John Loreipsum</a></div>
+                                            <div class="state purple">Roaming</div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                                <span class="grey">ID #332211</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Yello</td>
+                            <td>Bike</td>
+                            <td>Shift, Roamer</td>
+                            <td>
+                                <div class="achivements-list">
+                                    <div class="item check"></div>
+                                </div>
+                            </td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </td>
+                            <td class="info-button-cell">
+                                <div class="info-panel f-right">
+                                    <span class="info-link" title="Info"></span>
+                                    <div class="info-popup width-175">
+                                        <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                                        <div class="info-item font-letter-mail">Email</div>
+                                        <a href="driver-profile-store-owner-add-note.html" class="info-item font-edit-write">Add Note</a>
+                                        <div class="info-item font-star-two">Add to Favourites</div>
+                                        <div class="info-item font-dollar">Change payment method</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="driver-info">
+                                    <div class="user-photo-container f-left"><a href="driver-profile-store-owner.html"><img src="img/temp/01.jpg" alt="John" /></a></div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <div class="name"><a href="driver-profile-store-owner.html">John Loreipsum</a></div>
+                                            <div class="state purple">Roaming</div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                                <span class="grey">ID #332211</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Yello</td>
+                            <td>Bike</td>
+                            <td>Shift, Roamer</td>
+                            <td>
+                                <div class="achivements-list">
+                                    <div class="item check"></div>
+                                </div>
+                            </td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </td>
+                            <td class="info-button-cell">
+                                <div class="info-panel f-right">
+                                    <span class="info-link" title="Info"></span>
+                                    <div class="info-popup width-175">
+                                        <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                                        <div class="info-item font-letter-mail">Email</div>
+                                        <a href="driver-profile-store-owner-add-note.html" class="info-item font-edit-write">Add Note</a>
+                                        <div class="info-item font-star-two">Add to Favourites</div>
+                                        <div class="info-item font-dollar">Change payment method</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>                                                                                                
+                    </tbody>
+                </table>
+                <div class="pagination clearfix j_search_link">
+                    <span class="font-chevron-left arrow"></span>
+                    <a href="#" class="font-chevron-left arrow"></a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <span class="active">4</span>
+                    <span>...</span>
+                    <a href="#">8</a>
+                    <a href="#" class="font-chevron-right arrow"></a>
+                    <span class="font-chevron-right arrow"></span>
+                </div>
+                <div class="loading-block height-245 center j_search_link" style="display:none;">
+                    <h3 class="loading-inner gray-text">Sorry, No matches found.</h3>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

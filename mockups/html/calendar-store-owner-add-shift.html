@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Calendar Add Shift / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/weather-icons.css" type="text/css" />
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+        <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2 active" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="sidebar-container sidebar-actions">
+                    <div class="col-left">
+                        <h2>Add Shifts</h2>
+                        <div class="assigned-shifts-filter">
+                            <div class="input-wrapp date">
+                                <div class="text-block">Date</div>
+                                <input type="text" class="text-input small j_placeholder" alt="Select date" />
+                            </div>
+                            <div class="input-wrapp time">
+                                <div class="text-block">Time</div>
+                                <select class="select-70 j_select">
+                                    <option value="0">Start</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                                <select class="select-70 j_select f-right">
+                                    <option value="0">End</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                                <div class="text-block f-right">&ndash;</div>
+                                <div class="tooltip right">
+                                    <div class="text-icon font-exclamation-triangle icon-orange">Min. duration 3 hours.<br/>Please change time range.</div>
+                                </div>
+                            </div>
+                            <div class="middle-gray-text">Min. duration 3 hours</div>
+                            <div class="inline-input-block">
+                                <label class="bold-text">Vehicle</label>
+                                <div class="j_radio_container">
+                                    <div class="radio-input"><input id="vehicle-1" name="vehicle" value="" type="radio"><label class="j_radio" for="vehicle-1">Driver Owned</label></div>
+                                    <div class="radio-input"><input id="vehicle-2" name="vehicle" value="" type="radio" checked="checked"><label class="j_radio active" for="vehicle-2">Provided</label></div>
+                                </div>
+                            </div>
+                            <div class="inline-input-block">
+                                <label class="bold-text">Driver</label>
+                                <div class="checkbox-input"><input id="driver-1" value="" type="checkbox"><label class="j_checkbox" for="driver-1">Yello</label></div>
+                                <div class="checkbox-input"><input id="driver-2" value="" type="checkbox"><label class="j_checkbox" for="driver-2">Favourites</label></div>
+                                <div class="checkbox-input"><input id="driver-3" value="" type="checkbox" checked="checked"><label class="j_checkbox active" for="driver-3">My Driver(s)</label></div>
+                            </div>
+                            <input id="search" class="text-input small search j_placeholder" type="text" alt="Search driver and assign" onclick="$('.j_search_select').show(); $('.j_scrollpane').jScrollPane();"/>
+                            <div style="position:relative;">
+                                <div class="search-select-popup j_scrollpane j_search_select" style="display:none;">
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left no-photo"></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-select-item" onclick="$('.j_search_select').hide(); $('.j_search_select_drivers').show(); $('.j_post_btn').hide(); $('.j_allocate_btn').show();">
+                                        <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                        <div class="user-photo-info">
+                                            <div>John Smith, <span class="middle-gray-text">ID 332211</span></div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="j_search_select_drivers" style="display:none;">
+                                <br/>
+                                <div class="driver-info clearfix">
+                                    <div class="info-panel f-right">
+                                        <span class="info-link" title="Info"></span>
+                                        <div class="info-popup">
+                                            <div class="info-item font-user">View Profile</div>
+                                            <div class="info-item font-letter-mail">Email</div>
+                                            <div class="info-item font-edit-write">Add Note</div>
+                                            <div class="info-item font-star-two">Add to Favourites</div>
+                                        </div>
+                                    </div>
+                                    <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <div class="name">John Smith</div>
+                                            <div class="middle-gray-text">ID #332211</div>
+                                            <div>
+                                                <span class="star-block">
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-two"></span>
+                                                    <span class="font-star-half"></span>
+                                                    <span class="font-star"></span>
+                                                </span>
+                                            </div>
+                                            <a href="calendar-store-owner-add-shift.html" class="red-text link-icon"><span class="round-btn red font-x"></span>Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top-block">
+                                <a href="calendar-store-owner-pending.html" class="btn blue j_post_btn">Post Shift</a>
+                                <a href="calendar-store-owner-allocated.html" class="btn blue j_allocate_btn" style="display:none;">Allocate Shift</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <div class="f-right top-right-container">
+                            <div class="period-list clearfix">
+                                <div class="item"><span class="icon-calendar-2"></span></div>
+                            </div>
+                            <div class="period-list clearfix">
+                                <div class="item"><span class="font-chevron-left"></span></div>
+                                <div class="item">Today</div>
+                                <div class="item"><span class="font-chevron-right"></span></div>
+                            </div>
+                        </div>
+                        <h1 class="with-button">
+                            March 2015
+                            <a class="btn blue small" href="calendar-store-owner-add-shift.html">Add Shift</a>
+                            <span class="btn small">Copy weekly sheet</span>
+                        </h1>
+                        <ul class="color-list inline-list gray-text">
+                            <li class="bold">48 Total Shifts</li>
+                            <li class="red">Pending (8)</li>
+                            <li>Allocated (10)</li>
+                            <li class="yellow">Allocated Yello (10)</li>
+                            <li class="blue">Active (2)</li>
+                            <li class="violet">Approval (12)</li>
+                            <li class="green">Completed (12)</li>
+                        </ul>
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="wi wi-day-cloudy"><span>Mo, 16</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-day-sunny"><span>Tu, 17</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-rain active"><span>We, 18</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-day-rain"><span>Th, 19</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-cloudy"><span>Fr, 20</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-snow"><span>Sa, 21</span></div>
+                                    </th>
+                                    <th>
+                                        <div class="wi wi-thunderstorm"><span>Su, 22</span></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="calendar-store-owner-allocated.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item yellow">
+                                            <a href="calendar-store-owner-allocated-yello.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item yellow">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item yellow">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="calendar-store-owner-pending.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">All Drivers</span>
+                                                <span class="cell-count">14</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="calendar-store-owner-pending.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Yello, Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                                <span class="cell-count">14</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item yellow">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item yellow">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="calendar-store-owner-completed.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item red">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">Favourites</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item violet">
+                                            <a href="calendar-store-owner-approval.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item violet">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item green">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="calendar-table-item blue">
+                                            <a href="calendar-store-owner-active.html" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calendar-table-item blue">
+                                            <a href="#" class="calendar-table-cell">
+                                                9:00 to 10:00
+                                                <span class="bold-text">John Smith</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

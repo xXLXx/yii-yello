@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Dashboard Store Owner / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1 active" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="top-filter">
+                    <div class="period-list clearfix">
+                        <div class="item">Today</div>
+                        <div class="item">Yesterday</div>
+                        <div class="item active">Week</div>
+                        <div class="item">Month</div>
+                        <div class="item">Quarter</div>
+                        <div class="item">Year</div>
+                    </div>
+                    <div class="datepicker-wrapp">
+                        <label for="period">Period</label>
+                        <input id="period" type="text" class="text-input small" value="17 Aprill, 2015" />
+                    </div>
+                </div>
+                <div class="dashboard-two-cols-container">
+                    <div class="dashboard-fisrt-column">
+                        <div class="diagram-list">
+                            <div class="diagram-item clearfix">
+                                <div class="f-right">
+                                    <img src="img/temp/09.png" />
+                                </div>
+                                <div class="f-left">
+                                    <h3>Shifts</h3>
+                                    <h2>147</h2>
+                                    <ul class="color-list">
+                                        <li class="red">Pending (4)</li>
+                                        <li class="green">Completed (25)</li>
+                                        <li class="yellow">Allocated Yello (0)</li>
+                                        <li>Allocated (25)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="diagram-item clearfix">
+                                <div class="f-right">
+                                    <img src="img/temp/10.png" />
+                                </div>
+                                <div class="f-left">
+                                    <h3>Drivers</h3>
+                                    <h2>343</h2>
+                                    <ul class="color-list">
+                                        <li class="blue">Favorite Drivers (2)</li>
+                                        <li class="yellow">Yello Drivers (8)</li>
+                                        <li>Store drivers (25)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-second-column">
+                        <div class="border-all-list">
+                            <div class="time-line">
+                                <div class="time-item empty"></div>
+                                <div class="time-item"><span>01.03.15</span></div>
+                                <div class="time-item"><span>02.03.15</span></div>
+                                <div class="time-item"><span>03.03.15</span></div>
+                                <div class="time-item"><span>04.03.15</span></div>
+                                <div class="time-item"><span>05.03.15</span></div>
+                                <div class="time-item"><span>06.03.15</span></div>
+                                <div class="time-item"><span>07.03.15</span></div>
+                            </div>
+                            <div class="border-all-item clearfix">
+                                <div class="f-left">
+                                    <h3>Paid</h3>
+                                    <h2>$1,233</h2>
+                                    <h4>Avg. $213/day</h4>
+                                </div>
+                                <div class="f-right">
+                                    <img src="img/temp/11.png" />
+                                </div>
+                            </div>
+                            <div class="border-all-item clearfix">
+                                <div class="f-left">
+                                    <h3>Applications</h3>
+                                    <h2>1183</h2>
+                                </div>
+                                <div class="f-right">
+                                    <img src="img/temp/12.png" />
+                                </div>
+                            </div>
+                            <div class="border-all-item clearfix">
+                                <div class="f-left">
+                                    <h3>Deliveries</h3>
+                                    <h2>4383</h2>
+                                    <h4>Avg. 813/day</h4>
+                                </div>
+                                <div class="f-right">
+                                    <img src="img/temp/13.png" />
+                                </div>
+                            </div>
+                            <div class="border-all-item clearfix">
+                                <div class="f-left">
+                                    <h3>Shifts Booked</h3>
+                                    <h2>3383</h2>
+                                    <h4>Avg. 813/day</h4>
+                                </div>
+                                <div class="f-right">
+                                    <img src="img/temp/14.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

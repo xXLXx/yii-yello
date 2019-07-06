@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Sign Up / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="login-block">
+                <a class="logo" href="sign-up.html" title="Yello">Yello</a>
+                <div class="login-container">
+                    <div class="login-bg"><img src="img/login-bg.jpg" alt="login-bg" /></div>
+                    <div class="login-container-inner">
+                        <div class="login-popup width-460 j_first_step">
+                            <div class="register-form">
+                                <form action="">
+                                    <h2 class="center">Sign Up</h2>
+                                    <table>
+                                        <col width="96" />
+                                        <tr>
+                                            <th><label for="email">Email</label></th>
+                                            <td>
+                                                <input id="email" class="text-input error" value="" type="text" />
+                                                <p class="error-message">Please enter your email address.</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="userName">First Name</label></th>
+                                            <td>
+                                                <input id="userName" class="text-input" value="" type="text" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="userLastName">Last Name</label></th>
+                                            <td>
+                                                <input id="userLastName" class="text-input" value="Last Name" type="text" disabled="disabled" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="pass">Password</label></th>
+                                            <td>
+                                                <input id="pass" class="text-input" value="" type="password" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="confirm">Confirm</label></th>
+                                            <td>
+                                                <input id="confirm" class="text-input" value="" type="password" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="userRole">Register as</label></th>
+                                            <td>
+                                                <select id="userRole" class="j_select select-220">
+                                                    <option value="0">Yello Admin</option>
+                                                    <option value="1">Store Owner</option>
+                                                    <option value="2">Franchisors & MA</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <td>
+                                                <div class="checkbox-input"><input id="agreement" value="" type="checkbox" checked="checked" /><label class="j_checkbox active" for="agreement">I Accept Terms & Conditions</label></div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
+                                    <div class="text-right clearfix">
+                                        <div class="btn blue uppercase f-right" onclick="$('.j_first_step').hide(); $('.j_second_step').show();">Submit</div>
+                                        <a href="sign-in.html">I already have an account</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="login-popup width-340 j_second_step" style="display:none;">
+                            <div class="login-form">
+                                <form action="">
+                                    <h2 class="center">Activate account</h2>
+                                    <div class="center">Please verify your email address.<br/>Email with instructions to activate your account was sent, check your email.</div>
+                                    <div class="button-container center">
+                                        <div class="btn blue" onclick="$('.j_second_step').hide(); $('.j_third_step').show();">Ok</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="login-popup width-340 j_third_step" style="display:none;">
+                            <div class="login-form">
+                                <form action="">
+                                    <h2 class="center">Account activated</h2>
+                                    <div class="center">Account is successfully activated.<br/>Now you can sign in.</div>
+                                    <br/>
+                                    <div class="button-container center">
+                                        <a href="sign-in.html" class="btn blue">Sign in</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

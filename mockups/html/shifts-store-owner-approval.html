@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Assigned Approval Store Owner / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/colorbox.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1 active" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="sidebar-container sidebar-actions">
+                    <div class="col-left">
+                        <h2>Assigned Shifts</h2>
+                        <div class="assigned-shifts-filter">
+                            <a class="btn blue small f-right">
+                                <span class="font-filter"></span>
+                                Filter
+                            </a>
+                            <div class="period-list clearfix">
+                                <div class="item"><span class="icon-calendar-2"></span></div>
+                            </div>
+                            <div class="period-list clearfix">
+                                <div class="item"><span class="font-chevron-left"></span></div>
+                                <div class="item">Today</div>
+                                <div class="item"><span class="font-chevron-right"></span></div>
+                            </div>
+                            <input id="search" class="text-input small search j_placeholder" type="text" alt="Search">
+                            <div class="result-title">4 Shifts</div>
+                        </div>
+                        <div class="shift-list">
+                            <div class="shift-item orange">
+                                <h5>John Smith</h5>
+                                <div class="state orange">Awaiting for approval</div>
+                                <div>8 March, 2015</div>
+                                <div><div class="inline-block"><span class="gray-text">Start</span> 8:00am</div><div class="inline-block"><span class="gray-text">End</span> 6:00pm</div></div>
+                                <a href="shifts-store-owner-approval.html" class="shift-link"></a>
+                            </div>
+                            <div class="shift-item orange active">
+                                <h5>John Smith</h5>
+                                <div class="state orange">Awaiting for approval</div>
+                                <div>8 March, 2015</div>
+                                <div><div class="inline-block"><span class="gray-text">Start</span> 8:00am</div><div class="inline-block"><span class="gray-text">End</span> 6:00pm</div></div>
+                                <a href="shifts-store-owner-approval.html" class="shift-link"></a>
+                            </div>
+                            <div class="shift-item green">
+                                <h5>John Smith</h5>
+                                <div class="state green">Completed</div>
+                                <div>8 March, 2015</div>
+                                <div><div class="inline-block"><span class="gray-text">Start</span> 8:00am</div><div class="inline-block"><span class="gray-text">End</span> 6:00pm</div></div>
+                                <a href="shifts-store-owner-completed.html" class="shift-link"></a>
+                            </div>
+                            <div class="shift-item red">
+                                <h5>John Smith</h5>
+                                <div class="state red">Active</div>
+                                <div>8 March, 2015</div>
+                                <div><div class="inline-block"><span class="gray-text">Start</span> 8:00am</div><div class="inline-block"><span class="gray-text">End</span> 6:00pm</div></div>
+                                <a href="shifts-store-owner.html" class="shift-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <div class="border-top-list shifts-view">
+                            <div class="border-top-item">
+                                <div class="user-shifts">
+                                    <div class="user-photo-container"><img src="img/temp/02.jpg" alt="John" /></div>
+                                    <div class="user-photo-info">
+                                        <div class="user-photo-info-inner">
+                                            <h2 class="inline-block">John Smith</h2>
+                                            <div class="info-panel inline-block">
+                                                <span class="info-link" title="Info"></span>
+                                                <div class="info-popup">
+                                                    <a href="driver-profile-store-owner.html" class="info-item font-user">View Profile</a>
+                                                    <div class="info-item font-letter-mail">Email</div>
+                                                    <div class="info-item font-edit-write">Add Note</div>
+                                                    <div class="info-item font-star-two">Add to Favourites</div>
+                                                </div>
+                                            </div>
+                                            <div class="gray-text">Yello ID: #331122</div>
+                                            <div class="star-block big inline-block">
+                                                <span class="font-star-two"></span>
+                                                <span class="font-star-two"></span>
+                                                <span class="font-star-two"></span>
+                                                <span class="font-star-half"></span>
+                                                <span class="font-star"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top-item">
+                                <div class="table-block">
+                                    <div class="table-cell-item">
+                                        <h3>Shift #332211, 28 March, 2015</h3>
+                                        <div class="sticker yellow">Awaiting for approval</div>
+                                    </div>
+                                </div>
+                                <div class="table-block">
+                                    <div class="table-cell-item">
+                                        <h4>Booked time</h4>
+                                        <h3><span class="inline-block">Start 8:00am</span> <span class="inline-block">End 6:pm</span></h3>
+                                    </div>
+                                    <div class="table-cell-item">
+                                        <h4>Actual time</h4>
+                                        <div class="inline-block"><h3>Start <span class="green-text">7:00am</span></h3></div>
+                                        <div class="inline-block"><h3>End <span class="red-text">6:33pm</span></h3></div>
+                                    </div>
+                                    <div class="table-cell-item">
+                                        <h4>Time spent</h4>
+                                        <h3>11 hours 33 min</h3>
+                                    </div>
+                                </div>
+                                <div class="table-block">
+                                    <div class="table-cell-item">
+                                        <h4>Driver fee</h4>
+                                        <h3>$5 For Delivery</h3>
+                                        <div>(Minimum 12 deliveries)</div>
+                                    </div>
+                                    <div class="table-cell-item">
+                                        <h4>Completed deliveries</h4>
+                                        <h3>15</h3>
+                                    </div>
+                                    <div class="table-cell-item"></div>
+                                </div>
+                            </div>
+                            <div class="border-top-item small-margin j_request_review" style="display:none;">
+                                <h4>Requested rewiew</h4>
+                                <p>
+                                    Status: <span class="orange-text text-icon icon-alarm-clock">pending /</span> <span class="green-text text-icon icon-chat-1-1">Accepted</span>
+                                    <br/>
+                                    No. of deliveries for review: <span class="bold-text">12</span>
+                                </p>
+                                <p>
+                                    Reason:<br/>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>Pellentesque eu volutpat nibh.
+                                </p>
+                            </div>
+                            <div class="border-top-item">
+                                <h4 class="bold-text black-text">Total to pay</h4>
+                                <h2 class="bold-text">$145</h2>
+                                <div class="recall-block">
+                                    <h4 class="inline-block valign-middle">Job review</h4>
+                                    <span class="star-block big">
+                                        <span class="font-star-two"></span>
+                                        <span class="font-star-two"></span>
+                                        <span class="font-star-two"></span>
+                                        <span class="font-star-half"></span>
+                                        <span class="font-star"></span>
+                                    </span>
+                                    <div><textarea class="textarea">Nice job. as always! Thank you!</textarea></div>
+                                    <div class="button-container j_request_link">
+                                        <a href="calendar-store-owner-request-review.html" class="btn j_colorbox">Request Review</a>
+                                        <a href="shifts-store-owner-completed.html" class="btn blue">Approve</a>
+                                    </div>
+                                    <div class="button-container j_request_review" style="display:none;">
+                                        <a href="shifts-store-owner-completed.html" class="btn blue">Approve</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

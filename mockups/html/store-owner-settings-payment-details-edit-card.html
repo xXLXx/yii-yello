@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Payment Details Edit Card / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2 active" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="sidebar-container">
+                    <div class="col-left">
+                        <h2>Settings</h2>
+                        <div class="sidebar-menu">
+                            <h5>Preferences</h5>
+                            <ul>
+                                <li><a href="store-owner-settings-manage-accounts.html">Manage Account</a></li>
+                                <li><a href="store-owner-settings-manage-users.html">Manage Users</a></li>
+                                <li><a href="store-owner-settings-plans-pricing.html">Plans & Pricing</a></li>
+                                <li><a href="store-owner-settings-default-roster.html">Default roster</a></li>
+                            </ul>
+                        </div>
+                        <div class="sidebar-menu">
+                            <h5>Company Account</h5>
+                            <ul>
+                                <li><a href="store-owner-settings-company-details.html">Company Details</a></li>
+                                <li><a href="store-owner-settings-your-stores.html">Your Store</a></li>
+                                <li><a class="active" href="store-owner-settings-payment-details.html">Paiment Details</a></li>
+                                <li><a href="store-owner-settings-invoices.html">Invoices</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <!-- Payment details -->
+                        <h2><a class="middle-gray-text" href="store-owner-settings-payment-details.html">Payment Details /</a> Edit Card</h2>
+                        <form action="">
+                            <div class="clearfix">
+                                <table class="profile-settings">
+                                    <tr>
+                                        <td colspan="2">
+                                            <h3>Card Details</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="description">Description</label>
+                                            <input id="description" type="text" class="text-input small" value="Lorem Ipsum" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="cardholderName">Cardholder Name</label>
+                                            <input id="cardholderName" type="text" class="text-input small" value="John Smith" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="cardNumber">Card Number</label>
+                                            <span class="card-icon visa"><a href="#">Visa ending in 4333</a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="expires">Expires</label>
+                                            <select id="expires-mm" class="j_select select-58">
+                                                <option value="0">03</option>
+                                                <option value="1">MM 2</option>
+                                                <option value="2">MM 3</option>
+                                            </select>
+                                            <select id="expires-yy" class="j_select select-58">
+                                                <option value="0">18</option>
+                                                <option value="1">YY 2</option>
+                                                <option value="2">YY 3</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <br/>
+                                            <h3>Billing Address</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="fullName">Full Name</label>
+                                            <input id="fullName" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="address">Address <span class="gray-text">(Line 1)</span></label>
+                                            <input id="address" type="text" class="text-input small" />
+                                        </td>
+                                        <td>
+                                            <label for="address-2">Address <span class="gray-text">(Line 2)</span></label>
+                                            <input id="address-2" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="suburb">Suburb</label>
+                                            <input id="suburb" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="city">City</label>
+                                            <input id="city" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="state">State</label>
+                                            <select id="state" class="j_select select-218">
+                                                <option value="0">Select</option>
+                                                <option value="1">State 2</option>
+                                                <option value="2">State 3</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="zipPostcode">Zip/Postcode</label>
+                                            <input id="zipPostcode" type="text" class="text-input small width-100" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="country">Country</label>
+                                            <select id="country" class="j_select select-218">
+                                                <option value="0">Select</option>
+                                                <option value="1">Country 2</option>
+                                                <option value="2">Country 3</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="phone">Phone</label>
+                                            <input id="phone" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="border-top-block">
+                                <a href="store-owner-settings-payment-details.html" class="btn">Cancel</a>
+                                <a href="store-owner-settings-payment-details.html" class="btn blue">Add Card</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Manage Account / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-admin.html"></a>
+                        <a class="item icon-shop" href="store-admin.html"></a>
+                        <a class="item icon-contacts-2" href="drivers.html"></a>
+                        <a class="item icon-setting-gears-2 active" href="profile-admin.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item no-border">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="profile-admin.html">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="sidebar-container">
+                    <div class="col-left">
+                        <h2>Settings</h2>
+                        <div class="sidebar-menu">
+                            <h5>Preferences</h5>
+                            <ul>
+                                <li><a class="active" href="profile-admin.html">Manage Account</a></li>
+                                <li><a href="profile-admin-users.html">Manage Users</a></li>
+                                <li><a href="profile-admin-company.html">Company details</a></li>
+                                <li><a href="profile-admin-invoices.html">Invoices</a></li>
+                                <li><a href="profile-admin-bank.html">Bank details</a></li>
+                                <li><a href="profile-admin-pricing.html">Pricing Schedules</a></li>
+                                <li><a href="profile-admin-yello.html">Yello Corporate</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <!-- Manage Account -->
+                        <h2>Manage Account</h2>
+                        <form action="">
+                            <div class="clearfix">
+                                <table class="profile-settings f-left">
+                                    <tr>
+                                        <td>
+                                            <label for="userName">First Name</label>
+                                            <input id="userName" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="userLastName">Last Name</label>
+                                            <input id="userLastName" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="userEmail">Email</label>
+                                            <input id="userEmail" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="userPass">Password</label>
+                                            <input id="userPass" type="password" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="userPassConfirm">Repeat Password</label>
+                                            <input id="userPassConfirm" type="password" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="profile-user-photo">
+                                    <div class="user-photo-container">
+                                        <img src="img/temp/02.jpg" alt="John" />
+                                    </div>
+                                    <div class="upload-file">
+                                        <div class="link-icon font-picture-streamline blue-text">Upload new photo</div>
+                                        <input type="file" size="1"/>
+                                    </div>
+                                    <a class="link-icon font-delete-garbage-streamline red-text" href="#">Delete</a>
+                                </div>
+                            </div>
+                            <div class="border-top-block">
+                                <div class="btn blue">Save Settings</div>
+                                <p><a class="link-icon font-delete-garbage-streamline" href="#">Delete account</a></p>
+                                <p class="text-icon font-exclamation-triangle icon-orange">Attention! By deleting your account, all data will be permanently deleted.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

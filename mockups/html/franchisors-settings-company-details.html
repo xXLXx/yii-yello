@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Company Details Franchisors / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="franchisors-dashboard.html"></a>
+                        <a class="item icon-shop" href="franchisors-stores.html"></a>
+                        <a class="item icon-setting-gears-2 active" href="franchisors-settings.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item no-border">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="profile-admin.html">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="sidebar-container">
+                    <div class="col-left">
+                        <h2>Settings</h2>
+                        <div class="sidebar-menu">
+                            <h5>Preferences</h5>
+                            <ul>
+                                <li><a href="franchisors-settings.html">Manage Account</a></li>
+                                <li><a href="franchisors-settings-manage-users.html">Manage Users</a></li>
+                                <li><a href="franchisors-settings-yello-corporate.html">Yello Corporate</a></li>
+                            </ul>
+                        </div>
+                        <div class="sidebar-menu">
+                            <h5>Company Account</h5>
+                            <ul>
+                                <li><a class="active" href="franchisors-settings-company-details.html">Company Details</a></li>
+                                <li><a href="franchisors-settings-invitations.html">Invitations</a></li>
+                                <li><a href="franchisors-settings-bank-details.html">Bank Details</a></li>
+                                <li><a href="franchisors-settings-invoices.html">Invoices</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-right">
+                        <!-- Company Details -->
+                        <h2>Company Details</h2>
+                         <form action="">
+                            <div class="clearfix">
+                                <table class="profile-settings">
+                                    <tr>                                     
+                                        <td colspan="2">
+                                            <label for="companyName">Company Name</label>
+                                            <input id="companyName" type="text" class="text-input small" />
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="email">Email</label>
+                                            <input id="email" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="address">Address <span class="gray-text">(Line 1)</span></label>
+                                            <input id="address" type="text" class="text-input small" />
+                                        </td>
+                                        <td>
+                                            <label for="address-2">Address <span class="gray-text">(Line 2)</span></label>
+                                            <input id="address-2" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="suburb">Suburb</label>
+                                            <input id="suburb" type="text" class="text-input small" />
+                                        </td>
+                                        <td>
+                                            <label for="state">State</label>
+                                            <select id="state" class="j_select select-218">
+                                                <option value="0">Select State</option>
+                                                <option value="1">State 2</option>
+                                                <option value="2">State 3</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="contact-person">Contact Person</label>
+                                            <input id="contact-person" type="text" class="text-input small" />
+                                        </td>
+                                        <td>
+                                            <label for="phone">Phone</label>
+                                            <input id="phone" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="website">Website</label>
+                                            <input id="cwebsite" type="text" class="text-input small" />
+                                        </td>
+                                        <td>
+                                            <label for="abn">ABN</label>
+                                            <input id="abn" type="text" class="text-input small" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="timezone">Time zone</label>
+                                            <select id="country" class="j_select select-218">
+                                                <option value="0">Select Time zone</option>
+                                                <option value="1">Zone 1</option>
+                                                <option value="2">Zone 2</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="format">Time format</label>
+                                            <select id="format" class="j_select" style="width: 140px;">
+                                                <option value="0">Select format</option>
+                                                <option value="1">Format 2</option>
+                                                <option value="2">Format 3</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                          <label for="currency">Account Currency</label>
+                                          <select id="currency" class="j_select" style="width: 90px;">
+                                                <option value="0">AUD</option>
+                                                <option value="1">Format 2</option>
+                                                <option value="2">Format 3</option>
+                                            </select>
+                                        </td>  
+                                    </tr>
+                                </table>
+                                <div class="company-logo">
+                                    <div class="company-logo-container no-photo f-left"></div>
+                                    <div class="company-info">
+                                        <h5>Logo</h5>
+                                        <div class="gray-text">Recommended use square image with minimal dimensions 276x276px.<br>*.png, *.jpeg, *.gif</div>
+                                        <div class="upload-file">
+                                            <div class="link-icon font-picture-streamline blue-text">Upload logo</div>
+                                            <input size="1" type="file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top-block">
+                                <div class="btn">Cancel</div>
+                                <div class="btn blue">Save</div>
+                            </div>
+                        </form>                    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

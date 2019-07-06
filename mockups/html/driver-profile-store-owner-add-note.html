@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+    <head>
+        <title>Driver Profile Store Owner / Yello</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/font-style.css" type="text/css" />
+        <link rel="stylesheet" href="css/colorbox.css" type="text/css" />
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--[if IE 8]><script type="text/javascript" src="js/css3-mediaqueries.js"></script><![endif]-->
+        <script type="text/javascript" src="js/cusel-2.5.js"></script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+    <body>
+        <div class="wrapper j_fix_header">
+            <div class="header clearfix">
+                <div class="f-left">
+                    <div class="logo-container"><a href="index.html" class="logo">Yello</a></div>
+                    <div class="date-info"><span class="gray-text">24 March, 2015 </span>6:00 PM</div>
+                    <div class="main-menu">
+                        <a class="item icon-pie-chart-1" href="dashboard-store-owner.html"></a>
+                        <a class="item icon-calendar-2" href="calendar-store-owner.html"></a>
+                        <a class="item icon-contacts-2 active" href="drivers-store-owner.html"></a>
+                        <a class="item icon-check-1" href="shifts-store-owner.html"></a>
+                        <a class="item icon-setting-gears-2" href="store-owner-settings-manage-accounts.html"></a>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="user-menu">
+                        <div class="item">
+                            <div class="user-photo-container f-left"><img src="img/temp/01.jpg" alt="John" /></div>
+                            <div class="user-photo-info">
+                                <span>Hello, John</span>
+                                <span class="gray-text"><a href="#">Profile</a> / <a href="index.html">Logout</a></span>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h4>Store</h4>
+                            <select class="store-select select-100 j_select">
+                                <option value="0">Crust Pizza</option>
+                                <option value="1">Crust Pizza 1</option>
+                                <option value="2">Crust Pizza 2</option>
+                                <option value="3">Crust Pizza 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <div class="two-column">
+                    <div class="col-left f-left">
+                        <h2><a class="gray-text" href="drivers-store-owner.html">Drivers /</a> Driver profile</h2>
+                        <div class="info-panel blue f-right">
+                            <span class="info-link" title="Info"></span>
+                            <div class="info-popup">
+                                <div class="info-item font-letter-mail">Email</div>
+                                <div class="info-item font-edit-write j_add_note j_add_note_link" onclick="$('.j_remove_favourites').trigger('click'); $('.j_add_note_link').toggle();" style="display:none;">Add Note</div>
+                                <div class="info-item font-link j_invite j_add_note_link" style="display:none;">Invite to store</div>
+                                <div class="info-item font-star-two j_add_favourites j_add_note_link" onclick="$(this).hide(); $('.j_invite').hide(); $('.j_remove_favourites').show(); $('.j_favourites_sign').show(); $('.j_favourites_info').show();" style="display:none;">Add to favourites</div>
+                                <div class="info-item font-star-two red-text j_remove_favourites" style="display:none;" onclick="$(this).hide(); $('.j_invite').show(); $('.j_add_favourites').show(); $('.j_favourites_sign').hide(); $('.j_favourites_info').hide();">Remove from favourites</div>
+                            </div>
+                        </div>
+                        <div class="driver-info profile-view clearfix">
+                            <div class="user-photo-container f-left"><a href="driver-profile-store-owner.html"><img src="img/temp/01.jpg" alt="John" /></a></div>
+                            <div class="user-panel-button j_favourites_sign" style="display:none;">
+                                <span class="font-star-two"></span>
+                            </div>
+                            <div class="user-photo-info">
+                                <div class="user-photo-info-inner">
+                                    <h2>John Smith</h2>
+                                    <div class="text-small-11 gray-text">Yello ID: #3311122</div>
+                                    <div>
+                                        <span class="star-block">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
+                                    </div>
+                                    <div class="border-side-list j_favourites_info" style="display:none;"><span><a class="black-text" href="#" onclick="$('.j_remove_favourites').trigger('click'); $('.j_add_note').trigger('click'); return false;">Invited to your store</a></span><span class="red-text">Cancel</span></div>
+                                    <div class="border-side-list j_add_note_link" style="display:block;"><span><a class="green-text" href="#">Conntected to your store</a></span><span><a class="red-text link-icon font-link-broken" href="#" onclick="$('.j_add_note_link').toggle(); return false;">Disconnect</a></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Achivements</h4>
+                        <div class="achivements-list big-size">
+                            <div class="item check"></div>
+                        </div>
+                        <h4>Details</h4>
+                        <table class="strip-table">
+                            <col width="30%" />
+                            <tr class="tr-gray">
+                                <td class="gray-text">Availability</td>
+                                <td>Shift, Roamer</td>
+                            </tr>
+                            <tr>
+                                <td class="gray-text">Vehicle</td>
+                                <td>Car (Masserati Quatroporte, 2014) <a href="img/temp/15.jpg" class="j_colorbox_photo">View</a></td>
+                            </tr>
+                            <tr class="tr-gray">
+                                <td class="gray-text">Driver License</td>
+                                <td>
+                                    <span class="link-icon j_add_note_link" style="display:none;"><span class="round-btn red font-x"></span>Not submited</span>
+                                    <span class="j_add_note_link" style="display:block;"><span class="link-icon"><span class="round-btn green font-check"></span>Submited</span> <a href="img/temp/15.jpg" class="j_colorbox_photo">View</a></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="gray-text">Work in AU</td>
+                                <td><span class="link-icon"><span class="round-btn green font-check"></span>Legally allowed to work in Australia</span></td>
+                            </tr>
+                            <tr class="tr-gray j_add_note_link" style="display:table-row;">
+                                <td class="gray-text">Payment method</td>
+                                <td>Direct <a href="driver-profile-store-owner-change-payment-method.html" class="j_colorbox">Change</a> <span class="grey">/ or</span> <span class="orange-text">Change pending...</span></td>
+                            </tr>
+                        </table>
+                        <div class="j_add_note_link" style="display:block;">
+                            <h4>Private details</h4>
+                            <table class="strip-table">
+                                <col width="30%" />
+                                <tr class="tr-gray">
+                                    <td class="gray-text">Email</td>
+                                    <td>johnsmith@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td class="gray-text">Address</td>
+                                    <td>25 Lurline St<br/>Maroubra NSW 2035<br/>Sydney</td>
+                                </tr>
+                                <tr class="tr-gray">
+                                    <td class="gray-text">Phone</td>
+                                    <td>+61 00293 0021</td>
+                                </tr>
+                                <tr>
+                                    <td class="gray-text">Emergency contact<br/>Person</td>
+                                    <td>Simon<br/>+61 0297 3211</td>
+                                </tr>
+                                <tr class="tr-gray">
+                                    <td class="gray-text">T-Shirt Size</td>
+                                    <td>XXL</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>Locations</h4>
+                        <div class="location-list">
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                            <div class="location-item">Sydney</div>
+                            <div class="location-item">Lorem Ipsum</div>
+                        </div>
+                        <h4>Profile</h4>
+                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet ultrices leo. Duis in orci porta, imperdiet diam at, euismod sapien. Praessnt ac nunc fermentum, lobortis felis vel, lobortis diam. Mauris congue risus at lacus egestas, eget consectetur nulla consequat.</div>
+                    </div>
+                    <div class="col-right f-right">
+                        <div class="border-top-list profile-view">
+                            <div class="border-top-item">
+                                <div class="table-block">
+                                    <div class="table-cell-item">
+                                        <h4>Completed shifts</h4>
+                                        <h2 class="h1">4,422</h2>
+                                    </div>
+                                    <div class="table-cell-item">
+                                        <h4>Drivers</h4>
+                                        <h2 class="h1">122,000</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top-item">
+                                <div class="j_add_note_link" style="display:block;">
+                                    <div class="note-block">
+                                        <div class="note-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet ultrices leo. Duis in orci porta, imperdiet diam at, euismod sapien.</div>
+                                        <div class="note-button">
+                                            <span><a href="#" class="brown-text link-icon font-pencil">Edit Note</a></span>
+                                            <span><a href="#" class="brown-text link-icon font-delete-garbage-streamline">Delete</a></span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <h3 class="middle-gray-text">Reviews</h3>
+                                <div class="company-list">
+                                    <div class="company-item">
+                                        <h5>Crust Pizza</h5>
+                                        <span class="star-block big">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>Pellentesque eu volutpat nibh.</div>
+                                        <div class="gray-text">Today, 6:00 PM</div>
+                                    </div>
+                                    <div class="company-item">
+                                        <h5>Crust Pizza</h5>
+                                        <span class="star-block big">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>Pellentesque eu volutpat nibh.</div>
+                                        <div class="gray-text">Today, 6:00 PM</div>
+                                    </div>
+                                    <div class="company-item">
+                                        <h5>Crust Pizza</h5>
+                                        <span class="star-block big">
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-two"></span>
+                                            <span class="font-star-half"></span>
+                                            <span class="font-star"></span>
+                                        </span>
+                                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>Pellentesque eu volutpat nibh.</div>
+                                        <div class="gray-text">Today, 6:00 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
